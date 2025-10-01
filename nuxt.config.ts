@@ -1,36 +1,30 @@
-import { defineNuxtConfig } from 'nuxt/config';
-import { fileURLToPath } from 'node:url';
-import path from 'path';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import legacy from '@vitejs/plugin-legacy';
-
-const rootDir = fileURLToPath(new URL('.', import.meta.url));
-
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
-
-    ssr: false, // temp SPA
-
     devtools: { enabled: true },
 
-    modules: ['@nuxt/eslint', '@pinia/nuxt'],
+    modules: ['@nuxt/eslint', 'nuxt-svg-sprite-icon', 'nuxt-swiper'],
+    css: ['~/assets/css/main.css'],
 
     typescript: {
         strict: true,
         typeCheck: true,
     },
 
-    vite: {
-        plugins: [
-            createSvgIconsPlugin({
-                iconDirs: [path.resolve(rootDir, 'assets/icons')],
-                symbolId: 'icon-[name]',
-                inject: 'body-last',
-            }),
+    app: {
+        head: {
+            title: 'Arabeska',
+            htmlAttrs: {
+                lang: 'ru',
+            },
+            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+        },
+    },
 
-            legacy({
-                targets: ['defaults', 'not IE 11'],
-            }),
-        ],
+    svgSprite: {
+        input: './app/assets/svg',
+        output: './app/assets/svg/gen',
+        defaultSprite: 'icons',
+        elementClass: 'icon',
+        optimize: false,
     },
 });

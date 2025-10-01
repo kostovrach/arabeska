@@ -1,16 +1,12 @@
 // @ts-check
 import withNuxt from './.nuxt/eslint.config.mjs';
-import globals from 'globals';
 import prettier from '@vue/eslint-config-prettier';
 
-/** @type {any} */
-const customConfig = {
+/** @type {Object} */
+const customCfg = {
     ignores: ['**/dist/**', '**/.nuxt/**', '**/coverage/**', '**/scripts/**'],
     files: ['**/*.{ts,tsx,js,mjs,jsx,vue}'],
     languageOptions: {
-        globals: {
-            ...globals.browser,
-        },
         parserOptions: {
             extraFileExtensions: ['.vue'],
             project: ['./tsconfig.json'],
@@ -23,4 +19,4 @@ const customConfig = {
     prettier,
 };
 
-export default withNuxt(customConfig);
+export default withNuxt(customCfg);
