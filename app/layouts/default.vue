@@ -1,6 +1,6 @@
 <template>
     <main class="page">
-        test layuot
+        <TheHeader />
         <slot></slot>
     </main>
 </template>

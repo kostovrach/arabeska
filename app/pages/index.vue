@@ -2,12 +2,7 @@
     <section class="hero">
         <div class="hero__container">
             <ClientOnly>
-                <swiper-container
-                    ref="sliderRef"
-                    class="hero__slider"
-                    :speed="800"
-                    :allow-touch-move="false"
-                >
+                <swiper-container ref="sliderRef" class="hero__slider" :speed="800" :allow-touch-move="false">
                     <swiper-slide class="hero__slide">
                         <div class="hero__slide-wrapper">
                             <div class="hero__slide-content">
@@ -92,6 +87,26 @@
                         </div>
                     </swiper-slide>
                 </swiper-container>
+                <div class="hero__runline-container">
+                    <div class="hero__runline hero__runline--nav">
+                        <ul class="hero__runline-wrapper" v-for="n in 2" :key="n">
+                            <li class="hero__runline-item" v-for="item in navItems" :key="item.key">
+                                <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
+                                    {{ item.title }}
+                                </NuxtLink>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hero__runline hero__runline--filters">
+                        <ul class="hero__runline-wrapper" v-for="n in 2" :key="n">
+                            <li class="hero__runline-item" v-for="item in filterItems" :key="item.key">
+                                <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
+                                    {{ item.title }}
+                                </NuxtLink>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </ClientOnly>
         </div>
     </section>
@@ -101,26 +116,145 @@
     const sliderRef = ref(null);
 
     const swiper = useSwiper(sliderRef);
+
+    const navItems = [
+        {
+            key: '1',
+            title: 'букеты',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '2',
+            title: 'дополнительное',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '3',
+            title: 'цветы оптом',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '4',
+            title: 'сертификаты',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '5',
+            title: 'цветочная подписка',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '6',
+            title: 'открытки',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+    ];
+
+    const filterItems = [
+        {
+            key: '1',
+            title: 'розы',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '2',
+            title: 'гвоздики',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '3',
+            title: 'тюльпаны',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '4',
+            title: 'хризантемы',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '5',
+            title: 'астры',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '6',
+            title: 'подсолнухи',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '7',
+            title: 'калы',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+        {
+            key: '8',
+            title: 'ромашки',
+            path: {
+                name: 'index',
+                params: {},
+            },
+        },
+    ];
 </script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
     .hero {
-        color: $c-FFFFFF;
-        background-color: $c-accent;
+        $p: &;
+
+        overflow-x: clip;
         &__container {
             height: 100%;
-            @include content-layout($padding: 0);
         }
         &__slider {
             width: 100%;
+            color: $c-FFFFFF;
+            background-color: $c-accent;
         }
         &__slide {
             box-sizing: border-box;
             width: 100%;
-            min-height: 70lvh;
-            padding: 0 $px;
+            @include content-layout;
             &-wrapper {
                 height: 100%;
                 display: grid;
@@ -133,9 +267,13 @@
                 gap: rem(48);
                 padding: rem(128) 0;
             }
+            &-media {
+                max-height: 70lvh;
+                min-height: rem(670);
+            }
             &-image-container {
                 width: 100%;
-                max-height: 70lvh;
+                height: 100%;
                 mask-image: var(--mask);
                 mask-size: 100% 100%;
                 mask-repeat: no-repeat;
@@ -197,6 +335,65 @@
                     }
                     &--prev {
                         transform: scaleX(-1);
+                    }
+                }
+            }
+        }
+        &__runline-container {
+            display: flex;
+            flex-direction: column;
+        }
+        &__runline {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            gap: rem(64);
+            &--nav {
+                background-color: $c-98BBD7;
+                rotate: -2deg;
+                transform-origin: 0% 40%;
+                #{$p}__runline-wrapper {
+                    animation-direction: reverse;
+                }
+            }
+            &--filters {
+                background-color: $c-D4E1E7;
+                rotate: 3deg;
+                transform-origin: 140% 0%;
+            }
+            @media (pointer: fine) {
+                &:hover {
+                    #{$p}__runline-wrapper {
+                        animation-play-state: paused;
+                    }
+                }
+            }
+            &-wrapper {
+                display: flex;
+                align-items: center;
+                gap: rem(64);
+                padding: rem(8) 0;
+                will-change: translate;
+                animation: runline 10s linear infinite;
+                @keyframes runline {
+                    from {
+                        translate: 0 0;
+                    }
+                    to {
+                        translate: -50% 0;
+                    }
+                }
+            }
+            &-item {
+                width: fit-content;
+                text-transform: lowercase;
+                white-space: nowrap;
+                font-size: lineScale(24, 20, 480, 1440);
+                line-height: 1;
+                font-weight: $fw-semi;
+                @media (pointer: fine) {
+                    &:hover {
+                        color: $c-FFFFFF;
                     }
                 }
             }

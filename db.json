@@ -1,0 +1,776 @@
+{
+    "products": [
+        {
+            "id": "e1ad958a-95c9-4f7f-94e3-cb364cf7cf67",
+            "available": true,
+            "date_created": "2025-06-19",
+            "quantity": 3,
+            "price": 5231,
+            "title": "Весеннее утро",
+            "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
+            "size": "39x21x30 см",
+            "style": ["romantic", "evening"],
+            "reason": ["newborn", "graduation", "wedding"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Гвоздика", "quantity": "4 шт." },
+                { "name": "Гортензия", "quantity": "4 шт." },
+                { "name": "Тюльпан", "quantity": "3 шт." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "81743811-b283-49e9-a3a6-d745cf7050b8",
+            "available": true,
+            "date_created": "2024-07-30",
+            "quantity": 10,
+            "price": 12503,
+            "title": "Аромат любви",
+            "description": "Цветочная гармония в каждом лепестке.",
+            "size": "58x32x25 см",
+            "style": ["summery", "minimal"],
+            "reason": ["anniversary"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Фрезия", "quantity": "2 шт." },
+                { "name": "Роза", "quantity": "6 шт." },
+                { "name": "Тюльпан", "quantity": "3 шт." },
+                { "name": "Открытка", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "6ac5c96f-22b2-44ec-a9ab-0c13b7a220b1",
+            "available": true,
+            "date_created": "2025-01-08",
+            "quantity": 8,
+            "price": 10932,
+            "title": "Солнечный луч",
+            "description": "Яркий и запоминающийся букет для особенных моментов.",
+            "size": "42x33x24 см",
+            "style": ["classic", "summery"],
+            "reason": ["birthday", "corporate"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Тюльпан", "quantity": "7 шт." },
+                { "name": "Гербера", "quantity": "5 шт." },
+                { "name": "Крафт-бумага", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "3fcb02f1-0f82-4f35-b6a2-d7f88a1f9301",
+            "available": false,
+            "date_created": "2024-11-21",
+            "quantity": 2,
+            "price": 7630,
+            "title": "Лесная сказка",
+            "description": "Невероятно нежный букет для любого случая.",
+            "size": "48x27x28 см",
+            "style": ["romantic"],
+            "reason": ["romantic", "wedding"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Пион", "quantity": "3 шт." },
+                { "name": "Лилия", "quantity": "2 шт." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "f9a3f010-ef9f-4b68-b9b0-740ba4d93d90",
+            "available": true,
+            "date_created": "2025-05-12",
+            "quantity": 9,
+            "price": 14800,
+            "title": "Магия утра",
+            "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
+            "size": "56x35x27 см",
+            "style": ["modern", "minimal"],
+            "reason": ["graduation"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Орхидея", "quantity": "2 шт." },
+                { "name": "Роза", "quantity": "6 шт." },
+                { "name": "Бант", "quantity": "1 шт." }
+            ],
+            "discount": 20
+        },
+        {
+            "id": "c5b44a63-17ae-4e91-8b9a-6a134a15a3b5",
+            "available": true,
+            "date_created": "2025-02-17",
+            "quantity": 5,
+            "price": 5100,
+            "title": "Нежность дня",
+            "description": "Цветочная гармония в каждом лепестке.",
+            "size": "37x24x22 см",
+            "style": ["classic"],
+            "reason": ["anniversary", "birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Хризантема", "quantity": "5 шт." },
+                { "name": "Фрезия", "quantity": "3 шт." },
+                { "name": "Открытка", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "0e3c2c87-ccad-44ec-b5ef-991c84cf978f",
+            "available": true,
+            "date_created": "2024-09-04",
+            "quantity": 6,
+            "price": 9400,
+            "title": "Тайна вечера",
+            "description": "Невероятно нежный букет для любого случая.",
+            "size": "46x29x23 см",
+            "style": ["evening", "romantic"],
+            "reason": ["wedding", "anniversary"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Эустома", "quantity": "4 шт." },
+                { "name": "Роза", "quantity": "6 шт." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "35e37059-2b42-4a13-bd3c-4c1bc25d85c8",
+            "available": false,
+            "date_created": "2025-08-29",
+            "quantity": 1,
+            "price": 3120,
+            "title": "Радуга счастья",
+            "description": "Композиция, созданная для самых теплых эмоций.",
+            "size": "33x20x21 см",
+            "style": ["summery"],
+            "reason": ["newborn"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Тюльпан", "quantity": "3 шт." },
+                { "name": "Камилла", "quantity": "2 шт." },
+                { "name": "Коробка", "quantity": "1 шт." }
+            ],
+            "discount": 15
+        },
+        {
+            "id": "c94a78d4-3a6c-48a3-8571-5cfb79e12ed8",
+            "available": true,
+            "date_created": "2025-07-03",
+            "quantity": 7,
+            "price": 11100,
+            "title": "Ночное сияние",
+            "description": "Яркий и запоминающийся букет для особенных моментов.",
+            "size": "55x31x26 см",
+            "style": ["modern", "romantic"],
+            "reason": ["romantic", "anniversary"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Пион", "quantity": "4 шт." },
+                { "name": "Эустома", "quantity": "2 шт." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "4f9a9f2f-4ec5-4d6e-a9d0-e9f1b4e39c9a",
+            "available": true,
+            "date_created": "2024-04-12",
+            "quantity": 4,
+            "price": 6800,
+            "title": "Розовый рассвет",
+            "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
+            "size": "44x28x22 см",
+            "style": ["romantic"],
+            "reason": ["birthday", "wedding"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Роза", "quantity": "7 шт." },
+                { "name": "Гвоздика", "quantity": "4 шт." },
+                { "name": "Крафт-бумага", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "ea2c83b0-a6fd-4cf0-94cb-f6b8a4c74e6f",
+            "available": true,
+            "date_created": "2025-10-01",
+            "quantity": 10,
+            "price": 14200,
+            "title": "Лунный свет",
+            "description": "Цветочная гармония в каждом лепестке.",
+            "size": "59x36x29 см",
+            "style": ["romantic", "evening"],
+            "reason": ["romantic", "anniversary"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Орхидея", "quantity": "2 шт." },
+                { "name": "Тюльпан", "quantity": "5 шт." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "2f4c1a89-2d56-4e0e-bf56-e76a12e3a267",
+            "available": false,
+            "date_created": "2024-12-18",
+            "quantity": 2,
+            "price": 4500,
+            "title": "Морской бриз",
+            "description": "Натуральная красота и стиль в одной композиции.",
+            "size": "36x23x24 см",
+            "style": ["modern"],
+            "reason": ["graduation", "corporate"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Гербера", "quantity": "3 шт." },
+                { "name": "Альстромерия", "quantity": "2 шт." },
+                { "name": "Бант", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "dbb4e0a8-7bb1-41f8-8ac4-1cd83a5a74c6",
+            "available": true,
+            "date_created": "2025-09-22",
+            "quantity": 8,
+            "price": 12800,
+            "title": "Весеннее утро",
+            "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
+            "size": "50x30x27 см",
+            "style": ["classic", "wedding"],
+            "reason": ["wedding", "romantic"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Роза", "quantity": "8 шт." },
+                { "name": "Фрезия", "quantity": "3 шт." },
+                { "name": "Коробка", "quantity": "1 шт." }
+            ],
+            "discount": 30
+        },
+        {
+            "id": "9d26344a-69df-44e2-841d-1ff6c6c1fd9b",
+            "available": true,
+            "date_created": "2024-08-10",
+            "quantity": 3,
+            "price": 7800,
+            "title": "Аромат любви",
+            "description": "Композиция, созданная для самых теплых эмоций.",
+            "size": "41x25x23 см",
+            "style": ["summery", "romantic"],
+            "reason": ["birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Роза", "quantity": "5 шт." },
+                { "name": "Эустома", "quantity": "4 шт." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "88f82294-0e6b-4862-8711-23edcfb4e599",
+            "available": true,
+            "date_created": "2025-04-06",
+            "quantity": 7,
+            "price": 9200,
+            "title": "Солнечный луч",
+            "description": "Яркий и запоминающийся букет для особенных моментов.",
+            "size": "53x34x28 см",
+            "style": ["modern"],
+            "reason": ["anniversary", "corporate"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Лилия", "quantity": "3 шт." },
+                { "name": "Тюльпан", "quantity": "6 шт." },
+                { "name": "Открытка", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "b67dca25-fef3-44d7-8466-ec7c119e5cf1",
+            "available": true,
+            "date_created": "2025-06-02",
+            "quantity": 9,
+            "price": 13500,
+            "title": "Магия утра",
+            "description": "Цветочная гармония в каждом лепестке.",
+            "size": "57x35x29 см",
+            "style": ["romantic", "wedding"],
+            "reason": ["wedding", "birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Пион", "quantity": "4 шт." },
+                { "name": "Гортензия", "quantity": "2 шт." },
+                { "name": "Крафт-бумага", "quantity": "1 шт." }
+            ],
+            "discount": 25
+        },
+        {
+            "id": "9df822e7-9cf5-48df-a0c4-3a663a8907a9",
+            "available": true,
+            "date_created": "2025-05-28",
+            "quantity": 2,
+            "price": 8230,
+            "discount": 10,
+            "title": "Персиковая нежность",
+            "description": "Букет в теплых тонах для самых душевных моментов.",
+            "size": "42x23x26 см",
+            "style": ["tender", "classic"],
+            "reason": ["romantic", "birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Роза персиковая", "quantity": "7 шт." },
+                { "name": "Эвкалипт", "quantity": "1 пуч." },
+                { "name": "Лента", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "dbf3c2c9-99f6-4c08-9c42-f1cbdb3c8df0",
+            "available": false,
+            "date_created": "2024-08-15",
+            "quantity": 4,
+            "price": 9720,
+            "title": "Яркий праздник",
+            "description": "Насыщенный букет для особых событий.",
+            "size": "50x27x30 см",
+            "style": ["festive"],
+            "reason": ["graduation", "anniversary"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Гербера", "quantity": "5 шт." },
+                { "name": "Хризантема", "quantity": "6 шт." },
+                { "name": "Фетр", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "d1e2f2b9-8bc2-4a8d-a325-1a55d4981fb4",
+            "available": true,
+            "date_created": "2025-03-03",
+            "quantity": 9,
+            "price": 14300,
+            "discount": 15,
+            "title": "Королевский шик",
+            "description": "Роскошный букет для особых торжеств.",
+            "size": "65x38x32 см",
+            "style": ["luxury", "wedding"],
+            "reason": ["wedding", "anniversary"],
+            "images": [
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg",
+                "/img/temp/placeholder-900x900.jpg"
+            ],
+            "structure": [
+                { "name": "Роза красная", "quantity": "15 шт." },
+                { "name": "Орхидея", "quantity": "3 шт." },
+                { "name": "Эвкалипт", "quantity": "1 пуч." },
+                { "name": "Лента атласная", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "67d8f840-fc65-48ff-89b4-6dfbc5e24b62",
+            "available": true,
+            "date_created": "2024-11-19",
+            "quantity": 7,
+            "price": 5120,
+            "title": "Зимняя сказка",
+            "description": "Белоснежная композиция с ноткой хвои.",
+            "size": "48x28x24 см",
+            "style": ["winter", "minimal"],
+            "reason": ["christmas"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Белая роза", "quantity": "7 шт." },
+                { "name": "Хвоя", "quantity": "1 пуч." },
+                { "name": "Шишки", "quantity": "3 шт." }
+            ]
+        },
+        {
+            "id": "41c6a2b0-43e0-47cb-9183-6e740f9f8e57",
+            "available": true,
+            "date_created": "2025-09-10",
+            "quantity": 5,
+            "price": 6250,
+            "discount": 25,
+            "title": "Солнечный день",
+            "description": "Жизнерадостный букет в ярких оттенках.",
+            "size": "40x22x25 см",
+            "style": ["bright", "summery"],
+            "reason": ["birthday", "housewarming"],
+            "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Подсолнух", "quantity": "5 шт." },
+                { "name": "Ромашка", "quantity": "7 шт." },
+                { "name": "Лента желтая", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "c6e5ab38-bac3-456d-92ed-fd2935c503a0",
+            "available": false,
+            "date_created": "2025-04-25",
+            "quantity": 1,
+            "price": 4500,
+            "title": "Лесная гармония",
+            "description": "Натуральный букет с зеленью и лесными цветами.",
+            "size": "36x20x22 см",
+            "style": ["eco", "natural"],
+            "reason": ["romantic"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Зеленый папоротник", "quantity": "1 пуч." },
+                { "name": "Анемон", "quantity": "4 шт." },
+                { "name": "Крафт-бумага", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "d8b5799c-10d6-44ab-b639-d0c3eacda92f",
+            "available": true,
+            "date_created": "2025-02-14",
+            "quantity": 8,
+            "price": 13780,
+            "title": "Сердце весны",
+            "description": "Букет в форме сердца для особенного признания.",
+            "size": "52x29x27 см",
+            "style": ["romantic"],
+            "reason": ["valentine"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Роза розовая", "quantity": "11 шт." },
+                { "name": "Гипсофила", "quantity": "1 пуч." },
+                { "name": "Декоративное сердце", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "82ec5871-5a92-44d3-bd79-b2c070f71ec6",
+            "available": true,
+            "date_created": "2024-12-02",
+            "quantity": 6,
+            "price": 9200,
+            "discount": 20,
+            "title": "Осенний поцелуй",
+            "description": "Теплый букет в золотых оттенках осени.",
+            "size": "45x26x25 см",
+            "style": ["autumn", "romantic"],
+            "reason": ["thanksgiving"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Хризантема желтая", "quantity": "9 шт." },
+                { "name": "Кленовые листья", "quantity": "1 пуч." },
+                { "name": "Бархатцы", "quantity": "5 шт." }
+            ]
+        },
+        {
+            "id": "ad4a0b8f-8e06-414d-a3fa-c257a39e0613",
+            "available": true,
+            "date_created": "2025-07-07",
+            "quantity": 2,
+            "price": 7100,
+            "title": "Гармония лета",
+            "description": "Легкий букет из летних цветов.",
+            "size": "38x21x23 см",
+            "style": ["summery", "casual"],
+            "reason": ["birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Ромашка", "quantity": "10 шт." },
+                { "name": "Лаванда", "quantity": "1 пуч." },
+                { "name": "Лента льняная", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "c2e89fbb-4448-49bb-8cd0-5105a27c74a3",
+            "available": true,
+            "date_created": "2025-01-21",
+            "quantity": 3,
+            "price": 5600,
+            "title": "Утренняя свежесть",
+            "description": "Светлый и воздушный букет для хорошего дня.",
+            "size": "40x23x24 см",
+            "style": ["fresh", "minimal"],
+            "reason": ["birthday", "romantic"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Альстромерия", "quantity": "5 шт." },
+                { "name": "Эустома", "quantity": "4 шт." },
+                { "name": "Лента белая", "quantity": "1 шт." }
+            ]
+        }
+    ],
+    "accessories": [
+        {
+            "id": "6f2c9d1b-b7d5-4c1e-88f7-1df34f3b7c98",
+            "available": true,
+            "date_created": "2025-08-14",
+            "quantity": 25,
+            "price": 350,
+            "title": "Открытка с цветами",
+            "description": "Мини-открытка с нежным цветочным принтом.",
+            "size": "15x10 см",
+            "reason": ["birthday", "romantic"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Бумага дизайнерская", "quantity": "1 шт." },
+                { "name": "Конверт", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "a97db96b-1f9a-4a2b-8a68-9ad04e872f2e",
+            "available": true,
+            "date_created": "2024-11-02",
+            "quantity": 8,
+            "price": 2800,
+            "discount": 20,
+            "title": "Мягкий мишка",
+            "description": "Плюшевый мишка кремового цвета, отличный подарок к букету.",
+            "size": "40x25x20 см",
+            "reason": ["birthday", "romantic"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Ткань плюш", "quantity": "1 шт." },
+                { "name": "Наполнитель синтепон", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "e05fce50-537c-4d79-a47a-0a1c99df62f7",
+            "available": true,
+            "date_created": "2025-01-18",
+            "quantity": 5,
+            "price": 4200,
+            "title": "Ваза стеклянная",
+            "description": "Прозрачная ваза цилиндрической формы.",
+            "size": "30x15x15 см",
+            "reason": ["housewarming", "anniversary"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [{ "name": "Стекло", "quantity": "1 шт." }]
+        },
+        {
+            "id": "b3919eb3-46cf-4a2c-8d24-dbd4c7e89a13",
+            "available": false,
+            "date_created": "2025-04-07",
+            "quantity": 0,
+            "price": 1100,
+            "title": "Шар-сердце",
+            "description": "Фольгированный воздушный шар в форме сердца.",
+            "size": "40x40 см",
+            "reason": ["valentine", "birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Фольга", "quantity": "1 шт." },
+                { "name": "Гелий", "quantity": "1 заправка" }
+            ]
+        },
+        {
+            "id": "2b5f2173-8cf9-4dbf-9a36-f90f22a1ccf7",
+            "available": true,
+            "date_created": "2024-12-22",
+            "quantity": 15,
+            "price": 750,
+            "discount": 5,
+            "title": "Шоколадный набор",
+            "description": "Мини-набор шоколадных конфет ручной работы.",
+            "size": "12x12x4 см",
+            "reason": ["romantic", "thankyou"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Шоколад темный", "quantity": "6 шт." },
+                { "name": "Упаковочная коробка", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "fc54f3a1-2a8e-40f3-a12f-75c1f02a0eb7",
+            "available": true,
+            "date_created": "2025-05-15",
+            "quantity": 12,
+            "price": 650,
+            "title": "Свеча ароматическая",
+            "description": "Свеча с легким ароматом лаванды.",
+            "size": "10x7 см",
+            "reason": ["romantic", "anniversary"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Воск", "quantity": "1 шт." },
+                { "name": "Стеклянный стакан", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "c6cb51a8-9ff5-4625-bf86-d9e87530a5d9",
+            "available": true,
+            "date_created": "2025-03-30",
+            "quantity": 20,
+            "price": 490,
+            "title": "Открытка ручной работы",
+            "description": "Оригинальная открытка с тиснением и декоративным бантом.",
+            "size": "12x8 см",
+            "reason": ["wedding", "birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Картон дизайнерский", "quantity": "1 шт." },
+                { "name": "Тесьма", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "4e72c8a5-5f39-462f-baf3-7db9f72e4d12",
+            "available": false,
+            "date_created": "2025-06-10",
+            "quantity": 0,
+            "price": 5200,
+            "discount": 15,
+            "title": "Керамическая ваза",
+            "description": "Матовая ваза ручной работы в скандинавском стиле.",
+            "size": "28x14x14 см",
+            "reason": ["housewarming"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [{ "name": "Керамика", "quantity": "1 шт." }]
+        },
+        {
+            "id": "a6e76183-6d7e-4cf3-9432-b4536484b891",
+            "available": true,
+            "date_created": "2025-02-09",
+            "quantity": 6,
+            "price": 950,
+            "title": "Подарочная коробка",
+            "description": "Красивая коробка для цветов и подарков.",
+            "size": "25x25x20 см",
+            "reason": ["wedding", "birthday"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Картон", "quantity": "1 шт." },
+                { "name": "Лента атласная", "quantity": "1 шт." }
+            ]
+        },
+        {
+            "id": "ae98844c-8820-44c1-b763-4a0ac02862c9",
+            "available": true,
+            "date_created": "2025-07-25",
+            "quantity": 10,
+            "price": 1350,
+            "title": "Шарики набор",
+            "description": "Набор из пяти разноцветных латексных шаров.",
+            "size": "30x30 см",
+            "reason": ["birthday", "graduation"],
+            "images": ["/img/temp/placeholder-900x900.jpg"],
+            "structure": [
+                { "name": "Латексные шары", "quantity": "5 шт." },
+                { "name": "Гелий", "quantity": "1 заправка" }
+            ]
+        }
+    ],
+    "certificates": [
+        {
+            "id": "4c0d7a0f-b46d-4c81-8f35-6f95f8f1a2a0",
+            "title": "Сертификат на 1000 рублей",
+            "price": 1000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "8b19f7e2-92e9-41f2-87ef-3b768cd9a13b",
+            "title": "Сертификат на 5000 рублей",
+            "price": 5000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "b3b07ac4-2c54-43a5-9c59-07b2a38fdf5c",
+            "title": "Сертификат на 10000 рублей",
+            "price": 10000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "a6f4180b-b331-4dbf-9a91-17b7580a6b72",
+            "title": "Сертификат на 15000 рублей",
+            "price": 15000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "7f8cfb32-8885-4f47-9b38-569bc1f8f5a5",
+            "title": "Сертификат на 20000 рублей",
+            "price": 20000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "f1f5a83b-6630-4a72-9ef2-ecdb7b8c5f8c",
+            "title": "Сертификат на 25000 рублей",
+            "price": 25000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "1a3a1c77-17a0-42f5-8b4f-6c8d9c6d22dd",
+            "title": "Сертификат на 35000 рублей",
+            "price": 35000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "c8d8ec61-2925-4987-96e0-379e3bc94c32",
+            "title": "Сертификат на 50000 рублей",
+            "price": 50000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "3d47f80c-f7bb-4d59-a3fb-7f9e78cd7e2e",
+            "title": "Сертификат на 75000 рублей",
+            "price": 75000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "5f1a3c65-64a4-489a-9d23-4fb19c8e7a47",
+            "title": "Сертификат на 100000 рублей",
+            "price": 100000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "b6b3a429-70d9-40e3-b2c7-428d8e7cfad5",
+            "title": "Сертификат на 150000 рублей",
+            "price": 150000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "8c4f1b68-8d3e-42bb-8ef5-48c5f0f1a678",
+            "title": "Сертификат на 200000 рублей",
+            "price": 200000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        },
+        {
+            "id": "e1f5d3b2-19c4-4523-9c28-9fb73a3f38f2",
+            "title": "Сертификат на 250000 рублей",
+            "price": 250000,
+            "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
+            "image": "/img/temp/placeholder-900x900.jpg"
+        }
+    ]
+}

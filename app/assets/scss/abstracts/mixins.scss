@@ -33,7 +33,9 @@
     border: rem(2) solid $border-color;
     border-radius: $border-radius;
     padding: $padding;
-    transition: color $td $tf, border-color $td $tf;
+    transition:
+        color $td $tf,
+        border-color $td $tf;
     &::before {
         content: '';
         position: absolute;
@@ -54,11 +56,11 @@
         overflow: hidden;
         rotate: -45deg;
     }
-    @media (pointer: fine){
-        &:hover{
+    @media (pointer: fine) {
+        &:hover {
             color: $hover-color;
             border-color: transparent;
-            &::before{
+            &::before {
                 scale: 1;
                 opacity: 1;
             }
@@ -72,7 +74,8 @@
     @include arrow-translate;
 }
 
-@mixin gradient-text-hover($main-color: $c-111111, $accent-color: $c-accent) {
+// effects
+@mixin gradient-text-hover($main-color: $c-000000, $accent-color: $c-accent) {
     @supports (background-clip: text) {
         color: transparent;
         background-clip: text;
@@ -116,6 +119,44 @@
             color: $color;
             &::after {
                 width: 100%;
+            }
+        }
+    }
+}
+@mixin frame-scale(
+    $padding: rem(8) rem(16),
+    $border-radius: rem(16),
+    $finally-border-radius: inherit,
+    $anim-color: $c-accent,
+    $finally-color: $c-FFFFFF
+) {
+    position: relative;
+    border-radius: $border-radius;
+    padding: $padding;
+    transition: color $td $tf, border-radius $td $tf;
+    > * {
+        position: relative;
+        z-index: 2;
+    }
+    &::before{
+        content:'';
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        background-color: $anim-color;
+        border-radius: inherit;
+        scale: 1.5;
+        opacity: 0;
+        pointer-events: none;
+        transition: all $td $tf;
+    }
+    @media (pointer: fine){
+        &:hover{
+            color: $finally-color;
+            &::before{
+                opacity: 1;
+                scale: 1;
+                border-radius: $finally-border-radius;
             }
         }
     }
