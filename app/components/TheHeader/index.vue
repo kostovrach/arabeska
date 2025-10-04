@@ -25,7 +25,7 @@
                     <SvgSprite type="user" :size="24" />
                 </NuxtLink>
                 <NuxtLink class="header__action header__action--cart" :to="{ name: 'index' }">
-                    <SvgSprite type="cart" :size="24" />
+                    <SvgSprite type="bag" :size="24" />
                     <span class="header__action-indicator">48</span>
                 </NuxtLink>
                 <TheHeaderBurger />
@@ -54,7 +54,7 @@
             align-items: center;
             justify-content: space-between;
             gap: rem(32);
-            @include content-layout;
+            @include content-container;
         }
 
         // left bar

@@ -2,12 +2,18 @@
 @use './colors' as *;
 @use './variables' as *;
 
-@mixin content-layout($padding: 0 $px) {
+// layout
+@mixin content-container($padding: 0 $px) {
     max-width: rem(1920);
     margin: 0 auto;
     padding: $padding;
 }
 
+@mixin content-block() {
+    padding: rem(64) 0;
+}
+
+// components
 @mixin button-primary(
     $width: fit-content,
     $gap: lineScale(40, 20, 480, 1440),
@@ -123,6 +129,33 @@
         }
     }
 }
+@mixin hover-blick-line($init-color: $c-secondary, $anim-color: $c-accent) {
+    position: relative;
+    line-height: 1.5;
+    color: $init-color;
+    transition: color $td $tf;
+    overflow: hidden;
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: rem(1);
+        background-color: $init-color;
+        transition: all $td $tf;
+    }
+    @media (pointer: fine) {
+        &:hover {
+            color: $anim-color;
+            &::before {
+                width: 100%;
+                translate: 100%;
+                background-color: $anim-color;
+            }
+        }
+    }
+}
 @mixin frame-scale(
     $padding: rem(8) rem(16),
     $border-radius: rem(16),
@@ -133,13 +166,15 @@
     position: relative;
     border-radius: $border-radius;
     padding: $padding;
-    transition: color $td $tf, border-radius $td $tf;
+    transition:
+        color $td $tf,
+        border-radius $td $tf;
     > * {
         position: relative;
         z-index: 2;
     }
-    &::before{
-        content:'';
+    &::before {
+        content: '';
         position: absolute;
         z-index: 1;
         inset: 0;
@@ -150,10 +185,10 @@
         pointer-events: none;
         transition: all $td $tf;
     }
-    @media (pointer: fine){
-        &:hover{
+    @media (pointer: fine) {
+        &:hover {
             color: $finally-color;
-            &::before{
+            &::before {
                 opacity: 1;
                 scale: 1;
                 border-radius: $finally-border-radius;

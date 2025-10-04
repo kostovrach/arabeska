@@ -9,8 +9,8 @@
             "title": "Весеннее утро",
             "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
             "size": "39x21x30 см",
-            "style": ["romantic", "evening"],
-            "reason": ["newborn", "graduation", "wedding"],
+            "style": ["романтический", "вечерний"],
+            "reason": ["новорожденный", "выпускной", "свадьба"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -22,7 +22,8 @@
                 { "name": "Гортензия", "quantity": "4 шт." },
                 { "name": "Тюльпан", "quantity": "3 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "81743811-b283-49e9-a3a6-d745cf7050b8",
@@ -33,8 +34,8 @@
             "title": "Аромат любви",
             "description": "Цветочная гармония в каждом лепестке.",
             "size": "58x32x25 см",
-            "style": ["summery", "minimal"],
-            "reason": ["anniversary"],
+            "style": ["летний", "минимализм"],
+            "reason": ["годовщина"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -59,8 +60,8 @@
             "title": "Солнечный луч",
             "description": "Яркий и запоминающийся букет для особенных моментов.",
             "size": "42x33x24 см",
-            "style": ["classic", "summery"],
-            "reason": ["birthday", "corporate"],
+            "style": ["классический", "летний"],
+            "reason": ["день рождения", "корпоратив"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -70,7 +71,8 @@
                 { "name": "Тюльпан", "quantity": "7 шт." },
                 { "name": "Гербера", "quantity": "5 шт." },
                 { "name": "Крафт-бумага", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "3fcb02f1-0f82-4f35-b6a2-d7f88a1f9301",
@@ -81,8 +83,8 @@
             "title": "Лесная сказка",
             "description": "Невероятно нежный букет для любого случая.",
             "size": "48x27x28 см",
-            "style": ["romantic"],
-            "reason": ["romantic", "wedding"],
+            "style": ["романтический"],
+            "reason": ["романтический", "свадьба"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Пион", "quantity": "3 шт." },
@@ -99,8 +101,8 @@
             "title": "Магия утра",
             "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
             "size": "56x35x27 см",
-            "style": ["modern", "minimal"],
-            "reason": ["graduation"],
+            "style": ["современный", "минимализм"],
+            "reason": ["выпускной"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -123,8 +125,8 @@
             "title": "Нежность дня",
             "description": "Цветочная гармония в каждом лепестке.",
             "size": "37x24x22 см",
-            "style": ["classic"],
-            "reason": ["anniversary", "birthday"],
+            "style": ["классический"],
+            "reason": ["годовщина", "день рождения"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Хризантема", "quantity": "5 шт." },
@@ -141,8 +143,8 @@
             "title": "Тайна вечера",
             "description": "Невероятно нежный букет для любого случая.",
             "size": "46x29x23 см",
-            "style": ["evening", "romantic"],
-            "reason": ["wedding", "anniversary"],
+            "style": ["вечерний", "романтический"],
+            "reason": ["свадьба", "годовщина"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -163,15 +165,14 @@
             "title": "Радуга счастья",
             "description": "Композиция, созданная для самых теплых эмоций.",
             "size": "33x20x21 см",
-            "style": ["summery"],
-            "reason": ["newborn"],
+            "style": ["летний"],
+            "reason": ["новорожденный"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Тюльпан", "quantity": "3 шт." },
                 { "name": "Камилла", "quantity": "2 шт." },
                 { "name": "Коробка", "quantity": "1 шт." }
-            ],
-            "discount": 15
+            ]
         },
         {
             "id": "c94a78d4-3a6c-48a3-8571-5cfb79e12ed8",
@@ -182,8 +183,8 @@
             "title": "Ночное сияние",
             "description": "Яркий и запоминающийся букет для особенных моментов.",
             "size": "55x31x26 см",
-            "style": ["modern", "romantic"],
-            "reason": ["romantic", "anniversary"],
+            "style": ["современный", "романтический"],
+            "reason": ["романтический", "годовщина"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -193,7 +194,8 @@
                 { "name": "Пион", "quantity": "4 шт." },
                 { "name": "Эустома", "quantity": "2 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "4f9a9f2f-4ec5-4d6e-a9d0-e9f1b4e39c9a",
@@ -204,8 +206,8 @@
             "title": "Розовый рассвет",
             "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
             "size": "44x28x22 см",
-            "style": ["romantic"],
-            "reason": ["birthday", "wedding"],
+            "style": ["романтический"],
+            "reason": ["день рождения", "свадьба"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Роза", "quantity": "7 шт." },
@@ -222,8 +224,8 @@
             "title": "Лунный свет",
             "description": "Цветочная гармония в каждом лепестке.",
             "size": "59x36x29 см",
-            "style": ["romantic", "evening"],
-            "reason": ["romantic", "anniversary"],
+            "style": ["романтический", "вечерний"],
+            "reason": ["романтический", "годовщина"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -233,7 +235,8 @@
                 { "name": "Орхидея", "quantity": "2 шт." },
                 { "name": "Тюльпан", "quantity": "5 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "2f4c1a89-2d56-4e0e-bf56-e76a12e3a267",
@@ -244,8 +247,8 @@
             "title": "Морской бриз",
             "description": "Натуральная красота и стиль в одной композиции.",
             "size": "36x23x24 см",
-            "style": ["modern"],
-            "reason": ["graduation", "corporate"],
+            "style": ["современный"],
+            "reason": ["выпускной", "корпоратив"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Гербера", "quantity": "3 шт." },
@@ -262,8 +265,8 @@
             "title": "Весеннее утро",
             "description": "Очаровательный букет из свежих цветов — идеальный подарок.",
             "size": "50x30x27 см",
-            "style": ["classic", "wedding"],
-            "reason": ["wedding", "romantic"],
+            "style": ["классический", "свадебный"],
+            "reason": ["свадьба", "романтический"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -285,14 +288,15 @@
             "title": "Аромат любви",
             "description": "Композиция, созданная для самых теплых эмоций.",
             "size": "41x25x23 см",
-            "style": ["summery", "romantic"],
-            "reason": ["birthday"],
+            "style": ["летний", "романтический"],
+            "reason": ["день рождения"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Роза", "quantity": "5 шт." },
                 { "name": "Эустома", "quantity": "4 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "88f82294-0e6b-4862-8711-23edcfb4e599",
@@ -303,8 +307,8 @@
             "title": "Солнечный луч",
             "description": "Яркий и запоминающийся букет для особенных моментов.",
             "size": "53x34x28 см",
-            "style": ["modern"],
-            "reason": ["anniversary", "corporate"],
+            "style": ["современный"],
+            "reason": ["годовщина", "корпоратив"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Лилия", "quantity": "3 шт." },
@@ -321,8 +325,8 @@
             "title": "Магия утра",
             "description": "Цветочная гармония в каждом лепестке.",
             "size": "57x35x29 см",
-            "style": ["romantic", "wedding"],
-            "reason": ["wedding", "birthday"],
+            "style": ["романтический", "свадебный"],
+            "reason": ["свадьба", "день рождения"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Пион", "quantity": "4 шт." },
@@ -341,8 +345,8 @@
             "title": "Персиковая нежность",
             "description": "Букет в теплых тонах для самых душевных моментов.",
             "size": "42x23x26 см",
-            "style": ["tender", "classic"],
-            "reason": ["romantic", "birthday"],
+            "style": ["нежный", "классический"],
+            "reason": ["романтический", "день рождения"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Роза персиковая", "quantity": "7 шт." },
@@ -359,8 +363,8 @@
             "title": "Яркий праздник",
             "description": "Насыщенный букет для особых событий.",
             "size": "50x27x30 см",
-            "style": ["festive"],
-            "reason": ["graduation", "anniversary"],
+            "style": ["праздничный"],
+            "reason": ["выпускной", "годовщина"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Гербера", "quantity": "5 шт." },
@@ -378,8 +382,8 @@
             "title": "Королевский шик",
             "description": "Роскошный букет для особых торжеств.",
             "size": "65x38x32 см",
-            "style": ["luxury", "wedding"],
-            "reason": ["wedding", "anniversary"],
+            "style": ["роскошный", "свадебный"],
+            "reason": ["свадьба", "годовщина"],
             "images": [
                 "/img/temp/placeholder-900x900.jpg",
                 "/img/temp/placeholder-900x900.jpg",
@@ -390,7 +394,8 @@
                 { "name": "Орхидея", "quantity": "3 шт." },
                 { "name": "Эвкалипт", "quantity": "1 пуч." },
                 { "name": "Лента атласная", "quantity": "1 шт." }
-            ]
+            ],
+            "bestseller": true
         },
         {
             "id": "67d8f840-fc65-48ff-89b4-6dfbc5e24b62",
@@ -401,8 +406,8 @@
             "title": "Зимняя сказка",
             "description": "Белоснежная композиция с ноткой хвои.",
             "size": "48x28x24 см",
-            "style": ["winter", "minimal"],
-            "reason": ["christmas"],
+            "style": ["зимний", "минимализм"],
+            "reason": ["рождество"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Белая роза", "quantity": "7 шт." },
@@ -420,14 +425,15 @@
             "title": "Солнечный день",
             "description": "Жизнерадостный букет в ярких оттенках.",
             "size": "40x22x25 см",
-            "style": ["bright", "summery"],
-            "reason": ["birthday", "housewarming"],
+            "style": ["яркий", "летний"],
+            "reason": ["день рождения", "новоселье"],
             "images": ["/img/temp/placeholder-900x900.jpg", "/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Подсолнух", "quantity": "5 шт." },
                 { "name": "Ромашка", "quantity": "7 шт." },
                 { "name": "Лента желтая", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "c6e5ab38-bac3-456d-92ed-fd2935c503a0",
@@ -438,8 +444,8 @@
             "title": "Лесная гармония",
             "description": "Натуральный букет с зеленью и лесными цветами.",
             "size": "36x20x22 см",
-            "style": ["eco", "natural"],
-            "reason": ["romantic"],
+            "style": ["экологичный", "натуральный"],
+            "reason": ["романтический"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Зеленый папоротник", "quantity": "1 пуч." },
@@ -456,14 +462,15 @@
             "title": "Сердце весны",
             "description": "Букет в форме сердца для особенного признания.",
             "size": "52x29x27 см",
-            "style": ["romantic"],
-            "reason": ["valentine"],
+            "style": ["романтический"],
+            "reason": ["день святого Валентина"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Роза розовая", "quantity": "11 шт." },
                 { "name": "Гипсофила", "quantity": "1 пуч." },
                 { "name": "Декоративное сердце", "quantity": "1 шт." }
-            ]
+            ],
+            "popular": true
         },
         {
             "id": "82ec5871-5a92-44d3-bd79-b2c070f71ec6",
@@ -475,8 +482,8 @@
             "title": "Осенний поцелуй",
             "description": "Теплый букет в золотых оттенках осени.",
             "size": "45x26x25 см",
-            "style": ["autumn", "romantic"],
-            "reason": ["thanksgiving"],
+            "style": ["осенний", "романтический"],
+            "reason": ["день благодарения"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Хризантема желтая", "quantity": "9 шт." },
@@ -493,8 +500,8 @@
             "title": "Гармония лета",
             "description": "Легкий букет из летних цветов.",
             "size": "38x21x23 см",
-            "style": ["summery", "casual"],
-            "reason": ["birthday"],
+            "style": ["летний", "повседневный"],
+            "reason": ["день рождения"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Ромашка", "quantity": "10 шт." },
@@ -511,14 +518,15 @@
             "title": "Утренняя свежесть",
             "description": "Светлый и воздушный букет для хорошего дня.",
             "size": "40x23x24 см",
-            "style": ["fresh", "minimal"],
-            "reason": ["birthday", "romantic"],
+            "style": ["свежий", "минимализм"],
+            "reason": ["день рождения", "романтический"],
             "images": ["/img/temp/placeholder-900x900.jpg"],
             "structure": [
                 { "name": "Альстромерия", "quantity": "5 шт." },
                 { "name": "Эустома", "quantity": "4 шт." },
                 { "name": "Лента белая", "quantity": "1 шт." }
-            ]
+            ],
+            "bestseller": true
         }
     ],
     "accessories": [

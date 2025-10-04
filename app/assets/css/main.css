@@ -11,3 +11,8 @@ body {
 .symbol {
     font-family: 'Inter', sans-serif;
 }
+
+.ruble::before {
+    font-family: 'Inter', sans-serif;
+    content: '\20BD';
+}
