@@ -59,13 +59,13 @@
 </template>
 
 <script setup lang="ts">
-    import type { Product } from '~/interfaces/product.ts';
+    import type { IProduct } from '~/interfaces/product.ts';
 
     const props = defineProps({
         product: {
-            type: Object as () => Product,
+            type: Object as () => IProduct,
             required: true,
-            default: () => ({}) as Product,
+            default: () => ({}) as IProduct,
         },
         variant: {
             type: String as () => 'large' | null,

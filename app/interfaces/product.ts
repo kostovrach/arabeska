@@ -1,9 +1,9 @@
-interface ProductStructure {
+interface IProductStructure {
     name: string;
     quantity?: string | number;
 }
 
-export interface Product {
+export interface IProduct {
     id: string | number;
     available?: boolean;
     date_created?: string;
@@ -15,7 +15,7 @@ export interface Product {
     style?: string[];
     reason?: string[];
     images: string[] | string;
-    structure?: ProductStructure[];
+    structure?: IProductStructure[];
     discount?: number;
     bestseller?: boolean;
     popular?: boolean

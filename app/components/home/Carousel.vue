@@ -9,61 +9,72 @@
                 </NuxtLink>
             </div>
             <div class="home-carousel__body">
+                <template v-if="status === 'pending'">Загрузка...</template>
                 <ClientOnly>
-                    <template v-if="productsStatus === 'pending'">Загрузка...</template>
-                    <swiper-container
-                        v-else-if="productsStatus === 'success'"
-                        class="home-carousel__slider"
-                        ref="sliderRef"
-                        :init="productsStatus === 'success'"
-                        :navigation="navigationOptions"
-                        slides-per-view="auto"
-                        :space-between="32"
-                        :speed="800"
-                    >
-                        <swiper-slide class="home-carousel__slide" v-for="product in products" :key="product.id">
-                            <ProductCard :product="product" :variant="props.cardVariant" />
-                        </swiper-slide>
-                    </swiper-container>
-                    <template v-else>Ошибка загрузки данных</template>
-                    <div class="home-carousel__controls" v-if="props.wtithControls">
-                        <button
-                            class="home-carousel__button home-carousel__button--prev"
-                            @click="goPrev"
-                            :disabled="swiper.realIndex.value === 0"
+                    <template v-if="status === 'success'">
+                        <swiper-container
+                            class="home-carousel__slider"
+                            ref="sliderRef"
+                            :init="status === 'success'"
+                            :navigation="navigationOptions"
+                            slides-per-view="auto"
+                            :space-between="32"
+                            :speed="800"
                         >
-                            <SvgSprite type="arrow" />
-                        </button>
-                        <button
-                            class="home-carousel__button home-carousel__button--next"
-                            @click="goNext"
-                            :disabled="swiper.progress.value === 1"
-                        >
-                            <SvgSprite type="arrow" />
-                        </button>
-                    </div>
+                            <swiper-slide class="home-carousel__slide" v-for="product in products" :key="product.id">
+                                <ProductCard :product="product" :variant="props.cardVariant" />
+                            </swiper-slide>
+                        </swiper-container>
+                        <div class="home-carousel__controls" v-if="props.wtithControls">
+                            <button
+                                class="home-carousel__button home-carousel__button--prev"
+                                @click="goPrev"
+                                :disabled="swiper.realIndex.value === 0"
+                            >
+                                <SvgSprite type="arrow" />
+                            </button>
+                            <button
+                                class="home-carousel__button home-carousel__button--next"
+                                @click="goNext"
+                                :disabled="swiper.progress.value === 1"
+                            >
+                                <SvgSprite type="arrow" />
+                            </button>
+                        </div>
+                    </template>
                 </ClientOnly>
+
+                <!-- <template v-else>Ошибка загрузки данных</template> -->
             </div>
         </div>
     </section>
 </template>
 
 <script setup lang="ts">
-    import type { Product } from '~/interfaces/product';
+    // types
+    import type { AsyncDataRequestStatus } from '#app';
+    import type { Ref } from 'vue';
+    import type { IProduct } from '~/interfaces/product';
 
-    const props = defineProps({
-        endpoint: { type: String, required: true },
-        params: { type: Object },
-        filter: { type: String, default: '' },
-        title: { type: String, default: '' },
-        wtithControls: { type: Boolean, default: true },
-        wtithLink: { type: Boolean, default: true },
-        cardVariant: {
-            type: String as () => 'large' | null,
-            default: null,
-            validator: (val: string) => ['large'].includes(val),
-        },
-    });
+    const props = defineProps<{
+        contentRef: Ref<IProduct[] | null>;
+        statusRef: Ref<AsyncDataRequestStatus>;
+        title?: string;
+        wtithControls?: boolean;
+        wtithLink?: boolean;
+        cardVariant?: 'large' | null;
+    }>();
+
+    const status = computed(() => props.statusRef.value);
+    const products = computed(() => props.contentRef.value ?? []);
+
+    // отладочный watch (не выводить status в шаблон!)
+    watch(
+        () => props.statusRef.value,
+        (s) => {
+            console.log('Status changed to:', s);
+        }
+    );
 
     // slider==============================================
     const sliderRef = ref(null);
@@ -78,16 +89,6 @@
         nextEl: '.home-carousel__button--next',
     };
     //=====================================================
-
-
-
-    // ебучая хуйня, передалать
-    // data
-    const { data: productsList, status: productsStatus } = await useApiStore().fetchData(props.endpoint, {
-        ...props.params,
-    });
-    const products = computed<string[]>(() => productsList.value?.map((p: Product) => p.bestseller) ?? []);
-
 </script>
 
 <style scoped lang="scss">
