@@ -23,7 +23,8 @@
                 { "name": "Тюльпан", "quantity": "3 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
             ],
-            "popular": true
+            "popular": true,
+            "bestseller": true
         },
         {
             "id": "81743811-b283-49e9-a3a6-d745cf7050b8",
@@ -49,7 +50,8 @@
                 { "name": "Роза", "quantity": "6 шт." },
                 { "name": "Тюльпан", "quantity": "3 шт." },
                 { "name": "Открытка", "quantity": "1 шт." }
-            ]
+            ],
+            "bestseller": true
         },
         {
             "id": "6ac5c96f-22b2-44ec-a9ab-0c13b7a220b1",
@@ -72,7 +74,8 @@
                 { "name": "Гербера", "quantity": "5 шт." },
                 { "name": "Крафт-бумага", "quantity": "1 шт." }
             ],
-            "popular": true
+            "popular": true,
+            "bestseller": true
         },
         {
             "id": "3fcb02f1-0f82-4f35-b6a2-d7f88a1f9301",
@@ -154,7 +157,8 @@
                 { "name": "Эустома", "quantity": "4 шт." },
                 { "name": "Роза", "quantity": "6 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
-            ]
+            ],
+            "bestseller": true
         },
         {
             "id": "35e37059-2b42-4a13-bd3c-4c1bc25d85c8",
@@ -236,7 +240,8 @@
                 { "name": "Тюльпан", "quantity": "5 шт." },
                 { "name": "Лента", "quantity": "1 шт." }
             ],
-            "popular": true
+            "popular": true,
+            "bestseller": true
         },
         {
             "id": "2f4c1a89-2d56-4e0e-bf56-e76a12e3a267",
@@ -254,7 +259,8 @@
                 { "name": "Гербера", "quantity": "3 шт." },
                 { "name": "Альстромерия", "quantity": "2 шт." },
                 { "name": "Бант", "quantity": "1 шт." }
-            ]
+            ],
+            "bestseller": true
         },
         {
             "id": "dbb4e0a8-7bb1-41f8-8ac4-1cd83a5a74c6",

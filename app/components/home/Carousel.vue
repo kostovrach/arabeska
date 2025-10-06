@@ -9,42 +9,32 @@
                 </NuxtLink>
             </div>
             <div class="home-carousel__body">
-                <template v-if="status === 'pending'">Загрузка...</template>
+                <div v-show="status === 'pending'">Загрузка...</div>
+                <div v-show="status === 'error'">Ошибка загрузки данных</div>
+
                 <ClientOnly>
-                    <template v-if="status === 'success'">
-                        <swiper-container
-                            class="home-carousel__slider"
-                            ref="sliderRef"
-                            :init="status === 'success'"
-                            :navigation="navigationOptions"
-                            slides-per-view="auto"
-                            :space-between="32"
-                            :speed="800"
-                        >
-                            <swiper-slide class="home-carousel__slide" v-for="product in products" :key="product.id">
-                                <ProductCard :product="product" :variant="props.cardVariant" />
-                            </swiper-slide>
-                        </swiper-container>
-                        <div class="home-carousel__controls" v-if="props.wtithControls">
-                            <button
-                                class="home-carousel__button home-carousel__button--prev"
-                                @click="goPrev"
-                                :disabled="swiper.realIndex.value === 0"
-                            >
-                                <SvgSprite type="arrow" />
-                            </button>
-                            <button
-                                class="home-carousel__button home-carousel__button--next"
-                                @click="goNext"
-                                :disabled="swiper.progress.value === 1"
-                            >
-                                <SvgSprite type="arrow" />
-                            </button>
-                        </div>
-                    </template>
+                    <EmblaContainer
+                        v-show="status === 'success'"
+                        ref="sliderRef"
+                        :options="carouselOptions"
+                        :autoplay-enable="props.autoplay"
+                        :autoplay="props.autoplay ? autoplayOptions : undefined"
+                        padding="40px 0"
+                    >
+                        <EmblaSlide v-for="product in products" :key="product.id">
+                            <ProductCard :product="product" :variant="props.cardVariant" />
+                        </EmblaSlide>
+                    </EmblaContainer>
                 </ClientOnly>
 
-                <!-- <template v-else>Ошибка загрузки данных</template> -->
+                <div class="home-carousel__controls" v-if="!props.autoplay">
+                    <button class="home-carousel__button home-carousel__button--prev" @click="scrollPrev">
+                        <SvgSprite type="arrow" />
+                    </button>
+                    <button class="home-carousel__button home-carousel__button--next" @click="scrollNext">
+                        <SvgSprite type="arrow" />
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -55,39 +45,43 @@
     import type { AsyncDataRequestStatus } from '#app';
     import type { Ref } from 'vue';
     import type { IProduct } from '~/interfaces/product';
+    import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
+    import type { AutoplayOptionsType } from 'embla-carousel-autoplay';
 
-    const props = defineProps<{
+    interface IProps {
         contentRef: Ref<IProduct[] | null>;
         statusRef: Ref<AsyncDataRequestStatus>;
+        autoplay?: boolean;
         title?: string;
-        wtithControls?: boolean;
         wtithLink?: boolean;
         cardVariant?: 'large' | null;
-    }>();
+    }
+
+    const props = withDefaults(defineProps<IProps>(), {
+        wtithLink: true,
+        autoplay: false
+    });
 
     const status = computed(() => props.statusRef.value);
     const products = computed(() => props.contentRef.value ?? []);
 
-    // отладочный watch (не выводить status в шаблон!)
-    watch(
-        () => props.statusRef.value,
-        (s) => {
-            console.log('Status changed to:', s);
-        }
-    );
-
     // slider==============================================
-    const sliderRef = ref(null);
+    const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
 
-    const swiper = useSwiper(sliderRef);
-
-    const goPrev = () => swiper.prev();
-    const goNext = () => swiper.next();
-
-    const navigationOptions = {
-        prevEl: '.home-carousel__button--prev',
-        nextEl: '.home-carousel__button--next',
+    const carouselOptions: EmblaOptionsType = {
+        loop: false,
+        align: 'start',
+        dragFree: true,
     };
+
+    const autoplayOptions: AutoplayOptionsType = {
+        delay: 800,
+        jump: false,
+        stopOnMouseEnter: true
+    }
+
+    const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
+    const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
     //=====================================================
 </script>
 

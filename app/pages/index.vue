@@ -1,35 +1,28 @@
 <template>
     <NuxtLayout>
-        <!-- <HomeHero /> -->
-        <!-- {{ status }} -->
+        <HomeHero />
         <HomeCarousel
             title="В тренде"
-            :content-ref="toRef(productsList)"
-            :status-ref="toRef(productsStatus)"
-            :wtith-controls="false"
+            :content-ref="ref(popularproducts)"
+            :status-ref="ref(productsStatus)"
             :wtith-link="false"
+            :autoplay="true"
             card-variant="large"
         />
+        <HomeCarousel title="Бестселлеры" :content-ref="ref(bestsellerProducts)" :status-ref="ref(productsStatus)" />
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-    import type { AsyncDataRequestStatus } from '#app';
     import type { IProduct } from '~/interfaces/product';
 
-    // data
-    // const { data: productsList, status: productsStatus } = await useApiStore().fetchData<IProduct[]>('/products',);
+    // data=================================================
+    const productsStore = useProductsStore();
+    await productsStore.getProducts();
 
-    const productsList = useState('products', () => [] as IProduct[]);
-    const productsStatus = useState('status', () => '' as AsyncDataRequestStatus);
+    const { productsList, productsStatus } = storeToRefs(productsStore);
 
-    const data = useLazyFetch<IProduct[]>('http://localhost:3001/products', {
-        default: () => [],
-    });
-
-    productsList.value = data.data.value;
-    productsStatus.value = data.status.value;
-
-    console.log(isRef(productsList));
-    console.log(isRef(productsStatus));
+    const popularproducts: IProduct[] = (productsList.value ?? []).filter((el) => el.popular);
+    const bestsellerProducts: IProduct[] = (productsList.value ?? []).filter((el) => el.bestseller);
+    //======================================================
 </script>
