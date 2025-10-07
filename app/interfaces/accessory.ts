@@ -1,13 +1,13 @@
-interface AccessoryStructure {
-    name: string;
+interface IAccessoryStructure {
+    name?: string;
     quantity?: string | number
 }
 
-export interface Accessory {
+export interface IAccessory {
     id: string | number;
-    available: boolean;
+    available?: boolean;
     date_created: string;
-    quantity: number;
+    quantity?: number;
     price: number;
     discount?: number;
     title: string;
@@ -15,5 +15,5 @@ export interface Accessory {
     size?: string;
     reason?: string[];
     images: string[];
-    structure: AccessoryStructure[];
+    structure?: IAccessoryStructure[];
 }

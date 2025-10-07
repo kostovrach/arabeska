@@ -26,13 +26,17 @@
     });
 
     const plugins: EmblaPluginType[] = [];
-    const [emblaRef, emblaApi] = emblaCarouselVue(props.options);
 
     if (props.autoplayEnable && props.autoplay) {
-        plugins.push(Autoplay(props.autoplay));
+        plugins.push(
+            Autoplay({
+                ...props.autoplay,
+            })
+        );
     }
 
-    // Expose API для родительских компонентов
+    const [emblaRef, emblaApi] = emblaCarouselVue(props.options, plugins);
+
     defineExpose({
         emblaApi,
     });

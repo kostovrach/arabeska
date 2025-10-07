@@ -1,4 +1,4 @@
-export interface Certificate {
+export interface ICertificate {
     id: string | number;
     title: string;
     price: number;

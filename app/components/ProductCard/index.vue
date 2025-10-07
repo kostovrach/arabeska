@@ -1,10 +1,10 @@
 <template>
-    <div :class="['product', props.variant ? `product--${props.variant}` : '']">
-        <div class="product__sticker" v-if="props.product.discount">
+    <div class="product">
+        <div class="product__sticker" v-if="props.product.discount && props.product.discount !== 0">
             <span>-{{ props.product.discount }}</span>
             <span class="symbol">%</span>
         </div>
-        <div class="product__wrapper">
+        <NuxtLink class="product__wrapper" :to="{ name: 'product-id', params: { id: props.product.id } }">
             <picture class="product__image-container">
                 <img
                     class="product__image"
@@ -54,7 +54,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </NuxtLink>
     </div>
 </template>
 
@@ -66,11 +66,6 @@
             type: Object as () => IProduct,
             required: true,
             default: () => ({}) as IProduct,
-        },
-        variant: {
-            type: String as () => 'large' | null,
-            default: null,
-            validator: (val: string) => ['large'].includes(val),
         },
     });
 
@@ -105,8 +100,11 @@
 
         position: relative;
         max-width: rem(345);
-        &--large {
-            max-width: rem(415);
+        transition: translate $td $tf;
+        @media (pointer: fine){
+            &:hover{
+                translate: 0 rem(-8);
+            }
         }
         &__sticker {
             position: absolute;

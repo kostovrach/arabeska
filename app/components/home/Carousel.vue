@@ -2,15 +2,27 @@
     <section class="home-carousel">
         <div class="home-carousel__container">
             <div class="home-carousel__titlebox">
-                <h2 class="home-carousel__title">{{ props.title }}</h2>
-                <NuxtLink :to="{ name: 'index' }" class="home-carousel__link" v-if="props.wtithLink">
+                <h2 class="home-carousel__title" v-html="props.title"></h2>
+                <NuxtLink
+                    :to="{ name: 'index' }"
+                    class="home-carousel__link"
+                    v-if="props.wtithLink"
+                >
                     <span>Смотреть все</span>
                     <SvgSprite type="arrow" :size="12" />
                 </NuxtLink>
             </div>
             <div class="home-carousel__body">
-                <div v-show="status === 'pending'">Загрузка...</div>
-                <div v-show="status === 'error'">Ошибка загрузки данных</div>
+                <div class="home-carousel__loader" v-show="status === 'pending'">
+                    <div class="home-carousel__loader-wrapper">
+                        <ProductCardLoader v-for="n in 5" :key="n" />
+                    </div>
+                </div>
+
+                <div class="home-carousel__error" v-show="status === 'error' || status === 'idle'">
+                    <span>Ошибка загрузки данных</span>
+                    <span>Попробуйте перезагрузить страницу</span>
+                </div>
 
                 <ClientOnly>
                     <EmblaContainer
@@ -18,8 +30,10 @@
                         ref="sliderRef"
                         :options="carouselOptions"
                         :autoplay-enable="props.autoplay"
-                        :autoplay="props.autoplay ? autoplayOptions : undefined"
-                        padding="40px 0"
+                        :autoplay="autoplayOptions"
+                        padding="48px 0"
+                        @mouseenter="autoplayStop"
+                        @mouseleave="autoplayStart"
                     >
                         <EmblaSlide v-for="product in products" :key="product.id">
                             <ProductCard :product="product" :variant="props.cardVariant" />
@@ -28,10 +42,16 @@
                 </ClientOnly>
 
                 <div class="home-carousel__controls" v-if="!props.autoplay">
-                    <button class="home-carousel__button home-carousel__button--prev" @click="scrollPrev">
+                    <button
+                        class="home-carousel__button home-carousel__button--prev"
+                        @click="scrollPrev"
+                    >
                         <SvgSprite type="arrow" />
                     </button>
-                    <button class="home-carousel__button home-carousel__button--next" @click="scrollNext">
+                    <button
+                        class="home-carousel__button home-carousel__button--next"
+                        @click="scrollNext"
+                    >
                         <SvgSprite type="arrow" />
                     </button>
                 </div>
@@ -41,10 +61,11 @@
 </template>
 
 <script setup lang="ts">
-    // types
+    // types==================================================
     import type { AsyncDataRequestStatus } from '#app';
     import type { Ref } from 'vue';
     import type { IProduct } from '~/interfaces/product';
+
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';
 
@@ -59,7 +80,7 @@
 
     const props = withDefaults(defineProps<IProps>(), {
         wtithLink: true,
-        autoplay: false
+        autoplay: false,
     });
 
     const status = computed(() => props.statusRef.value);
@@ -69,19 +90,30 @@
     const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
 
     const carouselOptions: EmblaOptionsType = {
-        loop: false,
+        loop: true,
         align: 'start',
         dragFree: true,
+        duration: props.autoplay ? 20000 : 25,
     };
 
     const autoplayOptions: AutoplayOptionsType = {
-        delay: 800,
+        delay: 0,
         jump: false,
-        stopOnMouseEnter: true
-    }
+    };
 
     const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
     const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
+
+    const autoplayStop = () => {
+        if (props.autoplay) {
+            sliderRef?.value?.emblaApi?.plugins().autoplay.stop();
+        } else return;
+    };
+    const autoplayStart = () => {
+        if (props.autoplay) {
+            sliderRef?.value?.emblaApi?.plugins().autoplay.play();
+        } else return;
+    };
     //=====================================================
 </script>
 
@@ -95,15 +127,17 @@
         }
         &__titlebox {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr auto 1fr;
             grid-template-areas: '. title link';
             padding: 0 $px;
         }
         &__title {
             grid-area: title;
+            max-width: 25ch;
             justify-self: center;
             font-size: lineScale(64, 24, 480, 1440);
             font-weight: $fw-semi;
+            text-align: center;
         }
         &__link {
             grid-area: link;
@@ -113,6 +147,24 @@
             align-items: center;
             gap: rem(4);
             @include hover-blick-line;
+        }
+        &__loader {
+            width: 100%;
+            overflow: hidden;
+            padding: rem(40) 0;
+            &-wrapper {
+                min-width: max-content;
+            }
+        }
+        &__error {
+            width: 100%;
+            min-height: rem(400);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: rem(16);
+            text-align: center;
         }
         &__controls {
             display: flex;

@@ -1,12 +1,15 @@
+import type { ICertificate } from './certificate';
+import type { IAccessory } from './accessory';
+
 interface IProductStructure {
     name: string;
     quantity?: string | number;
 }
 
-export interface IProduct {
+export interface IProduct extends ICertificate, IAccessory {
     id: string | number;
     available?: boolean;
-    date_created?: string;
+    date_created: string;
     quantity?: number;
     price: number;
     title: string;
@@ -14,9 +17,9 @@ export interface IProduct {
     size?: string;
     style?: string[];
     reason?: string[];
-    images: string[] | string;
+    images: string[];
     structure?: IProductStructure[];
     discount?: number;
     bestseller?: boolean;
-    popular?: boolean
+    popular?: boolean;
 }
