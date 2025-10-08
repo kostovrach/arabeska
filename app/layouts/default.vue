@@ -2,6 +2,7 @@
     <main class="page">
         <TheHeader />
         <slot></slot>
+        <TheFooter />
     </main>
 </template>
 

@@ -25,7 +25,8 @@
         />
         <HomeBanner />
         <HomeAdvant />
-        <HomeFeedback :content-ref="ref(feedbackList)" :status-ref="ref(feedbackStatus)" />
+        <HomeFeedback />
+        <HomeMap />
     </NuxtLayout>
 </template>
 
@@ -51,13 +52,5 @@
     certificateStore.getCertificates();
 
     const { certificatesList, certificatesStatus } = storeToRefs(certificateStore);
-
-    // feedback
-    const feedbackStore = useFeedbackStore();
-    feedbackStore.getFeedback();
-
-    const { feedbackList, feedbackStatus } = storeToRefs(feedbackStore);
-    console.log(feedbackList.value);
-    
     //======================================================
 </script>

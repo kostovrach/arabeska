@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="home-feedback__error" v-show="status === 'error'">
-                    Потом добавить обработку ошибки
+                    <FetchError />
                 </div>
 
                 <ClientOnly>
@@ -112,12 +112,7 @@
                             v-for="item in items"
                             :key="item.id"
                         >
-                            <div class="home-feedback__slide-wrapper">
-                                <div class="home-feedback__slide-rate">
-                                    <SvgSprite type="rate-star" :size="24" v-for="n in item.rate" />
-                                </div>
-                                test
-                            </div>
+                            <HomeFeedbackCard :content="item" />
                         </EmblaSlide>
                     </EmblaContainer>
                 </ClientOnly>
@@ -128,30 +123,28 @@
 
 <script setup lang="ts">
     // types==================================================
-    import type { AsyncDataRequestStatus } from '#app';
-    import type { Ref } from 'vue';
-    import type { IFeedback } from '~/interfaces/feedback';
-
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';
     // =======================================================
 
-    const props = defineProps<{
-        contentRef: Ref<IFeedback[] | null>;
-        statusRef: Ref<AsyncDataRequestStatus>;
-    }>();
+    // data===================================================
+    const feedbackStore = useFeedbackStore();
+    feedbackStore.getFeedback();
 
-    const status = computed(() => props.statusRef.value);
-    const items = computed(() => props.contentRef.value ?? []);
+    const { feedbackList, feedbackStatus } = storeToRefs(feedbackStore);
 
-    // slider==============================================
+    const status = computed(() => feedbackStatus.value);
+    const items = computed(() => feedbackList.value ?? []);
+    // =======================================================
+
+    // slider=================================================
     const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
 
     const carouselOptions: EmblaOptionsType = {
         loop: true,
         align: 'start',
         dragFree: true,
-        duration: 20000,
+        duration: 50000,
     };
 
     const autoplayOptions: AutoplayOptionsType = {
@@ -165,7 +158,7 @@
     const autoplayStart = () => {
         sliderRef?.value?.emblaApi?.plugins().autoplay.play();
     };
-    //=====================================================
+    // =======================================================
 </script>
 
 <style scoped lang="scss">
@@ -174,6 +167,9 @@
     .home-feedback {
         @include content-block;
         &__container {
+            display: flex;
+            flex-direction: column;
+            gap: rem(64);
             @include content-container;
         }
         &__titlebox {
@@ -210,11 +206,10 @@
             display: flex;
             flex-wrap: wrap;
             gap: rem(32);
-            margin-top: rem(64);
             &-item {
                 width: 100%;
                 max-width: rem(300);
-                background-color: $c-D4E1E7;
+                background-color: rgba($c-D4E1E7, 0.5);
                 border-radius: rem(32) rem(32) 0 rem(32);
                 &-wrapper {
                     display: grid;
@@ -237,6 +232,11 @@
                     font-size: rem(14);
                     border-bottom: rem(1) dotted currentColor;
                     opacity: 0.5;
+                    @media (pointer: fine) {
+                        &:hover {
+                            border-color: transparent;
+                        }
+                    }
                 }
                 &-image-container {
                     grid-area: image;
@@ -257,8 +257,30 @@
                 }
             }
         }
+        &__body {
+            width: 100%;
+            @supports (mask-image: url()) {
+                mask-image: linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    #000 10%,
+                    #000 90%,
+                    transparent 100%
+                );
+                mask-size: 100%;
+                mask-repeat: no-repeat;
+            }
+        }
         &__slide {
             width: fit-content;
+        }
+        &__loader {
+            width: 100%;
+            overflow: hidden;
+            padding: rem(40) 0;
+            &-wrapper {
+                min-width: max-content;
+            }
         }
     }
 </style>

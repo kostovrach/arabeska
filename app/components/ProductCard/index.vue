@@ -100,6 +100,7 @@
 
         position: relative;
         max-width: rem(345);
+        height: 100%;
         transition: translate $td $tf;
         @media (pointer: fine){
             &:hover{
@@ -149,6 +150,8 @@
             }
         }
         &__wrapper {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             border-radius: $border-radius;
@@ -166,6 +169,10 @@
         }
         &__content {
             // flex: 0 1 20%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             padding: rem(16) rem(24);
             border-radius: 0 0 $border-radius $border-radius;
             border: rem(1) solid $c-D4E1E7;

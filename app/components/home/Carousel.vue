@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="home-carousel__error" v-show="status === 'error' || status === 'idle'">
-                    <ProductCardError />
+                    <FetchError />
                 </div>
                 <ClientOnly>
                     <EmblaContainer
@@ -34,7 +34,7 @@
                         @mouseenter="autoplayStop"
                         @mouseleave="autoplayStart"
                     >
-                        <EmblaSlide v-for="product in products" :key="product.id">
+                        <EmblaSlide class="home-carousel__slide" v-for="product in products" :key="product.id">
                             <ProductCard :product="product" />
                         </EmblaSlide>
                     </EmblaContainer>
@@ -204,7 +204,6 @@
         }
         &__slide {
             width: fit-content;
-            padding: rem(40) 0;
         }
     }
 </style>

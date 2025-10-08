@@ -18,7 +18,7 @@ export default defineNuxtConfig({
 
     app: {
         head: {
-            title: 'Arabeska',
+            title: 'Arabeska - Магазин цветов в Самаре',
             htmlAttrs: {
                 lang: 'ru',
             },

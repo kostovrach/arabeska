@@ -169,6 +169,7 @@
                 grid-area: content;
                 display: flex;
                 flex-direction: column;
+                padding: lineScale(64,16,480,1440);
                 &--centered {
                     align-items: center;
                     text-align: center;

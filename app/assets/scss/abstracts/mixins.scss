@@ -72,12 +72,41 @@
             }
             > span:has(svg) {
                 svg {
-                    animation: arrow-translate $td $tf;
+                    animation: arrow-translate calc($td * 1.5) $tf;
                 }
             }
         }
     }
     @include arrow-translate;
+}
+
+@mixin skeleton(
+    $color: $skeleton-color,
+    $anim-color: linear-gradient(90deg, transparent, rgba(#ffffff, 0.4), transparent)
+) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $color;
+    border-radius: rem(8);
+    overflow: hidden;
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        background: $anim-color;
+        animation: skeleton-anim 1.2s ease infinite;
+        pointer-events: none;
+    }
+    @keyframes skeleton-anim {
+        from {
+            translate: -100%;
+        }
+        to {
+            translate: 100%;
+        }
+    }
 }
 
 // effects

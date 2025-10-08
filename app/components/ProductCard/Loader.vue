@@ -20,9 +20,6 @@
     @use '~/assets/scss/abstracts' as *;
 
     .loader {
-        $color: #e2e8f0;
-        $anim-color: linear-gradient(90deg, transparent, rgba(#ffffff, 0.4), transparent);
-
         width: rem(345);
         display: inline-flex;
         flex-direction: column;
@@ -30,7 +27,7 @@
         margin-right: rem(32);
         border-radius: rem(24);
         overflow: hidden;
-        border: rem(1) solid $color;
+        border: rem(1) solid $skeleton-color;
         pointer-events: none;
         &__image {
             flex: 1 1 60%;
@@ -48,20 +45,7 @@
             justify-content: space-between;
         }
         &__skeleton {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background-color: $color;
-            border-radius: rem(8);
-            &::before {
-                content: '';
-                position: absolute;
-                z-index: 1;
-                inset: 0;
-                background: $anim-color;
-                animation: skeleton-anim 1.2s ease infinite;
-                pointer-events: none;
-            }
+            @include skeleton;
             &--image {
                 aspect-ratio: 1;
             }
@@ -80,14 +64,6 @@
                 width: rem(64);
                 aspect-ratio: 1;
                 border-radius: 50%;
-            }
-        }
-        @keyframes skeleton-anim {
-            from {
-                translate: -100%;
-            }
-            to {
-                translate: 100%;
             }
         }
     }

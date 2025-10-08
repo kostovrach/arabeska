@@ -98,11 +98,11 @@
             z-index: -1;
             border-radius: inherit;
             overflow: hidden;
-            filter: blur(3px) brightness(60%);
             img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                filter: blur(3px) brightness(60%);
             }
         }
         &__decorative-group {

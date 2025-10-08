@@ -32,7 +32,11 @@
                         </div>
                         <div class="home-hero__slide-media">
                             <picture class="home-hero__slide-image-container">
-                                <img class="home-hero__slide-image" src="/img/temp/flowers.gif" alt="#" />
+                                <img
+                                    class="home-hero__slide-image"
+                                    src="/img/temp/flowers.gif"
+                                    alt="#"
+                                />
                             </picture>
                         </div>
                     </div>
@@ -67,7 +71,11 @@
                         </div>
                         <div class="home-hero__slide-media">
                             <picture class="home-hero__slide-image-container">
-                                <img class="home-hero__slide-image" src="/img/temp/temp1.jpg" alt="#" />
+                                <img
+                                    class="home-hero__slide-image"
+                                    src="/img/temp/temp1.jpg"
+                                    alt="#"
+                                />
                             </picture>
                         </div>
                     </div>
@@ -77,7 +85,11 @@
             <div class="home-hero__runline-container">
                 <div class="home-hero__runline home-hero__runline--nav">
                     <ul class="home-hero__runline-wrapper" v-for="n in 2" :key="n">
-                        <li class="home-hero__runline-item" v-for="item in navItems" :key="item.key">
+                        <li
+                            class="home-hero__runline-item"
+                            v-for="item in navItems"
+                            :key="item.key"
+                        >
                             <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
                                 {{ item.title }}
                             </NuxtLink>
@@ -86,7 +98,11 @@
                 </div>
                 <div class="home-hero__runline home-hero__runline--filters">
                     <ul class="home-hero__runline-wrapper" v-for="n in 2" :key="n">
-                        <li class="home-hero__runline-item" v-for="item in filterItems" :key="item.key">
+                        <li
+                            class="home-hero__runline-item"
+                            v-for="item in filterItems"
+                            :key="item.key"
+                        >
                             <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
                                 {{ item.title }}
                             </NuxtLink>
@@ -251,7 +267,8 @@
             height: fit-content;
             min-height: 60lvh;
             color: $c-FFFFFF;
-            @include content-container;
+            overflow-x: clip;
+            @include content-container($padding: lineScale(64, 16, 480, 1440));
             &:nth-child(2n + 1) {
                 background-color: $c-082535;
             }
@@ -263,6 +280,7 @@
                 height: 100%;
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
+                gap: rem(128);
                 align-items: center;
             }
             &-title {
@@ -329,14 +347,15 @@
                 justify-content: center;
             }
             &-image-container {
-                max-width: rem(560);
+                height: 100%;
+                max-height: rem(420);
                 aspect-ratio: 1;
                 img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
                     border-radius: 50%;
-                    scale: 1.5;
+                    scale: 1.8;
                 }
             }
         }
