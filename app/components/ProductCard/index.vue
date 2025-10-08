@@ -44,7 +44,7 @@
                             </div>
                         </li>
                     </ul>
-                    <button :class="['product__button', inCart ? 'product__button--checked' : '']" @click="toggleCart">
+                    <button :class="['product__button', inCart ? 'product__button--checked' : '']" @click.prevent="toggleCart">
                         <span class="product__button-icon product__button-icon--default">
                             <SvgSprite type="cart" :size="36" />
                         </span>

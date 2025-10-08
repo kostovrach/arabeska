@@ -23,6 +23,9 @@
             :content-ref="ref(certificatesList)"
             :status-ref="ref(certificatesStatus)"
         />
+        <HomeBanner />
+        <HomeAdvant />
+        <HomeFeedback :content-ref="ref(feedbackList)" :status-ref="ref(feedbackStatus)" />
     </NuxtLayout>
 </template>
 
@@ -43,10 +46,18 @@
         (productsList.value ?? []).filter((el) => el.discount && el.discount !== 0)
     );
 
-    // certificate
+    // certificates
     const certificateStore = useCertificatesStore();
     certificateStore.getCertificates();
 
     const { certificatesList, certificatesStatus } = storeToRefs(certificateStore);
+
+    // feedback
+    const feedbackStore = useFeedbackStore();
+    feedbackStore.getFeedback();
+
+    const { feedbackList, feedbackStatus } = storeToRefs(feedbackStore);
+    console.log(feedbackList.value);
+    
     //======================================================
 </script>

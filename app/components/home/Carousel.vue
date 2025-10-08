@@ -2,7 +2,9 @@
     <section class="home-carousel">
         <div class="home-carousel__container">
             <div class="home-carousel__titlebox">
-                <h2 class="home-carousel__title" v-html="props.title"></h2>
+                <StarsOverlay class="home-carousel__title">
+                    <h2 v-html="props.title"></h2>
+                </StarsOverlay>
                 <NuxtLink
                     :to="{ name: 'index' }"
                     class="home-carousel__link"
@@ -18,12 +20,9 @@
                         <ProductCardLoader v-for="n in 5" :key="n" />
                     </div>
                 </div>
-
                 <div class="home-carousel__error" v-show="status === 'error' || status === 'idle'">
-                    <span>Ошибка загрузки данных</span>
-                    <span>Попробуйте перезагрузить страницу</span>
+                    <ProductCardError />
                 </div>
-
                 <ClientOnly>
                     <EmblaContainer
                         v-show="status === 'success'"
@@ -36,7 +35,7 @@
                         @mouseleave="autoplayStart"
                     >
                         <EmblaSlide v-for="product in products" :key="product.id">
-                            <ProductCard :product="product" :variant="props.cardVariant" />
+                            <ProductCard :product="product" />
                         </EmblaSlide>
                     </EmblaContainer>
                 </ClientOnly>
@@ -68,6 +67,7 @@
 
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';
+    // =======================================================
 
     interface IProps {
         contentRef: Ref<IProduct[] | null>;
@@ -75,7 +75,6 @@
         autoplay?: boolean;
         title?: string;
         wtithLink?: boolean;
-        cardVariant?: 'large' | null;
     }
 
     const props = withDefaults(defineProps<IProps>(), {
