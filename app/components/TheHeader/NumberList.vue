@@ -37,6 +37,7 @@
         position: relative;
         opacity: 0.8;
         padding: 0 rem(16);
+        white-space: nowrap;
         transition: opacity $td $tf;
         &__active {
             display: flex;

@@ -3,15 +3,27 @@
         <div class="header__container">
             <div class="header__overview">
                 <NuxtLink class="header__logo" :to="{ name: 'index' }">
-                    <div class="header__logo-image--desktop"><SvgSprite type="logo-full" size="100%" /></div>
-                    <div class="header__logo-image--touch"><SvgSprite type="logo-icon" size="100%" /></div>
+                    <div class="header__logo-image--desktop">
+                        <SvgSprite type="logo-full" size="100%" />
+                    </div>
+                    <div class="header__logo-image--touch">
+                        <SvgSprite type="logo-icon" size="100%" />
+                    </div>
                 </NuxtLink>
-                <TheHeaderDropDown />
+                <TheHeaderDropDown class="header__dropdown" />
                 <nav class="header__nav">
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }"><span>Тренды</span></NuxtLink>
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }"><span>Хиты</span></NuxtLink>
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }"><span>Акции</span></NuxtLink>
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }"><span>Подарки</span></NuxtLink>
+                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
+                        <span>Тренды</span>
+                    </NuxtLink>
+                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
+                        <span>Хиты</span>
+                    </NuxtLink>
+                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
+                        <span>Акции</span>
+                    </NuxtLink>
+                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
+                        <span>Подарки</span>
+                    </NuxtLink>
                 </nav>
             </div>
             <div class="header__controls">
@@ -19,8 +31,8 @@
                     <SvgSprite type="map-pin" :size="20" />
                     <span>Самара</span>
                 </div>
-                <TheHeaderNumberList />
-                <TheHeaderSearchbar />
+                <TheHeaderNumberList class="header__number-list" />
+                <TheHeaderSearchbar class="header__searchbar" />
                 <NuxtLink class="header__action header__action--profile" :to="{ name: 'index' }">
                     <SvgSprite type="user" :size="24" />
                 </NuxtLink>
@@ -28,7 +40,7 @@
                     <SvgSprite type="bag" :size="24" />
                     <span class="header__action-indicator">48</span>
                 </NuxtLink>
-                <TheHeaderBurger />
+                <TheHeaderBurger class="header__burger" />
             </div>
         </div>
     </header>
@@ -53,7 +65,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: rem(32);
+            gap: lineScale(32,16,480,1440);
             @include content-container;
         }
 
@@ -61,7 +73,7 @@
         &__overview {
             display: flex;
             align-items: center;
-            gap: rem(16);
+            gap: lineScale(16,8,480,1440);
             font-size: rem(14);
             font-weight: $fw-semi;
         }
@@ -78,14 +90,14 @@
                 &--desktop {
                     width: rem(250);
                     height: rem(40);
-                    @media (max-width: 768px) {
+                    @media (max-width: 1024px) {
                         display: none;
                     }
                 }
                 &--touch {
                     width: rem(50);
                     height: rem(32);
-                    @media (min-width: 768px) {
+                    @media (min-width: 1024px) {
                         display: none;
                     }
                 }
@@ -103,7 +115,7 @@
         &__controls {
             display: flex;
             align-items: center;
-            gap: rem(16);
+            gap: lineScale(16,8,480,1440);
             font-weight: $fw-semi;
         }
         &__location {
@@ -146,6 +158,22 @@
                 border: rem(0.25) solid transparent;
                 will-change: border-color;
                 transition: all $td $tf;
+            }
+        }
+    }
+
+    @media (max-width: 1300px){
+        .header {
+            &__location,
+            &__number-list {
+                display: none;
+            }
+        }
+    }
+    @media (max-width: 768px){
+        .header {
+            &__nav {
+                display: none;
             }
         }
     }

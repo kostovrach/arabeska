@@ -34,8 +34,7 @@
     // data=================================================
     // products
     const productsStore = useProductsStore();
-
-    productsStore.getProducts();
+    // Вызов основного метода происходит в app.vue
 
     const { productsList, productsStatus } = storeToRefs(productsStore);
 

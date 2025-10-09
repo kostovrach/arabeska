@@ -264,7 +264,6 @@
         }
         &__slide {
             width: 100vw;
-            height: fit-content;
             min-height: 60lvh;
             color: $c-FFFFFF;
             overflow-x: clip;
@@ -299,13 +298,15 @@
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
-                gap: lineScale(96, 40, 480, 1440);
+                gap: lineScale(96, 20, 480, 1440);
                 margin-top: rem(48);
             }
             &-button {
                 @include button-primary($hover-color: $c-secondary);
             }
             &-nav {
+                align-self: flex-end;
+                justify-self: flex-end;
                 display: flex;
                 align-items: center;
                 gap: rem(32);
@@ -415,6 +416,40 @@
                     &:hover {
                         color: $c-FFFFFF;
                     }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1300px){
+        .home-hero {
+            &__slide {
+                &-image-container img {
+                    scale: 1.5;
+                }
+            }
+        }
+    }
+    @media (max-width: 1024px){
+        .home-hero {
+            &__slide {
+                &-wrapper {
+                    gap: rem(64);
+                }
+                &-image-container img {
+                    scale: 1.3;
+                }
+            }
+        }
+    }
+    @media (max-width: 768px){
+        .home-hero {
+            &__slide {
+                &-wrapper {
+                    grid-template-columns: 100%;
+                }
+                &-media {
+                    display: none;
                 }
             }
         }

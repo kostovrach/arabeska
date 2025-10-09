@@ -56,7 +56,7 @@
         position: relative;
         margin: rem(128) 0;
         overflow: visible;
-        @include content-container;
+        @include content-container($padding: lineScale(32,0,480,1440));
         &__container {
             position: relative;
             display: flex;
@@ -80,7 +80,7 @@
             align-items: center;
             gap: rem(16);
             text-align: center;
-            padding: rem(32) rem(64);
+            padding: lineScale(32,16,480,1440) lineScale(64,32,480,1440);
             padding-bottom: rem(164);
         }
         &__subtitle {

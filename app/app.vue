@@ -2,7 +2,10 @@
     <NuxtPage />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const productsStore = useProductsStore();
+    productsStore.getProducts();
+</script>
 
 <style lang="scss">
     @use '~/assets/scss/abstracts' as *;
