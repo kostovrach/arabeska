@@ -1,10 +1,18 @@
 <template>
     <div class="product">
-        <div class="product__sticker" v-if="product.discount">
+        <div
+            class="product__sticker product__sticker--discount"
+            v-if="product.discount && !isNewProduct(product.date_created)"
+        >
             <span>
-                -{{ calcDiscountPercent(product.price, product.discount ?? product.price) }}
+                -{{ calcDiscountPercent(product.price, product.discount ?? product.price) }}%
             </span>
-            <span class="symbol">%</span>
+        </div>
+        <div
+            class="product__sticker product__sticker--new"
+            v-if="isNewProduct(product.date_created)"
+        >
+            <span>new!</span>
         </div>
         <NuxtLink class="product__wrapper" :to="{ name: 'product-id', params: { id: product.id } }">
             <picture class="product__image-container">
@@ -35,13 +43,17 @@
                             v-if="product.discount && typeof product.discount === 'number'"
                         >
                             <div>
-                                {{ product.price }}
+                                {{ product.price.toLocaleString() }}
                                 <span class="ruble"></span>
                             </div>
                         </li>
                         <li class="product__price-item product__price-item--current">
                             <div>
-                                {{ product.discount ? product.discount : product.price }}
+                                {{
+                                    product.discount
+                                        ? product.discount.toLocaleString()
+                                        : product.price.toLocaleString()
+                                }}
                                 <span class="ruble"></span>
                             </div>
                         </li>
@@ -113,41 +125,12 @@
             top: 0;
             left: 0;
             translate: -30% -50%;
-            width: rem(80);
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: rem(20);
-            color: $c-FFFFFF;
-            rotate: -15deg;
-            @supports (mask-image: url()) {
-                > * {
-                    position: relative;
-                    z-index: 1;
-                }
-                &::before {
-                    content: '';
-                    position: absolute;
-                    z-index: 0;
-                    inset: 0;
-                    mask-image: url('/img/masks/pinion.svg');
-                    mask-size: 100% 100%;
-                    background-color: $c-accent;
-                    animation: sticker-spin 15s linear infinite;
-                }
-                @keyframes sticker-spin {
-                    from {
-                        rotate: 0;
-                    }
-                    to {
-                        rotate: -360deg;
-                    }
-                }
+            &--discount {
+                @include sticker($bg-color: $c-accent);
             }
-            @supports not (mask-image: url()) {
-                background-color: $c-accent;
-                border-radius: 50%;
+            &--new {
+                text-transform: uppercase;
+                @include sticker($bg-color: $c-F5142B);
             }
         }
         &__wrapper {

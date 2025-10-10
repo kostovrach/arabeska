@@ -7,6 +7,26 @@
                     <ClientOnly>
                         <div class="product-view__slider">
                             <div class="product-view__slider-wrapper">
+                                <div
+                                    class="product-view__sticker product-view__sticker--discount"
+                                    v-if="product?.discount && !isNewProduct(product?.date_created)"
+                                >
+                                    <span>
+                                        -{{
+                                            calcDiscountPercent(
+                                                product.price,
+                                                product.discount ?? product.price
+                                            )
+                                        }}%
+                                    </span>
+                                </div>
+                                <div
+                                    class="product-view__sticker product-view__sticker--new"
+                                    v-if="isNewProduct(product?.date_created)"
+                                >
+                                    <span>new!</span>
+                                </div>
+
                                 <ProductPageSlider :product="product" />
                             </div>
                         </div>
@@ -66,9 +86,13 @@
                                     </div>
 
                                     <div class="product-view__counter">
-                                        <button><SvgSprite type="minus" :size="20" /></button>
+                                        <button type="button">
+                                            <SvgSprite type="minus" :size="20" />
+                                        </button>
                                         <span>1</span>
-                                        <button><SvgSprite type="plus" :size="20" /></button>
+                                        <button type="button">
+                                            <SvgSprite type="plus" :size="20" />
+                                        </button>
                                     </div>
                                 </form>
                                 <ul class="product-view__price">
@@ -76,11 +100,11 @@
                                         class="product-view__price-crossed"
                                         v-if="product?.discount"
                                     >
-                                        <span>{{ product.discount }}</span>
+                                        <span>{{ product?.discount?.toLocaleString() }}</span>
                                         <span class="ruble"></span>
                                     </li>
                                     <li class="product-view__price-current">
-                                        <span>{{ product?.price }}</span>
+                                        <span>{{ product?.price.toLocaleString() }}</span>
                                         <span class="ruble"></span>
                                     </li>
                                 </ul>
@@ -103,21 +127,24 @@
                             </div>
                             <ul class="product-view__footer">
                                 <li class="product-view__footer-card" v-if="1 === 1">
-                                    <span><SvgSprite type="user-fill" :size="40" /></span>
+                                    <span><SvgSprite type="user-fill" :size="24" /></span>
                                     <div>
                                         <NuxtLink :to="{ name: 'index' }">Авторизуйтесь,</NuxtLink>
                                         чтобы&nbsp;снизить цену
                                     </div>
                                 </li>
                                 <li class="product-view__footer-card" v-if="1 === 1">
-                                    <span><SvgSprite type="delivery" :size="40" /></span>
+                                    <span><SvgSprite type="delivery" :size="24" /></span>
                                     <span>Бесплатная доставка от 1500 ₽</span>
                                 </li>
                                 <li class="product-view__footer-card" v-if="product?.size">
-                                    <span><SvgSprite type="box" :size="40" /></span>
+                                    <span><SvgSprite type="box" :size="24" /></span>
                                     <span>Размеры {{ product?.size }}</span>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="product-view__info">
+                            test
                         </div>
                     </ClientOnly>
                 </div>
@@ -151,27 +178,39 @@
         &__body {
             display: grid;
             grid-template-columns: minmax(20%, rem(634)) auto;
+            grid-template-areas: 
+                'slider content'
+                'slider info';
             gap: rem(64);
         }
-        &__slider-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        &__slider-wrapper {
-            width: 100%;
-            height: fit-content;
-        }
         &__slider {
+            grid-area: slider;
             position: relative;
             width: fit-content;
             height: 100%;
             &-wrapper {
                 position: sticky;
                 top: rem(132);
+                width: 100%;
+                height: fit-content;
+            }
+        }
+        &__sticker {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            translate: 50% -50%;
+            &--discount {
+                @include sticker($bg-color: $c-accent);
+            }
+            &--new {
+                text-transform: uppercase;
+                @include sticker($bg-color: $c-F5142B);
             }
         }
         &__content {
+            grid-area: content;
             width: 100%;
             display: grid;
             grid-template-areas:
@@ -235,11 +274,12 @@
             max-height: rem(128);
             align-self: flex-end;
             justify-self: flex-end;
-            translate: -50% 50%;
+            translate: 0 30%;
             overflow: visible;
             pointer-events: none;
         }
         &__button {
+            font-size: lineScale(24,20,480,1440);
             pointer-events: auto;
         }
         &__counter {
@@ -256,6 +296,7 @@
             button {
                 cursor: pointer;
                 padding: rem(12);
+                translate: 0 rem(2);
                 @media (pointer: fine) {
                     &:hover {
                         color: $c-accent;
@@ -287,7 +328,7 @@
                 }
             }
             &-current {
-                font-size: lineScale(64, 48, 480, 1440);
+                font-size: lineScale(48, 24, 480, 1440);
             }
         }
         &__sider {
@@ -320,6 +361,42 @@
         }
         &__footer {
             grid-area: footer;
+            display: flex;
+            align-items: center;
+            gap: rem(8);
+            &-card {
+                flex: 1 1 30%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: rem(16);
+                padding: rem(16) rem(24);
+                border-radius: rem(32);
+                font-family: 'Inter', sans-serif;
+                text-wrap: balance;
+                line-height: 1.2;
+                background-color: $c-E5F2D8;
+                > span:has(svg) {
+                    width: rem(48);
+                    height: rem(48);
+                    aspect-ratio: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $c-FFFFFF;
+                    border-radius: 50%;
+                    background-color: $c-accent;
+                }
+                a {
+                    text-decoration: underline;
+                    @media (pointer: fine) {
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
         }
+        &__info {grid-area: info;}
     }
 </style>

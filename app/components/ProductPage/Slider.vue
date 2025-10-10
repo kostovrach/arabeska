@@ -1,13 +1,13 @@
 <template>
     <ClientOnly>
-        <EmblaContainer class="slider slider--main">
+        <EmblaContainer class="slider slider--main" :options="mainCarouselOptions">
             <EmblaSlide class="slider--main-slide" v-for="(slide, idx) in props.product?.images">
                 <picture class="slider--main-slide-image">
                     <img :src="slide" :alt="`Фото ${idx + 1}`" />
                 </picture>
             </EmblaSlide>
         </EmblaContainer>
-        <EmblaContainer class="slider slider--thumbs">
+        <EmblaContainer class="slider slider--thumbs" :options="thumbCarouselOptions">
             <EmblaSlide class="slider--thumbs-slide" v-for="(slide, idx) in props.product?.images">
                 <picture class="slider--thumbs-slide-image">
                     <img :src="slide" :alt="`Фото ${idx + 1}`" />
@@ -29,10 +29,16 @@
 
     const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
 
-    const carouselOptions: EmblaOptionsType = {
+    const mainCarouselOptions: EmblaOptionsType = {
         loop: true,
         align: 'start',
         dragFree: false,
+        duration: 35,
+    };
+    const thumbCarouselOptions: EmblaOptionsType = {
+        loop: true,
+        align: 'start',
+        dragFree: true,
         duration: 35,
     };
 </script>

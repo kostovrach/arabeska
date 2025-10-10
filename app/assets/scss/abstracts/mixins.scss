@@ -111,6 +111,46 @@
     }
 }
 
+@mixin sticker($bg-color: $c-accent, $color: $c-FFFFFF) {
+    width: rem(80);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: lineScale(20,18,480,1440);
+    font-family: 'Inter', sans-serif;
+    color: $color;
+    rotate: -15deg;
+    @supports (mask-image: url()) {
+        > * {
+            position: relative;
+            z-index: 1;
+        }
+        &::before {
+            content: '';
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            mask-image: url('/img/masks/pinion.svg');
+            mask-size: 100% 100%;
+            background-color: $bg-color;
+            animation: sticker-spin 15s linear infinite;
+        }
+        @keyframes sticker-spin {
+            from {
+                rotate: 0;
+            }
+            to {
+                rotate: -360deg;
+            }
+        }
+    }
+    @supports not (mask-image: url()) {
+        background-color: $bg-color;
+        border-radius: 50%;
+    }
+}
+
 // effects
 @mixin gradient-text-hover($main-color: $c-000000, $accent-color: $c-accent) {
     @supports (background-clip: text) {
