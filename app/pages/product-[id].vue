@@ -39,15 +39,16 @@
                                         <SvgSprite type="share" :size="32" />
                                     </div>
                                 </div>
-                                <form class="product-view__controls">
-                                    <ul class="product-view__type">
-                                        <li class="product-view__type-item">
-                                            <div class="product-view__type-toggler">
+                                <div class="product-view__controls">
+                                    <ul class="product-view__variant">
+                                        <li class="product-view__variant-item">
+                                            <div class="product-view__variant-toggler">
                                                 <input
+                                                    v-model="productModel.type"
                                                     type="radio"
-                                                    name="type"
-                                                    id="type-standart"
-                                                    checked
+                                                    name="variant"
+                                                    value="standart"
+                                                    id="variant-standart"
                                                 />
                                             </div>
                                             <p class="product-view__type-desc">
@@ -55,20 +56,32 @@
                                                 — собрать букет как на фото
                                             </p>
                                         </li>
-                                        <li class="product-view__type-item">
-                                            <div class="product-view__type-toggler">
-                                                <input type="radio" name="type" id="type-large" />
+                                        <li class="product-view__variant-item">
+                                            <div class="product-view__variant-toggler">
+                                                <input
+                                                    v-model="productModel.type"
+                                                    type="radio"
+                                                    name="variant"
+                                                    value="large"
+                                                    id="variant-large"
+                                                />
                                             </div>
-                                            <p class="product-view__type-desc">
+                                            <p class="product-view__variant-desc">
                                                 <span>Роскошный</span>
                                                 — на 50% больше цветов
                                             </p>
                                         </li>
-                                        <li class="product-view__type-item">
-                                            <div class="product-view__type-toggler">
-                                                <input type="radio" name="type" id="type-premium" />
+                                        <li class="product-view__variant-item">
+                                            <div class="product-view__variant-toggler">
+                                                <input
+                                                    v-model="productModel.type"
+                                                    type="radio"
+                                                    name="variant"
+                                                    value="premium"
+                                                    id="variant-premium"
+                                                />
                                             </div>
-                                            <p class="product-view__type-desc">
+                                            <p class="product-view__variant-desc">
                                                 <span>Премиум</span>
                                                 — в 2 раза больше цветов, крафтовая упаковка
                                             </p>
@@ -86,25 +99,33 @@
                                     </div>
 
                                     <div class="product-view__counter">
-                                        <button type="button">
-                                            <SvgSprite type="minus" :size="20" />
+                                        <button
+                                            type="button"
+                                            @click="removeQuantity"
+                                            :disabled="productModel.quantity <= 1"
+                                        >
+                                            <SvgSprite type="minus" :size="14" />
                                         </button>
-                                        <span>1</span>
-                                        <button type="button">
-                                            <SvgSprite type="plus" :size="20" />
+                                        <span>{{ productModel.quantity }}</span>
+                                        <button
+                                            type="button"
+                                            @click="addQuantity"
+                                            :disabled="productModel.quantity >= 5"
+                                        >
+                                            <SvgSprite type="plus" :size="14" />
                                         </button>
                                     </div>
-                                </form>
+                                </div>
                                 <ul class="product-view__price">
                                     <li
                                         class="product-view__price-crossed"
                                         v-if="product?.discount"
                                     >
-                                        <span>{{ product?.discount?.toLocaleString() }}</span>
+                                        <span>{{ discountPrice.toLocaleString() }}</span>
                                         <span class="ruble"></span>
                                     </li>
                                     <li class="product-view__price-current">
-                                        <span>{{ product?.price.toLocaleString() }}</span>
+                                        <span>{{ totalPrice.toLocaleString() }}</span>
                                         <span class="ruble"></span>
                                     </li>
                                 </ul>
@@ -144,7 +165,7 @@
                             </ul>
                         </div>
                         <div class="product-view__info">
-                            test
+                            <ProductPageAccordion />
                         </div>
                     </ClientOnly>
                 </div>
@@ -165,6 +186,42 @@
     const product = computed(() => productsItem.value);
     const status = computed(() => singleProductStatus.value);
     // =====================================================================
+
+    // product processing===================================================
+    // model
+    const productModel = reactive({
+        type: 'standart',
+        quantity: 1,
+    });
+
+    // multipliers
+    const variantMultipliers: Record<string, number> = {
+        standart: 1,
+        large: 1.5,
+        premium: 2,
+    };
+
+    // price
+    const discountPrice = computed(() => {
+        if (!product?.value?.discount) return 0;
+
+        const multiplier = variantMultipliers[productModel.type] || 1;
+        return product?.value?.discount * multiplier * productModel.quantity;
+    });
+
+    const totalPrice = computed(() => {
+        if (!product?.value?.price) return 0;
+
+        const multiplier = variantMultipliers[productModel.type] || 1;
+        return product?.value?.price * multiplier * productModel.quantity;
+    });
+
+    // counter
+    const addQuantity = () => productModel.quantity++;
+    const removeQuantity = () => {
+        if (productModel.quantity > 1) productModel.quantity--;
+    };
+    // =====================================================================
 </script>
 
 <style scoped lang="scss">
@@ -178,7 +235,7 @@
         &__body {
             display: grid;
             grid-template-columns: minmax(20%, rem(634)) auto;
-            grid-template-areas: 
+            grid-template-areas:
                 'slider content'
                 'slider info';
             gap: rem(64);
@@ -251,7 +308,7 @@
             cursor: pointer;
             color: $c-98BBD7;
         }
-        &__type {
+        &__variant {
             display: flex;
             flex-direction: column;
             gap: rem(16);
@@ -279,28 +336,33 @@
             pointer-events: none;
         }
         &__button {
-            font-size: lineScale(24,20,480,1440);
+            font-size: lineScale(24, 20, 480, 1440);
             pointer-events: auto;
         }
         &__counter {
             width: fit-content;
             display: flex;
             align-items: center;
-            gap: rem(40);
+            gap: rem(24);
             border: rem(1) solid $c-accent;
             border-radius: rem(32);
             overflow: hidden;
+            user-select: none;
             span {
-                font-size: lineScale(24, 18, 480, 1440);
+                font-size: lineScale(18, 16, 480, 1440);
             }
             button {
                 cursor: pointer;
-                padding: rem(12);
+                padding: rem(8) rem(12);
                 translate: 0 rem(2);
                 @media (pointer: fine) {
                     &:hover {
                         color: $c-accent;
                     }
+                }
+                &[disabled] {
+                    opacity: 0.5;
+                    pointer-events: none;
                 }
             }
         }
@@ -397,6 +459,8 @@
                 }
             }
         }
-        &__info {grid-area: info;}
+        &__info {
+            grid-area: info;
+        }
     }
 </style>

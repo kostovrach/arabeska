@@ -2,9 +2,10 @@
     <form class="form">
         <h3 class="form__title">Сэкономьте 5% за подписку!</h3>
         <div class="form__inputbox">
-            <input
+            <InputMask 
                 v-model="form.input"
-                v-phone-mask
+                mask="+7 (999) 999-99-99"
+                placeholder="+7 (___) ___-__-__"
                 id="subscribe-phone"
                 type="text"
                 name="subscribe-phone"
@@ -80,7 +81,8 @@
                     }
                 }
             }
-            &:has(input:focus) {
+            &:has(input:focus),
+            &:not(:has(input:placeholder-shown)) {
                 opacity: 1;
                 &::before {
                     width: 100%;

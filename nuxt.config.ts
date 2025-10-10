@@ -2,7 +2,7 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
 
-    modules: ['@pinia/nuxt', '@nuxt/eslint', 'nuxt-svg-sprite-icon', 'nuxt-swiper', '@vueuse/nuxt'],
+    modules: ['@pinia/nuxt', '@nuxt/eslint', 'nuxt-svg-sprite-icon', '@vueuse/nuxt', '@primevue/nuxt-module'],
     css: ['~/assets/css/main.css'],
 
     typescript: {

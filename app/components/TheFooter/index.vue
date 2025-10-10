@@ -481,10 +481,6 @@
             &__nav {
                 justify-content: initial;
             }
-            &__info {
-                // display: flex;
-                // flex-direction: column-reverse;
-            }
         }
     }
 </style>
