@@ -24,7 +24,7 @@
         display: inline-flex;
         flex-direction: column;
         gap: rem(16);
-        margin-right: rem(32);
+        margin-right: lineScale(32,16,1024,1440);
         border-radius: rem(24);
         overflow: hidden;
         border: rem(1) solid $skeleton-color;
@@ -65,6 +65,12 @@
                 aspect-ratio: 1;
                 border-radius: 50%;
             }
+        }
+    }
+
+    @media (max-width: 1024px){
+        .loader {
+            width: rem(240);
         }
     }
 </style>

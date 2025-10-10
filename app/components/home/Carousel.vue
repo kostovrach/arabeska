@@ -35,7 +35,7 @@
                         @mouseleave="autoplayStart"
                     >
                         <EmblaSlide class="home-carousel__slide" v-for="product in products" :key="product.id">
-                            <ProductCard :product="product" />
+                            <ProductCard :data="product" />
                         </EmblaSlide>
                     </EmblaContainer>
                 </ClientOnly>
@@ -127,14 +127,18 @@
         &__titlebox {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
-            grid-template-areas: '. title link';
+            grid-template-rows: repeat(2, auto);
+            grid-template-areas: 
+                '. title .'
+                'link link link';
+            gap: rem(32);
             padding: 0 $px;
         }
         &__title {
             grid-area: title;
             max-width: 25ch;
             justify-self: center;
-            font-size: lineScale(64, 24, 480, 1440);
+            font-size: lineScale(64, 32, 480, 1440);
             font-weight: $fw-semi;
             text-align: center;
         }
@@ -145,6 +149,7 @@
             display: flex;
             align-items: center;
             gap: rem(4);
+            white-space: nowrap;
             @include hover-blick-line;
         }
         &__loader {

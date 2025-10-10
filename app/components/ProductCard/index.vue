@@ -1,26 +1,28 @@
 <template>
     <div class="product">
-        <div class="product__sticker" v-if="props.product.discount && props.product.discount !== 0">
-            <span>-{{ props.product.discount }}</span>
+        <div class="product__sticker" v-if="product.discount">
+            <span>
+                -{{ calcDiscountPercent(product.price, product.discount ?? product.price) }}
+            </span>
             <span class="symbol">%</span>
         </div>
-        <NuxtLink class="product__wrapper" :to="{ name: 'product-id', params: { id: props.product.id } }">
+        <NuxtLink class="product__wrapper" :to="{ name: 'product-id', params: { id: product.id } }">
             <picture class="product__image-container">
                 <img
                     class="product__image"
-                    :src="props.product.images?.[0] || '/img/temp/placeholder-900x900.jpg'"
-                    :alt="props.product.title || ''"
+                    :src="product.images?.[0] || '/img/temp/placeholder-900x900.jpg'"
+                    :alt="product.title || ''"
                 />
             </picture>
             <div class="product__content">
                 <div class="product__titlebox">
-                    <h3 class="product__title">{{ props.product.title || '' }}</h3>
-                    <div class="product__id">{{ props.product.id }}</div>
+                    <h3 class="product__title">{{ product.title || '' }}</h3>
+                    <div class="product__id">{{ product.id }}</div>
                 </div>
-                <ul class="product__desc" v-if="props.product.structure">
+                <ul class="product__desc" v-if="product.structure">
                     <li
                         class="product__desc-item"
-                        v-for="(item, idx) in props.product.structure.slice(0, 2)"
+                        v-for="(item, idx) in product.structure.slice(0, 2)"
                         :key="idx"
                     >
                         {{ item.name }}
@@ -30,21 +32,24 @@
                     <ul class="product__price">
                         <li
                             class="product__price-item product__price-item--crossed"
-                            v-if="props.product.discount && typeof props.product.discount === 'number'"
+                            v-if="product.discount && typeof product.discount === 'number'"
                         >
                             <div>
-                                {{ calcOldPrice(props.product.price, props.product.discount) }}
+                                {{ product.price }}
                                 <span class="ruble"></span>
                             </div>
                         </li>
                         <li class="product__price-item product__price-item--current">
                             <div>
-                                {{ props.product.price }}
+                                {{ product.discount ? product.discount : product.price }}
                                 <span class="ruble"></span>
                             </div>
                         </li>
                     </ul>
-                    <button :class="['product__button', inCart ? 'product__button--checked' : '']" @click.prevent="toggleCart">
+                    <button
+                        :class="['product__button', inCart ? 'product__button--checked' : '']"
+                        @click.prevent="toggleCart"
+                    >
                         <span class="product__button-icon product__button-icon--default">
                             <SvgSprite type="cart" :size="36" />
                         </span>
@@ -62,12 +67,14 @@
     import type { IProduct } from '~/interfaces/product.ts';
 
     const props = defineProps({
-        product: {
+        data: {
             type: Object as () => IProduct,
             required: true,
             default: () => ({}) as IProduct,
         },
     });
+
+    const product = props.data;
 
     // temp cart processing==============================
 
@@ -83,12 +90,6 @@
         }
     }
     //====================================================
-
-    // utils
-    function calcOldPrice(price: number, discount: number): string {
-        const result = (price / (1 - discount / 100)).toFixed(0);
-        return result;
-    }
 </script>
 
 <style scoped lang="scss">
@@ -102,8 +103,8 @@
         max-width: rem(345);
         height: 100%;
         transition: translate $td $tf;
-        @media (pointer: fine){
-            &:hover{
+        @media (pointer: fine) {
+            &:hover {
                 translate: 0 rem(-8);
             }
         }
@@ -277,6 +278,15 @@
                 &--checked {
                     transform: translateY(-200%);
                 }
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .product {
+            max-width: rem(240);
+            &__titlebox {
+                flex-direction: column-reverse;
             }
         }
     }

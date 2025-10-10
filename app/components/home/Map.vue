@@ -45,6 +45,7 @@
             @include content-container;
         }
         &__content {
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: rem(40);
@@ -76,14 +77,14 @@
             display: flex;
             flex-direction: column;
             gap: rem(18);
-            font-family: 'Inter', sans-serif;
-            font-size: lineScale(20,18,480,1440);
-            font-weight: $fw-semi;
             > a {
                 width: fit-content;
                 display: flex;
                 align-items: center;
                 gap: rem(8);
+                font-family: 'Inter', sans-serif;
+                font-size: lineScale(20, 18, 480, 1440);
+                font-weight: $fw-semi;
                 @include hover-blick-line();
                 > svg {
                     rotate: -45deg;
@@ -102,6 +103,18 @@
                 object-fit: cover;
             }
             // ==============================
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .home-map {
+            &__container {
+                display: flex;
+                flex-direction: column;
+            }
+            &__map {
+                height: rem(320);
+            }
         }
     }
 </style>

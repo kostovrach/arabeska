@@ -228,7 +228,6 @@
     .footer {
         $p: &;
 
-        display: none;
         color: $c-FFFFFF;
         padding: rem(64) 0 rem(16) 0;
         background-color: $c-secondary;
@@ -236,8 +235,8 @@
             display: grid;
             grid-template-areas:
                 'slider main nav'
-                'slider info info';
-            gap: lineScale(64, 32, 480, 1440);
+                'info info info';
+            gap: rem(32);
             @include content-container;
         }
         &__slider {
@@ -359,6 +358,7 @@
             grid-area: main;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             gap: rem(32);
         }
         &__logo {
@@ -389,6 +389,7 @@
                 'map socials'
                 'map address';
             justify-content: space-between;
+            gap: rem(32) lineScale(64,32,480,1440);
             &-list {
                 max-width: 20ch;
                 display: flex;
@@ -423,12 +424,14 @@
             grid-area: info;
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
             gap: rem(32);
             color: $c-98BBD7;
             &-copy {
                 cursor: default;
                 font-size: rem(14);
                 opacity: 0.5;
+                white-space: nowrap;
                 &::before {
                     content: '\00A9';
                     font-family: 'Inter', sans-serif;
@@ -438,6 +441,7 @@
                 cursor: pointer;
                 font-size: rem(14);
                 font-weight: $fw-semi;
+                white-space: nowrap;
                 @media (pointer: fine){
                     &:hover{
                         color: $c-FFFFFF;
@@ -448,6 +452,38 @@
                 font-size: rem(12);
                 font-family: 'Inter', sans-serif;
                 opacity: 0.5;
+            }
+        }
+    }
+
+    @media (max-width: 1440px){
+        .footer {
+            &__container {
+                grid-template-areas: 
+                    'main nav'
+                    'info info';
+                gap: rem(64) rem(32);
+            }
+            &__slider {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 1024px){
+        .footer {
+            &__container {
+                grid-template-areas: 
+                    'main main'
+                    'nav nav'
+                    'info info';
+            }
+            &__nav {
+                justify-content: initial;
+            }
+            &__info {
+                // display: flex;
+                // flex-direction: column-reverse;
             }
         }
     }

@@ -88,6 +88,7 @@
             }
             > input {
                 width: 100%;
+                min-width: 15ch;
                 color: inherit;
                 background-color: transparent;
                 font-family: 'Inter', sans-serif;
@@ -119,6 +120,20 @@
         }
         &__checkbox {
             @include checkbox;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form {
+            grid-template-areas:
+                'title title'
+                'input input'
+                'button button'
+                'agreement agreement';
+            &__button {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
     }
 </style>

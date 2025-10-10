@@ -28,6 +28,7 @@
     cursor: pointer;
     position: relative;
     width: $width;
+    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -288,6 +289,50 @@
             top: 60%;
             width: rem(10);
             rotate: -135deg;
+        }
+    }
+}
+@mixin toggler($width: rem(48), $init-color: $c-98BBD7, $active-color: $c-accent) {
+    position: relative;
+    box-sizing: border-box;
+
+    width: $width;
+    aspect-ratio: 2/1;
+
+    background-color: $c-FFFFFF;
+    border: rem(2) solid $init-color;
+    border-radius: calc($width / 3);
+    transition:
+        background-color $td $tf,
+        border-color $td $tf;
+    overflow: hidden;
+    &::before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        aspect-ratio: 1;
+        background-color: $init-color;
+        border-radius: 50%;
+        border: calc($width / 16) solid $c-FFFFFF;
+        transition: all $td $tf;
+    }
+    input {
+        cursor: pointer;
+        position: absolute;
+        inset: 0;
+        appearance: none;
+    }
+    &:has(input:checked) {
+        background-color: $active-color;
+        border-color: $active-color;
+        &::before {
+            translate: calc(100% + ($width / 16)) 0;
+            // translate: 100% 0;
+            border-color: $active-color;
+            background-color: $c-FFFFFF;
         }
     }
 }

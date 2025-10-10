@@ -1,6 +1,9 @@
 <template>
     <ClientOnly>
-        <div :class="['searchbar', searchbarIsOpen ? 'searchbar--active' : '']">
+        <div
+            :class="['searchbar', searchbarIsOpen ? 'searchbar--active' : '']"
+            v-if="useProductsStore().productsList?.length"
+        >
             <div class="searchbar__container">
                 <div class="searchbar__inputbox">
                     <input
@@ -9,7 +12,7 @@
                         id="searchbar"
                         class="searchbar__input"
                         type="text"
-                        placeholder="Найти букет (название, повод, артикул...)"
+                        placeholder="Найти букет"
                         @input="onInput"
                     />
                     <button
@@ -21,15 +24,30 @@
                         <SvgSprite type="search" />
                     </button>
                 </div>
-                <div class="searchbar__result">
+                <div class="searchbar__result" v-if="searchbarIsOpen && inputModel !== ''">
                     <div
                         class="searchbar__result-empty"
-                        v-if="!searchResult?.length && inputModel !== ''"
+                        v-if="!searchResult?.length && inputModel !== '' && !isLoading"
                     >
-                        Совпадений не найдено
+                        <span class="searchbar__result-empty-text">
+                            К сожалению совпадений не найдено, но...
+                        </span>
+                        <span class="searchbar__result-empty-text">
+                            Вы можете поискать в каталоге
+                        </span>
+                        <NuxtLink class="searchbar__result-empty-button" :to="{ name: 'index' }">
+                            <span>Перейти</span>
+                            <span><SvgSprite type="arrow" :size="16" /></span>
+                        </NuxtLink>
+                    </div>
+                    <div
+                        class="searchbar__result-loading"
+                        v-if="!searchResult?.length && inputModel !== '' && isLoading"
+                    >
+                        <span></span>
                     </div>
 
-                    <ul class="searchbar__result-list" v-if="searchResult?.length">
+                    <ul class="searchbar__result-list">
                         <li
                             class="searchbar__result-item"
                             v-for="product in searchResult"
@@ -39,10 +57,35 @@
                                 class="searchbar__result-item-wrapper"
                                 :to="{ name: 'product-id', params: { id: product.id } }"
                             >
-                                {{ product.title }}
+                                <picture class="searchbar__result-item-image-container">
+                                    <img
+                                        :src="
+                                            product.images[0] ||
+                                            '/img/service/flowers-placeholder.png'
+                                        "
+                                        :alt="product.title"
+                                    />
+                                </picture>
+                                <div class="searchbar__result-item-content">
+                                    <p class="searchbar__result-item-title">{{ product.title }}</p>
+                                    <span class="searchbar__result-item-id">{{ product.id }}</span>
+                                    <span class="searchbar__result-item-price">
+                                        {{ product.price }}
+                                        <span class="ruble"></span>
+                                    </span>
+                                </div>
                             </NuxtLink>
                         </li>
                     </ul>
+                    <div
+                        class="searchbar__result-overflow"
+                        v-if="searchResult?.length && searchResult?.length === 5"
+                    >
+                        <NuxtLink class="searchbar__result-overflow-link" :to="{ name: 'index' }">
+                            <span>Показать все</span>
+                            <SvgSprite type="chevron" :size="16" />
+                        </NuxtLink>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,6 +101,7 @@
     const inputRef = ref<HTMLInputElement | null>(null);
     const inputModel = ref<string>('');
     const searchResult = ref<IProduct[] | null>(null);
+    const isLoading = ref<boolean>(false);
 
     const productsStore = useProductsStore();
 
@@ -66,10 +110,18 @@
             inputRef.value?.focus();
         } else return;
     }
+    const search = useDebounceFn(async () => {
+        searchResult.value = (await productsStore.searchProductsFuzzy(inputModel.value)).slice(
+            0,
+            5
+        );
+        isLoading.value = false;
+    }, 300);
 
-    const onInput = useDebounceFn(async () => {
-        searchResult.value = await productsStore.searchProductsFuzzy(inputModel.value);
-    }, 200);
+    const onInput = () => {
+        isLoading.value = true;
+        search();
+    };
 </script>
 
 <style lang="scss" scoped>
@@ -88,7 +140,7 @@
                 background-color: rgba($c-D4E1E7, 0.05);
             }
             #{$p}__input {
-                flex: 0 0 lineScale(480, 220, 480, 1440);
+                flex: 0 0 lineScale(480, 320, 480, 1440);
                 padding: rem(16) rem(24);
             }
             #{$p}__icon {
@@ -148,11 +200,154 @@
         }
         &__result {
             position: absolute;
+            top: 100%;
+            left: 0;
             width: 100%;
-            min-height: rem(128);
             background-color: inherit;
             padding: rem(32);
-            // margin-top: rem(256);
+            border-radius: 0 0 rem(32) rem(32);
+            overflow: hidden;
+            &-list {
+                display: flex;
+                flex-direction: column;
+                gap: rem(16);
+            }
+            &-item {
+                color: $c-FFFFFF;
+                &-wrapper {
+                    display: grid;
+                    grid-template-columns: max-content auto;
+                    gap: rem(24);
+                }
+                &-image-container {
+                    width: rem(80);
+                    aspect-ratio: 1;
+                    border-radius: rem(16);
+                    overflow: hidden;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+                &-content {
+                    width: 100%;
+                    height: 100%;
+                    display: grid;
+                    justify-content: space-between;
+                    align-content: space-between;
+                    grid-template-areas:
+                        'title id'
+                        'price price';
+                    gap: rem(8);
+                    padding: rem(12) 0;
+                    opacity: 0.8;
+                }
+                &-title {
+                    grid-area: title;
+                    font-size: lineScale(22, 20, 480, 1440);
+                    font-weight: $fw-semi;
+                }
+                &-id {
+                    grid-area: id;
+                    max-width: 8ch;
+                    font-size: rem(14);
+                    opacity: 0.5;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                &-price {
+                    grid-area: price;
+                }
+            }
+            &-loading {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > span {
+                    position: relative;
+                    display: block;
+                    width: rem(40);
+                    aspect-ratio: 1;
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        inset: 0;
+                        border-radius: 50%;
+                        border: {
+                            top: rem(2) solid $c-accent;
+                            right: rem(2) solid transparent;
+                        }
+                        animation: loader 1s linear infinite;
+                    }
+                }
+                @keyframes loader {
+                    to {
+                        rotate: 360deg;
+                    }
+                }
+            }
+            &-empty {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                &-text {
+                    font-size: rem(16);
+                    line-height: 1.4;
+                    opacity: 0.5;
+                }
+                &-button {
+                    margin-top: rem(24);
+                    @include button-primary(
+                        $font-size: rem(14),
+                        $padding: rem(12) rem(32),
+                        $gap: rem(16),
+                        $anim-color: $c-accent
+                    );
+                }
+            }
+            &-overflow {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: rem(16) 0 0;
+                &-link {
+                    display: flex;
+                    align-items: center;
+                    gap: rem(6);
+                    opacity: 0.8;
+                    @media (pointer: fine) {
+                        &:hover {
+                            color: $c-FFFFFF;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 590px) {
+        .searchbar {
+            $p: &;
+
+            &--active {
+                #{$p}__container {
+                    position: fixed;
+                    z-index: 10;
+                    top: 0;
+                    width: 100%;
+                    translate: initial;
+                    padding: rem(16);
+                }
+                #{$p}__input {
+                    flex: initial;
+                    width: 100%;
+                }
+            }
         }
     }
 </style>

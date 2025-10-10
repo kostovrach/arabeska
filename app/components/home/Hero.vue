@@ -298,7 +298,7 @@
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
-                gap: lineScale(96, 20, 480, 1440);
+                gap: lineScale(96, 64, 480, 1440);
                 margin-top: rem(48);
             }
             &-button {

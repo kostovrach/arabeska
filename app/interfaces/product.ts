@@ -10,7 +10,6 @@ export interface IProduct extends ICertificate, IAccessory {
     id: string | number;
     available?: boolean;
     date_created: string;
-    quantity?: number;
     price: number;
     title: string;
     description?: string;

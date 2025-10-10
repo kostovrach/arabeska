@@ -126,7 +126,7 @@
         &__title {
             width: fit-content;
             align-self: center;
-            font-size: lineScale(64, 24, 480, 1440);
+            font-size: lineScale(64, 32, 480, 1440);
             font-weight: $fw-semi;
             text-align: center;
         }
@@ -208,7 +208,7 @@
                 grid-template-columns: repeat(4, 1fr);
                 grid-template-areas: 'image-1 . image-2 image-3';
                 gap: rem(16);
-                margin-top: rem(64);
+                margin-top: lineScale(64,32,480,1440);
                 &-image-container {
                     width: 100%;
                     height: 100%;
@@ -226,6 +226,27 @@
                         height: 100%;
                         object-fit: cover;
                     }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1024px){
+        .home-advant {
+            &__list {
+                gap: rem(96);
+            }
+            &__item {
+                &-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                }
+                &-content {
+                    padding: 0;
+                }
+                &-image-container {
+                    width: 100%;
+                    height: rem(320);
                 }
             }
         }

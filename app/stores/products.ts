@@ -51,6 +51,7 @@ export const useProductsStore = defineStore('products', () => {
     async function getProducts(opt?: AsyncDataOptions<IProduct[]>) {
         const { data, status } = useLazyFetch<IProduct[]>(`${apiBase}/products`, {
             key: 'products',
+            transform: (products) => products.filter((p) => p.available === true),
             ...opt,
         }) as AsyncData<IProduct[], Error>;
 

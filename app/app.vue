@@ -13,5 +13,6 @@
     html,
     body {
         color: $c-secondary;
+        overflow-x: clip;
     }
 </style>

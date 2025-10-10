@@ -175,10 +175,11 @@
         &__titlebox {
             display: grid;
             grid-template-columns: repeat(2, auto);
-            grid-template-rows: repeat(2, auto);
+            grid-template-rows: repeat(3, auto);
             grid-template-areas:
                 'title .'
-                'subtitle link';
+                'subtitle .'
+                'link link';
             gap: rem(32);
         }
         &__title {
@@ -205,10 +206,13 @@
         &__widgets {
             display: flex;
             flex-wrap: wrap;
-            gap: rem(32);
+            gap: rem(16) rem(32);
             &-item {
                 width: 100%;
-                max-width: rem(300);
+                flex: 0 1 rem(300);
+                @media (max-width: 768px){
+                    flex-grow: 1;
+                }
                 background-color: rgba($c-D4E1E7, 0.5);
                 border-radius: rem(32) rem(32) 0 rem(32);
                 &-wrapper {
