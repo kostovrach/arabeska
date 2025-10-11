@@ -66,16 +66,16 @@ export const useProductsStore = defineStore('products', () => {
         opt?: AsyncDataOptions<IProduct>
     ) {
         if (typeof id === 'string') {
-            const { data, status } = useLazyFetch<IProduct>(`${apiBase}/products/${id}`, {
+            const { data, status } = (await useFetch<IProduct>(`${apiBase}/products/${id}`, {
                 key: `product-${id}`,
                 ...opt,
-            }) as AsyncData<IProduct, Error>;
+            })) as AsyncData<IProduct, Error>;
 
-            watchEffect(() => {
-                singleProductStatus.value = status.value;
-                if (data.value) productsItem.value = data.value;
-            });
-        } else return;
+            singleProductStatus.value = status.value;
+            productsItem.value = data.value;
+        } else {
+            singleProductStatus.value = 'error'
+        }
     }
 
     async function searchProductsFuzzy(query: string): Promise<IProduct[]> {

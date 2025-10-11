@@ -1,34 +1,28 @@
 <template>
-    <ClientOnly>
-        <EmblaContainer ref="mainRef" class="slider slider--main" :options="mainCarouselOptions">
-            <EmblaSlide
-                class="slider--main-slide"
-                v-for="(slide, idx) in props.product?.images"
-                :key="idx"
-            >
-                <picture class="slider--main-slide-image">
-                    <img :src="slide" :alt="`Фото ${idx + 1}`" />
-                </picture>
-            </EmblaSlide>
-        </EmblaContainer>
-        <EmblaContainer
-            ref="thumbsRef"
-            class="slider slider--thumbs"
-            :options="thumbsCarouselOptions"
+    <EmblaContainer ref="mainRef" class="slider slider--main" :options="mainCarouselOptions">
+        <EmblaSlide
+            class="slider--main-slide"
+            v-for="(slide, idx) in props.product?.images"
+            :key="idx"
         >
-            <EmblaSlide
-                class="slider--thumbs-slide"
-                v-for="(slide, idx) in props.product?.images"
-                :key="idx"
-                :class="{ 'slider--thumbs-slide--active': activeIndex === idx }"
-                @click="onThumbClick(idx)"
-            >
-                <picture class="slider--thumbs-slide-image">
-                    <img :src="slide" :alt="`Фото ${idx + 1}`" />
-                </picture>
-            </EmblaSlide>
-        </EmblaContainer>
-    </ClientOnly>
+            <picture class="slider--main-slide-image">
+                <img :src="slide" :alt="`Фото ${idx + 1}`" />
+            </picture>
+        </EmblaSlide>
+    </EmblaContainer>
+    <EmblaContainer ref="thumbsRef" class="slider slider--thumbs" :options="thumbsCarouselOptions">
+        <EmblaSlide
+            class="slider--thumbs-slide"
+            v-for="(slide, idx) in props.product?.images"
+            :key="idx"
+            :class="{ 'slider--thumbs-slide--active': activeIndex === idx }"
+            @click="onThumbClick(idx)"
+        >
+            <picture class="slider--thumbs-slide-image">
+                <img :src="slide" :alt="`Фото ${idx + 1}`" />
+            </picture>
+        </EmblaSlide>
+    </EmblaContainer>
 </template>
 
 <script setup lang="ts">
@@ -59,7 +53,7 @@
         duration: 25,
     };
 
-    // Logic =======================================================
+    // logic =======================================================
     onMounted(() => {
         const main = mainRef.value?.emblaApi;
         const thumbs = thumbsRef.value?.emblaApi;
@@ -74,7 +68,7 @@
         updateActive();
     });
 
-    // Methods =====================================================
+    // methods =====================================================
     function onThumbClick(index: number) {
         const main = mainRef.value?.emblaApi;
         if (main) main.scrollTo(index);
@@ -111,11 +105,15 @@
             height: fit-content;
             margin-top: rem(8);
             &-slide {
+                cursor: pointer;
                 max-width: rem(80);
                 aspect-ratio: 1;
                 border-radius: rem(16);
                 overflow: hidden;
                 margin-right: rem(8);
+                &--active {
+                    opacity: 0.8;
+                }
                 &-image {
                     width: 100%;
                     height: 100%;

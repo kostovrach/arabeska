@@ -2,172 +2,182 @@
     <NuxtLayout>
         <section class="product-view">
             <div class="product-view__container">
-                <div class="product-view__loading" v-show="status === 'pending'">Загрузка...</div>
+                <div class="product-view__loading" v-show="status === 'pending'">
+                    <ProductPageLoader />
+                </div>
+                <div class="product-view__error" v-show="status === 'error' || status === 'idle'">
+                    <FetchError />
+                </div>
                 <div class="product-view__body" v-show="status === 'success'">
-                    <ClientOnly>
-                        <div class="product-view__slider">
-                            <div class="product-view__slider-wrapper">
-                                <div
-                                    class="product-view__sticker product-view__sticker--discount"
-                                    v-if="product?.discount && !isNewProduct(product?.date_created)"
-                                >
-                                    <span>
-                                        -{{
-                                            calcDiscountPercent(
-                                                product.price,
-                                                product.discount ?? product.price
-                                            )
-                                        }}%
-                                    </span>
-                                </div>
-                                <div
-                                    class="product-view__sticker product-view__sticker--new"
-                                    v-if="isNewProduct(product?.date_created)"
-                                >
-                                    <span>new!</span>
-                                </div>
-
-                                <ProductPageSlider :product="product" />
+                    <div class="product-view__slider">
+                        <div class="product-view__slider-wrapper">
+                            <div
+                                class="product-view__sticker product-view__sticker--discount"
+                                v-if="product?.discount && !isNewProduct(product?.date_created)"
+                            >
+                                <span>
+                                    -{{
+                                        calcDiscountPercent(
+                                            product.price,
+                                            product.discount ?? product.price
+                                        )
+                                    }}%
+                                </span>
                             </div>
+                            <div
+                                class="product-view__sticker product-view__sticker--new"
+                                v-if="isNewProduct(product?.date_created)"
+                            >
+                                <span>new!</span>
+                            </div>
+
+                            <ProductPageSlider :product="product" />
                         </div>
-                        <div class="product-view__content">
-                            <div class="product-view__main">
-                                <div class="product-view__titlebox">
-                                    <h1 class="product-view__title">{{ product?.title }}</h1>
-                                    <p class="product-view__desc">{{ product?.description }}</p>
-                                    <div class="product-view__share-menu">
-                                        <ProductPageShare />
-                                    </div>
+                    </div>
+                    <div class="product-view__content">
+                        <div class="product-view__main">
+                            <div class="product-view__titlebox">
+                                <h1 class="product-view__title">{{ product?.title }}</h1>
+                                <p class="product-view__desc">{{ product?.description }}</p>
+                                <div class="product-view__share-menu">
+                                    <ProductPageShare />
                                 </div>
-                                <div class="product-view__controls">
-                                    <ul class="product-view__variant">
-                                        <li class="product-view__variant-item">
-                                            <div class="product-view__variant-toggler">
-                                                <input
-                                                    v-model="productModel.type"
-                                                    type="radio"
-                                                    name="variant"
-                                                    value="standart"
-                                                    id="variant-standart"
-                                                />
-                                            </div>
-                                            <p class="product-view__type-desc">
-                                                <span>Стандарт</span>
-                                                — собрать букет как на фото
-                                            </p>
-                                        </li>
-                                        <li class="product-view__variant-item">
-                                            <div class="product-view__variant-toggler">
-                                                <input
-                                                    v-model="productModel.type"
-                                                    type="radio"
-                                                    name="variant"
-                                                    value="large"
-                                                    id="variant-large"
-                                                />
-                                            </div>
-                                            <p class="product-view__variant-desc">
-                                                <span>Роскошный</span>
-                                                — на 50% больше цветов
-                                            </p>
-                                        </li>
-                                        <li class="product-view__variant-item">
-                                            <div class="product-view__variant-toggler">
-                                                <input
-                                                    v-model="productModel.type"
-                                                    type="radio"
-                                                    name="variant"
-                                                    value="premium"
-                                                    id="variant-premium"
-                                                />
-                                            </div>
-                                            <p class="product-view__variant-desc">
-                                                <span>Премиум</span>
-                                                — в 2 раза больше цветов, крафтовая упаковка
-                                            </p>
-                                        </li>
-                                    </ul>
-
-                                    <div class="product-view__button-container">
-                                        <CircleButton
-                                            class="product-view__button"
-                                            type="button"
-                                            logic="double-line"
-                                        >
-                                            <span>Добавить в&nbsp;корзину</span>
-                                        </CircleButton>
-                                    </div>
-
-                                    <div class="product-view__counter">
-                                        <button
-                                            type="button"
-                                            @click="removeQuantity"
-                                            :disabled="productModel.quantity <= 1"
-                                        >
-                                            <SvgSprite type="minus" :size="14" />
-                                        </button>
-                                        <span>{{ productModel.quantity }}</span>
-                                        <button
-                                            type="button"
-                                            @click="addQuantity"
-                                            :disabled="productModel.quantity >= 5"
-                                        >
-                                            <SvgSprite type="plus" :size="14" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <ul class="product-view__price">
-                                    <li
-                                        class="product-view__price-crossed"
-                                        v-if="product?.discount"
-                                    >
-                                        <span>{{ discountPrice.toLocaleString() }}</span>
-                                        <span class="ruble"></span>
+                            </div>
+                            <div class="product-view__controls">
+                                <ul class="product-view__variant">
+                                    <li class="product-view__variant-item">
+                                        <div class="product-view__variant-toggler">
+                                            <input
+                                                v-model="productModel.type"
+                                                type="radio"
+                                                name="variant"
+                                                value="standart"
+                                                id="variant-standart"
+                                            />
+                                        </div>
+                                        <p class="product-view__type-desc">
+                                            <strong>Стандарт</strong>
+                                            — собрать букет как на фото
+                                        </p>
                                     </li>
-                                    <li class="product-view__price-current">
-                                        <span>{{ totalPrice.toLocaleString() }}</span>
-                                        <span class="ruble"></span>
+                                    <li class="product-view__variant-item">
+                                        <div class="product-view__variant-toggler">
+                                            <input
+                                                v-model="productModel.type"
+                                                type="radio"
+                                                name="variant"
+                                                value="large"
+                                                id="variant-large"
+                                            />
+                                        </div>
+                                        <p class="product-view__variant-desc">
+                                            <strong>Роскошный</strong>
+                                            — на 50% больше цветов
+                                        </p>
+                                    </li>
+                                    <li class="product-view__variant-item">
+                                        <div class="product-view__variant-toggler">
+                                            <input
+                                                v-model="productModel.type"
+                                                type="radio"
+                                                name="variant"
+                                                value="premium"
+                                                id="variant-premium"
+                                            />
+                                        </div>
+                                        <p class="product-view__variant-desc">
+                                            <strong>Премиум</strong>
+                                            — в 2 раза больше цветов, крафтовая упаковка
+                                        </p>
                                     </li>
                                 </ul>
-                            </div>
-                            <div class="product-view__sider" v-if="product?.structure">
-                                <picture class="product-view__sider-image">
-                                    <img src="/img/service/flowers-placeholder.png" alt="Состав" />
-                                </picture>
-                                <div class="product-view__sider-list">
-                                    <p>Состав</p>
-                                    <ul>
-                                        <li v-for="(item, idx) in product?.structure" :key="idx">
-                                            <span>{{ item.name }}</span>
-                                            <span v-if="item.quantity">
-                                                &mdash;{{ item.quantity }}
-                                            </span>
-                                        </li>
-                                    </ul>
+
+                                <div class="product-view__button-container">
+                                    <CircleButton
+                                        class="product-view__button"
+                                        type="button"
+                                        logic="double-line"
+                                    >
+                                        <span>Добавить в&nbsp;корзину</span>
+                                    </CircleButton>
+                                </div>
+
+                                <div class="product-view__counter">
+                                    <button
+                                        type="button"
+                                        @click="removeQuantity"
+                                        :disabled="productModel.quantity <= 1"
+                                    >
+                                        <SvgSprite type="minus" :size="14" />
+                                    </button>
+                                    <span>{{ productModel.quantity }}</span>
+                                    <button
+                                        type="button"
+                                        @click="addQuantity"
+                                        :disabled="productModel.quantity >= 5"
+                                    >
+                                        <SvgSprite type="plus" :size="14" />
+                                    </button>
                                 </div>
                             </div>
-                            <ul class="product-view__footer">
-                                <li class="product-view__footer-card" v-if="1 === 1">
-                                    <span><SvgSprite type="user-fill" :size="24" /></span>
-                                    <div>
-                                        <NuxtLink :to="{ name: 'index' }">Авторизуйтесь,</NuxtLink>
-                                        чтобы&nbsp;снизить цену
-                                    </div>
+                            <ul class="product-view__price">
+                                <li class="product-view__price-crossed" v-if="product?.discount">
+                                    <span>
+                                        {{
+                                            product?.discount
+                                                ? totalPrice.toLocaleString()
+                                                : discountPrice.toLocaleString()
+                                        }}
+                                    </span>
+                                    <span class="ruble"></span>
                                 </li>
-                                <li class="product-view__footer-card" v-if="1 === 1">
-                                    <span><SvgSprite type="delivery" :size="24" /></span>
-                                    <span>Бесплатная доставка от 1500 ₽</span>
-                                </li>
-                                <li class="product-view__footer-card" v-if="product?.size">
-                                    <span><SvgSprite type="box" :size="24" /></span>
-                                    <span>Размеры {{ product?.size }}</span>
+                                <li class="product-view__price-current">
+                                    <span>
+                                        {{
+                                            product?.discount
+                                                ? discountPrice.toLocaleString()
+                                                : totalPrice.toLocaleString()
+                                        }}
+                                    </span>
+                                    <span class="ruble"></span>
                                 </li>
                             </ul>
                         </div>
-                        <div class="product-view__info">
-                            <ProductPageAccordion />
+                        <div class="product-view__sider" v-if="product?.structure">
+                            <picture class="product-view__sider-image">
+                                <img src="/img/service/flowers-placeholder.png" alt="Состав" />
+                            </picture>
+                            <div class="product-view__sider-list">
+                                <p>Состав</p>
+                                <ul>
+                                    <li v-for="(item, idx) in product?.structure" :key="idx">
+                                        <span>{{ item.name }}</span>
+                                        <span v-if="item.quantity">&mdash;{{ item.quantity }}</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </ClientOnly>
+                        <ul class="product-view__footer">
+                            <li class="product-view__footer-card" v-if="1 === 1">
+                                <span><SvgSprite type="user-fill" :size="24" /></span>
+                                <div>
+                                    <NuxtLink :to="{ name: 'index' }">Авторизуйтесь,</NuxtLink>
+                                    чтобы&nbsp;снизить цену
+                                </div>
+                            </li>
+                            <li class="product-view__footer-card" v-if="1 === 1">
+                                <span><SvgSprite type="delivery" :size="24" /></span>
+                                <span>Бесплатная доставка от 1500 ₽</span>
+                            </li>
+                            <li class="product-view__footer-card" v-if="product?.size">
+                                <span><SvgSprite type="box" :size="24" /></span>
+                                <span>Размеры {{ product?.size }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="product-view__info">
+                        <ProductPageAccordion />
+                    </div>
                 </div>
             </div>
         </section>
@@ -177,6 +187,7 @@
 <script setup lang="ts">
     // data =================================================================
     const route = useRoute();
+
     const productsStore = useProductsStore();
 
     productsStore.getProductById(route.params.id);
@@ -186,6 +197,34 @@
     const product = computed(() => productsItem.value);
     const status = computed(() => singleProductStatus.value);
     // =====================================================================
+
+    // SEO & Meta ===========================================================
+    useHead(() => ({
+        title: `Букет "${product.value?.title}" - Arabeska`,
+        meta: [
+            {
+                name: 'description',
+                content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
+            },
+            {
+                property: 'og:title',
+                content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
+            },
+            {
+                property: 'og:description',
+                content: `${product.value?.description}`,
+            },
+            {
+                property: 'og:image',
+                content: product.value?.images[0],
+            },
+            {
+                name: 'twitter:card',
+                content: 'summary_large_image',
+            },
+        ],
+    }));
+    // ======================================================================
 
     // product processing ===================================================
     // model
@@ -230,7 +269,7 @@
     @use '~/assets/scss/abstracts' as *;
 
     .product-view {
-        margin: rem(64) 0;
+        margin: lineScale(64, 32, 480, 1440) 0;
         &__container {
             @include content-container;
         }
@@ -297,18 +336,16 @@
         &__title {
             grid-area: title;
             font-size: lineScale(64, 32, 480, 1440);
+            line-height: 1;
             font-weight: $fw-semi;
         }
         &__share-menu {
             grid-area: share;
+            color: $c-98BBD7;
         }
         &__desc {
             grid-area: desc;
             font-size: lineScale(18, 16, 480, 1440);
-        }
-        &__share-menu {
-            cursor: pointer;
-            color: $c-98BBD7;
         }
         &__variant {
             display: flex;
@@ -324,9 +361,7 @@
             }
             &-desc {
                 font-family: 'Inter', sans-serif;
-                span {
-                    font-weight: $fw-bold;
-                }
+                line-height: 1.4;
             }
         }
         &__button-container {
