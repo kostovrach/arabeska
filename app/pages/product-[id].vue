@@ -36,7 +36,7 @@
                                     <h1 class="product-view__title">{{ product?.title }}</h1>
                                     <p class="product-view__desc">{{ product?.description }}</p>
                                     <div class="product-view__share-menu">
-                                        <SvgSprite type="share" :size="32" />
+                                        <ProductPageShare />
                                     </div>
                                 </div>
                                 <div class="product-view__controls">
@@ -175,11 +175,11 @@
 </template>
 
 <script setup lang="ts">
-    // data=================================================================
-    const route = useRoute().params.id;
+    // data =================================================================
+    const route = useRoute();
     const productsStore = useProductsStore();
 
-    productsStore.getProductById(route);
+    productsStore.getProductById(route.params.id);
 
     const { productsItem, singleProductStatus } = storeToRefs(productsStore);
 
@@ -187,7 +187,7 @@
     const status = computed(() => singleProductStatus.value);
     // =====================================================================
 
-    // product processing===================================================
+    // product processing ===================================================
     // model
     const productModel = reactive({
         type: 'standart',
@@ -217,7 +217,9 @@
     });
 
     // counter
-    const addQuantity = () => productModel.quantity++;
+    const addQuantity = () => {
+        if (productModel.quantity < 5) productModel.quantity++;
+    };
     const removeQuantity = () => {
         if (productModel.quantity > 1) productModel.quantity--;
     };
@@ -247,7 +249,7 @@
             height: 100%;
             &-wrapper {
                 position: sticky;
-                top: rem(132);
+                top: rem(136);
                 width: 100%;
                 height: fit-content;
             }

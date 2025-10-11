@@ -16,16 +16,6 @@ export default defineNuxtConfig({
         },
     },
 
-    app: {
-        head: {
-            title: 'Arabeska - Магазин цветов в Самаре',
-            htmlAttrs: {
-                lang: 'ru',
-            },
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
-        },
-    },
-
     svgSprite: {
         input: './app/assets/svg',
         output: './app/assets/svg/gen',

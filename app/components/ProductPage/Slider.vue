@@ -1,14 +1,28 @@
 <template>
     <ClientOnly>
-        <EmblaContainer class="slider slider--main" :options="mainCarouselOptions">
-            <EmblaSlide class="slider--main-slide" v-for="(slide, idx) in props.product?.images">
+        <EmblaContainer ref="mainRef" class="slider slider--main" :options="mainCarouselOptions">
+            <EmblaSlide
+                class="slider--main-slide"
+                v-for="(slide, idx) in props.product?.images"
+                :key="idx"
+            >
                 <picture class="slider--main-slide-image">
                     <img :src="slide" :alt="`Фото ${idx + 1}`" />
                 </picture>
             </EmblaSlide>
         </EmblaContainer>
-        <EmblaContainer class="slider slider--thumbs" :options="thumbCarouselOptions">
-            <EmblaSlide class="slider--thumbs-slide" v-for="(slide, idx) in props.product?.images">
+        <EmblaContainer
+            ref="thumbsRef"
+            class="slider slider--thumbs"
+            :options="thumbsCarouselOptions"
+        >
+            <EmblaSlide
+                class="slider--thumbs-slide"
+                v-for="(slide, idx) in props.product?.images"
+                :key="idx"
+                :class="{ 'slider--thumbs-slide--active': activeIndex === idx }"
+                @click="onThumbClick(idx)"
+            >
                 <picture class="slider--thumbs-slide-image">
                     <img :src="slide" :alt="`Фото ${idx + 1}`" />
                 </picture>
@@ -18,29 +32,53 @@
 </template>
 
 <script setup lang="ts">
-    // types================================================================
+    // types ================================================================
     import type { IProduct } from '~/interfaces/product';
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
-    // =====================================================================
 
     const props = defineProps<{
         product: IProduct | null;
     }>();
 
-    const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
+    // refs =================================================================
+    const mainRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
+    const thumbsRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
+    const activeIndex = ref(0);
 
+    // options =============================================================
     const mainCarouselOptions: EmblaOptionsType = {
         loop: true,
         align: 'start',
         dragFree: false,
         duration: 35,
     };
-    const thumbCarouselOptions: EmblaOptionsType = {
-        loop: true,
+    const thumbsCarouselOptions: EmblaOptionsType = {
+        loop: false,
         align: 'start',
         dragFree: true,
-        duration: 35,
+        duration: 25,
     };
+
+    // Logic =======================================================
+    onMounted(() => {
+        const main = mainRef.value?.emblaApi;
+        const thumbs = thumbsRef.value?.emblaApi;
+
+        if (!main || !thumbs) return;
+
+        const updateActive = () => {
+            activeIndex.value = main.selectedScrollSnap();
+        };
+        main.on('select', updateActive);
+
+        updateActive();
+    });
+
+    // Methods =====================================================
+    function onThumbClick(index: number) {
+        const main = mainRef.value?.emblaApi;
+        if (main) main.scrollTo(index);
+    }
 </script>
 
 <style scoped lang="scss">
