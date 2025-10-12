@@ -3,5 +3,5 @@ export interface ICertificate {
     title: string;
     price: number;
     description?: string;
-    image: string | string[];
+    images: string[];
 }

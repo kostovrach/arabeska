@@ -1,15 +1,19 @@
 <template>
-    <EmblaContainer ref="mainRef" class="slider slider--main" :options="mainCarouselOptions">
-        <EmblaSlide
-            class="slider--main-slide"
-            v-for="(slide, idx) in props.product?.images"
-            :key="idx"
-        >
-            <picture class="slider--main-slide-image">
-                <img :src="slide" :alt="`Фото ${idx + 1}`" />
-            </picture>
-        </EmblaSlide>
-    </EmblaContainer>
+    <Lightbox>
+        <EmblaContainer ref="mainRef" class="slider slider--main" :options="mainCarouselOptions">
+            <EmblaSlide
+                class="slider--main-slide"
+                v-for="(slide, idx) in props.product?.images"
+                :key="idx"
+            >
+                <a class="slider--main-slide-wrapper" :data-fancybox="product?.title" :href="slide">
+                    <picture class="slider--main-slide-image">
+                        <img :src="slide" :alt="`Фото ${idx + 1}`" />
+                    </picture>
+                </a>
+            </EmblaSlide>
+        </EmblaContainer>
+    </Lightbox>
     <EmblaContainer ref="thumbsRef" class="slider slider--thumbs" :options="thumbsCarouselOptions">
         <EmblaSlide
             class="slider--thumbs-slide"
@@ -54,7 +58,7 @@
     };
 
     // logic =======================================================
-    onMounted(() => {
+    watchEffect((onCleanup) => {
         const main = mainRef.value?.emblaApi;
         const thumbs = thumbsRef.value?.emblaApi;
 
@@ -66,6 +70,10 @@
         main.on('select', updateActive);
 
         updateActive();
+
+        onCleanup(() => {
+            main.off('select', updateActive);
+        });
     });
 
     // methods =====================================================
@@ -106,13 +114,13 @@
             margin-top: rem(8);
             &-slide {
                 cursor: pointer;
-                max-width: rem(80);
+                max-width: lineScale(80, 56, 480, 1440);
                 aspect-ratio: 1;
                 border-radius: rem(16);
                 overflow: hidden;
                 margin-right: rem(8);
                 &--active {
-                    opacity: 0.8;
+                    opacity: 0.6;
                 }
                 &-image {
                     width: 100%;

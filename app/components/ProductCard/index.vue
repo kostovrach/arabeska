@@ -1,5 +1,10 @@
 <template>
-    <div class="product">
+    <div
+        :class="[
+            'product',
+            props.dynamic?.enable ? `product--dynamic product--${props.dynamic?.class}` : '',
+        ]"
+    >
         <div
             class="product__sticker product__sticker--discount"
             v-if="product.discount && !isNewProduct(product.date_created)"
@@ -19,7 +24,7 @@
                 <img
                     class="product__image"
                     :src="product.images?.[0] || '/img/temp/placeholder-900x900.jpg'"
-                    :alt="product.title || ''"
+                    :alt="product.title || '#'"
                 />
             </picture>
             <div class="product__content">
@@ -78,13 +83,13 @@
 <script setup lang="ts">
     import type { IProduct } from '~/interfaces/product.ts';
 
-    const props = defineProps({
-        data: {
-            type: Object as () => IProduct,
-            required: true,
-            default: () => ({}) as IProduct,
-        },
-    });
+    const props = defineProps<{
+        data: IProduct;
+        dynamic?: {
+            enable: boolean;
+            class: 'active' | 'disable';
+        };
+    }>();
 
     const product = props.data;
 
@@ -112,13 +117,22 @@
         $border-radius: rem(24);
 
         position: relative;
-        max-width: rem(345);
+        width: rem(345);
         height: 100%;
         transition: translate $td $tf;
         @media (pointer: fine) {
             &:hover {
                 translate: 0 rem(-8);
             }
+        }
+        &--dynamic {
+            transition: all $td $tf;
+        }
+        &--disable {
+            scale: 0.8;
+            opacity: 0.8;
+            filter: grayscale(100%);
+            pointer-events: none;
         }
         &__sticker {
             position: absolute;
@@ -135,16 +149,16 @@
         }
         &__wrapper {
             width: 100%;
-            height: 100%;
+            // height: 100%;
             display: flex;
             flex-direction: column;
             border-radius: $border-radius;
             overflow: hidden;
         }
         &__image-container {
-            // flex: 0 1 80%;
             width: 100%;
-            height: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
             img {
                 width: 100%;
                 height: 100%;
@@ -152,7 +166,6 @@
             }
         }
         &__content {
-            // flex: 0 1 20%;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -182,11 +195,12 @@
         &__desc {
             width: 100%;
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5ch;
             margin-top: rem(4);
             &-item {
                 width: fit-content;
-                white-space: nowrap;
+                // white-space: nowrap;
                 font-size: lineScale(16, 14, 480, 1440);
                 opacity: 0.5;
                 &:not(:last-child)::after {
@@ -267,7 +281,7 @@
 
     @media (max-width: 1024px) {
         .product {
-            max-width: rem(240);
+            width: rem(280);
             &__titlebox {
                 flex-direction: column-reverse;
             }

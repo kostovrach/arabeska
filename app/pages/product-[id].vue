@@ -176,11 +176,12 @@
                         </ul>
                     </div>
                     <div class="product-view__info">
-                        <ProductPageAccordion />
+                        <ProductPageAccordion :multiply="true" />
                     </div>
                 </div>
             </div>
         </section>
+        <AccessorySlider title="Идеальное дополнение к букету" />
     </NuxtLayout>
 </template>
 
@@ -275,11 +276,11 @@
         }
         &__body {
             display: grid;
-            grid-template-columns: minmax(20%, rem(634)) auto;
+            grid-template-columns: repeat(2, auto);
             grid-template-areas:
                 'slider content'
                 'slider info';
-            gap: rem(64);
+            gap: lineScale(64, 32, 1024, 1440);
         }
         &__slider {
             grid-area: slider;
@@ -290,6 +291,7 @@
                 position: sticky;
                 top: rem(136);
                 width: 100%;
+                min-width: rem(280);
                 height: fit-content;
             }
         }
@@ -352,7 +354,8 @@
             flex-direction: column;
             gap: rem(16);
             &-item {
-                display: flex;
+                display: grid;
+                grid-template-columns: max-content auto;
                 align-items: center;
                 gap: rem(8);
             }
@@ -498,6 +501,67 @@
         }
         &__info {
             grid-area: info;
+        }
+    }
+
+    @media (max-width: 1240px) {
+        .product-view {
+            &__body {
+                grid-template-areas:
+                    'slider content'
+                    'info info';
+            }
+            &__content {
+                grid-template-areas:
+                    'main main'
+                    'sider sider'
+                    'footer footer';
+            }
+            &__sider {
+                width: 100%;
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: space-between;
+                gap: rem(32);
+            }
+            &__footer {
+                flex-wrap: wrap;
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .product-view {
+            &__sider {
+                &-image {
+                    max-width: rem(160);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .product-view {
+            &__body {
+                grid-template-areas:
+                    'slider slider'
+                    'content content'
+                    'info info';
+            }
+        }
+    }
+
+    @media (max-width: 580px) {
+        .product-view {
+            &__footer {
+                display: flex;
+                flex-direction: column;
+                &-card {
+                    flex: initial;
+                    width: 100%;
+                    justify-content: flex-start;
+                }
+            }
         }
     }
 </style>

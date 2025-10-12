@@ -169,7 +169,7 @@
                 grid-area: content;
                 display: flex;
                 flex-direction: column;
-                padding: lineScale(64,16,480,1440);
+                padding: lineScale(64, 16, 480, 1440);
                 &--centered {
                     align-items: center;
                     text-align: center;
@@ -208,7 +208,7 @@
                 grid-template-columns: repeat(4, 1fr);
                 grid-template-areas: 'image-1 . image-2 image-3';
                 gap: rem(16);
-                margin-top: lineScale(64,32,480,1440);
+                margin-top: lineScale(64, 32, 480, 1440);
                 &-image-container {
                     width: 100%;
                     height: 100%;
@@ -231,7 +231,7 @@
         }
     }
 
-    @media (max-width: 1024px){
+    @media (max-width: 1024px) {
         .home-advant {
             &__list {
                 gap: rem(96);

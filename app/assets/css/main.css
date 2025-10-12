@@ -16,3 +16,7 @@ body {
     font-family: 'Inter', sans-serif;
     content: '\20BD';
 }
+
+.fancybox__dialog {
+    max-width: 100vw !important;
+}

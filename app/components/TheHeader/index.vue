@@ -65,7 +65,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: lineScale(32,16,480,1440);
+            gap: lineScale(32, 16, 480, 1440);
             @include content-container;
         }
 
@@ -73,7 +73,7 @@
         &__overview {
             display: flex;
             align-items: center;
-            gap: lineScale(16,8,480,1440);
+            gap: lineScale(16, 8, 480, 1440);
             font-size: rem(14);
             font-weight: $fw-semi;
         }
@@ -97,7 +97,7 @@
                 &--touch {
                     width: rem(50);
                     height: rem(32);
-                    @media (min-width: 1024px) {
+                    @media (min-width: 1025px) {
                         display: none;
                     }
                 }
@@ -115,7 +115,7 @@
         &__controls {
             display: flex;
             align-items: center;
-            gap: lineScale(16,8,480,1440);
+            gap: lineScale(16, 8, 480, 1440);
             font-weight: $fw-semi;
         }
         &__location {
@@ -162,7 +162,7 @@
         }
     }
 
-    @media (max-width: 1300px){
+    @media (max-width: 1300px) {
         .header {
             &__location,
             &__number-list {
@@ -170,7 +170,7 @@
             }
         }
     }
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         .header {
             &__nav {
                 display: none;

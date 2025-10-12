@@ -389,7 +389,7 @@
                 'map socials'
                 'map address';
             justify-content: space-between;
-            gap: rem(32) lineScale(64,32,480,1440);
+            gap: rem(32) lineScale(64, 32, 480, 1440);
             &-list {
                 max-width: 20ch;
                 display: flex;
@@ -442,8 +442,8 @@
                 font-size: rem(14);
                 font-weight: $fw-semi;
                 white-space: nowrap;
-                @media (pointer: fine){
-                    &:hover{
+                @media (pointer: fine) {
+                    &:hover {
                         color: $c-FFFFFF;
                     }
                 }
@@ -456,10 +456,10 @@
         }
     }
 
-    @media (max-width: 1440px){
+    @media (max-width: 1440px) {
         .footer {
             &__container {
-                grid-template-areas: 
+                grid-template-areas:
                     'main nav'
                     'info info';
                 gap: rem(64) rem(32);
@@ -470,10 +470,10 @@
         }
     }
 
-    @media (max-width: 1024px){
+    @media (max-width: 1024px) {
         .footer {
             &__container {
-                grid-template-areas: 
+                grid-template-areas:
                     'main main'
                     'nav nav'
                     'info info';

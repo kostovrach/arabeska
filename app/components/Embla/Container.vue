@@ -48,6 +48,7 @@
         user-select: none;
         &__container {
             display: flex;
+            align-items: center;
         }
     }
 </style>

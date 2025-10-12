@@ -19,9 +19,17 @@
     $yAxisIntersection: -$minScreen * $slope + $min;
 
     @if $min > $max {
-        @return clamp(#{$max * 1rem}, #{$yAxisIntersection * 1rem} + #{$slope * 100vw}, #{$min * 1rem});
+        @return clamp(
+            #{$max * 1rem},
+            #{$yAxisIntersection * 1rem} + #{$slope * 100vw},
+            #{$min * 1rem}
+        );
     } @else {
-        @return clamp(#{$min * 1rem}, #{$yAxisIntersection * 1rem} + #{$slope * 100vw}, #{$max * 1rem});
+        @return clamp(
+            #{$min * 1rem},
+            #{$yAxisIntersection * 1rem} + #{$slope * 100vw},
+            #{$max * 1rem}
+        );
     }
 }
 @function lineScale-y($max, $min, $minScreen: 480, $maxScreen: 900) {
@@ -34,9 +42,17 @@
     $yAxisIntersection: -$minScreen * $slope + $min;
 
     @if $min > $max {
-        @return clamp(#{$max * 1rem}, #{$yAxisIntersection * 1rem} + #{$slope * 100lvh}, #{$min * 1rem});
+        @return clamp(
+            #{$max * 1rem},
+            #{$yAxisIntersection * 1rem} + #{$slope * 100lvh},
+            #{$min * 1rem}
+        );
     } @else {
-        @return clamp(#{$min * 1rem}, #{$yAxisIntersection * 1rem} + #{$slope * 100lvh}, #{$max * 1rem});
+        @return clamp(
+            #{$min * 1rem},
+            #{$yAxisIntersection * 1rem} + #{$slope * 100lvh},
+            #{$max * 1rem}
+        );
     }
 }
 

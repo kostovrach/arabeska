@@ -74,7 +74,7 @@ export const useProductsStore = defineStore('products', () => {
             singleProductStatus.value = status.value;
             productsItem.value = data.value;
         } else {
-            singleProductStatus.value = 'error'
+            singleProductStatus.value = 'error';
         }
     }
 

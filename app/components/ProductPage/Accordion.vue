@@ -1,5 +1,5 @@
 <template>
-    <Accordion class="product-spoilers">
+    <Accordion class="product-spoilers" :multiple="props.multiply">
         <AccordionPanel
             :value="idx"
             class="product-spoilers__item"
@@ -15,6 +15,9 @@
 </template>
 
 <script setup lang="ts">
+    const props = defineProps<{
+        multiply?: boolean;
+    }>();
     // mock-data
     const spoilers = [
         {

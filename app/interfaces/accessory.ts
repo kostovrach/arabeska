@@ -1,6 +1,6 @@
 interface IAccessoryStructure {
     name?: string;
-    quantity?: string | number
+    quantity?: string | number;
 }
 
 export interface IAccessory {

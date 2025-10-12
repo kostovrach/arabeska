@@ -34,7 +34,11 @@
                         @mouseenter="autoplayStop"
                         @mouseleave="autoplayStart"
                     >
-                        <EmblaSlide class="home-carousel__slide" v-for="product in products" :key="product.id">
+                        <EmblaSlide
+                            class="home-carousel__slide"
+                            v-for="product in products"
+                            :key="product.id"
+                        >
                             <ProductCard :data="product" />
                         </EmblaSlide>
                     </EmblaContainer>
@@ -43,12 +47,14 @@
                 <div class="home-carousel__controls" v-if="!props.autoplay">
                     <button
                         class="home-carousel__button home-carousel__button--prev"
+                        type="button"
                         @click="scrollPrev"
                     >
                         <SvgSprite type="arrow" />
                     </button>
                     <button
                         class="home-carousel__button home-carousel__button--next"
+                        type="button"
                         @click="scrollNext"
                     >
                         <SvgSprite type="arrow" />
@@ -90,7 +96,7 @@
 
     const carouselOptions: EmblaOptionsType = {
         loop: true,
-        align: 'start',
+        align: 'center',
         dragFree: true,
         duration: props.autoplay ? 20000 : 25,
     };
@@ -128,7 +134,7 @@
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             grid-template-rows: repeat(2, auto);
-            grid-template-areas: 
+            grid-template-areas:
                 '. title .'
                 'link link link';
             gap: rem(32);
@@ -177,35 +183,7 @@
             gap: rem(32);
         }
         &__button {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            &::before {
-                content: '';
-                display: block;
-                width: rem(32);
-                height: rem(2);
-                transform: scaleY(0.89);
-                translate: 0 -0.5px;
-                background-color: currentColor;
-                transition: width $td $tf;
-            }
-            @media (pointer: fine) {
-                &:hover {
-                    &::before {
-                        width: rem(48);
-                    }
-                }
-            }
-            &[disabled] {
-                opacity: 0.5;
-                &::before {
-                    width: 0;
-                }
-            }
-            &--prev {
-                transform: scaleX(-1);
-            }
+            @include slider-buttons;
         }
         &__slide {
             width: fit-content;

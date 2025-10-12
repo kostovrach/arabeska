@@ -2,7 +2,7 @@
     <form class="form">
         <h3 class="form__title">Сэкономьте 5% за подписку!</h3>
         <div class="form__inputbox">
-            <InputMask 
+            <InputMask
                 v-model="form.input"
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (___) ___-__-__"

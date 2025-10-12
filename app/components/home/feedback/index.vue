@@ -210,7 +210,7 @@
             &-item {
                 width: 100%;
                 flex: 0 1 rem(300);
-                @media (max-width: 768px){
+                @media (max-width: 768px) {
                     flex-grow: 1;
                 }
                 background-color: rgba($c-D4E1E7, 0.5);

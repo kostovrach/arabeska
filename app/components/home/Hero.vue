@@ -311,35 +311,7 @@
                 align-items: center;
                 gap: rem(32);
                 &-button {
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                    &::before {
-                        content: '';
-                        display: block;
-                        width: rem(32);
-                        height: rem(2);
-                        transform: scaleY(0.89);
-                        translate: 0 -0.5px;
-                        background-color: currentColor;
-                        transition: width $td $tf;
-                    }
-                    @media (pointer: fine) {
-                        &:hover {
-                            &::before {
-                                width: rem(48);
-                            }
-                        }
-                    }
-                    &[disabled] {
-                        opacity: 0.5;
-                        &::before {
-                            width: 0;
-                        }
-                    }
-                    &--prev {
-                        transform: scaleX(-1);
-                    }
+                    @include slider-buttons;
                 }
             }
             &-media {
@@ -421,7 +393,7 @@
         }
     }
 
-    @media (max-width: 1300px){
+    @media (max-width: 1300px) {
         .home-hero {
             &__slide {
                 &-image-container img {
@@ -430,7 +402,7 @@
             }
         }
     }
-    @media (max-width: 1024px){
+    @media (max-width: 1024px) {
         .home-hero {
             &__slide {
                 &-wrapper {
@@ -442,9 +414,11 @@
             }
         }
     }
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         .home-hero {
             &__slide {
+                min-height: initial;
+                padding: rem(64) rem(16);
                 &-wrapper {
                     grid-template-columns: 100%;
                 }

@@ -2,7 +2,13 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
 
-    modules: ['@pinia/nuxt', '@nuxt/eslint', 'nuxt-svg-sprite-icon', '@vueuse/nuxt', '@primevue/nuxt-module'],
+    modules: [
+        '@pinia/nuxt',
+        '@nuxt/eslint',
+        'nuxt-svg-sprite-icon',
+        '@vueuse/nuxt',
+        '@primevue/nuxt-module',
+    ],
     css: ['~/assets/css/main.css'],
 
     typescript: {
@@ -22,5 +28,12 @@ export default defineNuxtConfig({
         defaultSprite: 'icons',
         elementClass: 'icon',
         optimize: false,
+    },
+
+    build: {
+        transpile: ['@fancyapps/ui', 'fancyapps-ui'],
+    },
+    alias: {
+        'fancyapps-ui': './@fancyapps/ui/dist/index.esm.js',
     },
 });

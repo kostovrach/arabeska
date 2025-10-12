@@ -21,6 +21,6 @@
 
     .embla__slide {
         min-width: 0;
-        margin-right: lineScale(32,14,1024,1440);
+        margin-right: lineScale(32, 14, 1024, 1440);
     }
 </style>

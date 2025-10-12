@@ -118,7 +118,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: lineScale(20,18,480,1440);
+    font-size: lineScale(20, 18, 480, 1440);
     font-family: 'Inter', sans-serif;
     color: $color;
     rotate: -15deg;
@@ -149,6 +149,38 @@
     @supports not (mask-image: url()) {
         background-color: $bg-color;
         border-radius: 50%;
+    }
+}
+
+@mixin slider-buttons() {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    &::before {
+        content: '';
+        display: block;
+        width: rem(32);
+        height: rem(2);
+        transform: scaleY(0.89);
+        translate: 0 -0.5px;
+        background-color: currentColor;
+        transition: width $td $tf;
+    }
+    @media (pointer: fine) {
+        &:hover {
+            &::before {
+                width: rem(48);
+            }
+        }
+    }
+    &[disabled] {
+        opacity: 0.5;
+        &::before {
+            width: 0;
+        }
+    }
+    &--prev {
+        transform: scaleX(-1);
     }
 }
 
@@ -338,7 +370,7 @@
     box-sizing: border-box;
 
     width: $width;
-    aspect-ratio: 2/1;
+    height: calc($width / 2);
 
     background-color: $c-FFFFFF;
     border: rem(2) solid $init-color;

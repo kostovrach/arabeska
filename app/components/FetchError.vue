@@ -28,14 +28,19 @@
             aspect-ratio: 16/9;
         }
         &__title {
-            font-size: lineScale(32,24,480,1440);
+            font-size: lineScale(32, 24, 480, 1440);
             font-weight: $fw-semi;
             opacity: 0.25;
             margin-top: rem(24);
         }
         &__button {
             margin-top: rem(32);
-            @include button-primary($border-color: $c-D4E1E7, $font-size: lineScale(16,14,480,1440), $padding: rem(12) rem(40), $anim-color: $c-accent);
+            @include button-primary(
+                $border-color: $c-D4E1E7,
+                $font-size: lineScale(16, 14, 480, 1440),
+                $padding: rem(12) rem(40),
+                $anim-color: $c-accent
+            );
         }
     }
 </style>
