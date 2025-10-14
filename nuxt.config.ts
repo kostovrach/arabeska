@@ -8,8 +8,9 @@ export default defineNuxtConfig({
         'nuxt-svg-sprite-icon',
         '@vueuse/nuxt',
         '@primevue/nuxt-module',
+        '@vue-final-modal/nuxt',
     ],
-    css: ['~/assets/css/main.css'],
+    css: ['vue-final-modal/style.css', '~/assets/css/main.css'],
 
     typescript: {
         strict: true,

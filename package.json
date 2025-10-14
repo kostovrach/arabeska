@@ -19,6 +19,7 @@
         "@primevue/nuxt-module": "^4.4.1",
         "@types/node": "^24.6.1",
         "@vitejs/plugin-vue": "^6.0.1",
+        "@vue-final-modal/nuxt": "^1.0.3",
         "@vueuse/nuxt": "13.9.0",
         "embla-carousel": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
@@ -31,6 +32,7 @@
         "primevue": "^4.4.1",
         "vite": "^7.1.7",
         "vue": "^3.5.22",
+        "vue-final-modal": "^4.5.5",
         "vue-router": "^4.5.1"
     },
     "devDependencies": {

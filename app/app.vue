@@ -1,8 +1,11 @@
 <template>
     <NuxtPage />
+    <ModalsContainer />
 </template>
 
 <script setup lang="ts">
+    import { ModalsContainer } from 'vue-final-modal';
+
     // data ========================================================
     const productsStore = useProductsStore();
     productsStore.getProducts();

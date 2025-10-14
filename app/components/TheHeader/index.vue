@@ -40,13 +40,20 @@
                     <SvgSprite type="bag" :size="24" />
                     <span class="header__action-indicator">48</span>
                 </NuxtLink>
-                <TheHeaderBurger class="header__burger" />
+                <TheHeaderBurger @click="open" class="header__burger" />
             </div>
         </div>
     </header>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    import { ModalsAsideMenu } from '#components';
+    import { useModal } from 'vue-final-modal';
+
+    const { open, close } = useModal({
+        component: ModalsAsideMenu,
+    });
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

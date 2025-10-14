@@ -1,5 +1,5 @@
 <template>
-    <div class="menu">
+    <VueFinalModal class="menu">
         <div class="menu__container">
             <div class="menu__header">
                 <button class="menu__button" type="button">
@@ -38,10 +38,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </VueFinalModal>
 </template>
 
 <script setup lang="ts">
+    import { VueFinalModal } from 'vue-final-modal';
+
     // types ===================================================
     interface INavLink {
         routeName: string;
