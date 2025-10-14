@@ -27,7 +27,6 @@
         "fuse.js": "^7.1.0",
         "nuxt": "^4.1.2",
         "nuxt-svg-sprite-icon": "^2.0.1",
-        "nuxt-swiper": "2.0.1",
         "pinia": "^3.0.3",
         "primevue": "^4.4.1",
         "vite": "^7.1.7",
