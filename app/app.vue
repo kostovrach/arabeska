@@ -8,7 +8,12 @@
 
     // data ========================================================
     const productsStore = useProductsStore();
+    const certificateStore = useCertificatesStore();
+    const accessoriesStore = useAccessoriesStore();
+
     productsStore.getProducts();
+    certificateStore.getCertificates();
+    accessoriesStore.getAccessories();
     // =============================================================
 
     // SEO & Meta ==================================================
@@ -28,6 +33,5 @@
     html,
     body {
         color: $c-secondary;
-        overflow-x: clip;
     }
 </style>

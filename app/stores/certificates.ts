@@ -31,16 +31,16 @@ export const useCertificatesStore = defineStore('certificates', () => {
         opt?: AsyncDataOptions<IProduct>
     ) {
         if (typeof id === 'string') {
-            const { data, status } = useLazyFetch<IProduct>(`${apiBase}/certificates/${id}`, {
+            const { data, status } = (await useFetch<IProduct>(`${apiBase}/certificates/${id}`, {
                 key: `certificate-${id}`,
                 ...opt,
-            }) as AsyncData<IProduct, Error>;
+            })) as AsyncData<IProduct, Error>;
 
-            watchEffect(() => {
-                singleCertificateStatus.value = status.value;
-                if (data.value) certificatesItem.value = data.value;
-            });
-        } else return;
+            singleCertificateStatus.value = status.value;
+            certificatesItem.value = data.value;
+        } else {
+            singleCertificateStatus.value = 'error';
+        }
     }
 
     return {

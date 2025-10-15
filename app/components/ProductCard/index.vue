@@ -7,7 +7,7 @@
     >
         <div
             class="product__sticker product__sticker--discount"
-            v-if="product.discount && !isNewProduct(product.date_created)"
+            v-if="product.discount"
         >
             <span>
                 -{{ calcDiscountPercent(product.price, product.discount ?? product.price) }}%
@@ -15,7 +15,7 @@
         </div>
         <div
             class="product__sticker product__sticker--new"
-            v-if="isNewProduct(product.date_created)"
+            v-if="isNewProduct(product.date_created) && !product.discount"
         >
             <span>new!</span>
         </div>

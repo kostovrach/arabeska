@@ -2,7 +2,6 @@ import type { AsyncData, AsyncDataOptions, AsyncDataRequestStatus } from '#app';
 import type { IProduct } from '~/interfaces/product';
 
 export const useAccessoriesStore = defineStore('accessories', () => {
-    // Tech===========================
     const apiBase = useRuntimeConfig().public.apiBase;
 
     // State===============================================

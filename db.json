@@ -495,7 +495,7 @@
             "description": "Мини-открытка с нежным цветочным принтом.",
             "size": "15x10 см",
             "reason": ["birthday", "romantic"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Бумага дизайнерская", "quantity": "1 шт." },
                 { "name": "Конверт", "quantity": "1 шт." }
@@ -511,7 +511,7 @@
             "description": "Плюшевый мишка кремового цвета, отличный подарок к букету.",
             "size": "40x25x20 см",
             "reason": ["birthday", "romantic"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Ткань плюш", "quantity": "1 шт." },
                 { "name": "Наполнитель синтепон", "quantity": "1 шт." }
@@ -526,7 +526,7 @@
             "description": "Прозрачная ваза цилиндрической формы.",
             "size": "30x15x15 см",
             "reason": ["housewarming", "anniversary"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [{ "name": "Стекло", "quantity": "1 шт." }]
         },
         {
@@ -538,7 +538,7 @@
             "description": "Фольгированный воздушный шар в форме сердца.",
             "size": "40x40 см",
             "reason": ["valentine", "birthday"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Фольга", "quantity": "1 шт." },
                 { "name": "Гелий", "quantity": "1 заправка" }
@@ -554,7 +554,7 @@
             "description": "Мини-набор шоколадных конфет ручной работы.",
             "size": "12x12x4 см",
             "reason": ["romantic", "thankyou"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Шоколад темный", "quantity": "6 шт." },
                 { "name": "Упаковочная коробка", "quantity": "1 шт." }
@@ -569,7 +569,7 @@
             "description": "Свеча с легким ароматом лаванды.",
             "size": "10x7 см",
             "reason": ["romantic", "anniversary"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Воск", "quantity": "1 шт." },
                 { "name": "Стеклянный стакан", "quantity": "1 шт." }
@@ -584,7 +584,7 @@
             "description": "Оригинальная открытка с тиснением и декоративным бантом.",
             "size": "12x8 см",
             "reason": ["wedding", "birthday"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Картон дизайнерский", "quantity": "1 шт." },
                 { "name": "Тесьма", "quantity": "1 шт." }
@@ -600,7 +600,7 @@
             "description": "Матовая ваза ручной работы в скандинавском стиле.",
             "size": "28x14x14 см",
             "reason": ["housewarming"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [{ "name": "Керамика", "quantity": "1 шт." }]
         },
         {
@@ -612,7 +612,7 @@
             "description": "Красивая коробка для цветов и подарков.",
             "size": "25x25x20 см",
             "reason": ["wedding", "birthday"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Картон", "quantity": "1 шт." },
                 { "name": "Лента атласная", "quantity": "1 шт." }
@@ -627,7 +627,7 @@
             "description": "Набор из пяти разноцветных латексных шаров.",
             "size": "30x30 см",
             "reason": ["birthday", "graduation"],
-            "images": ["/img/temp/temp1.jpg"],
+            "images": ["/img/temp/temp-accessory.jpg"],
             "structure": [
                 { "name": "Латексные шары", "quantity": "5 шт." },
                 { "name": "Гелий", "quantity": "1 заправка" }
@@ -640,91 +640,91 @@
             "title": "Сертификат на 1000 рублей",
             "price": 1000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "8b19f7e2-92e9-41f2-87ef-3b768cd9a13b",
             "title": "Сертификат на 5000 рублей",
             "price": 5000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "b3b07ac4-2c54-43a5-9c59-07b2a38fdf5c",
             "title": "Сертификат на 10000 рублей",
             "price": 10000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "a6f4180b-b331-4dbf-9a91-17b7580a6b72",
             "title": "Сертификат на 15000 рублей",
             "price": 15000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "7f8cfb32-8885-4f47-9b38-569bc1f8f5a5",
             "title": "Сертификат на 20000 рублей",
             "price": 20000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "f1f5a83b-6630-4a72-9ef2-ecdb7b8c5f8c",
             "title": "Сертификат на 25000 рублей",
             "price": 25000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "1a3a1c77-17a0-42f5-8b4f-6c8d9c6d22dd",
             "title": "Сертификат на 35000 рублей",
             "price": 35000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "c8d8ec61-2925-4987-96e0-379e3bc94c32",
             "title": "Сертификат на 50000 рублей",
             "price": 50000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "3d47f80c-f7bb-4d59-a3fb-7f9e78cd7e2e",
             "title": "Сертификат на 75000 рублей",
             "price": 75000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "5f1a3c65-64a4-489a-9d23-4fb19c8e7a47",
             "title": "Сертификат на 100000 рублей",
             "price": 100000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "b6b3a429-70d9-40e3-b2c7-428d8e7cfad5",
             "title": "Сертификат на 150000 рублей",
             "price": 150000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "8c4f1b68-8d3e-42bb-8ef5-48c5f0f1a678",
             "title": "Сертификат на 200000 рублей",
             "price": 200000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         },
         {
             "id": "e1f5d3b2-19c4-4523-9c28-9fb73a3f38f2",
             "title": "Сертификат на 250000 рублей",
             "price": 250000,
             "description": "Подарочный сертификат, которым можно оплатить любые товары нашего магазина.",
-            "images": ["/img/temp/temp1.jpg"]
+            "images": ["/img/temp/temp-certificate.jpg"]
         }
     ],
     "feedback": [

@@ -10,7 +10,13 @@
                         <SvgSprite type="logo-icon" size="100%" />
                     </div>
                 </NuxtLink>
-                <TheHeaderDropDown class="header__dropdown" />
+                <div class="header__dropdown">
+                    <button class="header__dropdown-button" type="button" @click="openCatalog">
+                        <SvgSprite type="frame" :size="12" />
+                        <span>Каталог</span>
+                    </button>
+                    <div class="header__dropdo-__body"></div>
+                </div>
                 <nav class="header__nav">
                     <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
                         <span>Тренды</span>
@@ -40,18 +46,32 @@
                     <SvgSprite type="bag" :size="24" />
                     <span class="header__action-indicator">48</span>
                 </NuxtLink>
-                <TheHeaderBurger @click="open" class="header__burger" />
+                <TheHeaderBurger @click="openMenu" class="header__burger" />
             </div>
         </div>
     </header>
 </template>
 
 <script setup lang="ts">
-    import { ModalsAsideMenu } from '#components';
+    import { ModalsSideMenu, ModalsСatalog } from '#components';
     import { useModal } from 'vue-final-modal';
 
-    const { open, close } = useModal({
-        component: ModalsAsideMenu,
+    const { open: openMenu, close: closeMenu } = useModal({
+        component: ModalsSideMenu,
+        attrs: {
+            onClose() {
+                closeMenu();
+            },
+        },
+    });
+
+    const { open: openCatalog, close: closeCatalog } = useModal({
+        component: ModalsСatalog,
+        attrs: {
+            onClose() {
+                closeCatalog();
+            },
+        },
     });
 </script>
 
@@ -108,6 +128,16 @@
                         display: none;
                     }
                 }
+            }
+        }
+        &__dropdown {
+            &-button {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: rem(8);
+                color: $c-D4E1E7;
+                @include frame-scale;
             }
         }
         &__nav {

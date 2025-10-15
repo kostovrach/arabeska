@@ -9,8 +9,8 @@
     padding: $padding;
 }
 
-@mixin content-block() {
-    margin: rem(128) 0;
+@mixin content-block($margin: rem(128)) {
+    margin: $margin 0;
 }
 
 // components
@@ -262,8 +262,8 @@
 }
 @mixin hover-overlap($bg-color: $c-accent) {
     position: relative;
-    &::before{
-        content:'';
+    &::before {
+        content: '';
         position: absolute;
         z-index: 1;
         top: 0;
@@ -278,9 +278,9 @@
         position: relative;
         z-index: 2;
     }
-    @media (pointer: fine){
-        &:hover{
-            &::before{
+    @media (pointer: fine) {
+        &:hover {
+            &::before {
                 width: 100%;
             }
         }

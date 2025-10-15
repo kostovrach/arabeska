@@ -8,5 +8,5 @@ export function isNewProduct(dateCreated: string | null | undefined, period?: nu
     const diffInMs = now.getTime() - created.getTime();
     const daysDiff = diffInMs / (1000 * 60 * 60 * 24);
 
-    return daysDiff < (period || 14);
+    return daysDiff < (period || 164);
 }

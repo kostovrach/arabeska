@@ -39,16 +39,17 @@
     const { productsList, productsStatus } = storeToRefs(productsStore);
 
     const popularproducts = computed(() => (productsList.value ?? []).filter((el) => el.popular));
+
     const bestsellerProducts = computed(() =>
         (productsList.value ?? []).filter((el) => el.bestseller)
     );
+
     const discountProducts = computed(() =>
         (productsList.value ?? []).filter((el) => el.discount && el.discount !== 0)
     );
 
     // certificates
     const certificateStore = useCertificatesStore();
-    certificateStore.getCertificates();
 
     const { certificatesList, certificatesStatus } = storeToRefs(certificateStore);
     //======================================================
