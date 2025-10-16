@@ -108,7 +108,7 @@
         },
         {
             label: 'цветочная подписка',
-            routeName: '',
+            routeName: 'subscription',
         },
         {
             label: 'отзывы',

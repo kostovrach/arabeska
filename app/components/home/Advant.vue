@@ -106,9 +106,7 @@
     </section>
 </template>
 
-<script setup lang="ts">
-    import StarsOverlay from '../StarsOverlay.vue';
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

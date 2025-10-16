@@ -3,7 +3,7 @@
         <section class="product-view">
             <div class="product-view__container">
                 <div class="product-view__loading" v-show="status === 'pending'">
-                    <ProductPageLoader />
+                    <ProductLoader />
                 </div>
                 <div class="product-view__error" v-show="status === 'error' || status === 'idle'">
                     <FetchError />
@@ -31,7 +31,7 @@
                                 <span>new!</span>
                             </div>
 
-                            <ProductPageSlider :product="product" />
+                            <ProductSlider :product="product" />
                         </div>
                     </div>
                     <div class="product-view__content">
@@ -40,7 +40,7 @@
                                 <h1 class="product-view__title">{{ product?.title }}</h1>
                                 <p class="product-view__desc">{{ product?.description }}</p>
                                 <div class="product-view__share-menu">
-                                    <ProductPageShare />
+                                    <ProductShare />
                                 </div>
                             </div>
                             <div class="product-view__controls">
@@ -176,7 +176,7 @@
                         </ul>
                     </div>
                     <div class="product-view__info">
-                        <ProductPageAccordion :multiply="true" />
+                        <ProductAccordion :multiply="true" />
                     </div>
                 </div>
             </div>

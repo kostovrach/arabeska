@@ -7,26 +7,45 @@
                     <span class="feedback-list__counter">({{ feedbackList?.length }})</span>
                 </ClientOnly>
             </div>
-            <ul class="feedback-list__body">
-                <li v-for="(card, idx) in items" :key="idx" class="feedback-list__item">
-                    <div class="feedback-list__item-rate">
-                        <span v-for="n in card.rate" :key="n" class="feedback-list__item-rate-icon">
-                            <SvgSprite type="star" :size="32" />
-                        </span>
-                    </div>
-                    <picture class="feedback-list__item-image-container">
-                        <img
-                            class="feedback-list__item-image"
-                            :src="card.user.avatar || '/img/service/flowers-placeholder.png'"
-                            :alt="card.user.name"
-                        />
-                    </picture>
-                    <div class="feedback-list__item-content">
-                        <h3 class="feedback-list__item-title">{{ card.user.name }}</h3>
-                        <p class="feedback-list__item-text" v-if="card.text">{{ card.text }}</p>
-                    </div>
-                </li>
-            </ul>
+            <div class="feedback-list__error" v-show="status === 'error' || status === 'idle'">
+                <FetchError />
+            </div>
+            <div
+                class="feedback-list__body feedback-list__body--loader"
+                v-show="status === 'pending'"
+            >
+                <FeedbackLoader
+                    class="feedback-list__item feedback-list__item--loader"
+                    v-for="n in 8"
+                    :key="n"
+                />
+            </div>
+            <ClientOnly>
+                <ul class="feedback-list__body" v-show="status === 'success'">
+                    <li v-for="(card, idx) in items" :key="idx" class="feedback-list__item">
+                        <div class="feedback-list__item-rate">
+                            <span
+                                v-for="n in card.rate"
+                                :key="n"
+                                class="feedback-list__item-rate-icon"
+                            >
+                                <SvgSprite type="star" :size="32" />
+                            </span>
+                        </div>
+                        <picture class="feedback-list__item-image-container">
+                            <img
+                                class="feedback-list__item-image"
+                                :src="card.user.avatar || '/img/service/flowers-placeholder.png'"
+                                :alt="card.user.name"
+                            />
+                        </picture>
+                        <div class="feedback-list__item-content">
+                            <h3 class="feedback-list__item-title">{{ card.user.name }}</h3>
+                            <p class="feedback-list__item-text" v-if="card.text">{{ card.text }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </ClientOnly>
         </div>
     </section>
 </template>
@@ -66,8 +85,6 @@
         &__body {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-
-            // grid-template-columns: repeat(auto-fill, minmax(rem(385), 1fr));
             gap: rem(16);
             margin-top: rem(64);
         }
