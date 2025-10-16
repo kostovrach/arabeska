@@ -14,6 +14,10 @@
     @use '~/assets/scss/abstracts' as *;
 
     .page {
+        min-height: 100lvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         overflow-x: clip;
     }
 </style>

@@ -5,10 +5,7 @@
             props.dynamic?.enable ? `product--dynamic product--${props.dynamic?.class}` : '',
         ]"
     >
-        <div
-            class="product__sticker product__sticker--discount"
-            v-if="product.discount"
-        >
+        <div class="product__sticker product__sticker--discount" v-if="product.discount">
             <span>
                 -{{ calcDiscountPercent(product.price, product.discount ?? product.price) }}%
             </span>

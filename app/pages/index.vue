@@ -50,6 +50,7 @@
 
     // certificates
     const certificateStore = useCertificatesStore();
+    // Вызов основного метода происходит в app.vue
 
     const { certificatesList, certificatesStatus } = storeToRefs(certificateStore);
     //======================================================

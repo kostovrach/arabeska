@@ -1,0 +1,190 @@
+<template>
+    <section class="feedback-list">
+        <div class="feedback-list__container">
+            <div class="feedback-list__titlebox">
+                <h2 class="feedback-list__title">Отзывы</h2>
+                <ClientOnly>
+                    <span class="feedback-list__counter">({{ feedbackList?.length }})</span>
+                </ClientOnly>
+            </div>
+            <ul class="feedback-list__body">
+                <li v-for="(card, idx) in items" :key="idx" class="feedback-list__item">
+                    <div class="feedback-list__item-rate">
+                        <span v-for="n in card.rate" :key="n" class="feedback-list__item-rate-icon">
+                            <SvgSprite type="star" :size="32" />
+                        </span>
+                    </div>
+                    <picture class="feedback-list__item-image-container">
+                        <img
+                            class="feedback-list__item-image"
+                            :src="card.user.avatar || '/img/service/flowers-placeholder.png'"
+                            :alt="card.user.name"
+                        />
+                    </picture>
+                    <div class="feedback-list__item-content">
+                        <h3 class="feedback-list__item-title">{{ card.user.name }}</h3>
+                        <p class="feedback-list__item-text" v-if="card.text">{{ card.text }}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+</template>
+
+<script setup lang="ts">
+    // data===================================================
+    const feedbackStore = useFeedbackStore();
+    feedbackStore.getFeedback();
+
+    const { feedbackList, feedbackStatus } = storeToRefs(feedbackStore);
+
+    const status = computed(() => feedbackStatus.value);
+    const items = computed(() => feedbackList.value ?? []);
+    // =======================================================
+</script>
+
+<style scoped lang="scss">
+    @use '~/assets/scss/abstracts' as *;
+
+    .feedback-list {
+        @include content-block($margin: rem(64));
+        &__container {
+            @include content-container;
+        }
+        &__titlebox {
+            display: flex;
+            align-items: flex-start;
+        }
+        &__title {
+            font-size: lineScale(48, 40, 480, 1440);
+            font-weight: $fw-semi;
+        }
+        &__counter {
+            font-family: 'Inter', sans-serif;
+            font-weight: $fw-semi;
+        }
+        &__body {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            // grid-template-columns: repeat(auto-fill, minmax(rem(385), 1fr));
+            gap: rem(16);
+            margin-top: rem(64);
+        }
+        &__item {
+            position: relative;
+            font-family: 'Inter', sans-serif;
+            border: rem(1) solid $c-D4E1E7;
+            border-radius: rem(32);
+            overflow: hidden;
+            &:nth-child(even) {
+                translate: 0 rem(96);
+            }
+            &-rate {
+                position: absolute;
+                top: rem(16);
+                left: rem(16);
+                display: flex;
+                align-items: center;
+                gap: rem(4);
+                color: $c-FFFFFF;
+                &-icon {
+                    filter: drop-shadow(5px 5px 5px rgba(#000, 0.5));
+                }
+            }
+            &-image-container {
+                width: 100%;
+                aspect-ratio: 1;
+            }
+            &-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            &-content {
+                display: flex;
+                flex-direction: column;
+                gap: rem(24);
+                padding: rem(16);
+            }
+            &-title {
+                font-size: lineScale(22, 18, 480, 1440);
+                font-weight: $fw-semi;
+            }
+            &-text {
+                font-size: lineScale(18, 16, 480, 1440);
+                line-height: 1.25;
+            }
+        }
+    }
+
+    @media (max-width: 1240px) {
+        .feedback-list {
+            &__body {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            &__item {
+                &:nth-child(even) {
+                    translate: initial;
+                }
+                &:nth-child(3n + 2) {
+                    translate: 0 rem(96);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .feedback-list {
+            &__body {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            &__item {
+                &:nth-child(3n + 2) {
+                    translate: initial;
+                }
+                &:nth-child(even) {
+                    translate: 0 rem(96);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 540px) {
+        .feedback-list {
+            &__body {
+                grid-template-columns: 100%;
+            }
+            &__item {
+                display: grid;
+                grid-template-areas:
+                    'rate rate'
+                    'image content';
+                gap: rem(40) rem(16);
+                padding: rem(24);
+                &:nth-child(even) {
+                    translate: initial;
+                }
+                &-rate {
+                    grid-area: rate;
+                    position: initial;
+                    color: $c-accent;
+                    &-icon {
+                        filter: initial;
+                    }
+                }
+                &-image-container {
+                    grid-area: image;
+                    width: rem(64);
+                    border-radius: 50%;
+                    overflow: hidden;
+                }
+                &-content {
+                    grid-area: content;
+                    gap: rem(16);
+                    padding: 0;
+                }
+            }
+        }
+    }
+</style>

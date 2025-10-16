@@ -135,12 +135,12 @@
             align-items: flex-start;
         }
         &__title {
-            font-size: lineScale(64,32,480,1440);
+            font-size: lineScale(64, 32, 480, 1440);
             font-weight: $fw-semi;
         }
         &__counter {
             font-family: 'Inter', sans-serif;
-            font-size: lineScale(24,18,480,1440)
+            font-size: lineScale(24, 18, 480, 1440);
         }
     }
 

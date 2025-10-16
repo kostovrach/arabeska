@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+    import { VueFinalModal } from 'vue-final-modal';
     // types =========================================================
     import type { RouteParamsRawGeneric } from 'vue-router';
     interface ICatalogCard {
@@ -40,7 +41,6 @@
         routeParams?: RouteParamsRawGeneric;
     }
     // ===============================================================
-    import { VueFinalModal } from 'vue-final-modal';
 
     const emit = defineEmits<{
         (e: 'close'): void;

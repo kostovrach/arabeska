@@ -20,7 +20,7 @@
                             'menu__nav-link',
                             routeName === link.routeName ? 'menu__nav-link--current' : '',
                         ]"
-                        :to="{ name: link.routeName }"
+                        :to="{ name: link.routeName, params: link.routeParams }"
                     >
                         <span>{{ link.label }}</span>
                     </NuxtLink>
@@ -51,9 +51,10 @@
     import { VueFinalModal } from 'vue-final-modal';
 
     // types ===================================================
+    import type { RouteParamsRawGeneric } from 'vue-router';
     interface INavLink {
         routeName: string;
-        routeParams?: object;
+        routeParams?: RouteParamsRawGeneric;
         label: string;
     }
 
@@ -78,7 +79,8 @@
         },
         {
             label: 'каталог',
-            routeName: '',
+            routeName: 'catalog-category',
+            routeParams: { category: 'flowers' },
         },
         {
             label: 'личный кабинет',
@@ -110,15 +112,15 @@
         },
         {
             label: 'отзывы',
-            routeName: '',
+            routeName: 'feedback',
         },
         {
             label: 'адреса магазинов',
-            routeName: '',
+            routeName: 'contact',
         },
         {
             label: 'оптовикам',
-            routeName: '',
+            routeName: 'wholesale',
         },
     ];
 
@@ -199,7 +201,13 @@
             overflow-y: auto;
             padding: rem(32) 0;
             @supports (mask-image: url()) {
-                mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+                mask-image: linear-gradient(
+                    180deg,
+                    transparent 0%,
+                    #000 10%,
+                    #000 90%,
+                    transparent 100%
+                );
             }
             @include hide-scrollbar;
             &-link {
