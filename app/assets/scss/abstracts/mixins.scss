@@ -184,6 +184,22 @@
     }
 }
 
+@mixin close-button() {
+    cursor: pointer;
+    width: fit-content;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include frame-scale($padding: rem(8), $border-radius: 50%);
+    @media (pointer: fine) {
+        transition: rotate $td $tf;
+        &:hover {
+            rotate: -90deg;
+        }
+    }
+}
+
 // effects
 @mixin gradient-text-hover($main-color: $c-000000, $accent-color: $c-accent) {
     @supports (background-clip: text) {

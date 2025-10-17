@@ -16,8 +16,13 @@
                 <div class="footer__nav-list footer__nav-list--map">
                     <h4 class="footer__nav-title">Карта сайта</h4>
                     <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Главная</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Каталог</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Отзывы</NuxtLink>
+                    <NuxtLink
+                        class="footer__nav-link"
+                        :to="{ name: 'catalog-category', params: { category: 'flowers' } }"
+                    >
+                        Каталог
+                    </NuxtLink>
+                    <NuxtLink class="footer__nav-link" :to="{ name: 'feedback' }">Отзывы</NuxtLink>
                     <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">
                         Личный кабинет
                     </NuxtLink>
@@ -25,9 +30,13 @@
                         Доставка и оплата
                     </NuxtLink>
                     <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Возврат</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Оптовикам</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Франшиза</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Контакты</NuxtLink>
+                    <NuxtLink class="footer__nav-link" :to="{ name: 'wholesale' }">
+                        Оптовикам
+                    </NuxtLink>
+                    <NuxtLink class="footer__nav-link" :to="{ name: 'franchise' }">
+                        Франшиза
+                    </NuxtLink>
+                    <NuxtLink class="footer__nav-link" :to="{ name: 'contact' }">Контакты</NuxtLink>
                 </div>
                 <div class="footer__nav-list footer__nav-list--socials">
                     <h4 class="footer__nav-title">Мы в соцсетях</h4>
@@ -87,7 +96,9 @@
             </div>
             <div class="footer__info">
                 <span class="footer__info-copy">2019 Arabeska. All Rights Reserved</span>
-                <button class="footer__info-button">Политика конфиденциальности</button>
+                <button class="footer__info-button" type="button" @click="openPrivacy">
+                    Политика конфиденциальности
+                </button>
                 <span class="footer__info-footnote">
                     *Instagram — продукт компании Meta, которая признана экстремистской организацией
                     в России
@@ -97,7 +108,19 @@
     </footer>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    import { ModalsPrivacy } from '#components';
+    import { useModal } from 'vue-final-modal';
+
+    const { open: openPrivacy, close: closePrivacy } = useModal({
+        component: ModalsPrivacy,
+        attrs: {
+            onClose() {
+                closePrivacy();
+            },
+        },
+    });
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

@@ -14,7 +14,7 @@
                 class="feedback-list__body feedback-list__body--loader"
                 v-show="status === 'pending'"
             >
-                <FeedbackLoader
+                <FeedbackCardLoader
                     class="feedback-list__item feedback-list__item--loader"
                     v-for="n in 8"
                     :key="n"

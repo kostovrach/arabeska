@@ -20,7 +20,11 @@
                             'menu__nav-link',
                             routeName === link.routeName ? 'menu__nav-link--current' : '',
                         ]"
-                        :to="{ name: link.routeName, params: link.routeParams }"
+                        :to="{
+                            name: link.routeName,
+                            params: link.routeParams,
+                            hash: link.routeHash,
+                        }"
                     >
                         <span>{{ link.label }}</span>
                     </NuxtLink>
@@ -55,6 +59,7 @@
     interface INavLink {
         routeName: string;
         routeParams?: RouteParamsRawGeneric;
+        routeHash?: string;
         label: string;
     }
 
@@ -96,15 +101,18 @@
         },
         {
             label: 'оплата',
-            routeName: '',
+            routeName: 'faq',
+            routeHash: '#payment',
         },
         {
             label: 'доставка',
-            routeName: '',
+            routeName: 'faq',
+            routeHash: '#delivery',
         },
         {
             label: 'возврат',
-            routeName: '',
+            routeName: 'faq',
+            routeHash: '#terms-of-return',
         },
         {
             label: 'цветочная подписка',
@@ -181,19 +189,7 @@
         }
         &__button {
             align-self: flex-end;
-            cursor: pointer;
-            width: fit-content;
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            @include frame-scale($padding: rem(8), $border-radius: 50%);
-            @media (pointer: fine) {
-                transition: rotate $td $tf;
-                &:hover {
-                    rotate: -90deg;
-                }
-            }
+            @include close-button;
         }
         &__nav {
             display: flex;
