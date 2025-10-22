@@ -39,18 +39,18 @@
             <div class="catalog-head">
                 <div class="catalog-head__container">
                     <div class="catalog-head__titlebox">
-                        <h2 class="catalog-head__title" v-if="route.params.category === 'flowers'">
+                        <h2 v-if="route.params.category === 'flowers'" class="catalog-head__title">
                             Сборные букеты с доставкой в Самаре
                         </h2>
                         <h2
-                            class="catalog-head__title"
                             v-if="route.params.category === 'certificates'"
+                            class="catalog-head__title"
                         >
                             Подарочные сертификаты
                         </h2>
                         <h2
-                            class="catalog-head__title"
                             v-if="route.params.category === 'accessory'"
+                            class="catalog-head__title"
                         >
                             Дополнительные товары и аксессуары
                         </h2>

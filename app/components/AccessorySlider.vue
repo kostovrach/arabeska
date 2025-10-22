@@ -2,7 +2,7 @@
     <section class="accessory-slider">
         <div class="accessory-slider__container">
             <div class="accessory-slider__titlebox">
-                <StarsOverlay class="accessory-slider__title" v-if="props.title">
+                <StarsOverlay v-if="props.title" class="accessory-slider__title">
                     <h2 v-html="props.title"></h2>
                 </StarsOverlay>
                 <div class="accessory-slider__controls">
@@ -23,14 +23,14 @@
                 </div>
             </div>
             <div class="accessory-slider__body">
-                <div class="accessory-slider__loader" v-show="status === 'pending'">
+                <div v-show="status === 'pending'" class="accessory-slider__loader">
                     <div class="accessory-slider__loader-wrapper">
                         <ProductCardLoader v-for="n in 5" :key="n" />
                     </div>
                 </div>
                 <div
-                    class="accessory-slider__error"
                     v-show="status === 'error' || status === 'idle'"
+                    class="accessory-slider__error"
                 >
                     <FetchError />
                 </div>
@@ -42,9 +42,9 @@
                         padding="48px 0"
                     >
                         <EmblaSlide
-                            class="accessory-slider__slide"
                             v-for="(product, idx) in products"
                             :key="product.id"
+                            class="accessory-slider__slide"
                             :class="{ 'accessory-slider__slide--active': idx === selectedIndex }"
                         >
                             <ProductCard

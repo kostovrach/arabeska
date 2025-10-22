@@ -5,8 +5,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { Fancybox as FancyboxType } from '@fancyapps/ui';
-    import type { FancyboxOptions } from '@fancyapps/ui';
+    import type { Fancybox as FancyboxType, FancyboxOptions } from '@fancyapps/ui';
 
     const props = defineProps<{
         options?: FancyboxOptions;

@@ -1,10 +1,10 @@
 <template>
     <div class="slider">
-        <EmblaContainer class="slider__body" ref="sliderRef" :options="carouselOptions">
+        <EmblaContainer ref="sliderRef" class="slider__body" :options="carouselOptions">
             <EmblaSlide
-                class="slider__slide"
                 v-for="slide in slides"
                 :key="slide.id"
+                class="slider__slide"
                 :space-between="16"
             >
                 <picture class="slider__slide-image-container">

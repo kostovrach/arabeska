@@ -17,7 +17,7 @@
         <div class="wholesale">
             <section class="wholesale-list">
                 <ul class="wholesale-list__container">
-                    <li class="wholesale-list__item" v-for="(item, idx) in listItems" :key="idx">
+                    <li v-for="(item, idx) in listItems" :key="idx" class="wholesale-list__item">
                         <picture class="wholesale-list__item-image-container">
                             <img
                                 class="wholesale-list__item-image"

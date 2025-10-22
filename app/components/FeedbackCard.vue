@@ -3,7 +3,7 @@
         <div class="feedback-card__wrapper">
             <div class="feedback-card__body">
                 <div class="feedback-card__rate">
-                    <SvgSprite type="rate-star" :size="24" v-for="n in item.rate" :key="n" />
+                    <SvgSprite v-for="n in item.rate" :key="n" type="rate-star" :size="24" />
                 </div>
                 <div class="feedback-card__text">{{ item.text }}</div>
             </div>

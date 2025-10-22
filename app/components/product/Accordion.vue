@@ -1,10 +1,10 @@
 <template>
     <Accordion class="product-spoilers" :multiple="props.multiply">
         <AccordionPanel
-            :value="idx"
-            class="product-spoilers__item"
             v-for="(item, idx) in spoilers"
             :key="idx"
+            :value="idx"
+            class="product-spoilers__item"
         >
             <AccordionHeader class="product-spoilers__item-title">{{ item.title }}</AccordionHeader>
             <AccordionContent>

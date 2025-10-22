@@ -5,14 +5,14 @@
             props.dynamic?.enable ? `product--dynamic product--${props.dynamic?.class}` : '',
         ]"
     >
-        <div class="product__sticker product__sticker--discount" v-if="product.discount">
+        <div v-if="product.discount" class="product__sticker product__sticker--discount">
             <span>
                 -{{ calcDiscountPercent(product.price, product.discount ?? product.price) }}%
             </span>
         </div>
         <div
-            class="product__sticker product__sticker--new"
             v-if="isNewProduct(product.date_created) && !product.discount"
+            class="product__sticker product__sticker--new"
         >
             <span>new!</span>
         </div>
@@ -29,11 +29,11 @@
                     <h3 class="product__title">{{ product.title || '' }}</h3>
                     <div class="product__id">{{ product.id }}</div>
                 </div>
-                <ul class="product__desc" v-if="product.structure">
+                <ul v-if="product.structure" class="product__desc">
                     <li
-                        class="product__desc-item"
                         v-for="(item, idx) in product.structure.slice(0, 2)"
                         :key="idx"
+                        class="product__desc-item"
                     >
                         {{ item.name }}
                     </li>
@@ -41,8 +41,8 @@
                 <div class="product__footer">
                     <ul class="product__price">
                         <li
-                            class="product__price-item product__price-item--crossed"
                             v-if="product.discount && typeof product.discount === 'number'"
+                            class="product__price-item product__price-item--crossed"
                         >
                             <div>
                                 {{ product.price.toLocaleString() }}

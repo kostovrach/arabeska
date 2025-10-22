@@ -7,21 +7,21 @@
                     <span class="feedback-list__counter">({{ feedbackList?.length }})</span>
                 </ClientOnly>
             </div>
-            <div class="feedback-list__error" v-show="status === 'error' || status === 'idle'">
+            <div v-show="status === 'error' || status === 'idle'" class="feedback-list__error">
                 <FetchError />
             </div>
             <div
-                class="feedback-list__body feedback-list__body--loader"
                 v-show="status === 'pending'"
+                class="feedback-list__body feedback-list__body--loader"
             >
                 <FeedbackCardLoader
-                    class="feedback-list__item feedback-list__item--loader"
                     v-for="n in 8"
                     :key="n"
+                    class="feedback-list__item feedback-list__item--loader"
                 />
             </div>
             <ClientOnly>
-                <ul class="feedback-list__body" v-show="status === 'success'">
+                <ul v-show="status === 'success'" class="feedback-list__body">
                     <li v-for="(card, idx) in items" :key="idx" class="feedback-list__item">
                         <div class="feedback-list__item-rate">
                             <span
@@ -41,7 +41,7 @@
                         </picture>
                         <div class="feedback-list__item-content">
                             <h3 class="feedback-list__item-title">{{ card.user.name }}</h3>
-                            <p class="feedback-list__item-text" v-if="card.text">{{ card.text }}</p>
+                            <p v-if="card.text" class="feedback-list__item-text">{{ card.text }}</p>
                         </div>
                     </li>
                 </ul>

@@ -1,15 +1,15 @@
 <template>
     <ClientOnly>
         <div
-            :class="['searchbar', searchbarIsOpen ? 'searchbar--active' : '']"
             v-if="useProductsStore().productsList?.length"
+            :class="['searchbar', searchbarIsOpen ? 'searchbar--active' : '']"
         >
             <div class="searchbar__container">
                 <div class="searchbar__inputbox">
                     <input
-                        v-model="inputModel"
-                        ref="inputRef"
                         id="searchbar"
+                        ref="inputRef"
+                        v-model="inputModel"
                         class="searchbar__input"
                         type="text"
                         placeholder="Найти букет"
@@ -24,10 +24,10 @@
                         <SvgSprite type="search" />
                     </button>
                 </div>
-                <div class="searchbar__result" v-if="searchbarIsOpen && inputModel !== ''">
+                <div v-if="searchbarIsOpen && inputModel !== ''" class="searchbar__result">
                     <div
-                        class="searchbar__result-empty"
                         v-if="!searchResult?.length && inputModel !== '' && !isLoading"
+                        class="searchbar__result-empty"
                     >
                         <span class="searchbar__result-empty-text">
                             К сожалению совпадений не найдено, но...
@@ -41,17 +41,17 @@
                         </NuxtLink>
                     </div>
                     <div
-                        class="searchbar__result-loading"
                         v-if="!searchResult?.length && inputModel !== '' && isLoading"
+                        class="searchbar__result-loading"
                     >
                         <span></span>
                     </div>
 
                     <ul class="searchbar__result-list">
                         <li
-                            class="searchbar__result-item"
                             v-for="product in searchResult"
                             :key="product.id"
+                            class="searchbar__result-item"
                         >
                             <NuxtLink
                                 class="searchbar__result-item-wrapper"
@@ -78,8 +78,8 @@
                         </li>
                     </ul>
                     <div
-                        class="searchbar__result-overflow"
                         v-if="searchResult?.length && searchResult?.length === 5"
+                        class="searchbar__result-overflow"
                     >
                         <NuxtLink class="searchbar__result-overflow-link" :to="{ name: 'index' }">
                             <span>Показать все</span>

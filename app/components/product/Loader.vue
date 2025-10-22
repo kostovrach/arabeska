@@ -7,7 +7,7 @@
                 <div class="loader__skeleton loader__skeleton--title"></div>
             </div>
             <div class="loader__text">
-                <div class="loader__skeleton loader__skeleton--text" v-for="n in 6" :key="n"></div>
+                <div v-for="n in 6" :key="n" class="loader__skeleton loader__skeleton--text"></div>
             </div>
 
             <div class="loader__footer">

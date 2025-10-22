@@ -6,7 +6,7 @@
         <div class="info-hero__container">
             <span class="info-hero__tag">{{ props.tag }}</span>
             <h1 class="info-hero__title" v-html="props.title"></h1>
-            <p class="info-hero__desc" v-if="props.desc" v-html="props.desc"></p>
+            <p v-if="props.desc" class="info-hero__desc" v-html="props.desc"></p>
             <slot name="button"></slot>
         </div>
     </section>

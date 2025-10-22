@@ -2,9 +2,9 @@
     <Lightbox>
         <EmblaContainer ref="mainRef" class="slider slider--main" :options="mainCarouselOptions">
             <EmblaSlide
-                class="slider--main-slide"
                 v-for="(slide, idx) in props.product?.images"
                 :key="idx"
+                class="slider--main-slide"
             >
                 <a class="slider--main-slide-wrapper" :data-fancybox="product?.title" :href="slide">
                     <picture class="slider--main-slide-image">
@@ -16,9 +16,9 @@
     </Lightbox>
     <EmblaContainer ref="thumbsRef" class="slider slider--thumbs" :options="thumbsCarouselOptions">
         <EmblaSlide
-            class="slider--thumbs-slide"
             v-for="(slide, idx) in props.product?.images"
             :key="idx"
+            class="slider--thumbs-slide"
             :class="{ 'slider--thumbs-slide--active': activeIndex === idx }"
             @click="onThumbClick(idx)"
         >

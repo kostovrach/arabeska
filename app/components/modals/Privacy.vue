@@ -14,10 +14,10 @@
                     <span class="modal-privacy__tag">Последнее обновление:</span>
                 </div>
                 <div class="modal-privacy__body">
-                    <div class="modal-privacy__loader" v-show="1 !== 1">
+                    <div v-show="1 !== 1" class="modal-privacy__loader">
                         <TextModalLoader />
                     </div>
-                    <div class="modal-privacy__error" v-show="1 !== 1">
+                    <div v-show="1 !== 1" class="modal-privacy__error">
                         <FetchError />
                     </div>
                     <!-- <div class="modal-privacy__content" v-html=""></div> -->

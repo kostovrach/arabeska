@@ -3,10 +3,10 @@
         <h3 class="subscribe-form__title" v-html="props.title"></h3>
         <div class="subscribe-form__inputbox">
             <InputMask
+                id="subscribe-phone"
                 v-model="form.input"
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (___) ___-__-__"
-                id="subscribe-phone"
                 type="text"
                 name="subscribe-phone"
             />
@@ -18,10 +18,10 @@
         <div class="subscribe-form__agreement">
             <div class="subscribe-form__checkbox">
                 <input
+                    id="subscribe-agreement"
                     v-model="form.checkbox"
                     type="checkbox"
                     name="subscribe-agreement"
-                    id="subscribe-agreement"
                 />
             </div>
             <label for="subscribe-agreement">

@@ -15,8 +15,8 @@
                     class="subscription-pricing__item"
                 >
                     <div
-                        class="subscription-pricing__item-sticker subscription-pricing__item-sticker--discount"
                         v-if="card.discount"
+                        class="subscription-pricing__item-sticker subscription-pricing__item-sticker--discount"
                     >
                         <span>
                             -{{ calcDiscountPercent(card.price, card.discount ?? card.price) }}%
@@ -39,8 +39,8 @@
                             <div class="subscription-pricing__item-footer">
                                 <div class="subscription-pricing__item-price">
                                     <span
-                                        class="subscription-pricing__item-price-crossed"
                                         v-if="card.discount && typeof card.discount === 'number'"
+                                        class="subscription-pricing__item-price-crossed"
                                     >
                                         {{ card.price.toLocaleString() }}
                                         <span class="ruble"></span>

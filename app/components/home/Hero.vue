@@ -1,7 +1,7 @@
 <template>
     <section class="home-hero">
         <div class="home-hero__container">
-            <EmblaContainer class="home-hero__slider" ref="sliderRef" :options="carouselOptions">
+            <EmblaContainer ref="sliderRef" class="home-hero__slider" :options="carouselOptions">
                 <EmblaSlide class="home-hero__slide" width="100%">
                     <div class="home-hero__slide-wrapper">
                         <div class="home-hero__slide-content">
@@ -84,11 +84,11 @@
 
             <div class="home-hero__runline-container">
                 <div class="home-hero__runline home-hero__runline--nav">
-                    <ul class="home-hero__runline-wrapper" v-for="n in 2" :key="n">
+                    <ul v-for="n in 2" :key="n" class="home-hero__runline-wrapper">
                         <li
-                            class="home-hero__runline-item"
                             v-for="item in navItems"
                             :key="item.key"
+                            class="home-hero__runline-item"
                         >
                             <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
                                 {{ item.title }}
@@ -97,11 +97,11 @@
                     </ul>
                 </div>
                 <div class="home-hero__runline home-hero__runline--filters">
-                    <ul class="home-hero__runline-wrapper" v-for="n in 2" :key="n">
+                    <ul v-for="n in 2" :key="n" class="home-hero__runline-wrapper">
                         <li
-                            class="home-hero__runline-item"
                             v-for="item in filterItems"
                             :key="item.key"
+                            class="home-hero__runline-item"
                         >
                             <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
                                 {{ item.title }}

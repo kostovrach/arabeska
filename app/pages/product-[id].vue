@@ -2,18 +2,18 @@
     <NuxtLayout>
         <section class="product-view">
             <div class="product-view__container">
-                <div class="product-view__loading" v-show="status === 'pending'">
+                <div v-show="status === 'pending'" class="product-view__loading">
                     <ProductLoader />
                 </div>
-                <div class="product-view__error" v-show="status === 'error' || status === 'idle'">
+                <div v-show="status === 'error' || status === 'idle'" class="product-view__error">
                     <FetchError />
                 </div>
-                <div class="product-view__body" v-show="status === 'success'">
+                <div v-show="status === 'success'" class="product-view__body">
                     <div class="product-view__slider">
                         <div class="product-view__slider-wrapper">
                             <div
-                                class="product-view__sticker product-view__sticker--discount"
                                 v-if="product?.discount && !isNewProduct(product?.date_created)"
+                                class="product-view__sticker product-view__sticker--discount"
                             >
                                 <span>
                                     -{{
@@ -25,8 +25,8 @@
                                 </span>
                             </div>
                             <div
-                                class="product-view__sticker product-view__sticker--new"
                                 v-if="isNewProduct(product?.date_created)"
+                                class="product-view__sticker product-view__sticker--new"
                             >
                                 <span>new!</span>
                             </div>
@@ -48,11 +48,11 @@
                                     <li class="product-view__variant-item">
                                         <div class="product-view__variant-toggler">
                                             <input
+                                                id="variant-standart"
                                                 v-model="productModel.type"
                                                 type="radio"
                                                 name="variant"
                                                 value="standart"
-                                                id="variant-standart"
                                             />
                                         </div>
                                         <p class="product-view__type-desc">
@@ -63,11 +63,11 @@
                                     <li class="product-view__variant-item">
                                         <div class="product-view__variant-toggler">
                                             <input
+                                                id="variant-large"
                                                 v-model="productModel.type"
                                                 type="radio"
                                                 name="variant"
                                                 value="large"
-                                                id="variant-large"
                                             />
                                         </div>
                                         <p class="product-view__variant-desc">
@@ -78,11 +78,11 @@
                                     <li class="product-view__variant-item">
                                         <div class="product-view__variant-toggler">
                                             <input
+                                                id="variant-premium"
                                                 v-model="productModel.type"
                                                 type="radio"
                                                 name="variant"
                                                 value="premium"
-                                                id="variant-premium"
                                             />
                                         </div>
                                         <p class="product-view__variant-desc">
@@ -105,23 +105,23 @@
                                 <div class="product-view__counter">
                                     <button
                                         type="button"
-                                        @click="removeQuantity"
                                         :disabled="productModel.quantity <= 1"
+                                        @click="removeQuantity"
                                     >
                                         <SvgSprite type="minus" :size="14" />
                                     </button>
                                     <span>{{ productModel.quantity }}</span>
                                     <button
                                         type="button"
-                                        @click="addQuantity"
                                         :disabled="productModel.quantity >= 5"
+                                        @click="addQuantity"
                                     >
                                         <SvgSprite type="plus" :size="14" />
                                     </button>
                                 </div>
                             </div>
                             <ul class="product-view__price">
-                                <li class="product-view__price-crossed" v-if="product?.discount">
+                                <li v-if="product?.discount" class="product-view__price-crossed">
                                     <span>
                                         {{
                                             product?.discount
@@ -143,7 +143,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="product-view__sider" v-if="product?.structure">
+                        <div v-if="product?.structure" class="product-view__sider">
                             <picture class="product-view__sider-image">
                                 <img src="/img/service/flowers-placeholder.png" alt="Состав" />
                             </picture>
@@ -158,18 +158,18 @@
                             </div>
                         </div>
                         <ul class="product-view__footer">
-                            <li class="product-view__footer-card" v-if="1 === 1">
+                            <li v-if="1 === 1" class="product-view__footer-card">
                                 <span><SvgSprite type="user-fill" :size="24" /></span>
                                 <div>
                                     <NuxtLink :to="{ name: 'index' }">Авторизуйтесь,</NuxtLink>
                                     чтобы&nbsp;снизить цену
                                 </div>
                             </li>
-                            <li class="product-view__footer-card" v-if="1 === 1">
+                            <li v-if="1 === 1" class="product-view__footer-card">
                                 <span><SvgSprite type="delivery" :size="24" /></span>
                                 <span>Бесплатная доставка от 1500 ₽</span>
                             </li>
-                            <li class="product-view__footer-card" v-if="product?.size">
+                            <li v-if="product?.size" class="product-view__footer-card">
                                 <span><SvgSprite type="box" :size="24" /></span>
                                 <span>Размеры {{ product?.size }}</span>
                             </li>

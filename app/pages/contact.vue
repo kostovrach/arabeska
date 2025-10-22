@@ -7,9 +7,9 @@
                         <h1 class="contact__title">Адреса магазинов</h1>
                         <ul class="contact__addresses">
                             <li
-                                class="contact__addresses-item"
                                 v-for="(item, idx) in addresses"
                                 :key="idx"
+                                class="contact__addresses-item"
                             >
                                 <span class="contact__addresses-item-icon">
                                     <SvgSprite type="globe" :size="32" />
@@ -110,7 +110,7 @@
         <Banner
             class="contact__banner"
             title="Будьте в курсе новых скидок и предложений!"
-            imageUrl="/img/temp/flowers.gif"
+            image-url="/img/temp/flowers.gif"
         >
             <SubscribeForm
                 title="Подпишитесь на нашу рассылку! Обещаем присылать письма не чаще раза в неделю, только важное и по делу."

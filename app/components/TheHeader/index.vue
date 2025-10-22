@@ -46,7 +46,7 @@
                     <SvgSprite type="bag" :size="24" />
                     <span class="header__action-indicator">48</span>
                 </NuxtLink>
-                <TheHeaderBurger @click="openMenu" class="header__burger" />
+                <TheHeaderBurger class="header__burger" @click="openMenu" />
             </div>
         </div>
     </header>

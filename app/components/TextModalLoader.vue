@@ -4,8 +4,8 @@
             <div class="text-modal-loader__skeleton text-modal-loader__skeleton--title"></div>
             <div class="text-modal-loader__item-text">
                 <div
-                    v-for="n in 4"
-                    :key="n"
+                    v-for="n2 in 4"
+                    :key="n2"
                     class="text-modal-loader__skeleton text-modal-loader__skeleton--text"
                 ></div>
             </div>

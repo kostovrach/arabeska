@@ -1,7 +1,7 @@
 <template>
     <section class="franchise-list">
         <ul class="franchise-list__container">
-            <li class="franchise-list__item" v-for="(item, idx) in listItems" :key="idx">
+            <li v-for="(item, idx) in listItems" :key="idx" class="franchise-list__item">
                 <picture class="franchise-list__item-image-container">
                     <img class="franchise-list__item-image" :src="item.imageUrl" :alt="`${idx}`" />
                 </picture>

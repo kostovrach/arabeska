@@ -1,26 +1,26 @@
 <template>
     <div class="feedback-carousel">
-        <div class="feedback-carousel__loader" v-show="status === 'pending'">
+        <div v-show="status === 'pending'" class="feedback-carousel__loader">
             <div class="feedback-carousel__loader-wrapper">
                 <FeedbackLoader v-for="n in 5" :key="n" />
             </div>
         </div>
-        <div class="feedback-carousel__error" v-show="status === 'error'">
+        <div v-show="status === 'error'" class="feedback-carousel__error">
             <FetchError />
         </div>
 
         <ClientOnly>
             <EmblaContainer
                 v-show="status === 'success'"
-                class="feedback-carousel__slider"
                 ref="sliderRef"
+                class="feedback-carousel__slider"
                 :options="carouselOptions"
                 :autoplay-enable="true"
                 :autoplay="autoplayOptions"
                 @mouseenter="autoplayStop"
                 @mouseleave="autoplayStart"
             >
-                <EmblaSlide class="feedback-carousel__slide" v-for="item in items" :key="item.id">
+                <EmblaSlide v-for="item in items" :key="item.id" class="feedback-carousel__slide">
                     <FeedbackCard :content="item" />
                 </EmblaSlide>
             </EmblaContainer>

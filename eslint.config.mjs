@@ -2,21 +2,27 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
 import prettier from '@vue/eslint-config-prettier';
 
-/** @type {Object} */
-const customCfg = {
-    ignores: ['**/dist/**', '**/.nuxt/**', '**/coverage/**', '**/scripts/**'],
-    files: ['**/*.{ts,tsx,js,mjs,jsx,vue}'],
-    languageOptions: {
-        parserOptions: {
-            extraFileExtensions: ['.vue'],
-            project: ['./tsconfig.json'],
+export default withNuxt([
+    {
+        ignores: [
+            '**/dist/**',
+            '**/node_modules/**',
+            '**/.nuxt/**',
+            '**/coverage/**',
+            '**/scripts/**',
+        ],
+        files: ['**/*.{ts,js,mjs,vue}'],
+        languageOptions: {
+            parserOptions: {
+                extraFileExtensions: ['.vue'],
+                projectService: true,
+            },
+        },
+        rules: {
+            'vue/multi-word-component-names': 'off',
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            'vue/no-v-html': 'off',
         },
     },
-    rules: {
-        'vue/multi-word-component-names': 'off',
-        '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-    },
     prettier,
-};
-
-export default withNuxt(customCfg);
+]);

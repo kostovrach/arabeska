@@ -6,21 +6,21 @@
                     <h2 v-html="props.title"></h2>
                 </StarsOverlay>
                 <NuxtLink
+                    v-if="props.wtithLink"
                     :to="{ name: 'index' }"
                     class="home-carousel__link"
-                    v-if="props.wtithLink"
                 >
                     <span>Смотреть все</span>
                     <SvgSprite type="arrow" :size="12" />
                 </NuxtLink>
             </div>
             <div class="home-carousel__body">
-                <div class="home-carousel__loader" v-show="status === 'pending'">
+                <div v-show="status === 'pending'" class="home-carousel__loader">
                     <div class="home-carousel__loader-wrapper">
                         <ProductCardLoader v-for="n in 5" :key="n" />
                     </div>
                 </div>
-                <div class="home-carousel__error" v-show="status === 'error' || status === 'idle'">
+                <div v-show="status === 'error' || status === 'idle'" class="home-carousel__error">
                     <FetchError />
                 </div>
                 <ClientOnly>
@@ -35,16 +35,16 @@
                         @mouseleave="autoplayStart"
                     >
                         <EmblaSlide
-                            class="home-carousel__slide"
                             v-for="product in products"
                             :key="product.id"
+                            class="home-carousel__slide"
                         >
                             <ProductCard :data="product" />
                         </EmblaSlide>
                     </EmblaContainer>
                 </ClientOnly>
 
-                <div class="home-carousel__controls" v-if="!props.autoplay">
+                <div v-if="!props.autoplay" class="home-carousel__controls">
                     <button
                         class="home-carousel__button home-carousel__button--prev"
                         type="button"
@@ -84,6 +84,7 @@
     }
 
     const props = withDefaults(defineProps<IProps>(), {
+        title: '',
         wtithLink: true,
         autoplay: false,
     });

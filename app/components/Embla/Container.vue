@@ -1,5 +1,5 @@
 <template>
-    <div class="embla" ref="emblaRef">
+    <div ref="emblaRef" class="embla">
         <div class="embla__container" :style="{ padding: props.padding }">
             <slot></slot>
         </div>
@@ -21,6 +21,7 @@
 
     const props = withDefaults(defineProps<IProps>(), {
         options: () => ({}),
+        autoplay: () => ({}),
         padding: '0',
         autoplayEnable: false,
     });

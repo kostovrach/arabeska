@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { AsyncData, AsyncDataOptions, AsyncDataRequestStatus } from '#app';
 import type { IProduct } from '~/interfaces/product';
 import type FuseType from 'fuse.js';

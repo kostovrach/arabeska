@@ -24,7 +24,7 @@
 
     interface IProps {
         type?: 'button' | 'a' | 'NuxtLink';
-        logic?: 'double-line' | 'noanim';
+        logic?: 'double-line' | 'noanim' | 'basic';
         to?: string;
         href?: string;
         buttonType?: string;
@@ -34,6 +34,9 @@
 
     const props = withDefaults(defineProps<IProps>(), {
         type: 'a',
+        logic: 'basic',
+        to: '/',
+        href: '/',
         buttonType: 'button',
         target: '',
         id: '',

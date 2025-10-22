@@ -1,5 +1,5 @@
 <template>
-    <SpeedDial class="share-menu" :model="shareLinks" direction="down" :transitionDelay="80">
+    <SpeedDial class="share-menu" :model="shareLinks" direction="down" :transition-delay="80">
         <template #button="{ toggleCallback }">
             <div class="share-menu__button" @click="toggleCallback">
                 <SvgSprite type="share" :size="40" />
