@@ -167,7 +167,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: rem(16) rem(24);
+            padding: rem(16) lineScale(24, 12, 480, 1440);
             border-radius: 0 0 $border-radius $border-radius;
             border: rem(1) solid $c-D4E1E7;
             border-top: none;
@@ -197,7 +197,6 @@
             margin-top: rem(4);
             &-item {
                 width: fit-content;
-                // white-space: nowrap;
                 font-size: lineScale(16, 14, 480, 1440);
                 opacity: 0.5;
                 &:not(:last-child)::after {

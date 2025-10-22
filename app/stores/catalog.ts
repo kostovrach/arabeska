@@ -1,5 +1,5 @@
 import type { IProduct } from '~/interfaces/product';
-import type { TypeCategories } from '~/types/catrgories';
+import type { TypeCategories } from '~/types/categories';
 
 export const useCatalogStore = defineStore('catalog', () => {
     const { productsList } = useProductsStore();

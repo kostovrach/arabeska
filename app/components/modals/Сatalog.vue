@@ -11,7 +11,12 @@
                     <NuxtLink
                         v-for="(card, idx) in catalogCards"
                         :key="idx"
-                        class="catalog__item"
+                        :class="
+                            route.name === card.routeName &&
+                            route.params.category === card.routeParams?.category
+                                ? 'catalog__item catalog__item--current'
+                                : 'catalog__item'
+                        "
                         :to="{ name: card.routeName, params: card.routeParams }"
                     >
                         <picture class="catalog__item-image-container">
@@ -42,6 +47,8 @@
     }
     // ===============================================================
 
+    const route = useRoute();
+
     const emit = defineEmits<{
         (e: 'close'): void;
     }>();
@@ -58,7 +65,7 @@
         {
             image: '/img/temp/temp1.jpg',
             label: 'Цветы оптом',
-            routeName: 'index',
+            routeName: 'wholesale',
         },
         {
             image: '/img/temp/temp1.jpg',
@@ -121,6 +128,10 @@
                         }
                     }
                 }
+            }
+            &--current {
+                pointer-events: none;
+                opacity: 0.5;
             }
             &-wrapper {
                 position: relative;

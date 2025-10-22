@@ -54,12 +54,177 @@
                         >
                             Дополнительные товары и аксессуары
                         </h2>
-                        <span class="catalog-head__counter">({{ products?.length }})</span>
+                        <span class="catalog-head__counter">({{ filteredProducts?.length }})</span>
                     </div>
-                    <div class="catalog-head__controls">
-                        <div class="catalog-head__filters"></div>
-                        <div class="catalog-head__price"></div>
-                        <div class="catalog-head__sort"></div>
+
+                    <div v-if="route.params.category === 'flowers'" class="catalog-head__controls">
+                        <div class="catalog-head__filterbox">
+                            <!-- Popular filter -->
+                            <label class="catalog-head__filter-singleton">
+                                <input v-model="isPopular" type="checkbox" />
+                                Популярные
+                            </label>
+
+                            <!-- Discount filter -->
+                            <label class="catalog-head__filter-singleton">
+                                <input v-model="isDiscounted" type="checkbox" />
+                                Акции
+                            </label>
+
+                            <!-- Flower filter -->
+                            <div class="catalog-head__filter-group">
+                                <button
+                                    class="catalog-head__filter-group-button"
+                                    @click="showFlowerDropdown = !showFlowerDropdown"
+                                >
+                                    <div class="catalog-head__filter-group-label">
+                                        Цветы
+                                        <span v-show="selectedFlowers.length">
+                                            ({{ selectedFlowers.length }})
+                                        </span>
+                                    </div>
+                                    <span class="catalog-head__filter-group-icon">
+                                        <SvgSprite type="chevron" :size="12" />
+                                    </span>
+                                </button>
+                                <div
+                                    v-if="showFlowerDropdown"
+                                    class="catalog-head__filter-group-dropdown"
+                                >
+                                    <label
+                                        v-for="flower in flowerOptions"
+                                        :key="flower"
+                                        class="catalog-head__filter-group-item"
+                                    >
+                                        <input
+                                            v-model="selectedFlowers"
+                                            type="checkbox"
+                                            :value="flower"
+                                        />
+                                        {{ flower }}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Reason filter -->
+                            <div class="catalog-head__filter-group">
+                                <button
+                                    class="catalog-head__filter-group-button"
+                                    @click="showReasonDropdown = !showReasonDropdown"
+                                >
+                                    <div class="catalog-head__filter-group-label">
+                                        Повод
+                                        <span v-show="selectedReasons.length">
+                                            ({{ selectedReasons.length }})
+                                        </span>
+                                    </div>
+                                    <span class="catalog-head__filter-group-icon">
+                                        <SvgSprite type="chevron" :size="12" />
+                                    </span>
+                                </button>
+                                <div
+                                    v-if="showReasonDropdown"
+                                    class="catalog-head__filter-group-dropdown"
+                                >
+                                    <label
+                                        v-for="reason in reasonOptions"
+                                        :key="reason"
+                                        class="catalog-head__filter-group-item"
+                                    >
+                                        <input
+                                            v-model="selectedReasons"
+                                            type="checkbox"
+                                            :value="reason"
+                                        />
+                                        {{ reason }}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Style filter -->
+                            <div class="catalog-head__filter-group">
+                                <button
+                                    class="catalog-head__filter-group-button"
+                                    @click="showStyleDropdown = !showStyleDropdown"
+                                >
+                                    <div class="catalog-head__filter-group-label">
+                                        Стиль
+                                        <span v-show="selectedStyles.length">
+                                            ({{ selectedStyles.length }})
+                                        </span>
+                                    </div>
+                                    <span class="catalog-head__filter-group-icon">
+                                        <SvgSprite type="chevron" :size="12" />
+                                    </span>
+                                </button>
+                                <div
+                                    v-if="showStyleDropdown"
+                                    class="catalog-head__filter-group-dropdown"
+                                >
+                                    <label
+                                        v-for="style in styleOptions"
+                                        :key="style"
+                                        class="catalog-head__filter-group-item"
+                                    >
+                                        <input
+                                            v-model="selectedStyles"
+                                            type="checkbox"
+                                            :value="style"
+                                        />
+                                        {{ style }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price range filter -->
+                        <div class="catalog-head__range">
+                            <span class="catalog-head__range-title">Цена</span>
+                            <div class="catalog-head__range-label">
+                                <div>
+                                    {{ priceRange.min }}
+                                    <span class="ruble"></span>
+                                </div>
+                                <div>
+                                    {{ priceRange.max }}
+                                    <span class="ruble"></span>
+                                </div>
+                            </div>
+                            <div class="catalog-head__range-inputbox">
+                                <input
+                                    v-model.number="priceRange.min"
+                                    type="range"
+                                    :min="0"
+                                    :max="priceRange.max"
+                                    step="100"
+                                />
+                                <input
+                                    v-model.number="priceRange.max"
+                                    type="range"
+                                    :min="priceRange.min"
+                                    :max="10000"
+                                    step="100"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Sort options -->
+                        <div class="catalog-head__sort">
+                            <select v-model="sortOrder" class="catalog-head__sort-select">
+                                <option class="catalog-head__sort-option" :value="null">
+                                    Без сортировки
+                                </option>
+                                <option class="catalog-head__sort-option" value="asc">
+                                    По возрастанию цены
+                                </option>
+                                <option class="catalog-head__sort-option" value="desc">
+                                    По убыванию цены
+                                </option>
+                            </select>
+                            <span class="catalog-head__sort-icon">
+                                <SvgSprite type="chevron" :size="16" />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,7 +232,7 @@
                 <div class="catalog-list__container">
                     <ul class="catalog-list__body">
                         <li
-                            v-for="product in products"
+                            v-for="product in filteredProducts"
                             :key="product.id"
                             class="catalog-list__item"
                         >
@@ -81,21 +246,35 @@
 </template>
 
 <script setup lang="ts">
-    // types ==============================================
-    import type { TypeCategories } from '~/types/catrgories';
-    // ====================================================
+    import type { TypeCategories } from '~/types/categories';
 
+    // Initialize store and fetch data
     const route = useRoute();
+    const catalogFilterStore = useCatalogFilterStore();
+    catalogFilterStore.getCatalogItems(route.params.category as TypeCategories);
+    catalogFilterStore.initFromQuery();
 
-    const catalogStore = useCatalogStore();
+    // Get store refs
+    const {
+        selectedFlowers,
+        isPopular,
+        isDiscounted,
+        selectedReasons,
+        selectedStyles,
+        priceRange,
+        sortOrder,
+        filteredProducts,
+    } = storeToRefs(catalogFilterStore);
 
-    catalogStore.getCatalogItems(route.params.category as TypeCategories);
+    // Filter options (static)
+    const flowerOptions = ['астры', 'жасмин', 'нарциссы', 'розы', 'гортензия'];
+    const reasonOptions = ['свадьба', 'выпускной', 'юбилей'];
+    const styleOptions = ['нежный', 'траурный'];
 
-    const { catalogList } = storeToRefs(catalogStore);
-
-    const products = computed(() => {
-        return catalogList.value;
-    });
+    // Dropdown visibility
+    const showFlowerDropdown = ref(false);
+    const showReasonDropdown = ref(false);
+    const showStyleDropdown = ref(false);
 </script>
 
 <style scoped lang="scss">
@@ -142,6 +321,127 @@
             font-family: 'Inter', sans-serif;
             font-size: lineScale(24, 18, 480, 1440);
         }
+        &__controls {
+            display: grid;
+            grid-template-areas:
+                'filterbox range'
+                '. sort';
+            justify-content: space-between;
+            align-items: center;
+            gap: rem(32) rem(64);
+            font-family: 'Inter', sans-serif;
+            margin-top: rem(64);
+        }
+        &__filterbox {
+            grid-area: filterbox;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: rem(8);
+            font-size: lineScale(18, 16, 480, 1440);
+            font-weight: $fw-semi;
+            user-select: none;
+        }
+        &__filter {
+            &-singleton,
+            &-group-button {
+                cursor: pointer;
+                padding: rem(18) rem(16);
+                border-radius: rem(32);
+                @media (pointer: fine) {
+                    &:hover {
+                        background-color: rgba($c-secondary, 0.1);
+                    }
+                }
+            }
+            &-singleton {
+                &:has(input[type='checkbox']:checked) {
+                    color: $c-FFFFFF;
+                    background-color: $c-accent;
+                    opacity: 1;
+                }
+            }
+            &-group {
+                position: relative;
+                &-button {
+                    display: flex;
+                    align-items: center;
+                    gap: rem(16);
+                }
+                &-dropdown {
+                    position: absolute;
+                    top: 105%;
+                    left: 50%;
+                    translate: -50% 0;
+                    width: rem(350);
+                    padding: rem(16);
+                    background-color: $c-main;
+                    border-radius: rem(32);
+                    box-shadow: 1px 1px 5px $c-D4E1E7;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: rem(8);
+                }
+                &-item {
+                    cursor: pointer;
+                    font-size: rem(14);
+                    padding: rem(6) rem(16) rem(6) rem(10);
+                    border: rem(1) solid $c-D4E1E7;
+                    border-radius: rem(32);
+                    @media (pointer: fine) {
+                        &:not(:has(input[type='checkbox']:checked)):hover {
+                            color: $c-accent;
+                            border-color: $c-accent;
+                        }
+                    }
+                    &:has(input[type='checkbox']:checked) {
+                        color: $c-FFFFFF;
+                        background-color: $c-accent;
+                        border-color: $c-accent;
+                    }
+                }
+            }
+        }
+        &__range {
+            grid-area: range;
+            display: grid;
+            grid-template-areas:
+                '. label'
+                'title inputbox';
+            align-items: center;
+            gap: rem(8) rem(32);
+            &-title,
+            &-label {
+                font-size: lineScale(18, 16, 480, 1440);
+                font-weight: $fw-semi;
+                opacity: 0.5;
+            }
+            &-title {
+                grid-area: title;
+            }
+            &-inputbox {
+                grid-area: inputbox;
+            }
+            &-label {
+                grid-area: label;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            input {
+                appearance: auto;
+            }
+        }
+        &__sort {
+            grid-area: sort;
+            justify-self: flex-end;
+            &-select {
+                appearance: none;
+            }
+            &-option {
+                appearance: none;
+            }
+        }
     }
 
     .catalog-list {
@@ -151,10 +451,10 @@
         }
         &__body {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(rem(385), 1fr));
-            gap: rem(32) rem(16);
-            @media (max-width: 540px) {
-                grid-template-columns: repeat(auto-fill, minmax(rem(280), 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(rem(320), 1fr));
+            gap: lineScale(48, 40, 480, 1440) lineScale(24, 12, 480, 1440);
+            @media (max-width: 768px) {
+                grid-template-columns: repeat(auto-fill, minmax(rem(185), 1fr));
             }
         }
         &__item {

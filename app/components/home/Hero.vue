@@ -134,23 +134,23 @@
             key: '1',
             title: 'букеты',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '2',
             title: 'дополнительное',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'accessory' },
             },
         },
         {
             key: '3',
             title: 'цветы оптом',
             path: {
-                name: 'index',
+                name: 'wholesale',
                 params: {},
             },
         },
@@ -158,15 +158,15 @@
             key: '4',
             title: 'сертификаты',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'certificates' },
             },
         },
         {
             key: '5',
             title: 'цветочная подписка',
             path: {
-                name: 'index',
+                name: 'subscription',
                 params: {},
             },
         },
@@ -174,8 +174,8 @@
             key: '6',
             title: 'открытки',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'accessory' },
             },
         },
     ];
@@ -338,10 +338,10 @@
         }
         &__runline {
             position: relative;
-            z-index: 5;
             display: flex;
             gap: rem(64);
             &--nav {
+                z-index: 5;
                 background-color: $c-99CC65;
                 rotate: -1.5deg;
                 transform-origin: 0% 40%;
@@ -350,6 +350,7 @@
                 }
             }
             &--filters {
+                z-index: 4;
                 background-color: $c-E5F2D8;
                 rotate: 3deg;
                 transform-origin: 140% 0%;
