@@ -23,6 +23,7 @@
         "@vueuse/nuxt": "13.9.0",
         "embla-carousel": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
+        "embla-carousel-fade": "^8.6.0",
         "embla-carousel-vue": "^8.6.0",
         "eslint": "^9.36.0",
         "fuse.js": "^7.1.0",

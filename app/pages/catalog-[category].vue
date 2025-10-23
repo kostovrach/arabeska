@@ -412,7 +412,7 @@
                 }
                 &-item {
                     cursor: pointer;
-                    font-size: rem(14);
+                    font-size: rem(16);
                     padding: rem(6) rem(16) rem(6) rem(10);
                     border: rem(1) solid $c-D4E1E7;
                     border-radius: rem(32);

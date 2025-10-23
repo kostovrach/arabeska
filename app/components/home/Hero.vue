@@ -1,7 +1,12 @@
 <template>
     <section class="home-hero">
         <div class="home-hero__container">
-            <EmblaContainer ref="sliderRef" class="home-hero__slider" :options="carouselOptions">
+            <EmblaContainer
+                ref="sliderRef"
+                class="home-hero__slider"
+                :options="carouselOptions"
+                fade
+            >
                 <EmblaSlide class="home-hero__slide" width="100%">
                     <div class="home-hero__slide-wrapper">
                         <div class="home-hero__slide-content">
@@ -185,64 +190,64 @@
             key: '1',
             title: 'розы',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '2',
             title: 'гвоздики',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '3',
             title: 'тюльпаны',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '4',
             title: 'хризантемы',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '5',
             title: 'астры',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '6',
             title: 'подсолнухи',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '7',
             title: 'калы',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
         {
             key: '8',
             title: 'ромашки',
             path: {
-                name: 'index',
-                params: {},
+                name: 'catalog-category',
+                params: { category: 'flowers' },
             },
         },
     ];
@@ -259,15 +264,27 @@
             height: 100%;
         }
         &__slider {
-            background-color: $c-082535;
+            // background-color: $c-082535;
             overflow: visible;
         }
         &__slide {
+            position: relative;
             width: 100vw;
             min-height: 60lvh;
             color: $c-FFFFFF;
             overflow-x: clip;
             @include content-container($padding: lineScale(64, 16, 480, 1440));
+            &::before{
+                content:'';
+                position: absolute;
+                top: 100%;
+                right: 0;
+                height: rem(64);
+                width: 100%;
+                background-color: inherit;
+                clip-path: polygon(100% 0, 0 0, 100% 100%);
+                transition-duration: 0s;
+            }
             &:nth-child(2n + 1) {
                 background-color: $c-082535;
             }
@@ -280,7 +297,7 @@
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: rem(128);
-                align-items: center;
+                align-items: flex-end;
             }
             &-title {
                 text-wrap: balance;
@@ -305,7 +322,6 @@
                 @include button-primary($hover-color: $c-secondary);
             }
             &-nav {
-                align-self: flex-end;
                 justify-self: flex-end;
                 display: flex;
                 align-items: center;
@@ -338,13 +354,16 @@
         }
         &__runline {
             position: relative;
+            left: 50%;
+            translate: -50% 0;
+            width: 110%;
             display: flex;
             gap: rem(64);
             &--nav {
                 z-index: 5;
                 background-color: $c-99CC65;
-                rotate: -1.5deg;
-                transform-origin: 0% 40%;
+                rotate: -6deg;
+                transform-origin: 30% 40%;
                 #{$p}__runline-wrapper {
                     animation-direction: reverse;
                 }
@@ -352,8 +371,8 @@
             &--filters {
                 z-index: 4;
                 background-color: $c-E5F2D8;
-                rotate: 3deg;
-                transform-origin: 140% 0%;
+                rotate: 2.9deg;
+                transform-origin: 70% 0%;
             }
             @media (pointer: fine) {
                 &:hover {

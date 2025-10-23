@@ -19,7 +19,7 @@
                     to="index"
                     logic="double-line"
                 >
-                    <span>Подписка на&nbsp;цветы</span>
+                    <span>Подписаться на&nbsp;цветы</span>
                 </CircleButton>
             </div>
 

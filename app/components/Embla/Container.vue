@@ -9,11 +9,13 @@
 <script setup lang="ts">
     import emblaCarouselVue from 'embla-carousel-vue';
     import Autoplay from 'embla-carousel-autoplay';
+    import Fade from 'embla-carousel-fade';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';
     import type { EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
 
     interface IProps {
         options?: EmblaOptionsType;
+        fade?: boolean;
         padding?: string;
         autoplayEnable?: boolean;
         autoplay?: AutoplayOptionsType;
@@ -22,6 +24,7 @@
     const props = withDefaults(defineProps<IProps>(), {
         options: () => ({}),
         autoplay: () => ({}),
+        fade: false,
         padding: '0',
         autoplayEnable: false,
     });
@@ -34,6 +37,10 @@
                 ...props.autoplay,
             })
         );
+    }
+
+    if (props.fade) {
+        plugins.push(Fade());
     }
 
     const [emblaRef, emblaApi] = emblaCarouselVue(props.options, plugins);
