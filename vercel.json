@@ -1,0 +1,7 @@
+{
+  "routes": [
+    { "src": "/products", "dest": "/api/products" },
+    { "src": "/certificates", "dest": "/api/certificates" },
+    { "src": "/api/(.*)", "dest": "/api/mock.js" }
+  ]
+}

@@ -7,7 +7,7 @@
                 </StarsOverlay>
                 <NuxtLink
                     v-if="props.wtithLink"
-                    :to="{ name: 'index' }"
+                    :to="{ name: 'catalog-category', params: { category: 'flowers' } }"
                     class="home-carousel__link"
                 >
                     <span>Смотреть все</span>
