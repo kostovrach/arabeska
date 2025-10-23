@@ -175,6 +175,13 @@
                                     </label>
                                 </div>
                             </div>
+                            <button
+                                class="catalog-head__filter-reset"
+                                :disabled="!isAnyFilterApplied"
+                                @click="resetAllFilters"
+                            >
+                                <SvgSprite type="refresh" :size="18" />
+                            </button>
                         </div>
 
                         <!-- Price range filter -->
@@ -211,15 +218,9 @@
                         <!-- Sort options -->
                         <div class="catalog-head__sort">
                             <select v-model="sortOrder" class="catalog-head__sort-select">
-                                <option class="catalog-head__sort-option" :value="null">
-                                    Без сортировки
-                                </option>
-                                <option class="catalog-head__sort-option" value="asc">
-                                    По возрастанию цены
-                                </option>
-                                <option class="catalog-head__sort-option" value="desc">
-                                    По убыванию цены
-                                </option>
+                                <option :value="null">Без сортировки</option>
+                                <option value="asc">По возрастанию цены</option>
+                                <option value="desc">По убыванию цены</option>
                             </select>
                             <span class="catalog-head__sort-icon">
                                 <SvgSprite type="chevron" :size="16" />
@@ -275,6 +276,28 @@
     const showFlowerDropdown = ref(false);
     const showReasonDropdown = ref(false);
     const showStyleDropdown = ref(false);
+
+    // Check if any filter is applied
+    const isAnyFilterApplied = computed(() => {
+        return (
+            selectedFlowers.value.length > 0 ||
+            isPopular.value ||
+            isDiscounted.value ||
+            selectedReasons.value.length > 0 ||
+            selectedStyles.value.length > 0 ||
+            priceRange.value.min > 0 ||
+            priceRange.value.max < 10000 ||
+            sortOrder.value !== null
+        );
+    });
+
+    // Reset filters
+    const resetAllFilters = () => {
+        catalogFilterStore.resetFilters();
+        showFlowerDropdown.value = false;
+        showReasonDropdown.value = false;
+        showStyleDropdown.value = false;
+    };
 </script>
 
 <style scoped lang="scss">
@@ -348,6 +371,11 @@
                 cursor: pointer;
                 padding: rem(18) rem(16);
                 border-radius: rem(32);
+                &:focus,
+                &:has(input:focus) {
+                    outline: none;
+                    background-color: rgba($c-secondary, 0.1);
+                }
                 @media (pointer: fine) {
                     &:hover {
                         background-color: rgba($c-secondary, 0.1);
@@ -401,6 +429,28 @@
                     }
                 }
             }
+            &-reset {
+                cursor: pointer;
+                width: rem(60);
+                aspect-ratio: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                &:focus {
+                    outline: none;
+                    background-color: rgba($c-secondary, 0.1);
+                }
+                @media (pointer: fine) {
+                    &:hover {
+                        background-color: rgba($c-secondary, 0.1);
+                    }
+                }
+                &:disabled {
+                    opacity: 0.6;
+                    pointer-events: none;
+                }
+            }
         }
         &__range {
             grid-area: range;
@@ -421,6 +471,60 @@
             }
             &-inputbox {
                 grid-area: inputbox;
+                input {
+                    appearance: none;
+                    height: rem(4);
+                    // track
+                    &::-webkit-slider-runnable-track {
+                        box-sizing: border-box;
+                        height: rem(4);
+                        background-color: $c-accent;
+                    }
+                    &::-moz-range-track {
+                        box-sizing: border-box;
+                        background-color: $c-accent;
+                    }
+                    // thumb
+                    &::-webkit-slider-thumb {
+                        cursor: pointer;
+                        width: rem(12);
+                        aspect-ratio: 1;
+                        border-radius: 50%;
+                        background-color: $c-accent;
+                        translate: 0 rem(-4);
+                        @media (pointer: fine) {
+                            &:hover {
+                                scale: 1.3;
+                            }
+                        }
+                    }
+                    &::-moz-range-thumb {
+                        cursor: pointer;
+                        width: rem(12);
+                        aspect-ratio: 1;
+                        border-radius: 50%;
+                        background-color: $c-accent;
+                        @media (pointer: fine) {
+                            &:hover {
+                                scale: 1.3;
+                            }
+                        }
+                    }
+                    // progress
+                    &::-moz-range-progress {
+                        background-color: $c-accent;
+                    }
+                    // state
+                    &:focus-visible,
+                    &:focus {
+                        &::-webkit-slider-thumb {
+                            scale: 1.3;
+                        }
+                        &::-moz-range-thumb {
+                            scale: 1.3;
+                        }
+                    }
+                }
             }
             &-label {
                 grid-area: label;
@@ -428,18 +532,42 @@
                 align-items: center;
                 justify-content: space-between;
             }
-            input {
-                appearance: auto;
-            }
         }
         &__sort {
             grid-area: sort;
+            position: relative;
             justify-self: flex-end;
+            width: rem(334);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: rem(1) solid $c-D4E1E7;
+            border-radius: rem(32);
+            overflow: hidden;
             &-select {
+                cursor: pointer;
+                width: 100%;
+                font-size: lineScale(18, 16, 480, 1440);
+                color: rgba($c-secondary, 0.8);
+                padding: rem(18) rem(24);
+                background-color: transparent;
                 appearance: none;
+                &:focus {
+                    outline: none;
+                }
+                @media (pointer: fine) {
+                    &:hover,
+                    &:focus {
+                        background-color: rgba($c-secondary, 0.1);
+                    }
+                }
             }
-            &-option {
-                appearance: none;
+            &-icon {
+                position: absolute;
+                top: 50%;
+                right: rem(24);
+                translate: 0 -50%;
+                pointer-events: none;
             }
         }
     }

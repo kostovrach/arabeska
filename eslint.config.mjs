@@ -24,5 +24,5 @@ export default withNuxt([
             'vue/no-v-html': 'off',
         },
     },
-    prettier,
+    // ...prettier,
 ]);

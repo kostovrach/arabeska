@@ -13,11 +13,11 @@
 }
 :focus,
 :active {
-    outline: none;
+    /* outline: none; */
 }
 a:focus,
 a:active {
-    outline: none;
+    /* outline: none; */
 }
 aside,
 nav,
@@ -81,6 +81,9 @@ button {
     cursor: pointer;
     background-color: inherit;
     all: unset;
+}
+button:focus {
+    outline: auto;
 }
 button::-moz-focus-inner {
     all: unset;

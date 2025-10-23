@@ -81,7 +81,10 @@
                         v-if="searchResult?.length && searchResult?.length === 5"
                         class="searchbar__result-overflow"
                     >
-                        <NuxtLink class="searchbar__result-overflow-link" :to="{ name: 'index' }">
+                        <NuxtLink
+                            class="searchbar__result-overflow-link"
+                            :to="{ name: 'catalog-category', params: { category: 'flowers' } }"
+                        >
                             <span>Показать все</span>
                             <SvgSprite type="chevron" :size="16" />
                         </NuxtLink>
@@ -182,6 +185,10 @@
             // initial state
             flex: 0 0 0px;
             padding: 0;
+
+            &:focus {
+                outline: none;
+            }
 
             &::placeholder {
                 color: inherit;

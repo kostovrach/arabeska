@@ -27,13 +27,7 @@ export const useCatalogFilterStore = defineStore('catalogFilter', () => {
     // Fetch catalog items based on category
     function getCatalogItems(category: TypeCategories) {
         // Reset filters when category changes
-        selectedFlowers.value = [];
-        isPopular.value = false;
-        isDiscounted.value = false;
-        selectedReasons.value = [];
-        selectedStyles.value = [];
-        priceRange.value = { min: 0, max: 10000 };
-        sortOrder.value = null;
+        resetFilters();
 
         // Load catalog data
         switch (category) {
@@ -50,6 +44,18 @@ export const useCatalogFilterStore = defineStore('catalogFilter', () => {
                 catalogList.value = productsList.value;
                 break;
         }
+    }
+
+    // Reset all filters
+    function resetFilters() {
+        selectedFlowers.value = [];
+        isPopular.value = false;
+        isDiscounted.value = false;
+        selectedReasons.value = [];
+        selectedStyles.value = [];
+        priceRange.value = { min: 0, max: 10000 };
+        sortOrder.value = null;
+        router.push({ query: {} }); // Clear query parameters
     }
 
     // Fuse.js setup
@@ -162,7 +168,8 @@ export const useCatalogFilterStore = defineStore('catalogFilter', () => {
 
     // Computed filtered products
     //   const filteredProducts = computed<IProduct[]>(() => debouncedFilter());
-    const filteredProducts = computed(() => applyFilters());
+
+    const filteredProducts = computed<IProduct[]>(() => applyFilters());
 
     // Sync filters with URL query parameters
     watch(
@@ -226,5 +233,6 @@ export const useCatalogFilterStore = defineStore('catalogFilter', () => {
         filteredProducts,
         getCatalogItems,
         initFromQuery,
+        resetFilters,
     };
 });
