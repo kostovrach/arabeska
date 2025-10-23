@@ -107,7 +107,7 @@
         {
             label: 'доставка',
             routeName: 'faq',
-            routeHash: '#delivery',
+            routeHash: '#delivery-rules',
         },
         {
             label: 'возврат',
