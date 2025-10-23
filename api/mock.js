@@ -1,5 +1,5 @@
 import { createRouter } from 'h3';
-import db from '../db.json' assert { type: 'json' };
+import db from '../db.json' with { type: 'json' };
 
 const router = createRouter();
 
