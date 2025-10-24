@@ -1,6 +1,13 @@
 <template>
     <div class="slider">
-        <EmblaContainer ref="sliderRef" class="slider__body" :options="carouselOptions">
+        <EmblaContainer
+            ref="sliderRef"
+            class="slider__body"
+            :options="carouselOptions"
+            autoplay-enable
+            @mouseenter="autoplayStop"
+            @mouseleave="autoplayStart"
+        >
             <EmblaSlide
                 v-for="slide in slides"
                 :key="slide.id"
@@ -58,8 +65,13 @@
         duration: 25,
     };
 
+    // controls========================================================
     const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
     const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
+    
+    const autoplayStop = () => sliderRef?.value?.emblaApi?.plugins().autoplay.stop();
+    const autoplayStart = () => sliderRef?.value?.emblaApi?.plugins().autoplay.play();
+    // ================================================================
 
     // pagination======================================================
     const selectedSnap = ref<number>();

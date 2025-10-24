@@ -15,28 +15,28 @@
             <div class="footer__nav">
                 <div class="footer__nav-list footer__nav-list--map">
                     <h4 class="footer__nav-title">Карта сайта</h4>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Главная</NuxtLink>
-                    <NuxtLink
-                        class="footer__nav-link"
-                        :to="{ name: 'catalog-category', params: { category: 'flowers' } }"
-                    >
+                    <NuxtLink v-show="route.name !== 'index'" class="footer__nav-link" :to="{ name: 'index' }">Главная</NuxtLink>
+                    <button class="footer__nav-link" type="button" @click="openCatalog">
                         Каталог
-                    </NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'feedback' }">Отзывы</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">
+                    </button>
+                    <NuxtLink v-show="route.name !== 'feedback'" class="footer__nav-link" :to="{ name: 'feedback' }">Отзывы</NuxtLink>
+                    <NuxtLink v-show="route.name !== ''" class="footer__nav-link" :to="{ name: 'index' }">
                         Личный кабинет
                     </NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">
-                        Доставка и оплата
+                    <NuxtLink v-show="route.name !== 'faq'" class="footer__nav-link" :to="{ name: 'faq', hash: '#delivery-rules' }">
+                        Доставка
                     </NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'index' }">Возврат</NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'wholesale' }">
+                    <NuxtLink v-show="route.name !== 'faq'" class="footer__nav-link" :to="{ name: 'faq', hash: '#payment' }">
+                        Оплата
+                    </NuxtLink>
+                    <NuxtLink v-show="route.name !== 'faq'" class="footer__nav-link" :to="{ name: 'faq', hash: '#terms-of-return' }">Возврат</NuxtLink>
+                    <NuxtLink v-show="route.name !== 'wholesale'" class="footer__nav-link" :to="{ name: 'wholesale' }">
                         Оптовикам
                     </NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'franchise' }">
+                    <NuxtLink v-show="route.name !== 'franchise'" class="footer__nav-link" :to="{ name: 'franchise' }">
                         Франшиза
                     </NuxtLink>
-                    <NuxtLink class="footer__nav-link" :to="{ name: 'contact' }">Контакты</NuxtLink>
+                    <NuxtLink v-show="route.name !== 'contact'" class="footer__nav-link" :to="{ name: 'contact' }">Контакты</NuxtLink>
                 </div>
                 <div class="footer__nav-list footer__nav-list--socials">
                     <h4 class="footer__nav-title">Мы в соцсетях</h4>
@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ModalsPrivacy } from '#components';
+    import { ModalsСatalog, ModalsPrivacy } from '#components';
     import { useModal } from 'vue-final-modal';
 
     const { open: openPrivacy, close: closePrivacy } = useModal({
@@ -120,6 +120,17 @@
             },
         },
     });
+
+    const { open: openCatalog, close: closeCatalog } = useModal({
+        component: ModalsСatalog,
+        attrs: {
+            onClose() {
+                closeCatalog();
+            },
+        },
+    });
+
+    const route = useRoute();
 </script>
 
 <style scoped lang="scss">
@@ -165,7 +176,8 @@
         &__links {
             display: flex;
             flex-direction: column;
-            a {
+            a,
+            button {
                 width: fit-content;
                 font-family: 'Inter', sans-serif;
                 font-size: lineScale(24, 18, 480, 1440);
@@ -201,6 +213,7 @@
                 margin-bottom: rem(8);
             }
             &-link {
+                cursor: pointer;
                 width: fit-content;
                 color: $c-98BBD7;
                 line-height: 1.2;

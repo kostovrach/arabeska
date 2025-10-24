@@ -95,7 +95,7 @@
 
     const listItems: IListItem[] = [
         {
-            imageUrl: '/img/temp/placeholder-900x900.jpg',
+            imageUrl: '/img/temp/temp1.jpg',
             content: `
             <h2>Для флористов, маркетинговых и свадебных агентств</h2>
             <p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>
@@ -116,7 +116,7 @@
                             `,
         },
         {
-            imageUrl: '/img/temp/placeholder-900x900.jpg',
+            imageUrl: '/img/temp/temp1.jpg',
             content: `
                             <h2>Минимальные партии для заказа</h2>
                             <p>
@@ -139,7 +139,7 @@
                             `,
         },
         {
-            imageUrl: '/img/temp/placeholder-900x900.jpg',
+            imageUrl: '/img/temp/temp1.jpg',
             content: `
             <h2>Оптовые цены</h2>
                         <p>

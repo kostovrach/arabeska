@@ -195,7 +195,7 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            padding: rem(32) 0;
+            padding: rem(40) 0;
             @supports (mask-image: url()) {
                 mask-image: linear-gradient(
                     180deg,

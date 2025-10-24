@@ -21,12 +21,18 @@
                 />
             </div>
             <ClientOnly>
-                <ul v-show="status === 'success'" class="feedback-list__body">
-                    <li v-for="(card, idx) in items" :key="idx" class="feedback-list__item">
+                <div v-show="status === 'success'" class="feedback-list__body">
+                    <button
+                        v-for="(card, idx) in items"
+                        :key="idx"
+                        class="feedback-list__item"
+                        type="button"
+                        @click="openFeedback(card.id)"
+                    >
                         <div class="feedback-list__item-rate">
                             <span
-                                v-for="n in card.rate"
-                                :key="n"
+                                v-for="icon in card.rate"
+                                :key="icon"
                                 class="feedback-list__item-rate-icon"
                             >
                                 <SvgSprite type="star" :size="32" />
@@ -36,21 +42,24 @@
                             <img
                                 class="feedback-list__item-image"
                                 :src="card.user.avatar || '/img/service/flowers-placeholder.png'"
-                                :alt="card.user.name"
+                                :alt="card.user.name || '#'"
                             />
                         </picture>
                         <div class="feedback-list__item-content">
                             <h3 class="feedback-list__item-title">{{ card.user.name }}</h3>
                             <p v-if="card.text" class="feedback-list__item-text">{{ card.text }}</p>
                         </div>
-                    </li>
-                </ul>
+                    </button>
+                </div>
             </ClientOnly>
         </div>
     </section>
 </template>
 
 <script setup lang="ts">
+    import { ModalsFeedbackItem } from '#components';
+    import { useModal } from 'vue-final-modal';
+
     // data===================================================
     const feedbackStore = useFeedbackStore();
     feedbackStore.getFeedback();
@@ -60,6 +69,19 @@
     const status = computed(() => feedbackStatus.value);
     const items = computed(() => feedbackList.value ?? []);
     // =======================================================
+
+    function openFeedback(id: string | number): void {
+        const { open: _open, close: closeFeedback } = useModal({
+            component: ModalsFeedbackItem,
+            attrs: {
+                feedbackId: id,
+                onClose() {
+                    closeFeedback();
+                },
+            },
+        });
+        _open();
+    }
 </script>
 
 <style scoped lang="scss">
@@ -89,13 +111,26 @@
             margin-top: rem(64);
         }
         &__item {
+            cursor: pointer;
             position: relative;
+            display: grid;
+            @media (min-width: 1240px) {
+                grid-template-columns: 100%;
+            }
             font-family: 'Inter', sans-serif;
             border: rem(1) solid $c-D4E1E7;
             border-radius: rem(32);
             overflow: hidden;
+            opacity: 0.9;
+            transition: all $td $tf;
             &:nth-child(even) {
                 translate: 0 rem(96);
+            }
+            @media (pointer: fine) {
+                &:hover {
+                    opacity: 1;
+                    transform: translateY(rem(-15));
+                }
             }
             &-rate {
                 position: absolute;
@@ -131,6 +166,7 @@
             &-text {
                 font-size: lineScale(18, 16, 480, 1440);
                 line-height: 1.25;
+                @include lineClamp(4);
             }
         }
     }

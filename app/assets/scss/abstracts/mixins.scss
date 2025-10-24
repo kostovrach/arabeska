@@ -113,12 +113,12 @@
 }
 
 @mixin sticker($bg-color: $c-accent, $color: $c-FFFFFF) {
-    width: rem(80);
+    width: lineScale(80,60,480,1440);
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: lineScale(20, 18, 480, 1440);
+    font-size: lineScale(20, 14, 480, 1440);
     font-family: 'Inter', sans-serif;
     color: $color;
     rotate: -15deg;

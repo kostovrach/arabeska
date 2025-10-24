@@ -10,7 +10,7 @@
                         <picture class="home-advant__item-image-container">
                             <img
                                 class="home-advant__item-image"
-                                src="/img/temp/placeholder-900x900.jpg"
+                                src="/img/temp/temp1.jpg"
                                 alt="#"
                             />
                         </picture>
@@ -22,7 +22,7 @@
                                 такой презент
                             </p>
                             <figure class="home-advant__item-composition">
-                                <img src="/img/temp/placeholder-900x900.jpg" alt="#" />
+                                <img src="/img/temp/flowers.gif" alt="#" />
                                 <figcaption>
                                     Непревзойденно-высокое качество свечей, подсвечников и
                                     упаковочной продукции подарит незабываемые впечатления каждому,
@@ -37,7 +37,7 @@
                         <picture class="home-advant__item-image-container">
                             <img
                                 class="home-advant__item-image"
-                                src="/img/temp/placeholder-900x900.jpg"
+                                src="/img/temp/temp1.jpg"
                                 alt="#"
                             />
                         </picture>
@@ -60,7 +60,7 @@
                         <picture class="home-advant__item-image-container">
                             <img
                                 class="home-advant__item-image"
-                                src="/img/temp/placeholder-900x900.jpg"
+                                src="/img/temp/temp1.jpg"
                                 alt="#"
                             />
                         </picture>
@@ -79,21 +79,21 @@
                                 <picture class="home-advant__item-gallery-image-container">
                                     <img
                                         class="home-advant__item-gallery-image"
-                                        src="/img/temp/placeholder-900x900.jpg"
+                                        src="/img/temp/flowers.gif"
                                         alt="#"
                                     />
                                 </picture>
                                 <picture class="home-advant__item-gallery-image-container">
                                     <img
                                         class="home-advant__item-gallery-image"
-                                        src="/img/temp/placeholder-900x900.jpg"
+                                        src="/img/temp/temp1.jpg"
                                         alt="#"
                                     />
                                 </picture>
                                 <picture class="home-advant__item-gallery-image-container">
                                     <img
                                         class="home-advant__item-gallery-image"
-                                        src="/img/temp/placeholder-900x900.jpg"
+                                        src="/img/temp/flowers.gif"
                                         alt="#"
                                     />
                                 </picture>
@@ -209,7 +209,7 @@
                 margin-top: lineScale(64, 32, 480, 1440);
                 &-image-container {
                     width: 100%;
-                    height: 100%;
+                    aspect-ratio: 1;
                     &:nth-child(1) {
                         grid-area: image-1;
                     }
