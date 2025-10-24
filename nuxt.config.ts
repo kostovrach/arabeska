@@ -17,6 +17,10 @@ export default defineNuxtConfig({
         typeCheck: true,
     },
 
+    nitro: {
+        preset: 'vercel',
+    },
+
     runtimeConfig: {
         public: {
             // apiBase: 'http://localhost:3001',
