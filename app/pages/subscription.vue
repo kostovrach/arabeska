@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { IFaqItem } from '~/interfaces/faq-item';
+    import type { IFaqItem } from '~~/interfaces/faq-item';
 
     const faqList: IFaqItem[] = [
         {

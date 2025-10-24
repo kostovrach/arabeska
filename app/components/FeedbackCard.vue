@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
     // types==========================================
-    import type { IFeedback } from '~/interfaces/feedback';
+    import type { IFeedback } from '~~/interfaces/feedback';
     // ===============================================
 
     // data===========================================

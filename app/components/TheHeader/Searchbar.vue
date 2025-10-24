@@ -97,7 +97,7 @@
 
 <script setup lang="ts">
     // types===============================================
-    import type { IProduct } from '~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/product';
     // ====================================================
 
     const searchbarIsOpen = ref(false);

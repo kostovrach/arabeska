@@ -1,5 +1,5 @@
 import type { AsyncData, AsyncDataOptions, AsyncDataRequestStatus } from '#app';
-import type { IProduct } from '~/interfaces/product';
+import type { IProduct } from '~~/interfaces/product';
 
 export const useCertificatesStore = defineStore('certificates', () => {
     const apiBase = useRuntimeConfig().public.apiBase;

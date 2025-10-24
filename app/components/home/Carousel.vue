@@ -69,7 +69,7 @@
     // types==================================================
     import type { AsyncDataRequestStatus } from '#app';
     import type { Ref } from 'vue';
-    import type { IProduct } from '~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/product';
 
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';

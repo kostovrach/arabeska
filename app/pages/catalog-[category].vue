@@ -247,7 +247,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { TypeCategories } from '~/types/categories';
+    import type { TypeCategories } from '~~/types/categories';
 
     // Initialize store and fetch data
     const route = useRoute();

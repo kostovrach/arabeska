@@ -78,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { IProduct } from '~/interfaces/product.ts';
+    import type { IProduct } from '~~/interfaces/product';
 
     const props = defineProps<{
         data: IProduct;

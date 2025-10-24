@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
     // types =================================================================
-    import type { IFaqItem } from '~/interfaces/faq-item';
+    import type { IFaqItem } from '~~/interfaces/faq-item';
 
     interface IListItem {
         imageUrl: string;

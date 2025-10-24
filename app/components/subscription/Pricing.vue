@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { ISubscriptionItem } from '~/interfaces/subscription-item';
+    import type { ISubscriptionItem } from '~~/interfaces/subscription-item';
 
     // temp cart processing==============================
 

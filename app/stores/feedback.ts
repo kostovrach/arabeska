@@ -1,5 +1,5 @@
 import type { AsyncData, AsyncDataOptions, AsyncDataRequestStatus } from '#app';
-import type { IFeedback } from '~/interfaces/feedback';
+import type { IFeedback } from '~~/interfaces/feedback';
 
 export const useFeedbackStore = defineStore('feedback', () => {
     const apiBase = useRuntimeConfig().public.apiBase;

@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { IFaqItem } from '~/interfaces/faq-item';
+    import type { IFaqItem } from '~~/interfaces/faq-item';
 
     const props = defineProps<{
         vertical?: boolean;
