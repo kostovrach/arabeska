@@ -4,6 +4,7 @@
             <EmblaContainer
                 ref="sliderRef"
                 class="home-hero__slider"
+                style="overflow: visible"
                 :options="carouselOptions"
                 fade
             >
@@ -274,8 +275,8 @@
             color: $c-FFFFFF;
             overflow-x: clip;
             @include content-container($padding: lineScale(64, 16, 480, 1440));
-            &::before{
-                content:'';
+            &::before {
+                content: '';
                 position: absolute;
                 top: 100%;
                 right: 0;
