@@ -1,27 +1,22 @@
-import { eventHandler, getRouterParam, createError } from 'h3';
 import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
 import path from 'path';
+import { eventHandler, getRouterParam, createError } from 'h3';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const db = JSON.parse(readFileSync(path.join(__dirname, '/db.json'), 'utf-8'));
 
 export default eventHandler((event) => {
-  try {
-    const dbPath = path.join(process.cwd(), 'db.json'); // Корень проекта Vercel
-    const db = JSON.parse(readFileSync(dbPath, 'utf-8'));
+  const resource = getRouterParam(event, 'resource'); // Например, "products"
 
-    const resource = getRouterParam(event, 'resource'); // Например, "products"
-
-    if (!db[resource]) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: `Resource ${resource} not found`,
-      });
-    }
-
-    return db[resource]; // Возвращает массив, например, db.products
-  } catch (error) {
-    // console.error('Error reading db.json:', error); // Логирование для Vercel
+  if (!db[resource]) {
     throw createError({
-      statusCode: 500,
-      statusMessage: `Internal server error: ${error.message}`,
+      statusCode: 404,
+      statusMessage: `Resource ${resource} not found`,
     });
   }
+
+  return db[resource]; // Возвращает массив, например, db.products
 });
