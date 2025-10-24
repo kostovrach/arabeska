@@ -1,6 +1,23 @@
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
+    ssr: true,
+
+    typescript: {
+        strict: true,
+        typeCheck: true,
+    },
+
+    nitro: {
+        preset: 'vercel',
+    },
+
+    runtimeConfig: {
+        public: {
+            // apiBase: 'http://localhost:3001',
+            apiBase: '/api',
+        },
+    },
 
     modules: [
         '@pinia/nuxt',
@@ -11,23 +28,6 @@ export default defineNuxtConfig({
         '@vue-final-modal/nuxt',
     ],
     css: ['vue-final-modal/style.css', '~/assets/css/main.css'],
-
-    typescript: {
-        strict: true,
-        typeCheck: true,
-    },
-
-    nitro: {
-        preset: 'vercel',
-        static: true,
-    },
-
-    runtimeConfig: {
-        public: {
-            // apiBase: 'http://localhost:3001',
-            apiBase: '/api',
-        },
-    },
 
     svgSprite: {
         input: './app/assets/svg',
