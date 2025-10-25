@@ -14,8 +14,9 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            // apiBase: 'http://localhost:3001',
             apiBase: '/api',
+            // yandexApiKey: process.env.YANDEX_API_KEY || '',
+            yandexApiKey: '0e461b3f-8a75-4fed-abe0-5ade52c59052',
         },
     },
 

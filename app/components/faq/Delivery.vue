@@ -12,7 +12,7 @@
         </ul>
         <div class="faq-delivery__address">
             <h3 class="faq-delivery__subtitle">Зоны доставки</h3>
-            <h3 class="faq-delivery__desc">Проверьте свой адрес</h3>
+            <p class="faq-delivery__desc">Проверьте свой адрес</p>
             <div class="faq-delivery__address-validator">
                 <FloatLabel
                     class="faq-delivery__address-validator-input"

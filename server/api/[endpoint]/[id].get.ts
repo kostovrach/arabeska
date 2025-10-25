@@ -2,7 +2,7 @@ import { defineHandler } from 'h3';
 import type { IDatabase } from '~~/interfaces/database';
 import dbData from '../../data/db.json';
 
-const db = dbData as unknown as IDatabase;
+const db = dbData as IDatabase;
 
 export default defineHandler((event) => {
     const params = (event as any).context?.params || {};
