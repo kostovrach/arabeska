@@ -65,6 +65,15 @@
     }
     // =======================================================================
 
+    // test directus
+    const { data: content } = useDirectusList('page_wholesale', {
+        fields: JSON.stringify(['id', 'hero_image', 'hero_tag', 'hero_title', 'hero_description']),
+        limit: 1
+    });
+
+    console.log(content);
+    
+
     // data ==================================================================
     const faqList: IFaqItem[] = [
         {

@@ -17,6 +17,10 @@ export default defineNuxtConfig({
             apiBase: '/api',
             // yandexApiKey: process.env.YANDEX_API_KEY || '',
         },
+        directus: {
+            url: process.env.DIRECTUS_URL || '',
+            token: process.env.DIRECTUS_TOKEN || '',
+        },
     },
 
     modules: [
