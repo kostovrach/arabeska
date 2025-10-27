@@ -2,12 +2,12 @@
     <SpeedDial class="share-menu" :model="shareLinks" direction="down" :transition-delay="80">
         <template #button="{ toggleCallback }">
             <div class="share-menu__button" @click="toggleCallback">
-                <SvgSprite type="share" :size="40" />
+                <SvgSprite type="share" :size="32" />
             </div>
         </template>
         <template #item="{ item }">
             <div class="share-menu__item" :style="`--hover-color: ${item.hoverColor}`">
-                <SvgSprite :type="item.icon ?? 'arrow'" :size="36" />
+                <SvgSprite :type="item.icon ?? 'arrow'" :size="32" />
             </div>
         </template>
     </SpeedDial>

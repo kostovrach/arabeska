@@ -129,7 +129,7 @@
             scale: 0.8;
             opacity: 0.8;
             // filter: grayscale(100%);
-            pointer-events: none;
+            // pointer-events: none;
         }
         &__sticker {
             position: absolute;

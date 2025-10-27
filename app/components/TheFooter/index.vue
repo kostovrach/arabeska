@@ -15,28 +15,72 @@
             <div class="footer__nav">
                 <div class="footer__nav-list footer__nav-list--map">
                     <h4 class="footer__nav-title">Карта сайта</h4>
-                    <NuxtLink v-show="route.name !== 'index'" class="footer__nav-link" :to="{ name: 'index' }">Главная</NuxtLink>
+                    <NuxtLink
+                        v-show="route.name !== 'index'"
+                        class="footer__nav-link"
+                        :to="{ name: 'index' }"
+                    >
+                        Главная
+                    </NuxtLink>
                     <button class="footer__nav-link" type="button" @click="openCatalog">
                         Каталог
                     </button>
-                    <NuxtLink v-show="route.name !== 'feedback'" class="footer__nav-link" :to="{ name: 'feedback' }">Отзывы</NuxtLink>
-                    <NuxtLink v-show="route.name !== ''" class="footer__nav-link" :to="{ name: 'index' }">
+                    <NuxtLink
+                        v-show="route.name !== 'feedback'"
+                        class="footer__nav-link"
+                        :to="{ name: 'feedback' }"
+                    >
+                        Отзывы
+                    </NuxtLink>
+                    <NuxtLink
+                        v-show="route.name !== ''"
+                        class="footer__nav-link"
+                        :to="{ name: 'index' }"
+                    >
                         Личный кабинет
                     </NuxtLink>
-                    <NuxtLink v-show="route.name !== 'faq'" class="footer__nav-link" :to="{ name: 'faq', hash: '#delivery-rules' }">
+                    <NuxtLink
+                        v-show="route.name !== 'faq'"
+                        class="footer__nav-link"
+                        :to="{ name: 'faq', hash: '#delivery-rules' }"
+                    >
                         Доставка
                     </NuxtLink>
-                    <NuxtLink v-show="route.name !== 'faq'" class="footer__nav-link" :to="{ name: 'faq', hash: '#payment' }">
+                    <NuxtLink
+                        v-show="route.name !== 'faq'"
+                        class="footer__nav-link"
+                        :to="{ name: 'faq', hash: '#payment' }"
+                    >
                         Оплата
                     </NuxtLink>
-                    <NuxtLink v-show="route.name !== 'faq'" class="footer__nav-link" :to="{ name: 'faq', hash: '#terms-of-return' }">Возврат</NuxtLink>
-                    <NuxtLink v-show="route.name !== 'wholesale'" class="footer__nav-link" :to="{ name: 'wholesale' }">
+                    <NuxtLink
+                        v-show="route.name !== 'faq'"
+                        class="footer__nav-link"
+                        :to="{ name: 'faq', hash: '#terms-of-return' }"
+                    >
+                        Возврат
+                    </NuxtLink>
+                    <NuxtLink
+                        v-show="route.name !== 'wholesale'"
+                        class="footer__nav-link"
+                        :to="{ name: 'wholesale' }"
+                    >
                         Оптовикам
                     </NuxtLink>
-                    <NuxtLink v-show="route.name !== 'franchise'" class="footer__nav-link" :to="{ name: 'franchise' }">
+                    <NuxtLink
+                        v-show="route.name !== 'franchise'"
+                        class="footer__nav-link"
+                        :to="{ name: 'franchise' }"
+                    >
                         Франшиза
                     </NuxtLink>
-                    <NuxtLink v-show="route.name !== 'contact'" class="footer__nav-link" :to="{ name: 'contact' }">Контакты</NuxtLink>
+                    <NuxtLink
+                        v-show="route.name !== 'contact'"
+                        class="footer__nav-link"
+                        :to="{ name: 'contact' }"
+                    >
+                        Контакты
+                    </NuxtLink>
                 </div>
                 <div class="footer__nav-list footer__nav-list--socials">
                     <h4 class="footer__nav-title">Мы в соцсетях</h4>

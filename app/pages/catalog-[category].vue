@@ -304,17 +304,21 @@
     @use '~/assets/scss/abstracts' as *;
 
     .catalog-nav {
+        width: 100%;
         background-color: $c-accent;
         padding: rem(4) 0;
+        overflow-x: auto;
+        @include hide-scrollbar;
         &__container {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
             gap: lineScale(32, 16, 480, 1440);
+            min-width: fit-content;
             @include content-container;
         }
         &__link {
-            font-size: lineScale(20, 14, 480, 1440);
+            white-space: nowrap;
+            font-size: lineScale(20, 18, 480, 1440);
             @media (pointer: fine) {
                 &:hover {
                     color: $c-FFFFFF;

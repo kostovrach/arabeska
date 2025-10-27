@@ -68,7 +68,7 @@
     // controls========================================================
     const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
     const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
-    
+
     const autoplayStop = () => sliderRef?.value?.emblaApi?.plugins().autoplay.stop();
     const autoplayStart = () => sliderRef?.value?.emblaApi?.plugins().autoplay.play();
     // ================================================================

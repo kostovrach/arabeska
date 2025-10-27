@@ -55,10 +55,13 @@
                                                 value="standart"
                                             />
                                         </div>
-                                        <p class="product-view__type-desc">
+                                        <label
+                                            for="variant-standart"
+                                            class="product-view__type-desc"
+                                        >
                                             <strong>Стандарт</strong>
                                             — собрать букет как на фото
-                                        </p>
+                                        </label>
                                     </li>
                                     <li class="product-view__variant-item">
                                         <div class="product-view__variant-toggler">
@@ -70,10 +73,13 @@
                                                 value="large"
                                             />
                                         </div>
-                                        <p class="product-view__variant-desc">
+                                        <label
+                                            for="variant-large"
+                                            class="product-view__variant-desc"
+                                        >
                                             <strong>Роскошный</strong>
                                             — на 50% больше цветов
-                                        </p>
+                                        </label>
                                     </li>
                                     <li class="product-view__variant-item">
                                         <div class="product-view__variant-toggler">
@@ -85,10 +91,13 @@
                                                 value="premium"
                                             />
                                         </div>
-                                        <p class="product-view__variant-desc">
+                                        <label
+                                            for="variant-premium"
+                                            class="product-view__variant-desc"
+                                        >
                                             <strong>Премиум</strong>
                                             — в 2 раза больше цветов, крафтовая упаковка
-                                        </p>
+                                        </label>
                                     </li>
                                 </ul>
 
@@ -297,8 +306,8 @@
         }
         &__sticker {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: rem(16);
+            right: rem(16);
             z-index: 2;
             translate: 50% -50%;
             &--discount {
@@ -348,6 +357,10 @@
         &__desc {
             grid-area: desc;
             font-size: lineScale(18, 16, 480, 1440);
+        }
+        &__controls {
+            display: flex;
+            flex-direction: column;
         }
         &__variant {
             display: flex;
@@ -413,7 +426,7 @@
             &-crossed {
                 position: relative;
                 width: fit-content;
-                font-size: rem(24);
+                font-size: lineScale(24, 18, 480, 1440);
                 > span {
                     opacity: 0.5;
                 }

@@ -113,7 +113,7 @@
 }
 
 @mixin sticker($bg-color: $c-accent, $color: $c-FFFFFF) {
-    width: lineScale(80,60,480,1440);
+    width: lineScale(80, 60, 480, 1440);
     aspect-ratio: 1;
     display: flex;
     align-items: center;
@@ -196,6 +196,117 @@
         transition: rotate $td $tf;
         &:hover {
             rotate: -90deg;
+        }
+    }
+}
+
+@mixin checkbox($size: rem(24), $accent-color: $c-98BBD7, $contrast-color: $c-FFFFFF) {
+    cursor: pointer;
+    position: relative;
+    width: $size;
+    height: $size;
+    aspect-ratio: 1/1;
+    border: rem(1) solid $accent-color;
+    > input[type='checkbox'] {
+        cursor: pointer;
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        width: rem(14);
+        height: rem(2);
+        opacity: 0;
+        transition: all calc($td / 2) $tf;
+        pointer-events: none;
+    }
+    @media (pointer: fine) {
+        &:hover {
+            &::before,
+            &::after {
+                background-color: $accent-color;
+                opacity: 1;
+            }
+            &::before {
+                rotate: 90deg;
+            }
+        }
+    }
+    &:has(input:checked) {
+        background-color: $accent-color;
+        &::before,
+        &::after {
+            background-color: $contrast-color;
+            opacity: 1;
+        }
+        &::before {
+            left: 63%;
+            width: rem(12);
+            rotate: 135deg;
+        }
+        &::after {
+            left: 30%;
+            top: 60%;
+            width: rem(10);
+            rotate: -135deg;
+        }
+    }
+}
+
+@mixin toggler($width: rem(48), $init-color: $c-98BBD7, $active-color: $c-accent) {
+    position: relative;
+    box-sizing: border-box;
+
+    width: $width;
+    // height: calc($width / 2);
+    aspect-ratio: 2/1;
+
+    background-color: $c-FFFFFF;
+    border: rem(2) solid $init-color;
+    border-radius: calc($width / 3);
+    transition:
+        background-color $td $tf,
+        border-color $td $tf;
+    overflow: hidden;
+    &::before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        aspect-ratio: 1;
+        background-color: $init-color;
+        border-radius: 50%;
+        border: calc($width / 16) solid $c-FFFFFF;
+        transition: all $td $tf;
+        pointer-events: none;
+    }
+    input {
+        cursor: pointer;
+        position: absolute;
+        inset: 0;
+        appearance: none;
+        touch-action: manipulation;
+    }
+    &:has(input:checked) {
+        background-color: $active-color;
+        border-color: $active-color;
+        &::before {
+            translate: calc(100% + ($width / 16)) 0;
+            border-color: $active-color;
+            background-color: $c-FFFFFF;
         }
     }
 }
@@ -344,113 +455,6 @@
 }
 
 // tech
-@mixin checkbox($size: rem(24), $accent-color: $c-98BBD7, $contrast-color: $c-FFFFFF) {
-    cursor: pointer;
-    position: relative;
-    width: $size;
-    height: $size;
-    aspect-ratio: 1/1;
-    border: rem(1) solid $accent-color;
-    > input[type='checkbox'] {
-        cursor: pointer;
-        position: absolute;
-        z-index: 1;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
-    }
-    &::before,
-    &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        translate: -50% -50%;
-        width: rem(14);
-        height: rem(2);
-        opacity: 0;
-        transition: all calc($td / 2) $tf;
-        pointer-events: none;
-    }
-    @media (pointer: fine) {
-        &:hover {
-            &::before,
-            &::after {
-                background-color: $accent-color;
-                opacity: 1;
-            }
-            &::before {
-                rotate: 90deg;
-            }
-        }
-    }
-    &:has(input:checked) {
-        background-color: $accent-color;
-        &::before,
-        &::after {
-            background-color: $contrast-color;
-            opacity: 1;
-        }
-        &::before {
-            left: 63%;
-            width: rem(12);
-            rotate: 135deg;
-        }
-        &::after {
-            left: 30%;
-            top: 60%;
-            width: rem(10);
-            rotate: -135deg;
-        }
-    }
-}
-@mixin toggler($width: rem(48), $init-color: $c-98BBD7, $active-color: $c-accent) {
-    position: relative;
-    box-sizing: border-box;
-
-    width: $width;
-    height: calc($width / 2);
-
-    background-color: $c-FFFFFF;
-    border: rem(2) solid $init-color;
-    border-radius: calc($width / 3);
-    transition:
-        background-color $td $tf,
-        border-color $td $tf;
-    overflow: hidden;
-    &::before {
-        content: '';
-        box-sizing: border-box;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        aspect-ratio: 1;
-        background-color: $init-color;
-        border-radius: 50%;
-        border: calc($width / 16) solid $c-FFFFFF;
-        transition: all $td $tf;
-    }
-    input {
-        cursor: pointer;
-        position: absolute;
-        inset: 0;
-        appearance: none;
-    }
-    &:has(input:checked) {
-        background-color: $active-color;
-        border-color: $active-color;
-        &::before {
-            translate: calc(100% + ($width / 16)) 0;
-            // translate: 100% 0;
-            border-color: $active-color;
-            background-color: $c-FFFFFF;
-        }
-    }
-}
 @mixin hide-scrollbar() {
     scrollbar-width: none;
     -ms-overflow-style: none;

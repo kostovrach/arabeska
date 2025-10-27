@@ -207,8 +207,9 @@
             &-sticker {
                 position: absolute;
                 z-index: 2;
-                top: rem(-40);
-                left: rem(-32);
+                top: rem(16);
+                left: rem(16);
+                translate: -50% -50%;
                 @include sticker($bg-color: $c-F5142B);
             }
             &-wrapper {
