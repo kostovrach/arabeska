@@ -84,6 +84,9 @@ importers:
       '@vue/eslint-config-prettier':
         specifier: ^10.2.0
         version: 10.2.0(@types/eslint@9.6.1)(eslint@9.36.0(jiti@2.6.1))(prettier@3.6.2)
+      '@yandex/ymaps3-types':
+        specifier: ^1.0.17818622
+        version: 1.0.17818622(@vue/runtime-core@3.5.22)
       eslint-config-prettier:
         specifier: ^10.1.8
         version: 10.1.8(eslint@9.36.0(jiti@2.6.1))
@@ -1859,6 +1862,20 @@ packages:
 
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
+
+  '@yandex/ymaps3-types@1.0.17818622':
+    resolution: {integrity: sha512-I2vCLc6iA+PVDssVFeWcFpCTgPcIqPtxAbPKDWAB4mpVk2sft5rjOa1dUUFkeB+Un5BSr2NS5kDfcqQPzEA+Eg==}
+    peerDependencies:
+      '@types/react': 16-19
+      '@types/react-dom': 16-19
+      '@vue/runtime-core': '3'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+      '@vue/runtime-core':
+        optional: true
 
   abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
@@ -6727,6 +6744,10 @@ snapshots:
   '@xtuc/ieee754@1.2.0': {}
 
   '@xtuc/long@4.2.2': {}
+
+  '@yandex/ymaps3-types@1.0.17818622(@vue/runtime-core@3.5.22)':
+    optionalDependencies:
+      '@vue/runtime-core': 3.5.22
 
   abbrev@3.0.1: {}
 
