@@ -88,6 +88,10 @@
             routeParams: { category: 'flowers' },
         },
         {
+            label: 'цветочная подписка',
+            routeName: 'subscription',
+        },
+        {
             label: 'личный кабинет',
             routeName: '',
         },
@@ -113,10 +117,6 @@
             label: 'возврат',
             routeName: 'faq',
             routeHash: '#terms-of-return',
-        },
-        {
-            label: 'цветочная подписка',
-            routeName: 'subscription',
         },
         {
             label: 'отзывы',

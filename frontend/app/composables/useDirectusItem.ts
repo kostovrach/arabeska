@@ -1,20 +1,52 @@
-export function useDirectusItem<T = any>(
-    collection: string,
-    id: string | number,
-    params: Record<string, any> = {},
-    options: { server?: boolean; key?: string } = {}
-): {
+import { useFetch } from '#app';
+
+interface UseDirectusItemOptions {
+    /**
+     * Ключ кэша для useAsyncData/useFetch
+     */
+    key?: string;
+    /**
+     * Время жизни кэша в секундах (по умолчанию 60)
+     */
+    cacheTtl?: number;
+    /**
+     * Явно форсировать повторный запрос (игнорировать кэш useFetch)
+     */
+    force?: boolean;
+}
+
+interface UseDirectusResult<T> {
     data: Ref<T | null>;
     pending: Ref<boolean>;
-    error: Ref<any>;
+    error: Ref<Error | null>;
     refresh: () => Promise<void>;
-} {
-    const key = options.key ?? `directus:item:${collection}:${id}:${JSON.stringify(params)}`;
-    const { data, pending, error, refresh } = useFetch<T>(`/api/directus/${collection}/${id}`, {
+}
+
+/**
+ * Универсальный composable для запроса к серверному API `/api/cms/items`
+ */
+export function useDirectusItem<T = any>(
+    collection: string,
+    params: Record<string, any>,
+    opts: UseDirectusItemOptions = {}
+): UseDirectusResult<T> {
+    const key = opts.key ?? JSON.stringify(params);
+
+    const { data, pending, error, refresh } = useFetch<{ data: T }>(`/api/cms/${collection}`, {
         key,
         query: params,
-        server: options.server ?? true,
+        server: true,
+        lazy: false,
+        getCachedData(key, nuxtApp) {
+            return nuxtApp.payload.data[key];
+        },
+        immediate: !opts.force,
     });
 
-    return { data: data as Ref<T | null>, pending, error, refresh };
+    return {
+        data: computed(() => data.value?.data ?? null),
+        pending,
+        error: computed(() => (error.value ? (error.value as Error) : null)),
+        refresh,
+    };
 }
