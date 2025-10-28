@@ -77,22 +77,22 @@ export default defineCachedEventHandler(
             };
 
             // Если указан id — считаем, что нужно вернуть один элемент
-            if (id) {
-                // Поддержка поля id как uuid или прямой фильтр по primary key
-                const params = {
-                    fields: fields ?? ['*', ...(relations ?? [])],
-                    filter: { id: { _eq: id } },
-                    limit: 1,
-                };
-                const item = await fetchItem(collection, params, opts);
-                return { data: item };
-            }
+            // if (id) {
+            //     // Поддержка поля id как uuid или прямой фильтр по primary key
+            //     const params = {
+            //         fields: fields ?? ['*', ...(relations ?? [])],
+            //         filter: { id: { _eq: id } },
+            //         limit: 1,
+            //     };
+            //     const item = await fetchItem(collection, params, opts);
+            //     return { data: item };
+            // }
 
             // В остальных случаях возвращаем список
             const params = { fields: fields ?? ['*', ...(relations ?? [])], filter, sort, limit };
-            const list = await fetchList(collection, params, opts);
+            const item = await fetchItem(collection, params, opts);
 
-            return { data: list };
+            return { data: item };
         } catch (err: any) {
             event.res.status = 500;
             event.res.statusText = err;

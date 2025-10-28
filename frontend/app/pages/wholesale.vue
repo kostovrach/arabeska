@@ -2,10 +2,10 @@
     <NuxtLayout>
         <InfoHero
             class="wholesale-hero"
-            image-url="/img/temp/temp1.jpg"
-            tag="Оптовикам"
-            title="Всегда свежие цветы для бизнеса"
-            desc="Свежие цветы с нашей собственной фермы в Самарской области. Наши официальные оптовики получают доступ к многоуровневой партнёрской программе, скидки на продукцию, подарки и многое другое"
+            :image-url="page.hero.image_url"
+            :tag="page.hero.tag"
+            :title="page.hero.title"
+            :desc="page.hero.description"
         >
             <template #button>
                 <button class="wholesale-hero__button" type="button">
@@ -17,15 +17,18 @@
         <div class="wholesale">
             <section class="wholesale-list">
                 <ul class="wholesale-list__container">
-                    <li v-for="(item, idx) in listItems" :key="idx" class="wholesale-list__item">
+                    <li v-for="(item, idx) in page.advant" :key="idx" class="wholesale-list__item">
                         <picture class="wholesale-list__item-image-container">
                             <img
                                 class="wholesale-list__item-image"
-                                :src="item.imageUrl"
+                                :src="item.wholesale_advant_id.image_url"
                                 :alt="`${idx}`"
                             />
                         </picture>
-                        <div class="wholesale-list__item-content" v-html="item.content"></div>
+                        <div
+                            class="wholesale-list__item-content"
+                            v-html="item.wholesale_advant_id.content"
+                        ></div>
                     </li>
                 </ul>
             </section>
@@ -66,9 +69,12 @@
     // =======================================================================
 
     // test directus
-    const { page, pending, error } = usePage('page_wholesale');
+    const { page, pending, error } = usePage('wholesale', [
+        'hero.*',
+        'advant.*',
+        'advant.wholesale_advant_id.*',
+    ]);
     console.log(page.value);
-    // console.log(error);
 
     // data ==================================================================
     const faqList: IFaqItem[] = [

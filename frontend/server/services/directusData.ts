@@ -153,7 +153,6 @@ export async function fetchItem(
 
     try {
         const query = buildParams({ fields, filter: params.filter, sort: params.sort, limit });
-        // ⚠️ Здесь изменение: collection передаём как путь
         const res = await directus.request(readItems(collection, query));
 
         const data = normalizeSingleResponse(res);
@@ -198,13 +197,10 @@ export async function fetchList(
             sort: params.sort,
             limit: params.limit,
         });
-        // ⚠️ Передача collection как путь
         const res = await directus.request(readItems(collection, query));
-        // console.log(res);
 
         const data = normalizeListResponse(res);
-        console.log(11111111111,data);
-        
+
         if (data && opts.resolveFiles !== false) data.forEach(addFileUrls);
 
         memSet(key, data);
