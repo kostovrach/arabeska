@@ -3,7 +3,9 @@
         <div class="faq-section__container">
             <div class="faq-section__titlebox">
                 <h3 class="faq-section__title">{{ props.title }}</h3>
-                <p class="faq-section__desc" v-html="props.description"></p>
+                <ClientOnly>
+                    <p class="faq-section__desc" v-html="props.description"></p>
+                </ClientOnly>
             </div>
             <div class="faq-section__body">
                 <Accordion class="faq-section__list" multiple>
@@ -25,7 +27,7 @@
                             <h4 class="faq-section__item-title">{{ item.title }}</h4>
                         </AccordionHeader>
                         <AccordionContent>
-                            <div class="faq-section__item-content" v-html="item.body"></div>
+                            <div class="faq-section__item-content" v-html="item.content"></div>
                         </AccordionContent>
                     </AccordionPanel>
                 </Accordion>

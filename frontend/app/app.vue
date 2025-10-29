@@ -26,8 +26,9 @@
     });
     // =============================================================
 
-    const { content } = useCms('wholesale');
-    console.log(content.value);
+    // const { content } = useCms('categories');
+    // console.log(content.value);
+    
 </script>
 
 <style lang="scss">
