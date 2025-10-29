@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiBase: '/api',
-            // yandexApiKey: process.env.YANDEX_API_KEY || '',
+            urlBase: process.env.BASE_URL || '',
         },
         directus: {
             url: process.env.DIRECTUS_URL || '',

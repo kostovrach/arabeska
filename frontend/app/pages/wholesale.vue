@@ -1,11 +1,11 @@
 <template>
     <NuxtLayout>
-        <InfoHero
+        <!-- <InfoHero
             class="wholesale-hero"
-            :image-url="page.hero.image_url"
-            :tag="page.hero.tag"
-            :title="page.hero.title"
-            :desc="page.hero.description"
+            :image-url="content.hero.image_url"
+            :tag="content.hero.tag"
+            :title="content.hero.title"
+            :desc="content.hero.description"
         >
             <template #button>
                 <button class="wholesale-hero__button" type="button">
@@ -13,11 +13,11 @@
                     <span><SvgSprite type="arrow" :size="24" /></span>
                 </button>
             </template>
-        </InfoHero>
+        </InfoHero> -->
         <div class="wholesale">
-            <section class="wholesale-list">
+            <!-- <section class="wholesale-list">
                 <ul class="wholesale-list__container">
-                    <li v-for="(item, idx) in page.advant" :key="idx" class="wholesale-list__item">
+                    <li v-for="(item, idx) in content.advant" :key="idx" class="wholesale-list__item">
                         <picture class="wholesale-list__item-image-container">
                             <img
                                 class="wholesale-list__item-image"
@@ -31,7 +31,7 @@
                         ></div>
                     </li>
                 </ul>
-            </section>
+            </section> -->
             <FaqSection
                 title="Популярные вопросы"
                 description="Это самые часто задаваемые вопросы и ответы на них. Если вы не нашли ответа на свой вопрос - напишите нам на почту: <a href='mailto:'>info@intheplace.ru</a>"
@@ -69,12 +69,14 @@
     // =======================================================================
 
     // test directus
-    const { page, pending, error } = usePage('wholesale', [
+    const { content, pending, error } = useCms('wholesale', [
         'hero.*',
         'advant.*',
         'advant.wholesale_advant_id.*',
     ]);
-    console.log(page.value);
+    console.log(content);
+
+    
 
     // data ==================================================================
     const faqList: IFaqItem[] = [

@@ -4,12 +4,14 @@ import { fetchItem, fetchList } from '../../services/directusData';
 export default defineCachedEventHandler(
     async (event: H3Event) => {
         // console.log(event);
-        
+
+        const config = useRuntimeConfig();
+
         try {
             let q: Record<string, string> = {};
             const url = event.req.url;
             if (url) {
-                const parsed = new URL(url, 'http://localhost'); // базовый host нужен только для парсинга
+                const parsed = new URL(url, config.public.urlBase); // базовый host нужен только для парсинга
                 q = Object.fromEntries(parsed.searchParams.entries());
             }
             // Параметры запроса
@@ -64,7 +66,7 @@ export default defineCachedEventHandler(
             // sort, limit, id, resolveFiles, force
             const sort = q.sort ? String(q.sort) : undefined;
             const limit = q.limit !== undefined ? Number(q.limit) : undefined;
-            const id = q.id ? String(q.id) : undefined;
+            // const id = q.id ? String(q.id) : undefined;
             const resolveFiles =
                 q.resolveFiles !== undefined ? String(q.resolveFiles) !== 'false' : true;
             const force = q.force === '1' || q.force === 'true';
@@ -90,7 +92,7 @@ export default defineCachedEventHandler(
 
             // В остальных случаях возвращаем список
             const params = { fields: fields ?? ['*', ...(relations ?? [])], filter, sort, limit };
-            const item = await fetchItem(collection, params, opts);
+            const item = await fetchList(collection, params, opts);
 
             return { data: item };
         } catch (err: any) {

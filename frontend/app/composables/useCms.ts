@@ -6,7 +6,7 @@ interface UsePageOptions {
     cacheTtl?: number;
 }
 
-export function usePage<T = any>(
+export function useCms<T = any>(
     collection: string,
     withRelations: string[] = [],
     opts: UsePageOptions = {}
@@ -23,7 +23,7 @@ export function usePage<T = any>(
     });
 
     return {
-        page: data,
+        content: data,
         pending,
         error,
         refresh,

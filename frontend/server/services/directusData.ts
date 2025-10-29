@@ -75,6 +75,26 @@ export function normalizeListResponse(res: any): any[] {
 
     return [];
 }
+export function normalizeCollectionResponse(res: any): any | any[] {
+    if (res == null) return [];
+
+    // Если Directus вернул массив напрямую
+    if (Array.isArray(res)) return res;
+
+    // Если есть res.data
+    if (res && typeof res === 'object' && 'data' in res) {
+        const d = (res as any).data;
+        if (Array.isArray(d)) return d; // обычная коллекция
+        if (d && typeof d === 'object') return d; // singleton внутри data -> вернуть объект
+        return [];
+    }
+
+    // Если res сам по себе — объект: считаем singleton и возвращаем объект
+    if (typeof res === 'object') return res;
+
+    // fallback
+    return [];
+}
 
 // ---------- memory cache ----------
 type MemRec = { data: any; ts: number };
@@ -176,7 +196,7 @@ export async function fetchList(
         persist?: boolean;
         persistTtl?: number;
     } = {}
-): Promise<any[]> {
+): Promise<any /* either any[] or any (object) */> {
     const fields = params.fields ?? ['*'];
     const key = buildListKey(collection, {
         fields,
@@ -199,12 +219,27 @@ export async function fetchList(
         });
         const res = await directus.request(readItems(collection, query));
 
-        const data = normalizeListResponse(res);
+        // Нормализуем — может вернуть массив или объект
+        const normalized = normalizeCollectionResponse(res);
 
-        if (data && opts.resolveFiles !== false) data.forEach(addFileUrls);
+        // Если нормализованный результат — массив, применяем addFileUrls к каждому элементу
+        if (Array.isArray(normalized)) {
+            if (normalized && opts.resolveFiles !== false) normalized.forEach(addFileUrls);
+            memSet(key, normalized);
+            return normalized;
+        }
 
-        memSet(key, data);
-        return data;
+        // Если нормализованный результат — объект (singleton)
+        if (normalized && typeof normalized === 'object') {
+            if (opts.resolveFiles !== false) addFileUrls(normalized);
+            memSet(key, normalized);
+            return normalized;
+        }
+
+        // fallback: пустой массив
+        const empty: any[] = [];
+        memSet(key, empty);
+        return empty;
     } catch (err) {
         console.error('[directusData] fetchList error', err);
         throw err;
