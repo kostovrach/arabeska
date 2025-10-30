@@ -40,10 +40,9 @@
 </template>
 
 <script setup lang="ts">
-    import type { IFaqItem } from '~~/interfaces/faq-item';
 
     // mock-data =====================================================
-    const faqList: IFaqItem[] = [
+    const faqList = [
         {
             title: 'Как я могу присоединиться к бонусной программе?',
             content: `

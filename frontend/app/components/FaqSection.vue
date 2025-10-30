@@ -8,7 +8,7 @@
                 </ClientOnly>
             </div>
             <div class="faq-section__body">
-                <Accordion class="faq-section__list" multiple>
+                <Accordion v-if="props.content" class="faq-section__list" multiple>
                     <template #expandicon>
                         <span class="faq-section__item-icon faq-section__item-icon--expand"></span>
                     </template>
@@ -37,13 +37,16 @@
 </template>
 
 <script setup lang="ts">
-    import type { IFaqItem } from '~~/interfaces/faq-item';
+    // import type { IFaqItem } from '~~/interfaces/faq-item';
 
     const props = defineProps<{
         vertical?: boolean;
         title: string;
         description?: string;
-        content: IFaqItem[];
+        content?: {
+            title?: string;
+            content?: string;
+        }[];
     }>();
 </script>
 

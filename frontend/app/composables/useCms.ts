@@ -1,8 +1,9 @@
-// app/composables/useCms.ts
+import type { AsyncDataOptions } from '#app';
 
 export function useCms<T = any>(
     collection: string,
     withRelations: string[] = [],
+    requestOpt?: AsyncDataOptions<any>,
     opts: { resolveFiles?: boolean; force?: boolean; key?: string; cacheTtl?: number } = {}
 ) {
     const key = opts.key ?? `cms:${collection}:${JSON.stringify(withRelations)}`;
@@ -11,21 +12,20 @@ export function useCms<T = any>(
         resolveFiles: opts.resolveFiles ?? true,
     };
 
-    const { data, pending, error, refresh } = useFetch<{ data: T }>(`/api/cms/${collection}`, {
+    const { data, status, refresh } = useFetch<{ data: T }>(`/api/cms/${collection}`, {
         key,
         query,
         server: true,
-        lazy: false,
         getCachedData(k, nuxtApp) {
             return nuxtApp.payload.data?.[k];
         },
         immediate: !opts.force,
+        ...requestOpt,
     });
 
     return {
         content: computed(() => data.value?.data ?? null),
-        pending,
-        error: computed(() => error.value ?? null),
+        status,
         refresh,
     };
 }

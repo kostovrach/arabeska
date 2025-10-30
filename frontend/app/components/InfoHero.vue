@@ -4,7 +4,7 @@
             <img class="info-hero__image" :src="props.imageUrl" :alt="props.title" />
         </picture>
         <div class="info-hero__container">
-            <span class="info-hero__tag">{{ props.tag }}</span>
+            <span class="info-hero__tag" v-if="props.tag">{{ props.tag }}</span>
             <h1 class="info-hero__title" v-html="props.title"></h1>
             <p v-if="props.desc" class="info-hero__desc" v-html="props.desc"></p>
             <slot name="button"></slot>

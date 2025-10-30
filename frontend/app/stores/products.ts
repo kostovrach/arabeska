@@ -7,6 +7,19 @@ import type FuseType from 'fuse.js';
 export const useProductsStore = defineStore('products', () => {
     const apiBase = useRuntimeConfig().public.apiBase;
 
+    const productRelations = [
+        'images.*',
+        'images.directus_files_id.*',
+        'category.*',
+        'category.categories_id.*',
+        'reason.*',
+        'reason.reason_id.*',
+        'style.*',
+        'style.style_id.*',
+        'structure.*',
+        'structure.structure_id.*',
+    ];
+
     // State===============================================
     const productsList = useState<IProduct[] | null>('productsList', () => null);
     const productsItem = useState<IProduct | null>('productsItem', () => null);
@@ -50,34 +63,31 @@ export const useProductsStore = defineStore('products', () => {
     );
 
     // Actions=============================================
-    async function getProducts(opt?: AsyncDataOptions<IProduct[]>) {
-        const { data, status } = useLazyFetch<IProduct[]>(`${apiBase}/products`, {
-            key: 'products',
-            transform: (products) => products.filter((p) => p.available === true),
-            ...opt,
-        }) as AsyncData<IProduct[], Error>;
+    async function getProducts() {
+        const { content: productsRaw, status } = useCms<IProduct[]>('products', productRelations, {
+            lazy: true,
+        });
+
+        const products = computed(() => productsRaw.value?.filter((el) => el.available === true));
 
         watchEffect(() => {
             productsStatus.value = status.value;
-            if (data.value) productsList.value = data.value;
+            if (products.value) productsList.value = products.value;
         });
     }
 
-    async function getProductById(
-        id: string | string[] | undefined,
-        opt?: AsyncDataOptions<IProduct>
-    ) {
-        if (typeof id === 'string') {
-            const { data, status } = (await useFetch<IProduct>(`${apiBase}/products/${id}`, {
-                key: `product-${id}`,
-                ...opt,
-            })) as AsyncData<IProduct, Error>;
+    async function getProductById(id: number | string) {
+        const { content: productRaw, status } = useCms<IProduct[]>('products', productRelations, {
+            lazy: true,
+        });
+        const product = computed(() =>
+            productRaw.value?.filter((el) => el.id == id && el.available === true)
+        );
 
+        watchEffect(() => {
             singleProductStatus.value = status.value;
-            productsItem.value = data.value;
-        } else {
-            singleProductStatus.value = 'error';
-        }
+            if (product.value) productsItem.value = product.value[0] ?? null;
+        });
     }
 
     async function searchProductsFuzzy(query: string): Promise<IProduct[]> {

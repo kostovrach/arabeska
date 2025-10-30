@@ -38,7 +38,13 @@
                         <div class="product-view__main">
                             <div class="product-view__titlebox">
                                 <h1 class="product-view__title">{{ product?.title }}</h1>
-                                <p class="product-view__desc">{{ product?.description }}</p>
+                                <ClientOnly>
+                                    <p
+                                        class="product-view__desc"
+                                        v-if="product?.description"
+                                        v-html="product?.description"
+                                    ></p>
+                                </ClientOnly>
                                 <div class="product-view__share-menu">
                                     <ProductShare />
                                 </div>
@@ -160,8 +166,8 @@
                                 <p>Состав</p>
                                 <ul>
                                     <li v-for="(item, idx) in product?.structure" :key="idx">
-                                        <span>{{ item.name }}</span>
-                                        <span v-if="item.quantity">&mdash;{{ item.quantity }}</span>
+                                        <span>{{ item.structure_id?.name }}</span>
+                                        <!-- <span v-if="item.quantity">&mdash;{{ item.quantity }}</span> -->
                                     </li>
                                 </ul>
                             </div>
@@ -200,7 +206,7 @@
 
     const productsStore = useProductsStore();
 
-    productsStore.getProductById(route.params.id);
+    productsStore.getProductById(route.params.id as string);
 
     const { productsItem, singleProductStatus } = storeToRefs(productsStore);
 
@@ -209,31 +215,31 @@
     // =====================================================================
 
     // SEO & Meta ===========================================================
-    useHead(() => ({
-        title: `Букет "${product.value?.title}" - Arabeska`,
-        meta: [
-            {
-                name: 'description',
-                content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
-            },
-            {
-                property: 'og:title',
-                content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
-            },
-            {
-                property: 'og:description',
-                content: `${product.value?.description}`,
-            },
-            {
-                property: 'og:image',
-                content: product.value?.images[0],
-            },
-            {
-                name: 'twitter:card',
-                content: 'summary_large_image',
-            },
-        ],
-    }));
+    // useHead(() => ({
+    //     title: `Букет "${product.value?.title}" - Arabeska`,
+    //     meta: [
+    //         {
+    //             name: 'description',
+    //             content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
+    //         },
+    //         {
+    //             property: 'og:title',
+    //             content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
+    //         },
+    //         {
+    //             property: 'og:description',
+    //             content: `${product.value?.description}`,
+    //         },
+    //         {
+    //             property: 'og:image',
+    //             content: product.value?.images[0],
+    //         },
+    //         {
+    //             name: 'twitter:card',
+    //             content: 'summary_large_image',
+    //         },
+    //     ],
+    // }));
     // ======================================================================
 
     // product processing ===================================================

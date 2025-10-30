@@ -72,14 +72,14 @@
         title?: string;
     }>();
 
-    const accessoriesStore = useAccessoriesStore();
+    const productsStore = useProductsStore();
 
-    accessoriesStore.getAccessories();
+    productsStore.getProducts();
 
-    const { accessoriesList, accessoriesStatus } = storeToRefs(accessoriesStore);
+    const { productsList, productsStatus } = storeToRefs(productsStore);
 
-    const products = computed(() => accessoriesList.value);
-    const status = computed(() => accessoriesStatus.value);
+    const products = computed(() => productsList.value);
+    const status = computed(() => productsStatus.value);
     // =======================================================
 
     // slider=================================================

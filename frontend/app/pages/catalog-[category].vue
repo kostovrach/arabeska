@@ -1,59 +1,33 @@
 <template>
     <NuxtLayout>
         <ClientOnly>
-            <nav class="catalog-nav">
-                <div class="catalog-nav__container">
-                    <NuxtLink
-                        :class="[
-                            'catalog-nav__link',
-                            route.params.category === 'flowers' ? 'catalog-nav__link--current' : '',
-                        ]"
-                        :to="{ name: route.name, params: { category: 'flowers' } }"
-                    >
-                        букеты
-                    </NuxtLink>
-                    <NuxtLink
-                        :class="[
-                            'catalog-nav__link',
-                            route.params.category === 'certificates'
-                                ? 'catalog-nav__link--current'
-                                : '',
-                        ]"
-                        :to="{ name: route.name, params: { category: 'certificates' } }"
-                    >
-                        сертификаты
-                    </NuxtLink>
-                    <NuxtLink
-                        :class="[
-                            'catalog-nav__link',
-                            route.params.category === 'accessory'
-                                ? 'catalog-nav__link--current'
-                                : '',
-                        ]"
-                        :to="{ name: route.name, params: { category: 'accessory' } }"
-                    >
-                        дополнительно к букету
-                    </NuxtLink>
-                </div>
-            </nav>
+            <div class="catalog-nav">
+                <EmblaContainer
+                    class="catalog-nav__container"
+                    :options="{
+                        align: 'start',
+                        dragFree: true,
+                    }"
+                >
+                    <EmblaSlide v-for="item in categories" :key="item.id">
+                        <NuxtLink
+                            :class="[
+                                'catalog-nav__link',
+                                route.params.category === slugify(item.name)
+                                    ? 'catalog-nav__link--current'
+                                    : '',
+                            ]"
+                            :to="{ name: route.name, params: { category: slugify(item.name) } }"
+                        >
+                            {{ item.name }}
+                        </NuxtLink>
+                    </EmblaSlide>
+                </EmblaContainer>
+            </div>
             <div class="catalog-head">
                 <div class="catalog-head__container">
                     <div class="catalog-head__titlebox">
-                        <h2 v-if="route.params.category === 'flowers'" class="catalog-head__title">
-                            Сборные букеты с доставкой в Самаре
-                        </h2>
-                        <h2
-                            v-if="route.params.category === 'certificates'"
-                            class="catalog-head__title"
-                        >
-                            Подарочные сертификаты
-                        </h2>
-                        <h2
-                            v-if="route.params.category === 'accessory'"
-                            class="catalog-head__title"
-                        >
-                            Дополнительные товары и аксессуары
-                        </h2>
+                        <h2 class="catalog-head__title">Сборные букеты с доставкой в Самаре</h2>
                         <span class="catalog-head__counter">({{ filteredProducts?.length }})</span>
                     </div>
 
@@ -247,12 +221,20 @@
 </template>
 
 <script setup lang="ts">
-    import type { TypeCategories } from '~~/types/categories';
+    // types ===================================================================
+    import type { TypeCategories } from '~~/interfaces/categories';
+    // =========================================================================
+
+    // data ====================================================================
+    const route = useRoute();
+
+    const { content: categoriesRaw } = useCms<TypeCategories[]>('categories');
+    const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+    // =========================================================================
 
     // Initialize store and fetch data
-    const route = useRoute();
     const catalogFilterStore = useCatalogFilterStore();
-    catalogFilterStore.getCatalogItems(route.params.category as TypeCategories);
+    catalogFilterStore.getCatalogItems(route.params.category as string);
     catalogFilterStore.initFromQuery();
 
     // Get store refs
@@ -307,13 +289,7 @@
         width: 100%;
         background-color: $c-accent;
         padding: rem(4) 0;
-        overflow-x: auto;
-        @include hide-scrollbar;
         &__container {
-            display: flex;
-            align-items: center;
-            gap: lineScale(32, 16, 480, 1440);
-            min-width: fit-content;
             @include content-container;
         }
         &__link {

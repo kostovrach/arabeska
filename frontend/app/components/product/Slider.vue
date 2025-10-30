@@ -6,15 +6,27 @@
                 :key="idx"
                 class="slider--main-slide"
             >
-                <a class="slider--main-slide-wrapper" :data-fancybox="product?.title" :href="slide">
+                <a
+                    class="slider--main-slide-wrapper"
+                    :data-fancybox="product?.title"
+                    :href="`${cmsUrl}/assets/${slide.directus_files_id.id}`"
+                >
                     <picture class="slider--main-slide-image">
-                        <img :src="slide" :alt="`Фото ${idx + 1}`" />
+                        <img
+                            :src="`${cmsUrl}/assets/${slide.directus_files_id.id}`"
+                            :alt="`Фото ${idx + 1}`"
+                        />
                     </picture>
                 </a>
             </EmblaSlide>
         </EmblaContainer>
     </Lightbox>
-    <EmblaContainer ref="thumbsRef" class="slider slider--thumbs" :options="thumbsCarouselOptions">
+    <EmblaContainer
+        v-if="props.product?.images.length && props.product?.images.length > 1"
+        ref="thumbsRef"
+        class="slider slider--thumbs"
+        :options="thumbsCarouselOptions"
+    >
         <EmblaSlide
             v-for="(slide, idx) in props.product?.images"
             :key="idx"
@@ -23,7 +35,10 @@
             @click="onThumbClick(idx)"
         >
             <picture class="slider--thumbs-slide-image">
-                <img :src="slide" :alt="`Фото ${idx + 1}`" />
+                <img
+                    :src="`${cmsUrl}/assets/${slide.directus_files_id.id}`"
+                    :alt="`Фото ${idx + 1}`"
+                />
             </picture>
         </EmblaSlide>
     </EmblaContainer>
@@ -37,6 +52,8 @@
     const props = defineProps<{
         product: IProduct | null;
     }>();
+
+    const cmsUrl = useRuntimeConfig().public.apiBase;
 
     // refs =================================================================
     const mainRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);

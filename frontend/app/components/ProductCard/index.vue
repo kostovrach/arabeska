@@ -20,7 +20,10 @@
             <picture class="product__image-container">
                 <img
                     class="product__image"
-                    :src="product.images?.[0] || '/img/temp/placeholder-900x900.jpg'"
+                    :src="
+                        `${cmsUrl}/assets/${product.images?.[0]?.directus_files_id.id}` ||
+                        '/img/temp/placeholder-900x900.jpg'
+                    "
                     :alt="product.title || '#'"
                 />
             </picture>
@@ -35,7 +38,7 @@
                         :key="idx"
                         class="product__desc-item"
                     >
-                        {{ item.name }}
+                        {{ item.structure_id?.name }}
                     </li>
                 </ul>
                 <div class="product__footer">
@@ -89,6 +92,8 @@
     }>();
 
     const product = props.data;
+    
+    const cmsUrl = useRuntimeConfig().public.apiBase;
 
     // temp cart processing==============================
 

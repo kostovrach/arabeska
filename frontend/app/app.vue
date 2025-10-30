@@ -8,12 +8,8 @@
 
     // data ========================================================
     const productsStore = useProductsStore();
-    const certificateStore = useCertificatesStore();
-    const accessoriesStore = useAccessoriesStore();
 
     productsStore.getProducts();
-    certificateStore.getCertificates();
-    accessoriesStore.getAccessories();
     // =============================================================
 
     // SEO & Meta ==================================================
@@ -25,10 +21,6 @@
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
     });
     // =============================================================
-
-    // const { content } = useCms('categories');
-    // console.log(content.value);
-    
 </script>
 
 <style lang="scss">

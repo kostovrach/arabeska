@@ -60,7 +60,7 @@
                                 <picture class="searchbar__result-item-image-container">
                                     <img
                                         :src="
-                                            product.images[0] ||
+                                            `${cmsUrl}/assets/${product.images[0]?.directus_files_id.id}` ||
                                             '/img/service/flowers-placeholder.png'
                                         "
                                         :alt="product.title"
@@ -99,6 +99,8 @@
     // types===============================================
     import type { IProduct } from '~~/interfaces/product';
     // ====================================================
+
+    const cmsUrl = useRuntimeConfig().public.apiBase;
 
     const searchbarIsOpen = ref(false);
     const inputRef = ref<HTMLInputElement | null>(null);

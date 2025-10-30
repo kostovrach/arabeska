@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            apiBase: '/api',
+            apiBase: process.env.DIRECTUS_URL || '',
             urlBase: process.env.BASE_URL || '',
         },
         directus: {

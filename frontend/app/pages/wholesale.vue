@@ -1,176 +1,104 @@
 <template>
     <NuxtLayout>
-        <InfoHero
-            class="wholesale-hero"
-            :image-url="content.image_url"
-            :tag="content.tag"
-            :title="content.title"
-            :desc="content.description"
-        >
-            <template #button>
-                <button class="wholesale-hero__button" type="button">
-                    <span>Подать заявку</span>
-                    <span><SvgSprite type="arrow" :size="24" /></span>
-                </button>
-            </template>
-        </InfoHero>
-        <div class="wholesale">
-            <section class="wholesale-list">
-                <ul class="wholesale-list__container">
-                    <li
-                        v-for="(item, idx) in content.advant"
-                        :key="idx"
-                        class="wholesale-list__item"
-                    >
-                        <picture class="wholesale-list__item-image-container">
-                            <img
-                                class="wholesale-list__item-image"
-                                :src="item.wholesale_advant_id.image_url"
-                                :alt="`${idx}`"
-                            />
-                        </picture>
-                        <div
-                            class="wholesale-list__item-content"
-                            v-html="item.wholesale_advant_id.content"
-                        ></div>
-                    </li>
-                </ul>
-            </section>
-            <FaqSection
-                :title="content.faq_title"
-                :description="content.faq_description"
-                :content="content.faq_blocks"
-            />
-            <Banner
-                v-if="content.banner_image_url"
-                class="wholesale-banner"
-                :title="content.banner_title"
-                :image-url="content.banner_image_url"
+        <template v-if="page">
+            <InfoHero
+                class="wholesale-hero"
+                :image-url="page.image_url ?? ''"
+                :tag="page.tag ?? ''"
+                :title="page.title ?? ''"
+                :desc="page.description"
             >
-                <div class="wholesale-banner__content">
-                    <ClientOnly>
-                        <div class="wholesale-banner__text" v-html="content.banner_content"></div>
-                    </ClientOnly>
-                    <button class="wholesale-banner__button" type="button">
+                <template #button>
+                    <button class="wholesale-hero__button" type="button">
                         <span>Подать заявку</span>
                         <span><SvgSprite type="arrow" :size="24" /></span>
                     </button>
-                </div>
-            </Banner>
-        </div>
+                </template>
+            </InfoHero>
+            <div class="wholesale">
+                <section class="wholesale-list">
+                    <ul class="wholesale-list__container">
+                        <li
+                            v-for="(item, idx) in page.advant"
+                            :key="idx"
+                            class="wholesale-list__item"
+                        >
+                            <picture class="wholesale-list__item-image-container">
+                                <img
+                                    class="wholesale-list__item-image"
+                                    :src="item?.wholesale_advant_id?.image_url"
+                                    :alt="`${idx}`"
+                                />
+                            </picture>
+                            <div
+                                class="wholesale-list__item-content"
+                                v-html="item.wholesale_advant_id?.content"
+                            ></div>
+                        </li>
+                    </ul>
+                </section>
+                <FaqSection
+                    :title="page.faq_title ?? ''"
+                    :description="page.faq_description"
+                    :content="page.faq_blocks"
+                />
+                <Banner
+                    v-if="page.banner_image_url"
+                    class="wholesale-banner"
+                    :title="page.banner_title ?? ''"
+                    :image-url="page.banner_image_url"
+                >
+                    <div class="wholesale-banner__content">
+                        <ClientOnly>
+                            <div class="wholesale-banner__text" v-html="page.banner_content"></div>
+                        </ClientOnly>
+                        <button class="wholesale-banner__button" type="button">
+                            <span>Подать заявку</span>
+                            <span><SvgSprite type="arrow" :size="24" /></span>
+                        </button>
+                    </div>
+                </Banner>
+            </div>
+        </template>
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-    // types =================================================================
-    // import type { IFaqItem } from '~~/interfaces/faq-item';
+    // types ===================================================================
+    type TypeWholesalePage = {
+        id: number | string;
+        tag?: string;
+        title?: string;
+        description?: string;
+        image?: string;
+        image_url?: string;
+        advant?: {
+            id?: number | string;
+            wholesale_id?: string;
+            wholesale_advant_id?: {
+                id?: number | string;
+                content?: string;
+                image?: string;
+                image_url?: string;
+            };
+        }[];
+        faq_title?: string;
+        faq_description?: string;
+        faq_blocks?: {
+            title?: string;
+            content?: string;
+        }[];
+        banner_title?: string;
+        banner_content?: string;
+        banner_image?: string;
+        banner_image_url?: string;
+    };
+    // =========================================================================
 
-    // interface IListItem {
-    //     imageUrl: string;
-    //     content: string;
-    // }
-    // =======================================================================
-
-    // test directus
-    const { content, pending, error } = useCms('wholesale', [
+    const { content: page, status } = useCms<TypeWholesalePage>('wholesale', [
         'advant.*',
         'advant.wholesale_advant_id.*',
     ]);
-    console.log(content);
-
-    // data ==================================================================
-    // const faqList: IFaqItem[] = [
-    //     {
-    //         title: 'Как я могу присоединиться к бонусной программе?',
-    //         body: `
-    //         <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-    //         `,
-    //     },
-    //     {
-    //         title: 'Сколько бонусов я могу накопить за один заказ?',
-    //         body: `
-    //         <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-    //         `,
-    //     },
-    //     {
-    //         title: 'Какие преимущества мне дает бонусная программа?',
-    //         body: `
-    //         <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-    //         `,
-    //     },
-    //     {
-    //         title: 'Какой срок действия скидки?',
-    //         body: `
-    //                     <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-    //                 `,
-    //     },
-    // ];
-
-    // const listItems: IListItem[] = [
-    //     {
-    //         imageUrl: '/img/temp/temp1.jpg',
-    //         content: `
-    //         <h2>Для флористов, маркетинговых и свадебных агентств</h2>
-    //         <p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>
-    //         <ul>
-    //         <li>
-    //         Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы
-    //         получаете бонусы, которые можно использовать для получения скидок.
-    //         </li>
-    //         <li>
-    //                             Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в
-    //                             следующем месяце.
-    //                         </li>
-    //                         <li>
-    //                         Качество от производителя: Все цветы поступают с нашей фермы, что
-    //                         гарантирует свежесть и высокое качество.
-    //                         </li>
-    //                         </ul>
-    //                         `,
-    //     },
-    //     {
-    //         imageUrl: '/img/temp/temp1.jpg',
-    //         content: `
-    //                         <h2>Минимальные партии для заказа</h2>
-    //                         <p>
-    //                         При оптовых покупках цветов с нашей фермы вы можете воспользоваться
-    //                         следующими условиями:
-    //                         </p>
-    //                         <ol>
-    //                         <li>Минимальная партия составляет всего 10 букетов.</li>
-    //                         <li>
-    //                         Заказы на сумму от 5000 рублей дают вам право на накопление бонусов,
-    //                         которые можно использовать для получения скидок на будущие покупки.
-    //                         </li>
-    //                         <li>
-    //                         Для доступа к личному кабинету, где вы сможете отслеживать свои бонусы и
-    //                         прогресс, необходимо зарегистрироваться на нашем сайте или ввести номер
-    //                         телефона, указанный при оформлении заказа. Обратите внимание, что
-    //                         информация о бонусах обновляется с небольшой задержкой.
-    //                         </li>
-    //                         </ol>
-    //                         `,
-    //     },
-    //     {
-    //         imageUrl: '/img/temp/temp1.jpg',
-    //         content: `
-    //         <h2>Оптовые цены</h2>
-    //                     <p>
-    //                     При оптовых закупках цветов с нашей фермы вы можете воспользоваться
-    //                     уникальной системой скидок, которая зависит от объёма ваших покупок. Чем
-    //                     больше вы заказываете, тем выше ваша скидка на следующие заказы!
-    //                     </p>
-    //                     <p>Уровни скидок:</p>
-    //                     <ul>
-    //                     <li>Начальный — скидка 0% для новых клиентов.</li>
-    //                     <li>Постоянный — скидка 5% при заказе от 100 000 рублей.</li>
-    //                     <li>Премиум — скидка 15% при заказе от 300 000 рублей.</li>
-    //                     <li>Элитный — скидка 25% при заказе от 1 000 000 рублей.</li>
-    //                     </ul>
-    //                     `,
-    //     },
-    // ];
-    // =======================================================================
 </script>
 
 <style lang="scss">
@@ -258,7 +186,7 @@
             flex-direction: column;
             gap: rem(8);
             line-height: 1.4;
-            font-size: lineScale(18,16,480,1440);
+            font-size: lineScale(18, 16, 480, 1440);
             h2,
             h3,
             h4,

@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 2ATln3pCghj4c6AoahbQV753D1KYnwCOLa45W5zM0ReE8bBJUlceXoeHpgTDCOS
+\restrict akBv9zuL4wdplKNbtXinvr1Q95WlD2MRjGfcJmo2Fp6YeMsD2Bk8XyZCsMgk4fr
 
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
@@ -30,7 +30,8 @@ CREATE TABLE public.categories (
     id uuid NOT NULL,
     name character varying(255) NOT NULL,
     sort integer,
-    available boolean DEFAULT true
+    available boolean DEFAULT true,
+    image uuid
 );
 
 
@@ -1264,34 +1265,34 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant ALTER COLUMN id SET DEFAULT n
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: directus
 --
 
-COPY public.categories (id, name, sort, available) FROM stdin;
-7841a067-65d4-479d-9156-9a13a2977d1e	День матери	1	t
-a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	Букет невесты	2	t
-1917a463-21c7-4d04-926b-d07259019930	Корзины	9	t
-2283bf24-7eba-41b2-9fd2-0facadacbd0a	Декор для дома	5	t
-f2112df7-4000-4c51-b9e1-6bc542d831be	Букеты	6	t
-6addc28c-47ea-45da-95a7-501f9fa094e6	8 марта	7	t
-418fbdf9-519a-466f-aa5d-35e277d0857a	Весенняя коллекция	8	t
-0e35dd7f-aa20-4700-b38e-c175cfd6a3b0	14 февраля	3	f
-435b14c8-e7e1-4652-bfcb-e33505d51375	Цветы собственного производства	4	f
-c33dd427-fc81-4ae0-9216-d151df0b12c0	День знаний	10	t
-ba876a60-d0d1-410d-b150-c23729a09b18	Зимняя коллекция	11	t
-4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f	Кустовые розы	12	t
-d4cee2b2-a9f1-4b77-bbc2-63b260cc28e2	Летняя коллекция	13	t
-5867ef07-53ec-4b1d-887d-7bd674e248bd	Монобукеты	14	t
-21f9bb16-16c2-4d61-82f1-fd2d6c11d567	Новый год	15	t
-0c008a34-fd3f-4ce4-967a-6f45c75ca8e4	Осенняя коллекция	16	t
-dcb8248a-781e-429e-8cde-9bb728b6e1b5	Открытки	17	t
-b655a38a-10c2-458a-9abf-53cbb749bbe8	Пионы	18	t
-429a34dd-6cd9-49da-8efb-f40bc69e786b	Подарки	19	t
-e9a2bde1-47fe-4116-a6b6-c23854d55f57	Популярное	20	t
-8ac35f92-430d-4ee9-8945-f0ae75f4a7c5	Премиум	21	t
-92b40a19-2513-441f-830f-f63c8280728f	Розы	22	t
-61dd73b1-655e-4ace-a922-b42741961d7d	Свадебные букеты	23	t
-9847eb03-e3bc-42ec-ab47-8966b7380d40	Тюльпаны	24	t
-647d44f1-c459-4ee9-b7f4-65c0bd107999	Цветы в коробке	25	t
-88601e48-6abc-4303-a9a6-f73465a71478	1 сентября	26	t
-e991d516-4de4-4378-aff2-f425417050f2	Эко-букеты	27	t
+COPY public.categories (id, name, sort, available, image) FROM stdin;
+7841a067-65d4-479d-9156-9a13a2977d1e	День матери	3	t	\N
+a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	Букет невесты	4	t	\N
+1917a463-21c7-4d04-926b-d07259019930	Корзины	11	t	\N
+2283bf24-7eba-41b2-9fd2-0facadacbd0a	Декор для дома	7	t	\N
+f2112df7-4000-4c51-b9e1-6bc542d831be	Букеты	8	t	\N
+6addc28c-47ea-45da-95a7-501f9fa094e6	8 марта	9	t	\N
+418fbdf9-519a-466f-aa5d-35e277d0857a	Весенняя коллекция	10	t	\N
+0e35dd7f-aa20-4700-b38e-c175cfd6a3b0	14 февраля	5	f	\N
+435b14c8-e7e1-4652-bfcb-e33505d51375	Цветы собственного производства	6	f	\N
+ba876a60-d0d1-410d-b150-c23729a09b18	Зимняя коллекция	12	t	\N
+4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f	Кустовые розы	13	t	\N
+d4cee2b2-a9f1-4b77-bbc2-63b260cc28e2	Летняя коллекция	14	t	\N
+5867ef07-53ec-4b1d-887d-7bd674e248bd	Монобукеты	15	t	\N
+21f9bb16-16c2-4d61-82f1-fd2d6c11d567	Новый год	16	t	\N
+0c008a34-fd3f-4ce4-967a-6f45c75ca8e4	Осенняя коллекция	17	t	\N
+dcb8248a-781e-429e-8cde-9bb728b6e1b5	Открытки	18	t	\N
+b655a38a-10c2-458a-9abf-53cbb749bbe8	Пионы	19	t	\N
+429a34dd-6cd9-49da-8efb-f40bc69e786b	Подарки	20	t	\N
+e9a2bde1-47fe-4116-a6b6-c23854d55f57	Популярное	21	t	\N
+8ac35f92-430d-4ee9-8945-f0ae75f4a7c5	Премиум	22	t	\N
+c33dd427-fc81-4ae0-9216-d151df0b12c0	День знаний	2	t	\N
+92b40a19-2513-441f-830f-f63c8280728f	Розы	1	t	\N
+61dd73b1-655e-4ace-a922-b42741961d7d	Свадебные букеты	23	t	\N
+9847eb03-e3bc-42ec-ab47-8966b7380d40	Тюльпаны	24	t	\N
+647d44f1-c459-4ee9-b7f4-65c0bd107999	Цветы в коробке	25	t	\N
+88601e48-6abc-4303-a9a6-f73465a71478	1 сентября	26	t	\N
+e991d516-4de4-4378-aff2-f425417050f2	Эко-букеты	27	t	\N
 \.
 
 
@@ -2470,6 +2471,51 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 1168	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-29 14:01:42.937+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_fields	131	http://localhost:8055
 1169	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-29 14:03:13.802+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_files	09be7688-d281-480b-9a0d-f7966781057a	http://localhost:8055
 1170	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-29 14:04:52.971+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	wholesale	9be4e10a-bc62-4144-afc5-1adc89ebdcd2	http://localhost:8055
+1171	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 07:56:24.918+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	categories	92b40a19-2513-441f-830f-f63c8280728f	http://localhost:8055
+1172	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 09:18:46.34+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	categories	c33dd427-fc81-4ae0-9216-d151df0b12c0	http://localhost:8055
+1173	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 09:20:56.157+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	categories	c33dd427-fc81-4ae0-9216-d151df0b12c0	http://localhost:8055
+1174	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 09:20:59.206+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	categories	92b40a19-2513-441f-830f-f63c8280728f	http://localhost:8055
+1175	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 09:50:20.342+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_fields	132	http://localhost:8055
+1176	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 09:50:32.721+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_collections	categories	http://localhost:8055
+1177	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.915+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	1	http://localhost:8055
+1178	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.921+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	2	http://localhost:8055
+1179	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.927+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	3	http://localhost:8055
+1180	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.932+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	4	http://localhost:8055
+1181	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.938+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	5	http://localhost:8055
+1182	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.944+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	6	http://localhost:8055
+1183	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.949+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	7	http://localhost:8055
+1184	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.958+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_files	1	http://localhost:8055
+1185	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.965+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	1	http://localhost:8055
+1186	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.968+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	2	http://localhost:8055
+1187	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.972+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	3	http://localhost:8055
+1188	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.979+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_reason	1	http://localhost:8055
+1189	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.982+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_reason	2	http://localhost:8055
+1190	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.986+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_reason	3	http://localhost:8055
+1191	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:07.989+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	8	http://localhost:8055
+1192	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.51+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	8	http://localhost:8055
+1193	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.522+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	9	http://localhost:8055
+1194	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.53+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	10	http://localhost:8055
+1195	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.545+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	11	http://localhost:8055
+1196	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.554+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	12	http://localhost:8055
+1197	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.569+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_structure	13	http://localhost:8055
+1198	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.579+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_files	2	http://localhost:8055
+1199	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.589+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	4	http://localhost:8055
+1200	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.597+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	5	http://localhost:8055
+1201	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.606+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	6	http://localhost:8055
+1202	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.612+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	7	http://localhost:8055
+1203	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.62+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_categories	8	http://localhost:8055
+1204	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.638+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_reason	4	http://localhost:8055
+1205	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.643+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products_reason	5	http://localhost:8055
+1206	create	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:46:29.646+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	9	http://localhost:8055
+1207	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:01:19.481+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_fields	40	http://localhost:8055
+1208	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:02:20.424+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_fields	75	http://localhost:8055
+1209	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:03:34.798+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	directus_fields	75	http://localhost:8055
+1210	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:09:15.398+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	9	http://localhost:8055
+1211	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:09:45.95+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	9	http://localhost:8055
+1212	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:23:28.402+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	9	http://localhost:8055
+1213	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:31:33.823+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	9	http://localhost:8055
+1214	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:32:17.898+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	8	http://localhost:8055
+1215	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 13:33:25.546+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	products	8	http://localhost:8055
 \.
 
 
@@ -2483,10 +2529,10 @@ products_reason	import_export	\N	\N	t	f	\N	\N	t	\N	\N	\N	all	\N	\N	3	products	op
 products_structure	import_export	\N	\N	t	f	\N	\N	t	\N	\N	\N	all	\N	\N	4	products	open	\N	f
 products_categories	import_export	\N	\N	t	f	\N	\N	t	\N	\N	\N	all	\N	\N	5	products	open	\N	f
 wholesale_advant	\N	\N	{{image}}{{content}}	t	f	\N	\N	t	\N	\N	\N	all	\N	\N	1	wholesale	open	\N	f
+categories	settings_suggest	\N	{{image}}{{name}}	f	f	[{"language":"ru-RU","translation":"Категории","singular":"Категория","plural":"Категории"}]	\N	t	\N	\N	sort	all	\N	["sort"]	1	attrs	open	\N	f
 wholesale	two_pager	\N	\N	f	t	\N	\N	t	\N	\N	\N	all	\N	\N	1	pages	open	\N	f
 styles	settings_suggest	\N	\N	f	f	[{"language":"ru-RU","translation":"Стиль","singular":"Стиль","plural":"Стили"}]	\N	t	\N	\N	\N	all	\N	\N	2	attrs	open	\N	f
 reason	settings_suggest	\N	\N	f	f	[{"language":"ru-RU","translation":"Поводы","singular":"Повод","plural":"Поводы"}]	\N	t	\N	\N	\N	all	\N	\N	4	attrs	open	\N	f
-categories	settings_suggest	\N	{{name}}	f	f	[{"language":"ru-RU","translation":"Категории","singular":"Категория","plural":"Категории"}]	\N	t	\N	\N	sort	all	\N	["sort"]	1	attrs	open	\N	f
 structure	settings_suggest	\N	\N	f	f	[{"language":"ru-RU","translation":"Состав","singular":"Состав","plural":"Составы"}]	\N	t	\N	\N	sort	all	\N	\N	3	attrs	open	\N	f
 wholesale_wholesale_advant	import_export	\N	\N	t	f	\N	\N	t	\N	\N	\N	all	\N	\N	1	wholesale_advant	open	\N	f
 products	stacks	\N	\N	f	f	[{"language":"ru-RU","translation":"Товары","singular":"Товар","plural":"Товары"}]	\N	t	\N	\N	sort	all	\N	\N	1	\N	open	\N	f
@@ -2534,6 +2580,8 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 125	wholesale	faq_description	\N	input-rich-text-html	{"toolbar":["bold","italic","underline","strikethrough","h3","h4","h5","h6","numlist","bullist","removeformat","customLink","customImage","hr","fullscreen"]}	formatted-value	\N	f	f	2	full	[{"language":"ru-RU","translation":"Описание блока"}]	\N	\N	f	faq	\N	\N
 127	wholesale	banner	alias,no-data,group	group-detail	{"headerIcon":"image_aspect_ratio"}	\N	\N	f	f	5	full	[{"language":"ru-RU","translation":"Баннер"}]	\N	\N	f	\N	\N	\N
 123	wholesale	faq	alias,no-data,group	group-detail	{"headerIcon":"question_mark"}	\N	\N	f	f	4	full	[{"language":"ru-RU","translation":"Раздел FAQ"}]	\N	\N	f	\N	\N	\N
+40	products	description	\N	input-rich-text-html	{"toolbar":["bold","italic","underline","strikethrough","subscript","superscript","h2","h3","h4","h5","h6","alignleft","aligncenter","alignright","numlist","bullist","removeformat","customLink","hr","fullscreen","code"]}	formatted-value	\N	f	f	4	full	[{"language":"ru-RU","translation":"Описание товара"}]	\N	\N	f	data	\N	\N
+75	products	images	files	files	{}	related-values	{"template":null}	f	f	6	full	[{"language":"ru-RU","translation":"Изображения"}]	\N	\N	t	data	\N	\N
 81	products_structure	products_id	\N	\N	\N	\N	\N	f	t	2	full	\N	\N	\N	f	\N	\N	\N
 82	products_structure	structure_id	\N	\N	\N	\N	\N	f	t	3	full	\N	\N	\N	f	\N	\N	\N
 45	styles	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
@@ -2557,9 +2605,7 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 85	products	seo_title	\N	input	{"iconLeft":"title"}	\N	\N	f	f	1	full	\N	\N	\N	f	seo	\N	\N
 73	products	price	\N	input	{"iconLeft":"currency_ruble"}	raw	\N	f	f	2	half	[{"language":"ru-RU","translation":"Цена"}]	\N	\N	t	data	\N	\N
 87	products	seo_keywords	cast-csv	tags	{"whitespace":"-","capitalization":"lowercase"}	\N	\N	f	f	3	full	\N	\N	\N	f	seo	\N	\N
-40	products	description	\N	input-rich-text-html	{"toolbar":["bold","italic","underline","strikethrough","subscript","superscript","h2","h3","h4","h5","h6","alignleft","aligncenter","alignright","numlist","bullist","removeformat","customLink","hr","fullscreen","code"]}	raw	\N	f	f	4	full	[{"language":"ru-RU","translation":"Описание товара"}]	\N	\N	f	data	\N	\N
 36	products	date_updated	date-updated	datetime	\N	datetime	{"relative":true}	t	t	3	half	\N	\N	\N	f	\N	\N	\N
-75	products	images	files	files	{}	related-values	\N	f	f	6	full	[{"language":"ru-RU","translation":"Изображения"}]	\N	\N	t	data	\N	\N
 38	products	sort	\N	input	{"iconLeft":"sort_by_alpha","min":0}	\N	\N	t	t	1	full	[{"language":"ru-RU","translation":"Сортировка"}]	Значение от 0 до ∞, где 0 - первая позиция 	\N	f	tech	{"_and":[{"sort":{"_gte":"0"}}]}	\N
 91	categories	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 90	products	data	alias,no-data,group	group-detail	{"headerIcon":"database"}	\N	\N	f	f	4	full	[{"language":"ru-RU","translation":"Основные данные"}]	\N	\N	f	\N	\N	\N
@@ -2596,6 +2642,7 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 129	wholesale	banner_image	file	file-image	\N	image	\N	f	f	1	full	[{"language":"ru-RU","translation":"Фоновое изображение"}]	\N	\N	f	banner	\N	\N
 119	wholesale	advant	m2m	list-m2m	{"enableSelect":false}	related-values	{"template":"{{wholesale_advant_id.image}}{{wholesale_advant_id.content}}"}	f	f	1	full	[{"language":"ru-RU","translation":"Блок"}]	\N	\N	f	list	\N	\N
 130	wholesale	banner_title	\N	input	{"iconLeft":"title"}	raw	\N	f	f	2	full	[{"language":"ru-RU","translation":"Заголовок баннера"}]	\N	\N	f	banner	\N	\N
+132	categories	image	file	file-image	\N	image	{"circle":true}	f	f	5	full	[{"language":"ru-RU","translation":"Изображение для категории"}]	Для выпадающего каталога	\N	f	\N	\N	\N
 \.
 
 
@@ -2789,11 +2836,11 @@ abf8a154-5b1c-4a46-ac9c-7300570f4f17	$t:public_label	public	$t:public_descriptio
 --
 
 COPY public.directus_presets (id, bookmark, "user", role, collection, search, layout, layout_query, layout_options, refresh_interval, filter, icon, color) FROM stdin;
-3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
 2	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	reason	\N	\N	{"tabular":{"fields":["name"],"sort":["-name"],"page":1}}	{"tabular":{"widths":{"name":524,"id":160},"align":{"name":"left"}}}	\N	\N	bookmark	\N
 4	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	structure	\N	tabular	{"tabular":{"page":1,"sort":["name"]},"map":{"limit":1000}}	{"tabular":{"spacing":"cozy"},"cards":{"title":"{{name}}"},"kanban":{"titleField":"name"},"calendar":{"viewInfo":{"type":"dayGridMonth","startDateStr":"2025-10-01T00:00:00+03:00"}}}	\N	\N	bookmark	\N
-5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":729,"available":160}}}	\N	\N	bookmark	\N
 1	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	styles	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
+5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available","image"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":450,"available":271,"image":259},"spacing":"cozy"}}	\N	\N	bookmark	\N
+3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":763}}}	\N	\N	bookmark	\N
 \.
 
 
@@ -2817,6 +2864,7 @@ COPY public.directus_relations (id, many_collection, many_field, one_collection,
 27	wholesale_wholesale_advant	wholesale_advant_id	wholesale_advant	\N	\N	\N	wholesale_id	\N	nullify
 28	wholesale_wholesale_advant	wholesale_id	wholesale	advant	\N	\N	wholesale_advant_id	\N	nullify
 30	wholesale	banner_image	directus_files	\N	\N	\N	\N	\N	nullify
+31	categories	image	directus_files	\N	\N	\N	\N	\N	nullify
 \.
 
 
@@ -3781,6 +3829,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 983	1126	directus_fields	105	{"id":105,"collection":"wholesale","field":"hero","special":["alias","no-data","group"],"interface":"group-detail","options":{},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Хироскрин"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"hero","sort":2,"group":null}	\N	\N
 984	1127	directus_fields	118	{"id":118,"collection":"wholesale","field":"list","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"list"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Список преимуществ"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"list","sort":3,"group":null}	\N	\N
 985	1128	directus_fields	123	{"id":123,"collection":"wholesale","field":"faq","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"question_mark"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Раздел FAQ"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"faq","sort":4,"group":null}	\N	\N
+1029	1173	categories	c33dd427-fc81-4ae0-9216-d151df0b12c0	{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0","name":"День знаний","sort":2,"available":true}	{"available":true}	\N	\N
 963	1103	wholesale_wholesale_advant	7	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	\N	\N
 962	1102	wholesale_advant	a96d6a1d-9b15-43ee-8755-d242c92bcc03	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	963	\N
 965	1105	wholesale_wholesale_advant	8	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	\N	\N
@@ -3788,6 +3837,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 986	1129	directus_fields	124	{"id":124,"collection":"wholesale","field":"faq_title","special":null,"interface":"input","options":{"iconLeft":"title"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":1,"width":"full","translations":[{"language":"ru-RU","translation":"Заголовок блока"}],"note":null,"conditions":null,"required":false,"group":"faq","validation":null,"validation_message":null}	{"collection":"wholesale","field":"faq_title","sort":1,"group":"faq"}	\N	\N
 1006	1150	directus_fields	129	{"id":129,"collection":"wholesale","field":"banner_image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":null,"readonly":false,"hidden":false,"sort":1,"width":"full","translations":[{"language":"ru-RU","translation":"Фоновое изображение"}],"note":null,"conditions":null,"required":false,"group":"banner","validation":null,"validation_message":null}	{"collection":"wholesale","field":"banner_image","sort":1,"group":"banner"}	\N	\N
 1008	1152	directus_fields	130	{"sort":6,"interface":"input","special":null,"options":{"iconLeft":"title"},"translations":[{"language":"ru-RU","translation":"Заголовок баннера"}],"display":"raw","collection":"wholesale","field":"banner_title"}	{"sort":6,"interface":"input","special":null,"options":{"iconLeft":"title"},"translations":[{"language":"ru-RU","translation":"Заголовок баннера"}],"display":"raw","collection":"wholesale","field":"banner_title"}	\N	\N
+1030	1174	categories	92b40a19-2513-441f-830f-f63c8280728f	{"id":"92b40a19-2513-441f-830f-f63c8280728f","name":"Розы","sort":1,"available":true}	{"available":true}	\N	\N
 964	1104	wholesale_advant	78b365d9-ec54-4337-af8b-c62ad45e9d92	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	965	\N
 967	1107	wholesale_wholesale_advant	9	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	\N	\N
 966	1106	wholesale_advant	350f1de0-a24f-491b-9d6c-b1f8e12dc93f	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	967	\N
@@ -3795,6 +3845,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1010	1154	directus_fields	105	{"id":105,"collection":"wholesale","field":"hero","special":["alias","no-data","group"],"interface":"group-detail","options":{},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Хироскрин"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"hero","sort":2,"group":null}	\N	\N
 1011	1155	directus_fields	118	{"id":118,"collection":"wholesale","field":"list","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"list"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Список преимуществ"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"list","sort":3,"group":null}	\N	\N
 1012	1156	directus_fields	123	{"id":123,"collection":"wholesale","field":"faq","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"question_mark"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Раздел FAQ"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"faq","sort":4,"group":null}	\N	\N
+1040	1184	products_files	1	{"products_id":"8","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}	{"products_id":"8","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}	1047	\N
 969	1109	wholesale_wholesale_advant	10	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	{"wholesale_advant_id":{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"},"wholesale_id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2"}	\N	\N
 968	1108	wholesale_advant	0be59b02-5267-401c-90d9-be80a41f44a6	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","content":"<h2>Для флористов, маркетинговых и свадебных агентств</h2>\\n<p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>\\n<ul>\\n<li>Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы получаете бонусы, которые можно использовать для получения скидок.</li>\\n<li>Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в следующем месяце.</li>\\n<li>Качество от производителя: Все цветы поступают с нашей фермы, что гарантирует свежесть и высокое качество.</li>\\n</ul>"}	969	\N
 970	1111	directus_collections	wholesale_advant	{"collection":"wholesale_advant","icon":null,"note":null,"display_template":"{{image}}{{content}}","hidden":true,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":1,"group":"wholesale","collapse":"open","preview_url":null,"versioning":false}	{"hidden":true}	\N	\N
@@ -3826,6 +3877,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1002	1146	directus_fields	18	{"id":18,"collection":"wholesale","field":"id","special":["uuid"],"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"id","sort":1,"group":null}	\N	\N
 1003	1147	directus_fields	105	{"id":105,"collection":"wholesale","field":"hero","special":["alias","no-data","group"],"interface":"group-detail","options":{},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Хироскрин"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"hero","sort":2,"group":null}	\N	\N
 1004	1148	directus_fields	118	{"id":118,"collection":"wholesale","field":"list","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"list"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Список преимуществ"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"list","sort":3,"group":null}	\N	\N
+1028	1172	categories	c33dd427-fc81-4ae0-9216-d151df0b12c0	{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0","name":"День знаний","sort":2,"available":false}	{"available":false}	\N	\N
 1013	1157	directus_fields	129	{"id":129,"collection":"wholesale","field":"banner_image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":null,"readonly":false,"hidden":false,"sort":1,"width":"full","translations":[{"language":"ru-RU","translation":"Фоновое изображение"}],"note":null,"conditions":null,"required":false,"group":"banner","validation":null,"validation_message":null}	{"collection":"wholesale","field":"banner_image","sort":1,"group":"banner"}	\N	\N
 1015	1159	directus_fields	130	{"id":130,"collection":"wholesale","field":"banner_title","special":null,"interface":"input","options":{"iconLeft":"title"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Заголовок баннера"}],"note":null,"conditions":null,"required":false,"group":"banner","validation":null,"validation_message":null}	{"collection":"wholesale","field":"banner_title","sort":2,"group":"banner"}	\N	\N
 1014	1158	directus_fields	127	{"id":127,"collection":"wholesale","field":"banner","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"image_aspect_ratio"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Баннер"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"wholesale","field":"banner","sort":5,"group":null}	\N	\N
@@ -3840,6 +3892,47 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1024	1168	directus_fields	131	{"id":131,"collection":"wholesale","field":"banner_content","special":null,"interface":"input-rich-text-html","options":{"toolbar":["bold","italic","underline","strikethrough","subscript","superscript","h3","h4","h5","h6","numlist","bullist","customLink","hr","fullscreen"]},"display":"formatted-value","display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Текстовое содержимое"}],"note":null,"conditions":null,"required":false,"group":"banner","validation":null,"validation_message":null}	{"collection":"wholesale","field":"banner_content","sort":3,"group":"banner"}	\N	\N
 1025	1169	directus_files	09be7688-d281-480b-9a0d-f7966781057a	{"title":"Flowers","filename_download":"flowers.gif","type":"image/gif","storage":"local"}	{"title":"Flowers","filename_download":"flowers.gif","type":"image/gif","storage":"local"}	\N	\N
 1026	1170	wholesale	9be4e10a-bc62-4144-afc5-1adc89ebdcd2	{"id":"9be4e10a-bc62-4144-afc5-1adc89ebdcd2","image":"c49375f7-06d0-47d3-babd-0515605ec99f","tag":"Оптовикам","title":"Всегда свежие цветы для бизнеса","description":"Свежие цветы с нашей собственной фермы в Самарской области. Наши официальные оптовики получают доступ к многоуровневой партнёрской программе, скидки на продукцию, подарки и многое другое","faq_title":"Популярные вопросы","faq_description":"<p>Это самые часто задаваемые вопросы и ответы на них. Если вы не нашли ответа на свой вопрос - напишите нам на почту: <a href=\\"mailto:info@intheplace.ru\\" target=\\"_blank\\" rel=\\"noopener\\">info@intheplace.ru</a></p>","faq_blocks":[{"title":"Как я могу присоединиться к бонусной программе?","content":"<p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>"},{"title":"Сколько бонусов я могу накопить за один заказ?","content":"<p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>"},{"title":"Какие преимущества мне дает бонусная программа?","content":"<p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>"},{"title":"Какой срок действия скидки?","content":"<p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>"}],"banner_image":"09be7688-d281-480b-9a0d-f7966781057a","banner_title":"Начните работать с нами!","banner_content":"<p>Наши официальные оптовики получают неоспоримые преимущества партнёрства: доступ к многоуровневой партнёрской программе, скидки на продукцию, подарки и многое другое</p>","advant":[7,8,9,10]}	{"banner_image":"09be7688-d281-480b-9a0d-f7966781057a","banner_title":"Начните работать с нами!","banner_content":"<p>Наши официальные оптовики получают неоспоримые преимущества партнёрства: доступ к многоуровневой партнёрской программе, скидки на продукцию, подарки и многое другое</p>"}	\N	\N
+1027	1171	categories	92b40a19-2513-441f-830f-f63c8280728f	{"id":"92b40a19-2513-441f-830f-f63c8280728f","name":"Розы","sort":1,"available":false}	{"available":false}	\N	\N
+1031	1175	directus_fields	132	{"sort":5,"special":["file"],"translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога","interface":"file-image","display":"image","display_options":{"circle":true},"collection":"categories","field":"image"}	{"sort":5,"special":["file"],"translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога","interface":"file-image","display":"image","display_options":{"circle":true},"collection":"categories","field":"image"}	\N	\N
+1032	1176	directus_collections	categories	{"collection":"categories","icon":"settings_suggest","note":null,"display_template":"{{image}}{{name}}","hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Категории","singular":"Категория","plural":"Категории"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":"sort","accountability":"all","color":null,"item_duplication_fields":["sort"],"sort":1,"group":"attrs","collapse":"open","preview_url":null,"versioning":false}	{"display_template":"{{image}}{{name}}"}	\N	\N
+1047	1191	products	8	{"title":"тест","price":17000,"discount":12000,"description":"<p>Тестовое описание</p>","size":"10х10х10см","images":{"create":[{"products_id":"+","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}],"update":[],"delete":[]},"reason":{"create":[{"products_id":"+","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}},{"products_id":"+","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}},{"products_id":"+","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}],"update":[],"delete":[]},"structure":{"create":[{"products_id":"+","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}},{"products_id":"+","structure_id":{"id":"516f6fd3-32fa-45e5-bb80-0aaefe47cb3f"}},{"products_id":"+","structure_id":{"id":"9a7268c1-6b81-4c93-9beb-2af9e8ee1148"}},{"products_id":"+","structure_id":{"id":"6c0d5a40-2f0a-43a8-9e37-f67c547b0c10"}},{"products_id":"+","structure_id":{"id":"bf7a62bb-143d-45b2-9b66-6a819f552439"}},{"products_id":"+","structure_id":{"id":"d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9"}},{"products_id":"+","structure_id":{"id":"caab1f2d-2b8c-4433-83da-0bb00e5dbad4"}}],"update":[],"delete":[]},"category":{"create":[{"products_id":"+","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}},{"products_id":"+","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}},{"products_id":"+","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}}],"update":[],"delete":[]},"seo_title":"seo_title","seo_description":"seo_вesc","seo_keywords":["seo","seo1","seo2"]}	{"title":"тест","price":17000,"discount":12000,"description":"<p>Тестовое описание</p>","size":"10х10х10см","images":{"create":[{"products_id":"+","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}],"update":[],"delete":[]},"reason":{"create":[{"products_id":"+","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}},{"products_id":"+","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}},{"products_id":"+","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}],"update":[],"delete":[]},"structure":{"create":[{"products_id":"+","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}},{"products_id":"+","structure_id":{"id":"516f6fd3-32fa-45e5-bb80-0aaefe47cb3f"}},{"products_id":"+","structure_id":{"id":"9a7268c1-6b81-4c93-9beb-2af9e8ee1148"}},{"products_id":"+","structure_id":{"id":"6c0d5a40-2f0a-43a8-9e37-f67c547b0c10"}},{"products_id":"+","structure_id":{"id":"bf7a62bb-143d-45b2-9b66-6a819f552439"}},{"products_id":"+","structure_id":{"id":"d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9"}},{"products_id":"+","structure_id":{"id":"caab1f2d-2b8c-4433-83da-0bb00e5dbad4"}}],"update":[],"delete":[]},"category":{"create":[{"products_id":"+","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}},{"products_id":"+","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}},{"products_id":"+","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}}],"update":[],"delete":[]},"seo_title":"seo_title","seo_description":"seo_вesc","seo_keywords":["seo","seo1","seo2"]}	\N	\N
+1033	1177	products_structure	1	{"products_id":"8","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}}	{"products_id":"8","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}}	1047	\N
+1034	1178	products_structure	2	{"products_id":"8","structure_id":{"id":"516f6fd3-32fa-45e5-bb80-0aaefe47cb3f"}}	{"products_id":"8","structure_id":{"id":"516f6fd3-32fa-45e5-bb80-0aaefe47cb3f"}}	1047	\N
+1035	1179	products_structure	3	{"products_id":"8","structure_id":{"id":"9a7268c1-6b81-4c93-9beb-2af9e8ee1148"}}	{"products_id":"8","structure_id":{"id":"9a7268c1-6b81-4c93-9beb-2af9e8ee1148"}}	1047	\N
+1036	1180	products_structure	4	{"products_id":"8","structure_id":{"id":"6c0d5a40-2f0a-43a8-9e37-f67c547b0c10"}}	{"products_id":"8","structure_id":{"id":"6c0d5a40-2f0a-43a8-9e37-f67c547b0c10"}}	1047	\N
+1037	1181	products_structure	5	{"products_id":"8","structure_id":{"id":"bf7a62bb-143d-45b2-9b66-6a819f552439"}}	{"products_id":"8","structure_id":{"id":"bf7a62bb-143d-45b2-9b66-6a819f552439"}}	1047	\N
+1038	1182	products_structure	6	{"products_id":"8","structure_id":{"id":"d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9"}}	{"products_id":"8","structure_id":{"id":"d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9"}}	1047	\N
+1039	1183	products_structure	7	{"products_id":"8","structure_id":{"id":"caab1f2d-2b8c-4433-83da-0bb00e5dbad4"}}	{"products_id":"8","structure_id":{"id":"caab1f2d-2b8c-4433-83da-0bb00e5dbad4"}}	1047	\N
+1044	1188	products_reason	1	{"products_id":"8","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}	{"products_id":"8","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}	1047	\N
+1041	1185	products_categories	1	{"products_id":"8","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}}	{"products_id":"8","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}}	1047	\N
+1042	1186	products_categories	2	{"products_id":"8","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}}	{"products_id":"8","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}}	1047	\N
+1043	1187	products_categories	3	{"products_id":"8","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}}	{"products_id":"8","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}}	1047	\N
+1045	1189	products_reason	2	{"products_id":"8","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}}	{"products_id":"8","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}}	1047	\N
+1046	1190	products_reason	3	{"products_id":"8","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}	{"products_id":"8","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}	1047	\N
+1062	1206	products	9	{"title":"тест 2","price":25000,"discount":100,"description":"<p>Тестовое описание 2</p>","size":"20х20х20см","images":{"create":[{"products_id":"+","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}],"update":[],"delete":[]},"reason":{"create":[{"products_id":"+","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}},{"products_id":"+","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}],"update":[],"delete":[]},"structure":{"create":[{"products_id":"+","structure_id":{"id":"99d724cd-dd9c-4b39-80c4-3e08585086f4"}},{"products_id":"+","structure_id":{"id":"4101b4ca-dab3-4809-913b-56ba9d6d70b7"}},{"products_id":"+","structure_id":{"id":"22c486a9-ecf5-4432-837e-cff833b00590"}},{"products_id":"+","structure_id":{"id":"50b586b8-025a-44ec-a397-ce1e46373686"}},{"products_id":"+","structure_id":{"id":"f119a603-67c6-4478-8c67-9101bab7cda9"}},{"products_id":"+","structure_id":{"id":"513d8e30-8a1c-457d-a9ac-dc80c0060d5d"}}],"update":[],"delete":[]},"category":{"create":[{"products_id":"+","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}},{"products_id":"+","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}},{"products_id":"+","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}},{"products_id":"+","categories_id":{"id":"a679dd91-d1c7-43af-aebb-c4d4e7a5dc69"}},{"products_id":"+","categories_id":{"id":"2283bf24-7eba-41b2-9fd2-0facadacbd0a"}}],"update":[],"delete":[]},"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"]}	{"title":"тест 2","price":25000,"discount":100,"description":"<p>Тестовое описание 2</p>","size":"20х20х20см","images":{"create":[{"products_id":"+","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}],"update":[],"delete":[]},"reason":{"create":[{"products_id":"+","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}},{"products_id":"+","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}],"update":[],"delete":[]},"structure":{"create":[{"products_id":"+","structure_id":{"id":"99d724cd-dd9c-4b39-80c4-3e08585086f4"}},{"products_id":"+","structure_id":{"id":"4101b4ca-dab3-4809-913b-56ba9d6d70b7"}},{"products_id":"+","structure_id":{"id":"22c486a9-ecf5-4432-837e-cff833b00590"}},{"products_id":"+","structure_id":{"id":"50b586b8-025a-44ec-a397-ce1e46373686"}},{"products_id":"+","structure_id":{"id":"f119a603-67c6-4478-8c67-9101bab7cda9"}},{"products_id":"+","structure_id":{"id":"513d8e30-8a1c-457d-a9ac-dc80c0060d5d"}}],"update":[],"delete":[]},"category":{"create":[{"products_id":"+","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}},{"products_id":"+","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}},{"products_id":"+","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}},{"products_id":"+","categories_id":{"id":"a679dd91-d1c7-43af-aebb-c4d4e7a5dc69"}},{"products_id":"+","categories_id":{"id":"2283bf24-7eba-41b2-9fd2-0facadacbd0a"}}],"update":[],"delete":[]},"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"]}	\N	\N
+1048	1192	products_structure	8	{"products_id":"9","structure_id":{"id":"99d724cd-dd9c-4b39-80c4-3e08585086f4"}}	{"products_id":"9","structure_id":{"id":"99d724cd-dd9c-4b39-80c4-3e08585086f4"}}	1062	\N
+1049	1193	products_structure	9	{"products_id":"9","structure_id":{"id":"4101b4ca-dab3-4809-913b-56ba9d6d70b7"}}	{"products_id":"9","structure_id":{"id":"4101b4ca-dab3-4809-913b-56ba9d6d70b7"}}	1062	\N
+1050	1194	products_structure	10	{"products_id":"9","structure_id":{"id":"22c486a9-ecf5-4432-837e-cff833b00590"}}	{"products_id":"9","structure_id":{"id":"22c486a9-ecf5-4432-837e-cff833b00590"}}	1062	\N
+1051	1195	products_structure	11	{"products_id":"9","structure_id":{"id":"50b586b8-025a-44ec-a397-ce1e46373686"}}	{"products_id":"9","structure_id":{"id":"50b586b8-025a-44ec-a397-ce1e46373686"}}	1062	\N
+1052	1196	products_structure	12	{"products_id":"9","structure_id":{"id":"f119a603-67c6-4478-8c67-9101bab7cda9"}}	{"products_id":"9","structure_id":{"id":"f119a603-67c6-4478-8c67-9101bab7cda9"}}	1062	\N
+1053	1197	products_structure	13	{"products_id":"9","structure_id":{"id":"513d8e30-8a1c-457d-a9ac-dc80c0060d5d"}}	{"products_id":"9","structure_id":{"id":"513d8e30-8a1c-457d-a9ac-dc80c0060d5d"}}	1062	\N
+1054	1198	products_files	2	{"products_id":"9","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}	{"products_id":"9","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}	1062	\N
+1055	1199	products_categories	4	{"products_id":"9","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}}	{"products_id":"9","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}}	1062	\N
+1056	1200	products_categories	5	{"products_id":"9","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}}	{"products_id":"9","categories_id":{"id":"c33dd427-fc81-4ae0-9216-d151df0b12c0"}}	1062	\N
+1057	1201	products_categories	6	{"products_id":"9","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}}	{"products_id":"9","categories_id":{"id":"7841a067-65d4-479d-9156-9a13a2977d1e"}}	1062	\N
+1058	1202	products_categories	7	{"products_id":"9","categories_id":{"id":"a679dd91-d1c7-43af-aebb-c4d4e7a5dc69"}}	{"products_id":"9","categories_id":{"id":"a679dd91-d1c7-43af-aebb-c4d4e7a5dc69"}}	1062	\N
+1059	1203	products_categories	8	{"products_id":"9","categories_id":{"id":"2283bf24-7eba-41b2-9fd2-0facadacbd0a"}}	{"products_id":"9","categories_id":{"id":"2283bf24-7eba-41b2-9fd2-0facadacbd0a"}}	1062	\N
+1060	1204	products_reason	4	{"products_id":"9","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}}	{"products_id":"9","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}}	1062	\N
+1061	1205	products_reason	5	{"products_id":"9","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}	{"products_id":"9","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}	1062	\N
+1063	1207	directus_fields	40	{"id":40,"collection":"products","field":"description","special":null,"interface":"input-rich-text-html","options":{"toolbar":["bold","italic","underline","strikethrough","subscript","superscript","h2","h3","h4","h5","h6","alignleft","aligncenter","alignright","numlist","bullist","removeformat","customLink","hr","fullscreen","code"]},"display":"formatted-value","display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Описание товара"}],"note":null,"conditions":null,"required":false,"group":"data","validation":null,"validation_message":null}	{"collection":"products","field":"description","display":"formatted-value"}	\N	\N
+1064	1208	directus_fields	75	{"id":75,"collection":"products","field":"images","special":["files"],"interface":"files","options":{},"display":"related-values","display_options":{"template":"{{directus_files_id.$thumbnail}}"},"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Изображения"}],"note":null,"conditions":null,"required":true,"group":"data","validation":null,"validation_message":null}	{"collection":"products","field":"images","display":"related-values","display_options":{"template":"{{directus_files_id.$thumbnail}}"}}	\N	\N
+1065	1209	directus_fields	75	{"id":75,"collection":"products","field":"images","special":["files"],"interface":"files","options":{},"display":"related-values","display_options":{"template":null},"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Изображения"}],"note":null,"conditions":null,"required":true,"group":"data","validation":null,"validation_message":null}	{"collection":"products","field":"images","display_options":{"template":null}}	\N	\N
+1066	1210	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-10-30T13:09:15.388Z","available":false,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":100,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"available":false,"date_updated":"2025-10-30T13:09:15.388Z"}	\N	\N
+1067	1211	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-10-30T13:09:45.949Z","available":true,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":100,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"available":true,"date_updated":"2025-10-30T13:09:45.949Z"}	\N	\N
+1068	1212	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-10-30T13:23:28.400Z","available":false,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":100,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"available":false,"date_updated":"2025-10-30T13:23:28.400Z"}	\N	\N
+1069	1213	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-10-30T13:31:33.821Z","available":true,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":100,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"available":true,"date_updated":"2025-10-30T13:31:33.821Z"}	\N	\N
+1070	1214	products	8	{"id":"8","date_created":"2025-10-30T10:43:07.899Z","date_updated":"2025-10-30T13:32:17.896Z","available":false,"sort":2,"title":"тест","description":"<p>Тестовое описание</p>","size":"10х10х10см","price":17000,"discount":12000,"seo_title":"seo_title","seo_description":"seo_вesc","seo_keywords":["seo","seo1","seo2"],"images":[1],"style":[],"reason":[1,2,3],"structure":[1,2,3,4,5,6,7],"category":[1,2,3]}	{"available":false,"date_updated":"2025-10-30T13:32:17.896Z"}	\N	\N
+1071	1215	products	8	{"id":"8","date_created":"2025-10-30T10:43:07.899Z","date_updated":"2025-10-30T13:33:25.545Z","available":true,"sort":2,"title":"тест","description":"<p>Тестовое описание</p>","size":"10х10х10см","price":17000,"discount":12000,"seo_title":"seo_title","seo_description":"seo_вesc","seo_keywords":["seo","seo1","seo2"],"images":[1],"style":[],"reason":[1,2,3],"structure":[1,2,3,4,5,6,7],"category":[1,2,3]}	{"available":true,"date_updated":"2025-10-30T13:33:25.545Z"}	\N	\N
 \.
 
 
@@ -3857,8 +3950,8 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 --
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
-hV0JjTLrUi0VtjRTU2IMw0md3zWtkKKIQiY4eUiNgwa12lkXmgnnfcI3_T4O-Nn2	d28ea43e-0087-4264-aad7-f52329173439	2025-10-29 12:42:10.969+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	\N	http://localhost:8055	u-kCOOMxYFA2HyQfJABDBYMQ6I2ciGZmnCbe5swIMv1faIzcZ7gH1WL_ABIlYrre
-u-kCOOMxYFA2HyQfJABDBYMQ6I2ciGZmnCbe5swIMv1faIzcZ7gH1WL_ABIlYrre	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 12:42:00.968+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	\N	http://localhost:8055	\N
+4KalwhwyY2CZ1e6u8bQGvDElCu8nR_2NssRSzUsLoO2V8zomnum6_a4x_BusLtQx	d28ea43e-0087-4264-aad7-f52329173439	2025-10-30 10:43:49.863+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	\N	http://localhost:8055	6PbXC4bkW_0D84PkF4AsYJNWY6OQNyP7f-BuyECCRkiKG979MOjJHmMYTQZlw4kC
+6PbXC4bkW_0D84PkF4AsYJNWY6OQNyP7f-BuyECCRkiKG979MOjJHmMYTQZlw4kC	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 10:43:39.863+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	\N	http://localhost:8055	\N
 \.
 
 
@@ -3892,8 +3985,8 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 --
 
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-10-29 12:42:00.976+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	JBHIGfwD5GSGJng17iTDvIOV86zpLKLC	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-10-30 10:43:39.869+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 \.
 
 
@@ -3918,6 +4011,8 @@ COPY public.directus_webhooks (id, name, method, url, status, data, actions, col
 --
 
 COPY public.products (id, date_created, date_updated, available, sort, title, description, size, price, discount, seo_title, seo_description, seo_keywords) FROM stdin;
+9	2025-10-30 10:46:29.501+00	2025-10-30 13:31:33.821+00	t	1	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	100	seo_title2	seo_desc2	seo3,seo4,seo5
+8	2025-10-30 10:43:07.899+00	2025-10-30 13:33:25.545+00	t	2	тест	<p>Тестовое описание</p>	10х10х10см	17000	12000	seo_title	seo_вesc	seo,seo1,seo2
 \.
 
 
@@ -3926,6 +4021,14 @@ COPY public.products (id, date_created, date_updated, available, sort, title, de
 --
 
 COPY public.products_categories (id, products_id, categories_id) FROM stdin;
+1	8	92b40a19-2513-441f-830f-f63c8280728f
+2	8	c33dd427-fc81-4ae0-9216-d151df0b12c0
+3	8	7841a067-65d4-479d-9156-9a13a2977d1e
+4	9	92b40a19-2513-441f-830f-f63c8280728f
+5	9	c33dd427-fc81-4ae0-9216-d151df0b12c0
+6	9	7841a067-65d4-479d-9156-9a13a2977d1e
+7	9	a679dd91-d1c7-43af-aebb-c4d4e7a5dc69
+8	9	2283bf24-7eba-41b2-9fd2-0facadacbd0a
 \.
 
 
@@ -3934,6 +4037,8 @@ COPY public.products_categories (id, products_id, categories_id) FROM stdin;
 --
 
 COPY public.products_files (id, products_id, directus_files_id) FROM stdin;
+1	8	c49375f7-06d0-47d3-babd-0515605ec99f
+2	9	c49375f7-06d0-47d3-babd-0515605ec99f
 \.
 
 
@@ -3942,6 +4047,11 @@ COPY public.products_files (id, products_id, directus_files_id) FROM stdin;
 --
 
 COPY public.products_reason (id, products_id, reason_id) FROM stdin;
+1	8	6371556d-6178-4fd7-891d-259db73c76bc
+2	8	097fb6db-20ea-47d8-a585-342b1bfd11eb
+3	8	1cfd6194-2a22-4624-9113-920dde9b8cbb
+4	9	b9350ae7-2ec4-429a-95d8-0178f036fc53
+5	9	6371556d-6178-4fd7-891d-259db73c76bc
 \.
 
 
@@ -3950,6 +4060,19 @@ COPY public.products_reason (id, products_id, reason_id) FROM stdin;
 --
 
 COPY public.products_structure (id, products_id, structure_id) FROM stdin;
+1	8	23e7926b-f2a1-4068-908c-6bb690233bc8
+2	8	516f6fd3-32fa-45e5-bb80-0aaefe47cb3f
+3	8	9a7268c1-6b81-4c93-9beb-2af9e8ee1148
+4	8	6c0d5a40-2f0a-43a8-9e37-f67c547b0c10
+5	8	bf7a62bb-143d-45b2-9b66-6a819f552439
+6	8	d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9
+7	8	caab1f2d-2b8c-4433-83da-0bb00e5dbad4
+8	9	99d724cd-dd9c-4b39-80c4-3e08585086f4
+9	9	4101b4ca-dab3-4809-913b-56ba9d6d70b7
+10	9	22c486a9-ecf5-4432-837e-cff833b00590
+11	9	50b586b8-025a-44ec-a397-ce1e46373686
+12	9	f119a603-67c6-4478-8c67-9101bab7cda9
+13	9	513d8e30-8a1c-457d-a9ac-dc80c0060d5d
 \.
 
 
@@ -3986,64 +4109,64 @@ b859a8d7-dffb-4f76-bd96-ee254285ecce	На выпускной
 --
 
 COPY public.structure (id, name, sort) FROM stdin;
-23e7926b-f2a1-4068-908c-6bb690233bc8	Альстромерия	\N
-516f6fd3-32fa-45e5-bb80-0aaefe47cb3f	Амариллис	\N
-9a7268c1-6b81-4c93-9beb-2af9e8ee1148	Амми	\N
-6c0d5a40-2f0a-43a8-9e37-f67c547b0c10	Анемон	\N
-bf7a62bb-143d-45b2-9b66-6a819f552439	Антирринум	\N
-d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9	Антуриум	\N
-caab1f2d-2b8c-4433-83da-0bb00e5dbad4	Аспарагус	\N
-ef0c0577-64cf-422b-be6d-c609d5864a5e	Аспидистра	\N
-7a983be4-4016-4d99-8943-8e308f75ee9a	Астильба	\N
-73d6b923-98d6-4438-a9d4-9281d3870534	Астра	\N
-1e621a84-e48c-45a3-916b-0737cda0095d	Ахилея	\N
-807524d5-6d38-4d71-b54d-e78848a1a3b3	Берграс	\N
-6c806a81-0850-416a-8bbc-03b3f5c81773	Брассика	\N
-58ab621c-5a51-4ddb-b2e9-95d0b5ec884c	Бруния	\N
-14c95af4-698a-43c0-995a-9103eb34f406	Бавардия	\N
-48d9020f-3f1c-4537-b8fa-ce7c9d8b8a4f	Буплерум	\N
-89e9466c-e2b4-4110-ab4c-7566086a7769	Орхидея Ванда	\N
-9506efda-91ac-4a62-a882-b71ee65f3e44	Верба	\N
-92a43dc2-c2f5-454a-9439-60e4c0592f88	Вероника	\N
-36b76a3f-b020-4410-8f05-dbb0878fe98d	Орхидея Цимбидиум	\N
-40aa380b-4cb5-4c03-aad4-d9f26ccf6e8c	Вибурнум	\N
-973917e8-a8d3-427d-a1a5-bd03d7d23dda	Гвоздика	\N
-6edf1b21-221b-4326-97ff-0a83ebb5c515	Гвоздика кустовая	\N
-1c1b6933-84db-4547-9154-b3df828ee978	Гелиантус	\N
-72c19c46-5eba-4c2c-bd06-5b3e0afa059b	Георгины	\N
-74267c8e-6ddd-429a-bc74-c113517c73ff	Гербера	\N
-ca7af4ff-3ba5-404d-aab5-3fe132776edc	Гермини	\N
-d1d6be9d-ee52-471d-b599-30c7d83490cb	Гиацинт	\N
-fcd43968-5e80-4c3e-83df-7572f5abc6ac	Гиперикум	\N
-bebc96d9-1e70-4f51-abc4-a3898595f7d6	Гипсофила	\N
-1bf665f4-4a56-412d-a7e9-2fabc037b3ea	Гортензия	\N
-2f0308a5-49f9-4bba-bb00-c0768cb131e2	Декор	\N
-798d8553-02f6-4b1a-b1ef-b0b040049afc	Дельфиниум	\N
-5a5f6a68-21db-4206-b28d-1e5b306a8e04	Гениста	\N
-513d8e30-8a1c-457d-a9ac-dc80c0060d5d	Папоротник	\N
-2e7828b8-606a-4ba1-95ab-7318df95ebc3	Илекс	\N
-b369ba1d-ca4f-489a-ade9-17f88029d71e	Ирис	\N
-af6537ef-e504-4f18-8b70-59669339c5d6	Калла	\N
-af13f74f-e163-4d06-a031-e64d8abfd766	Клематис	\N
-1c47e146-d72e-4034-8aa9-11faabcba8e7	Краспедия	\N
-5849a7b0-af52-42e6-b4a4-61e818497a87	Куэркус	\N
-dfdefbbe-cd79-40f6-9096-076c050f7a19	Леукадендрон	\N
-cb040715-c359-48c8-bb07-83f20a8f26ef	Лилия	\N
-b7d2e8bc-3ed8-4ee8-bf87-a12f28de63fd	Лимониум	\N
-40df7fb3-d5bf-40fe-935c-a4487bb675be	Листья малины	\N
-a7ab3255-eb33-463f-aaa2-adb8c37b3356	Маттиола	\N
-99d724cd-dd9c-4b39-80c4-3e08585086f4	Танацетум	\N
-c821b4e3-af39-4fc5-9739-f3a3c5847ef7	Мимоза	\N
-625b0b22-02b5-4356-9165-1fa5cc611179	Нарцисс	\N
-8ba2d15b-1fdf-4101-8213-c021025349e3	Нобилис	\N
-a36a3250-3b78-45f0-a232-c295959ce15d	Нутан	\N
-9c4cd5ce-f2d5-42a2-a0b5-9fa35abdbd04	Озотамнус	\N
-fe1d63b9-d0d1-4d72-b74d-faa3d0886cea	Оксипеталум	\N
-f5daed79-87af-4d4e-8cb5-5ef17dc1c204	Орнитогалум	\N
-f119a603-67c6-4478-8c67-9101bab7cda9	Пион	\N
-50b586b8-025a-44ec-a397-ce1e46373686	Писташ	\N
-22c486a9-ecf5-4432-837e-cff833b00590	Питтоспорум	\N
-4101b4ca-dab3-4809-913b-56ba9d6d70b7	Протея	\N
+23e7926b-f2a1-4068-908c-6bb690233bc8	Альстромерия	1
+9a7268c1-6b81-4c93-9beb-2af9e8ee1148	Амми	3
+6c0d5a40-2f0a-43a8-9e37-f67c547b0c10	Анемон	4
+bf7a62bb-143d-45b2-9b66-6a819f552439	Антирринум	5
+d3c2e4e1-0ac1-4f31-88ca-7854ac907cd9	Антуриум	6
+caab1f2d-2b8c-4433-83da-0bb00e5dbad4	Аспарагус	7
+ef0c0577-64cf-422b-be6d-c609d5864a5e	Аспидистра	8
+7a983be4-4016-4d99-8943-8e308f75ee9a	Астильба	9
+73d6b923-98d6-4438-a9d4-9281d3870534	Астра	10
+1e621a84-e48c-45a3-916b-0737cda0095d	Ахилея	11
+807524d5-6d38-4d71-b54d-e78848a1a3b3	Берграс	12
+6c806a81-0850-416a-8bbc-03b3f5c81773	Брассика	13
+58ab621c-5a51-4ddb-b2e9-95d0b5ec884c	Бруния	14
+14c95af4-698a-43c0-995a-9103eb34f406	Бавардия	15
+48d9020f-3f1c-4537-b8fa-ce7c9d8b8a4f	Буплерум	16
+89e9466c-e2b4-4110-ab4c-7566086a7769	Орхидея Ванда	17
+9506efda-91ac-4a62-a882-b71ee65f3e44	Верба	18
+92a43dc2-c2f5-454a-9439-60e4c0592f88	Вероника	19
+36b76a3f-b020-4410-8f05-dbb0878fe98d	Орхидея Цимбидиум	20
+40aa380b-4cb5-4c03-aad4-d9f26ccf6e8c	Вибурнум	21
+973917e8-a8d3-427d-a1a5-bd03d7d23dda	Гвоздика	22
+6edf1b21-221b-4326-97ff-0a83ebb5c515	Гвоздика кустовая	23
+1c1b6933-84db-4547-9154-b3df828ee978	Гелиантус	24
+72c19c46-5eba-4c2c-bd06-5b3e0afa059b	Георгины	25
+74267c8e-6ddd-429a-bc74-c113517c73ff	Гербера	26
+ca7af4ff-3ba5-404d-aab5-3fe132776edc	Гермини	27
+d1d6be9d-ee52-471d-b599-30c7d83490cb	Гиацинт	28
+fcd43968-5e80-4c3e-83df-7572f5abc6ac	Гиперикум	29
+bebc96d9-1e70-4f51-abc4-a3898595f7d6	Гипсофила	30
+1bf665f4-4a56-412d-a7e9-2fabc037b3ea	Гортензия	31
+2f0308a5-49f9-4bba-bb00-c0768cb131e2	Декор	32
+798d8553-02f6-4b1a-b1ef-b0b040049afc	Дельфиниум	33
+5a5f6a68-21db-4206-b28d-1e5b306a8e04	Гениста	34
+513d8e30-8a1c-457d-a9ac-dc80c0060d5d	Папоротник	35
+2e7828b8-606a-4ba1-95ab-7318df95ebc3	Илекс	36
+b369ba1d-ca4f-489a-ade9-17f88029d71e	Ирис	37
+af6537ef-e504-4f18-8b70-59669339c5d6	Калла	38
+af13f74f-e163-4d06-a031-e64d8abfd766	Клематис	39
+1c47e146-d72e-4034-8aa9-11faabcba8e7	Краспедия	40
+5849a7b0-af52-42e6-b4a4-61e818497a87	Куэркус	41
+dfdefbbe-cd79-40f6-9096-076c050f7a19	Леукадендрон	42
+cb040715-c359-48c8-bb07-83f20a8f26ef	Лилия	43
+b7d2e8bc-3ed8-4ee8-bf87-a12f28de63fd	Лимониум	44
+40df7fb3-d5bf-40fe-935c-a4487bb675be	Листья малины	45
+a7ab3255-eb33-463f-aaa2-adb8c37b3356	Маттиола	46
+99d724cd-dd9c-4b39-80c4-3e08585086f4	Танацетум	47
+c821b4e3-af39-4fc5-9739-f3a3c5847ef7	Мимоза	48
+625b0b22-02b5-4356-9165-1fa5cc611179	Нарцисс	49
+8ba2d15b-1fdf-4101-8213-c021025349e3	Нобилис	50
+a36a3250-3b78-45f0-a232-c295959ce15d	Нутан	51
+9c4cd5ce-f2d5-42a2-a0b5-9fa35abdbd04	Озотамнус	52
+fe1d63b9-d0d1-4d72-b74d-faa3d0886cea	Оксипеталум	53
+f5daed79-87af-4d4e-8cb5-5ef17dc1c204	Орнитогалум	54
+f119a603-67c6-4478-8c67-9101bab7cda9	Пион	55
+50b586b8-025a-44ec-a397-ce1e46373686	Писташ	56
+22c486a9-ecf5-4432-837e-cff833b00590	Питтоспорум	57
+4101b4ca-dab3-4809-913b-56ba9d6d70b7	Протея	58
+516f6fd3-32fa-45e5-bb80-0aaefe47cb3f	Амариллис	2
 \.
 
 
@@ -4096,14 +4219,14 @@ COPY public.wholesale_wholesale_advant (id, wholesale_id, wholesale_advant_id) F
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 1170, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 1215, true);
 
 
 --
 -- Name: directus_fields_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_fields_id_seq', 131, true);
+SELECT pg_catalog.setval('public.directus_fields_id_seq', 132, true);
 
 
 --
@@ -4131,14 +4254,14 @@ SELECT pg_catalog.setval('public.directus_presets_id_seq', 5, true);
 -- Name: directus_relations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_relations_id_seq', 30, true);
+SELECT pg_catalog.setval('public.directus_relations_id_seq', 31, true);
 
 
 --
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1026, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1071, true);
 
 
 --
@@ -4159,35 +4282,35 @@ SELECT pg_catalog.setval('public.directus_webhooks_id_seq', 1, false);
 -- Name: products_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_categories_id_seq', 1, false);
+SELECT pg_catalog.setval('public.products_categories_id_seq', 8, true);
 
 
 --
 -- Name: products_files_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_files_id_seq', 1, false);
+SELECT pg_catalog.setval('public.products_files_id_seq', 2, true);
 
 
 --
 -- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_id_seq', 7, true);
+SELECT pg_catalog.setval('public.products_id_seq', 9, true);
 
 
 --
 -- Name: products_reason_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_reason_id_seq', 1, false);
+SELECT pg_catalog.setval('public.products_reason_id_seq', 5, true);
 
 
 --
 -- Name: products_structure_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_structure_id_seq', 1, false);
+SELECT pg_catalog.setval('public.products_structure_id_seq', 13, true);
 
 
 --
@@ -4602,6 +4725,14 @@ ALTER TABLE ONLY public.wholesale
 
 ALTER TABLE ONLY public.wholesale_wholesale_advant
     ADD CONSTRAINT wholesale_wholesale_advant_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categories categories_image_foreign; Type: FK CONSTRAINT; Schema: public; Owner: directus
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_image_foreign FOREIGN KEY (image) REFERENCES public.directus_files(id) ON DELETE SET NULL;
 
 
 --
@@ -5072,5 +5203,5 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 2ATln3pCghj4c6AoahbQV753D1KYnwCOLa45W5zM0ReE8bBJUlceXoeHpgTDCOS
+\unrestrict akBv9zuL4wdplKNbtXinvr1Q95WlD2MRjGfcJmo2Fp6YeMsD2Bk8XyZCsMgk4fr
 

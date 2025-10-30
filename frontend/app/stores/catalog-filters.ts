@@ -2,7 +2,7 @@ import { ref, computed, watch } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import Fuse from 'fuse.js';
 import type { IProduct } from '~~/interfaces/product';
-import type { TypeCategories } from '~~/types/categories';
+import type { TypeCategories } from '~~/interfaces/categories';
 
 export const useCatalogFilterStore = defineStore('catalogFilter', () => {
     // State
@@ -17,33 +17,16 @@ export const useCatalogFilterStore = defineStore('catalogFilter', () => {
 
     // External stores
     const { productsList } = storeToRefs(useProductsStore());
-    const { certificatesList } = storeToRefs(useCertificatesStore());
-    const { accessoriesList } = storeToRefs(useAccessoriesStore());
 
     // Router
     const route = useRoute();
     const router = useRouter();
 
     // Fetch catalog items based on category
-    function getCatalogItems(category: TypeCategories) {
+    function getCatalogItems(category: string) {
         // Reset filters when category changes
         resetFilters();
-
-        // Load catalog data
-        switch (category) {
-            case 'flowers':
-                catalogList.value = productsList.value;
-                break;
-            case 'certificates':
-                catalogList.value = certificatesList.value;
-                break;
-            case 'accessory':
-                catalogList.value = accessoriesList.value;
-                break;
-            default:
-                catalogList.value = productsList.value;
-                break;
-        }
+        catalogList.value = productsList.value;
     }
 
     // Reset all filters
@@ -96,7 +79,7 @@ export const useCatalogFilterStore = defineStore('catalogFilter', () => {
         // Apply flower filter (strict AND for all selected flowers)
         if (selectedFlowers.value.length > 0) {
             filteredProducts = filteredProducts.filter((product) => {
-                const flowerNames = product.structure?.map((s) => s.name) || [];
+                const flowerNames = product.structure?.map((s) => s.structure_id?.name) || [];
                 return selectedFlowers.value.every((flower) => {
                     const query = { 'structure.name': `="${flower}"` };
                     const results = fuse.search(query, { limit: filteredProducts.length });
