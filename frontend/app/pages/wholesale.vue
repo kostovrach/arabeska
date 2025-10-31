@@ -153,7 +153,11 @@
                 font-size: lineScale(18, 16, 480, 1440);
                 line-height: 1.3;
                 padding: rem(32);
-                h2, h3, h4, h5, h6 {
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
                     font-size: lineScale(32, 24, 480, 1440);
                     margin-bottom: rem(16);
                 }

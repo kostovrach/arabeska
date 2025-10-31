@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-
     // mock-data =====================================================
     const faqList = [
         {

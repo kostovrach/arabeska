@@ -92,7 +92,7 @@
     }>();
 
     const product = props.data;
-    
+
     const cmsUrl = useRuntimeConfig().public.apiBase;
 
     // temp cart processing==============================

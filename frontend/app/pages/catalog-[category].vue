@@ -26,188 +26,14 @@
             </div>
             <div class="catalog-head">
                 <div class="catalog-head__container">
-                    <div class="catalog-head__titlebox">
-                        <h2 class="catalog-head__title">Сборные букеты с доставкой в Самаре</h2>
-                        <span class="catalog-head__counter">({{ filteredProducts?.length }})</span>
-                    </div>
-
-                    <div v-if="route.params.category === 'flowers'" class="catalog-head__controls">
-                        <div class="catalog-head__filterbox">
-                            <!-- Popular filter -->
-                            <label class="catalog-head__filter-singleton">
-                                <input v-model="isPopular" type="checkbox" />
-                                Популярные
-                            </label>
-
-                            <!-- Discount filter -->
-                            <label class="catalog-head__filter-singleton">
-                                <input v-model="isDiscounted" type="checkbox" />
-                                Акции
-                            </label>
-
-                            <!-- Flower filter -->
-                            <div class="catalog-head__filter-group">
-                                <button
-                                    class="catalog-head__filter-group-button"
-                                    @click="showFlowerDropdown = !showFlowerDropdown"
-                                >
-                                    <div class="catalog-head__filter-group-label">
-                                        Цветы
-                                        <span v-show="selectedFlowers.length">
-                                            ({{ selectedFlowers.length }})
-                                        </span>
-                                    </div>
-                                    <span class="catalog-head__filter-group-icon">
-                                        <SvgSprite type="chevron" :size="12" />
-                                    </span>
-                                </button>
-                                <div
-                                    v-if="showFlowerDropdown"
-                                    class="catalog-head__filter-group-dropdown"
-                                >
-                                    <label
-                                        v-for="flower in flowerOptions"
-                                        :key="flower"
-                                        class="catalog-head__filter-group-item"
-                                    >
-                                        <input
-                                            v-model="selectedFlowers"
-                                            type="checkbox"
-                                            :value="flower"
-                                        />
-                                        {{ flower }}
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Reason filter -->
-                            <div class="catalog-head__filter-group">
-                                <button
-                                    class="catalog-head__filter-group-button"
-                                    @click="showReasonDropdown = !showReasonDropdown"
-                                >
-                                    <div class="catalog-head__filter-group-label">
-                                        Повод
-                                        <span v-show="selectedReasons.length">
-                                            ({{ selectedReasons.length }})
-                                        </span>
-                                    </div>
-                                    <span class="catalog-head__filter-group-icon">
-                                        <SvgSprite type="chevron" :size="12" />
-                                    </span>
-                                </button>
-                                <div
-                                    v-if="showReasonDropdown"
-                                    class="catalog-head__filter-group-dropdown"
-                                >
-                                    <label
-                                        v-for="reason in reasonOptions"
-                                        :key="reason"
-                                        class="catalog-head__filter-group-item"
-                                    >
-                                        <input
-                                            v-model="selectedReasons"
-                                            type="checkbox"
-                                            :value="reason"
-                                        />
-                                        {{ reason }}
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Style filter -->
-                            <div class="catalog-head__filter-group">
-                                <button
-                                    class="catalog-head__filter-group-button"
-                                    @click="showStyleDropdown = !showStyleDropdown"
-                                >
-                                    <div class="catalog-head__filter-group-label">
-                                        Стиль
-                                        <span v-show="selectedStyles.length">
-                                            ({{ selectedStyles.length }})
-                                        </span>
-                                    </div>
-                                    <span class="catalog-head__filter-group-icon">
-                                        <SvgSprite type="chevron" :size="12" />
-                                    </span>
-                                </button>
-                                <div
-                                    v-if="showStyleDropdown"
-                                    class="catalog-head__filter-group-dropdown"
-                                >
-                                    <label
-                                        v-for="style in styleOptions"
-                                        :key="style"
-                                        class="catalog-head__filter-group-item"
-                                    >
-                                        <input
-                                            v-model="selectedStyles"
-                                            type="checkbox"
-                                            :value="style"
-                                        />
-                                        {{ style }}
-                                    </label>
-                                </div>
-                            </div>
-                            <button
-                                class="catalog-head__filter-reset"
-                                :disabled="!isAnyFilterApplied"
-                                @click="resetAllFilters"
-                            >
-                                <SvgSprite type="refresh" :size="18" />
-                            </button>
-                        </div>
-
-                        <!-- Price range filter -->
-                        <div class="catalog-head__range">
-                            <span class="catalog-head__range-title">Цена</span>
-                            <div class="catalog-head__range-label">
-                                <div>
-                                    {{ priceRange.min }}
-                                    <span class="ruble"></span>
-                                </div>
-                                <div>
-                                    {{ priceRange.max }}
-                                    <span class="ruble"></span>
-                                </div>
-                            </div>
-                            <div class="catalog-head__range-inputbox">
-                                <input
-                                    v-model.number="priceRange.min"
-                                    type="range"
-                                    :min="0"
-                                    :max="priceRange.max"
-                                    step="100"
-                                />
-                                <input
-                                    v-model.number="priceRange.max"
-                                    type="range"
-                                    :min="priceRange.min"
-                                    :max="10000"
-                                    step="100"
-                                />
-                            </div>
-                        </div>
-
-                        <!-- Sort options -->
-                        <div class="catalog-head__sort">
-                            <select v-model="sortOrder" class="catalog-head__sort-select">
-                                <option :value="null">Без сортировки</option>
-                                <option value="asc">По возрастанию цены</option>
-                                <option value="desc">По убыванию цены</option>
-                            </select>
-                            <span class="catalog-head__sort-icon">
-                                <SvgSprite type="chevron" :size="16" />
-                            </span>
-                        </div>
-                    </div>
+                    <CatalogFilters />
                 </div>
             </div>
             <div class="catalog-list">
                 <div class="catalog-list__container">
                     <ul class="catalog-list__body">
                         <li
-                            v-for="product in filteredProducts"
+                            v-for="product in products"
                             :key="product.id"
                             class="catalog-list__item"
                         >
@@ -230,56 +56,10 @@
 
     const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+
+    const products = computed(() => useFiltersStore().filteredProducts);
+
     // =========================================================================
-
-    // Initialize store and fetch data
-    const catalogFilterStore = useCatalogFilterStore();
-    catalogFilterStore.getCatalogItems(route.params.category as string);
-    catalogFilterStore.initFromQuery();
-
-    // Get store refs
-    const {
-        selectedFlowers,
-        isPopular,
-        isDiscounted,
-        selectedReasons,
-        selectedStyles,
-        priceRange,
-        sortOrder,
-        filteredProducts,
-    } = storeToRefs(catalogFilterStore);
-
-    // Filter options (static)
-    const flowerOptions = ['астры', 'жасмин', 'нарциссы', 'розы', 'гортензия'];
-    const reasonOptions = ['свадьба', 'выпускной', 'юбилей'];
-    const styleOptions = ['нежный', 'траурный'];
-
-    // Dropdown visibility
-    const showFlowerDropdown = ref(false);
-    const showReasonDropdown = ref(false);
-    const showStyleDropdown = ref(false);
-
-    // Check if any filter is applied
-    const isAnyFilterApplied = computed(() => {
-        return (
-            selectedFlowers.value.length > 0 ||
-            isPopular.value ||
-            isDiscounted.value ||
-            selectedReasons.value.length > 0 ||
-            selectedStyles.value.length > 0 ||
-            priceRange.value.min > 0 ||
-            priceRange.value.max < 10000 ||
-            sortOrder.value !== null
-        );
-    });
-
-    // Reset filters
-    const resetAllFilters = () => {
-        catalogFilterStore.resetFilters();
-        showFlowerDropdown.value = false;
-        showReasonDropdown.value = false;
-        showStyleDropdown.value = false;
-    };
 </script>
 
 <style scoped lang="scss">
@@ -553,7 +333,7 @@
     }
 
     .catalog-list {
-        @include content-block;
+        margin: 0 0 rem(128);
         &__container {
             @include content-container;
         }

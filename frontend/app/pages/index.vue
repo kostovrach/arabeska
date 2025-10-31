@@ -122,5 +122,4 @@
         'advant_blocks.*',
         'advant_blocks.home_advant_id.*',
     ]);
-    console.log(page.value);
 </script>

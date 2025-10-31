@@ -27,7 +27,10 @@
                                 ? 'header__nav-link header__nav-link--current'
                                 : 'header__nav-link'
                         "
-                        :to="{ name: 'catalog-category', params: { category: slugify(category.name) } }"
+                        :to="{
+                            name: 'catalog-category',
+                            params: { category: slugify(category.name) },
+                        }"
                     >
                         <span>{{ category.name }}</span>
                     </NuxtLink>

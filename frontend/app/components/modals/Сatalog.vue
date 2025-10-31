@@ -7,9 +7,12 @@
     >
         <div class="catalog">
             <div class="catalog__container">
-                <EmblaContainer class="catalog__body" :options="{
-                    dragFree: true,
-                }">
+                <EmblaContainer
+                    class="catalog__body"
+                    :options="{
+                        dragFree: true,
+                    }"
+                >
                     <EmblaSlide
                         v-for="(card, idx) in categories"
                         :key="idx"
@@ -178,7 +181,7 @@
         }
     }
 
-    @media (max-width: 768px){
+    @media (max-width: 768px) {
         .catalog {
             &__item {
                 max-width: rem(240);

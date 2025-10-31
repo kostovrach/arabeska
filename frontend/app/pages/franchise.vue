@@ -45,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-
     const faqList = [
         {
             title: 'Первый этап — консультации и планирование',

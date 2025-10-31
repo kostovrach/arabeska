@@ -19,7 +19,7 @@
         padding?: string;
         autoplayEnable?: boolean;
         autoplay?: AutoplayOptionsType;
-        overflow?: 'hidden' | 'visible'
+        overflow?: 'hidden' | 'visible';
     }
 
     const props = withDefaults(defineProps<IProps>(), {
@@ -28,7 +28,7 @@
         fade: false,
         padding: '0',
         autoplayEnable: false,
-        overflow: 'hidden'
+        overflow: 'hidden',
     });
 
     const plugins: EmblaPluginType[] = [];
