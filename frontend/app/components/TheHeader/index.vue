@@ -18,17 +18,18 @@
                     <div class="header__dropdo-__body"></div>
                 </div>
                 <nav class="header__nav">
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
-                        <span>Тренды</span>
-                    </NuxtLink>
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
-                        <span>Хиты</span>
-                    </NuxtLink>
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
-                        <span>Акции</span>
-                    </NuxtLink>
-                    <NuxtLink class="header__nav-link" :to="{ name: 'index' }">
-                        <span>Подарки</span>
+                    <NuxtLink
+                        v-for="(category, idx) in categories?.slice(0, 4)"
+                        :key="idx"
+                        :class="
+                            route.name === 'catalog-category' &&
+                            route.params.category === slugify(category.name)
+                                ? 'header__nav-link header__nav-link--current'
+                                : 'header__nav-link'
+                        "
+                        :to="{ name: 'catalog-category', params: { category: slugify(category.name) } }"
+                    >
+                        <span>{{ category.name }}</span>
                     </NuxtLink>
                 </nav>
             </div>
@@ -53,8 +54,15 @@
 </template>
 
 <script setup lang="ts">
+    import type { ICategories } from '~~/interfaces/categories';
+
     import { ModalsSideMenu, ModalsСatalog } from '#components';
     import { useModal } from 'vue-final-modal';
+
+    const { content: categoriesRaw, status } = useCms<ICategories[]>('categories');
+    const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+
+    const route = useRoute();
 
     const { open: openMenu, close: closeMenu } = useModal({
         component: ModalsSideMenu,
@@ -145,6 +153,9 @@
             align-items: center;
             &-link {
                 @include frame-scale($anim-color: $c-98BBD7);
+                &--current {
+                    display: none;
+                }
             }
         }
 

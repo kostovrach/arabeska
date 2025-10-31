@@ -68,5 +68,5 @@ export default defineCachedEventHandler(
             return { data: null, error: String(err?.message || err) };
         }
     },
-    { maxAge: 60 }
+    { maxAge: 300 }
 );

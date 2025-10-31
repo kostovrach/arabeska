@@ -2,11 +2,8 @@
     <section class="home-feedback">
         <div class="home-feedback__container">
             <div class="home-feedback__titlebox">
-                <h2 class="home-feedback__title">Отзывы покупателей</h2>
-                <p class="home-feedback__subtitle">
-                    Наша продукция подарит незабываемые впечатления каждому, получившему такой
-                    презент
-                </p>
+                <h2 class="home-feedback__title">{{ props.title }}</h2>
+                <p class="home-feedback__subtitle" v-if="props.title">{{ props.subtitle }}</p>
                 <NuxtLink class="home-feedback__link" :to="{ name: 'feedback' }">
                     <span>Смотреть все</span>
                     <SvgSprite type="arrow" :size="12" />
@@ -18,7 +15,18 @@
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            title?: string;
+            subtitle?: string;
+        }>(),
+        {
+            title: 'Отзывы покупателей',
+            subtitle: '',
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

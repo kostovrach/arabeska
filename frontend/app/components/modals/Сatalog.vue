@@ -7,26 +7,38 @@
     >
         <div class="catalog">
             <div class="catalog__container">
-                <div class="catalog__body">
-                    <NuxtLink
-                        v-for="(card, idx) in catalogCards"
+                <EmblaContainer class="catalog__body" :options="{
+                    dragFree: true,
+                }">
+                    <EmblaSlide
+                        v-for="(card, idx) in categories"
                         :key="idx"
                         :class="
-                            route.name === card.routeName &&
-                            route.params.category === card.routeParams?.category
+                            route.name === 'catalog-category' &&
+                            route.params.category === slugify(card.name)
                                 ? 'catalog__item catalog__item--current'
                                 : 'catalog__item'
                         "
-                        :to="{ name: card.routeName, params: card.routeParams }"
                     >
-                        <picture class="catalog__item-image-container">
-                            <img class="catalog__item-image" :src="card.image" :alt="card.label" />
-                        </picture>
-                        <div class="catalog__item-wrapper">
-                            <p class="catalog__item-title">{{ card.label }}</p>
-                        </div>
-                    </NuxtLink>
-                </div>
+                        <NuxtLink
+                            :to="{
+                                name: 'catalog-category',
+                                params: { category: slugify(card.name) },
+                            }"
+                        >
+                            <picture class="catalog__item-image-container">
+                                <img
+                                    class="catalog__item-image"
+                                    :src="card.image_url ?? '/img/service/flowers.jpg'"
+                                    :alt="card.name"
+                                />
+                            </picture>
+                            <div class="catalog__item-wrapper">
+                                <p class="catalog__item-title">{{ card.name }}</p>
+                            </div>
+                        </NuxtLink>
+                    </EmblaSlide>
+                </EmblaContainer>
                 <div class="catalog__footer">
                     <button class="catalog__button" type="button" @click="emit('close')"></button>
                 </div>
@@ -37,53 +49,16 @@
 
 <script setup lang="ts">
     import { VueFinalModal } from 'vue-final-modal';
-    // types =========================================================
-    import type { RouteParamsRawGeneric } from 'vue-router';
-    interface ICatalogCard {
-        image: string;
-        label: string;
-        routeName: string;
-        routeParams?: RouteParamsRawGeneric;
-    }
-    // ===============================================================
+    import type { ICategories } from '~~/interfaces/categories';
+
+    const { content: categoriesRaw, status } = useCms<ICategories[]>('categories');
+    const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
 
     const route = useRoute();
 
     const emit = defineEmits<{
         (e: 'close'): void;
     }>();
-
-    const catalogCards: ICatalogCard[] = [
-        {
-            image: '/img/temp/temp1.jpg',
-            label: 'Букеты',
-            routeName: 'catalog-category',
-            routeParams: {
-                category: 'flowers',
-            },
-        },
-        {
-            image: '/img/temp/temp1.jpg',
-            label: 'Цветы оптом',
-            routeName: 'wholesale',
-        },
-        {
-            image: '/img/temp/temp1.jpg',
-            label: 'Сертификаты',
-            routeName: 'catalog-category',
-            routeParams: {
-                category: 'certificates',
-            },
-        },
-        {
-            image: '/img/temp/temp1.jpg',
-            label: 'Открытки',
-            routeName: 'catalog-category',
-            routeParams: {
-                category: 'accessory',
-            },
-        },
-    ];
 </script>
 
 <style scoped lang="scss">
@@ -102,17 +77,12 @@
             @include content-container;
         }
         &__body {
-            display: flex;
-            align-items: center;
-            gap: lineScale(32, 16, 480, 1440);
             margin-top: rem(96);
-            overflow-x: auto;
-            user-select: none;
-            @include hide-scrollbar;
         }
         &__item {
             flex: 1;
-            min-width: rem(320);
+            min-width: rem(360);
+            max-width: rem(360);
             position: relative;
             aspect-ratio: 1.5/1;
             border-radius: rem(32);
@@ -204,6 +174,15 @@
                 rotate: 15deg;
                 transform-origin: right;
                 transform: translateX(rem(-2));
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        .catalog {
+            &__item {
+                max-width: rem(240);
+                min-width: rem(240);
             }
         }
     }

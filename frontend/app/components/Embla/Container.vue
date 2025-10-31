@@ -1,5 +1,5 @@
 <template>
-    <div ref="emblaRef" class="embla">
+    <div ref="emblaRef" class="embla" :style="{ overflow: props.overflow }">
         <div class="embla__container" :style="{ padding: props.padding }">
             <slot></slot>
         </div>
@@ -19,6 +19,7 @@
         padding?: string;
         autoplayEnable?: boolean;
         autoplay?: AutoplayOptionsType;
+        overflow?: 'hidden' | 'visible'
     }
 
     const props = withDefaults(defineProps<IProps>(), {
@@ -27,6 +28,7 @@
         fade: false,
         padding: '0',
         autoplayEnable: false,
+        overflow: 'hidden'
     });
 
     const plugins: EmblaPluginType[] = [];
@@ -52,7 +54,6 @@
 
 <style scoped lang="scss">
     .embla {
-        overflow: hidden;
         user-select: none;
         &__container {
             display: flex;

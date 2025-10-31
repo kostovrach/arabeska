@@ -222,13 +222,13 @@
 
 <script setup lang="ts">
     // types ===================================================================
-    import type { TypeCategories } from '~~/interfaces/categories';
+    import type { ICategories } from '~~/interfaces/categories';
     // =========================================================================
 
     // data ====================================================================
     const route = useRoute();
 
-    const { content: categoriesRaw } = useCms<TypeCategories[]>('categories');
+    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
     // =========================================================================
 

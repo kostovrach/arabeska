@@ -1,4 +1,4 @@
-export interface TypeCategories {
+export interface ICategories {
     id: string;
     name: string;
     available: boolean;

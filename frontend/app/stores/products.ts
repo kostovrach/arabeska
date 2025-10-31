@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { AsyncData, AsyncDataOptions, AsyncDataRequestStatus } from '#app';
+import type { AsyncDataRequestStatus } from '#app';
 import type { IProduct } from '~~/interfaces/product';
 import type FuseType from 'fuse.js';
 
@@ -77,17 +77,26 @@ export const useProductsStore = defineStore('products', () => {
     }
 
     async function getProductById(id: number | string) {
-        const { content: productRaw, status } = useCms<IProduct[]>('products', productRelations, {
-            lazy: true,
-        });
-        const product = computed(() =>
-            productRaw.value?.filter((el) => el.id == id && el.available === true)
-        );
+        if (!id) {
+            singleProductStatus.value = 'error';
+            return;
+        } else {
+            const { content: productRaw, status } = useCms<IProduct[]>(
+                'products',
+                productRelations,
+                {
+                    lazy: true,
+                }
+            );
+            const product = computed(() =>
+                productRaw.value?.find((el) => el.id == id && el.available === true)
+            );
 
-        watchEffect(() => {
-            singleProductStatus.value = status.value;
-            if (product.value) productsItem.value = product.value[0] ?? null;
-        });
+            watchEffect(() => {
+                singleProductStatus.value = status.value;
+                if (product.value) productsItem.value = product.value ?? null;
+            });
+        }
     }
 
     async function searchProductsFuzzy(query: string): Promise<IProduct[]> {

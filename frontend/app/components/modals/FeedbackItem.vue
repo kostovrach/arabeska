@@ -9,8 +9,8 @@
                     <picture class="modal-feedback__image-container">
                         <img
                             class="modal-feedback__image"
-                            :src="feedback?.user.avatar || '/img/service/user-placeholder.png'"
-                            :alt="feedback?.user.name || '#'"
+                            :src="feedback?.avatar_url || '/img/service/user-placeholder.png'"
+                            :alt="feedback?.name || '#'"
                         />
                     </picture>
                     <div class="modal-feedback__rate">
@@ -22,7 +22,7 @@
                             <SvgSprite type="rate-star" :size="24" />
                         </span>
                     </div>
-                    <span class="modal-feedback__title">{{ feedback?.user.name }}</span>
+                    <span class="modal-feedback__title">{{ feedback?.name }}</span>
                 </div>
                 <p v-if="feedback?.text" class="modal-feedback__body">{{ feedback.text }}</p>
             </div>

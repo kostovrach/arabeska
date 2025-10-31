@@ -76,7 +76,7 @@
     // =======================================================
 
     interface IProps {
-        contentRef: Ref<IProduct[] | null>;
+        contentRef: Ref<IProduct[] | null> | ComputedRef<IProduct[] | null>;
         statusRef: Ref<AsyncDataRequestStatus>;
         autoplay?: boolean;
         title?: string;

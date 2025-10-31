@@ -12,11 +12,11 @@
                 <picture class="feedback-card__image-container">
                     <img
                         class="feedback-card__image"
-                        :src="item.user.avatar || '/img/service/user-placeholder.png'"
+                        :src="item.avatar_url || '/img/service/user-placeholder.png'"
                         alt="#"
                     />
                 </picture>
-                <p class="feedback-card__name">{{ item.user.name || 'Аноним' }}</p>
+                <p class="feedback-card__name">{{ item.name || 'Аноним' }}</p>
             </div>
         </div>
     </div>

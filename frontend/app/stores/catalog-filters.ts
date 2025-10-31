@@ -2,7 +2,7 @@ import { ref, computed, watch } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import Fuse from 'fuse.js';
 import type { IProduct } from '~~/interfaces/product';
-import type { TypeCategories } from '~~/interfaces/categories';
+import type { ICategories } from '~~/interfaces/categories';
 
 export const useCatalogFilterStore = defineStore('catalogFilter', () => {
     // State

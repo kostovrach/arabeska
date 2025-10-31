@@ -85,7 +85,7 @@
 
     const secondPart = computed(() => {
         const text = slotText.value;
-        if (props.logic === 'double-line') return text.split(' ')[1] || '';
+        if (props.logic === 'double-line') return text.split(' ').splice(1).join(' ') || '';
         return text.slice(Math.ceil(text.length / 2));
     });
 </script>

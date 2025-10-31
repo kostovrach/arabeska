@@ -41,12 +41,12 @@
                         <picture class="feedback-list__item-image-container">
                             <img
                                 class="feedback-list__item-image"
-                                :src="card.user.avatar || '/img/service/flowers-placeholder.png'"
-                                :alt="card.user.name || '#'"
+                                :src="card.avatar_url || '/img/service/flowers-placeholder.png'"
+                                :alt="card.name || '#'"
                             />
                         </picture>
                         <div class="feedback-list__item-content">
-                            <h3 class="feedback-list__item-title">{{ card.user.name }}</h3>
+                            <h3 class="feedback-list__item-title">{{ card.name }}</h3>
                             <p v-if="card.text" class="feedback-list__item-text">{{ card.text }}</p>
                         </div>
                     </button>

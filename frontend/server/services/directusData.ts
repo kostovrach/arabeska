@@ -111,7 +111,7 @@ function buildParams({
     return params;
 }
 
-/* ---------- fetchCollection: универсальная функция ---------- */
+/* ---------- fetchCollection ---------- */
 /**
  * Возвращает либо массив (коллекция), либо объект (singleton), либо null.
  */
@@ -119,7 +119,7 @@ export async function fetchCollection(
     collection: string,
     params: { fields?: any; filter?: any; sort?: any; limit?: any } = {},
     opts: { force?: boolean; memoryTtl?: number; resolveFiles?: boolean } = {}
-): Promise<any /* object | any[] | null */> {
+): Promise<any> {
     const fields = params.fields ?? ['*'];
     const key = buildListKey(collection, {
         fields,
@@ -128,7 +128,7 @@ export async function fetchCollection(
         limit: params.limit,
     });
 
-    // 🔹 Добавляем дефолтное время кэширования — 60 секунд (60000 мс)
+    // cache TTL
     const ttl = opts.memoryTtl ?? 60_000 * 5;
 
     if (!opts.force) {

@@ -2,24 +2,18 @@
     <section class="home-banner">
         <div class="home-banner__container">
             <div class="home-banner__title">
-                <HomeBannerCircularText text="Бесконечное внимание" />
+                <HomeBannerCircularText :text="props.title" />
             </div>
             <div class="home-banner__content">
-                <h2 class="home-banner__subtitle">
-                    Еженедельная доставка свежих цветов для ваших любимых.
-                </h2>
-                <p class="home-banner__desc">
-                    Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если
-                    выравнивание по центру. При большем количестве текста используйте другой тип
-                    выравнивания контента
-                </p>
+                <h2 class="home-banner__subtitle">{{ props.subtitle }}</h2>
+                <p class="home-banner__desc">{{ props.description }}</p>
                 <CircleButton
                     class="home-banner__button"
                     type="NuxtLink"
                     to="index"
                     logic="double-line"
                 >
-                    <span>Подписаться на&nbsp;цветы</span>
+                    <span>{{ props.buttonText }}</span>
                 </CircleButton>
             </div>
 
@@ -47,7 +41,22 @@
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            title: string;
+            subtitle: string;
+            description: string;
+            buttonText?: string;
+        }>(),
+        {
+            title: '',
+            subtitle: '',
+            description: '',
+            buttonText: 'Подписаться на цветы',
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
@@ -79,6 +88,7 @@
             flex-direction: column;
             align-items: center;
             gap: rem(16);
+            font-family: 'Inter', sans-serif;
             text-align: center;
             padding: lineScale(32, 16, 480, 1440) lineScale(64, 32, 480, 1440);
             padding-bottom: rem(164);

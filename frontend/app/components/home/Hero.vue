@@ -4,17 +4,28 @@
             <EmblaContainer
                 ref="sliderRef"
                 class="home-hero__slider"
-                style="overflow: visible"
                 :options="carouselOptions"
+                overflow="visible"
                 fade
             >
-                <EmblaSlide class="home-hero__slide" width="100%">
+                <EmblaSlide
+                    v-for="(slide, idx) in props.slides"
+                    :key="idx"
+                    class="home-hero__slide"
+                    width="100%"
+                >
                     <div class="home-hero__slide-wrapper">
                         <div class="home-hero__slide-content">
-                            <h1 class="home-hero__slide-title">Цветы, которые говорят без слов</h1>
-                            <p class="home-hero__slide-desc">
-                                Каждый букет в коллекции неповторим, каждый имеет свой характер
-                            </p>
+                            <h1 class="home-hero__slide-title">
+                                {{ slide.home_slider_id.title ?? '' }}
+                            </h1>
+                            <ClientOnly>
+                                <p
+                                    class="home-hero__slide-desc"
+                                    v-if="slide.home_slider_id.content"
+                                    v-html="slide.home_slider_id.content"
+                                ></p>
+                            </ClientOnly>
                             <div class="home-hero__slide-controls">
                                 <NuxtLink class="home-hero__slide-button" :to="{ name: 'index' }">
                                     <span>Подобрать букет</span>
@@ -36,51 +47,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="home-hero__slide-media">
+                        <div class="home-hero__slide-media" v-if="slide.home_slider_id.image_url">
                             <picture class="home-hero__slide-image-container">
                                 <img
                                     class="home-hero__slide-image"
-                                    src="/img/temp/flowers.gif"
-                                    alt="#"
-                                />
-                            </picture>
-                        </div>
-                    </div>
-                </EmblaSlide>
-                <EmblaSlide class="home-hero__slide" width="100%">
-                    <div class="home-hero__slide-wrapper">
-                        <div class="home-hero__slide-content">
-                            <h1 class="home-hero__slide-title">В подарок любимой</h1>
-                            <p class="home-hero__slide-desc">
-                                Каждый букет в коллекции неповторим, каждый имеет свой характер
-                            </p>
-                            <div class="home-hero__slide-controls">
-                                <NuxtLink class="home-hero__slide-button" :to="{ name: 'index' }">
-                                    <span>Подобрать букет</span>
-                                    <span><SvgSprite type="arrow" /></span>
-                                </NuxtLink>
-                                <div class="home-hero__slide-nav">
-                                    <button
-                                        class="home-hero__slide-nav-button home-hero__slide-nav-button--prev"
-                                        @click="scrollPrev"
-                                    >
-                                        <SvgSprite type="arrow" />
-                                    </button>
-                                    <button
-                                        class="home-hero__slide-nav-button home-hero__slide-nav-button--next"
-                                        @click="scrollNext"
-                                    >
-                                        <SvgSprite type="arrow" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="home-hero__slide-media">
-                            <picture class="home-hero__slide-image-container">
-                                <img
-                                    class="home-hero__slide-image"
-                                    src="/img/temp/temp1.jpg"
-                                    alt="#"
+                                    :src="slide.home_slider_id.image_url ?? ''"
+                                    :alt="slide.home_slider_id.title ?? '#'"
                                 />
                             </picture>
                         </div>
@@ -122,6 +94,27 @@
 
 <script setup lang="ts">
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
+
+    interface Slide {
+        id: number | string;
+        home_id: any;
+        home_slider_id: {
+            id: number | string;
+            title: string;
+            content: string;
+            image: string;
+            image_url: string;
+        };
+    }
+
+    const props = withDefaults(
+        defineProps<{
+            slides?: Slide[];
+        }>(),
+        {
+            slides: () => [],
+        }
+    );
 
     const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
 
@@ -254,7 +247,7 @@
     ];
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
     .home-hero {
@@ -311,6 +304,29 @@
                 font-weight: $fw-semi;
                 line-height: 1.2;
                 margin-top: rem(24);
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    font-size: lineScale(24, 18, 480, 1440);
+                    margin-bottom: rem(16);
+                }
+                ul,
+                ol {
+                    display: flex;
+                    flex-direction: column;
+                    gap: rem(8);
+                    li {
+                        margin-left: rem(22);
+                    }
+                }
+                ul > li {
+                    list-style: disc outside;
+                }
+                ol > li {
+                    list-style: decimal outside;
+                }
             }
             &-controls {
                 display: flex;
