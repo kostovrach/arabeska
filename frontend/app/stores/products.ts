@@ -5,8 +5,6 @@ import type { IProduct } from '~~/interfaces/product';
 import type FuseType from 'fuse.js';
 
 export const useProductsStore = defineStore('products', () => {
-    const apiBase = useRuntimeConfig().public.apiBase;
-
     const productRelations = [
         'images.*',
         'images.directus_files_id.*',

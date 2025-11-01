@@ -1,3 +1,4 @@
+import type { AsyncDataRequestStatus } from '#app';
 import type { LocationQuery } from 'vue-router';
 
 // types ============================================================
@@ -41,6 +42,7 @@ interface IFiltersList {
 }
 
 interface FilterState {
+    popularOnly: boolean;
     discountOnly: boolean;
     selectedStructures: string[];
     selectedReasons: string[];
@@ -52,7 +54,9 @@ interface FilterState {
 // ==================================================================
 
 export const useFiltersStore = defineStore('filters', () => {
+    // State ========================================================
     const filterState: Ref<FilterState> = ref({
+        popularOnly: false,
         discountOnly: false,
         selectedStructures: [],
         selectedReasons: [],
@@ -62,12 +66,13 @@ export const useFiltersStore = defineStore('filters', () => {
         sortBy: null,
     });
 
-    const structures: Ref<IFilterStructure[]> = ref([]);
-    const reasons: Ref<IFilterReasons[]> = ref([]);
-    const styles: Ref<IFilterStyle[]> = ref([]);
+    const structures = useState<IFilterStructure[] | null>('filterStructures', () => null);
+    const reasons = useState<IFilterReasons[] | null>('filterReasons', () => null);
+    const styles = useState<IFilterStyle[] | null>('filterStyles', () => null);
+    // ==============================================================
 
+    // Computed =====================================================
     const productsList = computed(() => useProductsStore().productsList ?? []);
-
     const minPrice = computed(() => {
         const prices = productsList.value
             .map((p) => p.discount ?? p.price)
@@ -81,7 +86,9 @@ export const useFiltersStore = defineStore('filters', () => {
             .filter((v) => typeof v === 'number');
         return prices.length ? Math.max(...prices) : 0;
     });
+    // ==============================================================
 
+    // Actions ======================================================
     function filteredProducts(category: string) {
         const products = computed(() => {
             if (!productsList.value.length) return [];
@@ -95,15 +102,16 @@ export const useFiltersStore = defineStore('filters', () => {
                 )
             );
 
-            let res = productsData.filter((p) => {
-                if (!p.available) return false;
-                if (filterState.value.discountOnly && p.discount == null) return false;
+            let res = productsData.filter((product) => {
+                if (!product.available) return false;
+                if (filterState.value.popularOnly && !product.popular) return false;
+                if (filterState.value.discountOnly && product.discount == null) return false;
 
-                const ep = p.discount ?? p.price;
+                const ep = product.discount ?? product.price;
                 if (ep == null || ep < pMin || ep > pMax) return false;
 
                 if (filterState.value.selectedStructures.length) {
-                    const names = (p.structure ?? []).map((s) =>
+                    const names = (product.structure ?? []).map((s) =>
                         String(s.structure_id?.name ?? '').trim()
                     );
                     if (!filterState.value.selectedStructures.every((sel) => names.includes(sel)))
@@ -111,7 +119,7 @@ export const useFiltersStore = defineStore('filters', () => {
                 }
 
                 if (filterState.value.selectedReasons.length) {
-                    const names = (p.reason ?? []).map((r) =>
+                    const names = (product.reason ?? []).map((r) =>
                         String(r.reason_id?.name ?? '').trim()
                     );
                     if (!filterState.value.selectedReasons.every((sel) => names.includes(sel)))
@@ -119,7 +127,7 @@ export const useFiltersStore = defineStore('filters', () => {
                 }
 
                 if (filterState.value.selectedStyles.length) {
-                    const names = (p.style ?? []).map((st) =>
+                    const names = (product.style ?? []).map((st) =>
                         String(st.styles_id?.name ?? '').trim()
                     );
                     if (!filterState.value.selectedStyles.every((sel) => names.includes(sel)))
@@ -158,11 +166,11 @@ export const useFiltersStore = defineStore('filters', () => {
         ]);
 
         watchEffect(() => {
-            const d = filtersData.value;
-            if (d) {
-                if (d.structure?.length) structures.value = d.structure;
-                if (d.reasons?.length) reasons.value = d.reasons;
-                if (d.styles?.length) styles.value = d.styles;
+            const data = filtersData.value;
+            if (data) {
+                if (data.structure?.length) structures.value = data.structure;
+                if (data.reasons?.length) reasons.value = data.reasons;
+                if (data.styles?.length) styles.value = data.styles;
             }
         });
     }
@@ -171,6 +179,7 @@ export const useFiltersStore = defineStore('filters', () => {
         filterState.value = {
             ...filterState.value,
             discountOnly: query.discount === 'true',
+            popularOnly: query.popular === 'true',
             selectedStructures: query.structure
                 ? String(query.structure).split(',').map(decodeURIComponent)
                 : [],
@@ -189,6 +198,7 @@ export const useFiltersStore = defineStore('filters', () => {
     function resetFilters() {
         if (
             !filterState.value.discountOnly &&
+            !filterState.value.popularOnly &&
             !filterState.value.selectedStructures.length &&
             !filterState.value.selectedReasons.length &&
             !filterState.value.selectedStyles.length &&
@@ -199,6 +209,7 @@ export const useFiltersStore = defineStore('filters', () => {
             return;
         } else {
             filterState.value = {
+                popularOnly: false,
                 discountOnly: false,
                 selectedStructures: [],
                 selectedReasons: [],
@@ -220,6 +231,7 @@ export const useFiltersStore = defineStore('filters', () => {
         },
         { immediate: true }
     );
+    // ==============================================================
 
     return {
         filterState,

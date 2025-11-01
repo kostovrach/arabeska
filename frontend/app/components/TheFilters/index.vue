@@ -8,6 +8,16 @@
             aria-label="Фильтры"
         >
             <div class="filters__group">
+                <label class="filters__item filters__item--button" for="filter-popular">
+                    <input
+                        type="checkbox"
+                        id="filter-popular"
+                        v-model="filterState.popularOnly"
+                        :aria-checked="filterState.popularOnly"
+                        aria-label="Показать популярные товары"
+                    />
+                    <span>Популярное</span>
+                </label>
                 <label class="filters__item filters__item--button" for="filter-discount">
                     <input
                         type="checkbox"
@@ -16,29 +26,35 @@
                         :aria-checked="filterState.discountOnly"
                         aria-label="Показать только товары с акцией"
                     />
-                    <span>Акция</span>
+                    <span>Акции</span>
                 </label>
                 <TheFiltersDropdown
                     class="filters__item filters__item--multiply"
                     label="Цветы"
                     :items="
-                        structures.map((s) => ({
-                            id: s.structure_id.id,
-                            name: s.structure_id.name,
-                        }))
+                        structures?.map((el) => ({
+                            id: el.structure_id.id,
+                            name: el.structure_id.name,
+                        })) ?? []
                     "
                     v-model:selected="filterState.selectedStructures"
                 />
                 <TheFiltersDropdown
                     class="filters__item filters__item--multiply"
                     label="Повод"
-                    :items="reasons.map((r) => ({ id: r.reason_id.id, name: r.reason_id.name }))"
+                    :items="
+                        reasons?.map((el) => ({ id: el.reason_id.id, name: el.reason_id.name })) ??
+                        []
+                    "
                     v-model:selected="filterState.selectedReasons"
                 />
                 <TheFiltersDropdown
                     class="filters__item filters__item--multiply"
                     label="Стиль"
-                    :items="styles.map((st) => ({ id: st.styles_id.id, name: st.styles_id.name }))"
+                    :items="
+                        styles?.map((el) => ({ id: el.styles_id.id, name: el.styles_id.name })) ??
+                        []
+                    "
                     v-model:selected="filterState.selectedStyles"
                 />
                 <button
@@ -133,10 +149,11 @@
     const route = useRoute();
     const router = useRouter();
 
-    const store = useFiltersStore();
-    const { filterState, structures, reasons, styles, minPrice, maxPrice } = storeToRefs(store);
+    const filterStore = useFiltersStore();
+    const { filterState, structures, reasons, styles, minPrice, maxPrice } =
+        storeToRefs(filterStore);
 
-    const { resetFilters, loadFilters, initFromQuery } = store;
+    const { resetFilters, loadFilters, initFromQuery } = filterStore;
 
     initFromQuery(route.query);
     loadFilters();
@@ -168,6 +185,7 @@
     // helpers ====================================================================
     const doSyncToUrl = useDebounceFn(() => {
         const q: LocationQuery = {};
+        if (filterState.value.popularOnly) q.popular = 'true';
         if (filterState.value.discountOnly) q.discount = 'true';
         if (filterState.value.selectedStructures.length)
             q.structure = filterState.value.selectedStructures.join(',');
@@ -374,120 +392,17 @@
         }
     }
 
-    .catalog-filters {
-        .cf__form {
+    @media (max-width: 768px) {
+        .filters {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .cf__item {
-            min-width: 180px;
-        }
-
-        .cf-checkbox {
-            display: inline-flex;
-            gap: 0.5rem;
-            align-items: center;
-            input {
-                width: 18px;
-                height: 18px;
+            flex-direction: column;
+            &__group {
+                max-width: 75%;
             }
-        }
-
-        .cf__options {
-            max-height: 220px;
-            overflow-y: auto;
-            border: 1px solid #e6e6e6;
-            padding: 0.5rem;
-            border-radius: 6px;
-            background: #fff;
-        }
-
-        .cf-option {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            padding: 0.2rem 0;
-            input {
-                width: 16px;
-                height: 16px;
+            &__range,
+            &__sort {
+                align-self: flex-end;
             }
-        }
-
-        /* Range */
-        .cf-range {
-            position: relative;
-            width: 280px;
-            height: 48px;
-            padding-top: 8px;
-        }
-
-        input[type='range'].cf-range__input {
-            -webkit-appearance: none;
-            appearance: none;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 12px;
-            height: 0;
-            background: transparent;
-            pointer-events: none;
-        }
-
-        input[type='range']::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            pointer-events: auto;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #c43e3e;
-            cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .cf-range__track {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 18px;
-            height: 6px;
-            background: #eee;
-            border-radius: 6px;
-        }
-
-        .cf-range__active {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            background: #c43e3e;
-            border-radius: 6px;
-        }
-
-        .cf-range__values {
-            margin-top: 34px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: #333;
-        }
-
-        select {
-            padding: 0.45rem 0.6rem;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            background: #fff;
-        }
-
-        .cf-reset {
-            background: transparent;
-            border: 1px solid #ddd;
-            padding: 0.35rem 0.6rem;
-            border-radius: 6px;
-            cursor: pointer;
         }
     }
 </style>

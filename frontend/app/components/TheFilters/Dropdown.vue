@@ -15,7 +15,7 @@
         >
             <div class="filters__item-button-label">
                 {{ props.label }}
-                <span v-if="selected.length">({{ selected.length }})</span>
+                <span v-if="selected.length">{{ selected.length }}</span>
             </div>
             <div :class="['filters__item-button-icon', { open: isOpen }]">
                 <SvgSprite type="chevron" :size="14" />
@@ -113,8 +113,22 @@
                 }
             }
             &-label {
+                position: relative;
                 > span {
                     font-family: monospace;
+                    width: rem(18);
+                    aspect-ratio: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: rem(12);
+                    color: $c-FFFFFF;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    translate: -75% -60%;
+                    background-color: $c-accent;
+                    border-radius: 50%;
                 }
             }
             &-icon {
@@ -128,7 +142,8 @@
             position: absolute;
             z-index: 5;
             top: 100%;
-            left: 0;
+            left: 50%;
+            translate: -30% 0;
             width: max-content;
             max-width: rem(370);
             display: flex;
@@ -141,7 +156,7 @@
         }
         &-option {
             cursor: pointer;
-            font-size: rem(16);
+            font-size: lineScale(16, 14, 480, 1440);
             padding: rem(6) rem(16);
             border: rem(1) solid $c-D4E1E7;
             border-radius: rem(32);
@@ -150,11 +165,22 @@
                 background-color: $c-accent;
                 border-color: $c-accent;
             }
+            &:active {
+                scale: 0.98;
+            }
             @media (pointer: fine) {
                 &:not(:has(input[type='checkbox']:checked)):hover {
                     color: $c-accent;
                     border-color: $c-accent;
                 }
+            }
+        }
+    }
+
+    @media (max-width: 580px) {
+        .filters__item {
+            &-list {
+                max-width: rem(280);
             }
         }
     }

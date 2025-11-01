@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 8EQp1DF5bPd1mgbTAAXanSG8DPvcgtShUyGK68Z4MgWyISDFxtyWgIZYUdJQGWf
+\restrict qB9kY4FrazrktsHJbiAQyHkGLz7r26K6O85LG6G5btudydhdeQBqlG4hLlXzuoN
 
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
@@ -1156,7 +1156,8 @@ CREATE TABLE public.products (
     discount integer,
     seo_title character varying(255),
     seo_description text,
-    seo_keywords text
+    seo_keywords text,
+    popular boolean DEFAULT false NOT NULL
 );
 
 
@@ -3654,6 +3655,18 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 1994	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.429+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters	257ab47c-3b72-4c39-835d-48937ca5f848	http://localhost:8055
 1995	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 15:09:48.079+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	http://localhost:8055
 1996	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 15:09:53.027+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	ba876a60-d0d1-410d-b150-c23729a09b18	http://localhost:8055
+1997	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:05.674+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	227	http://localhost:8055
+1998	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.649+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	34	http://localhost:8055
+1999	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.676+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	35	http://localhost:8055
+2000	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.696+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	38	http://localhost:8055
+2001	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.717+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	36	http://localhost:8055
+2002	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.733+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	37	http://localhost:8055
+2003	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.741+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	90	http://localhost:8055
+2004	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.762+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	227	http://localhost:8055
+2005	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.772+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	88	http://localhost:8055
+2006	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.79+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	89	http://localhost:8055
+2007	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.804+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	84	http://localhost:8055
+2008	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:22.753+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products	9	http://localhost:8055
 \.
 
 
@@ -3746,7 +3759,6 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 71	products_reason	products_id	\N	\N	\N	\N	\N	f	t	2	full	\N	\N	\N	f	\N	\N	\N
 72	products_reason	reason_id	\N	\N	\N	\N	\N	f	t	3	full	\N	\N	\N	f	\N	\N	\N
 41	products	size	\N	input	{"iconLeft":"resize"}	\N	\N	f	f	5	full	[{"language":"ru-RU","translation":"Описание размера товара"}]	Ожидается формат "10x10x10см"	\N	f	data	\N	\N
-89	products	tech	alias,no-data,group	group-detail	{"headerIcon":"admin_panel_settings","start":"closed"}	\N	\N	f	f	6	full	[{"language":"ru-RU","translation":"Настройки"}]	\N	\N	f	\N	\N	\N
 76	products_files	id	\N	\N	\N	\N	\N	f	t	1	full	\N	\N	\N	f	\N	\N	\N
 77	products_files	products_id	\N	\N	\N	\N	\N	f	t	2	full	\N	\N	\N	f	\N	\N	\N
 78	products_files	directus_files_id	\N	\N	\N	\N	\N	f	t	3	full	\N	\N	\N	f	\N	\N	\N
@@ -3755,22 +3767,22 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 85	products	seo_title	\N	input	{"iconLeft":"title"}	\N	\N	f	f	1	full	\N	\N	\N	f	seo	\N	\N
 73	products	price	\N	input	{"iconLeft":"currency_ruble"}	raw	\N	f	f	2	half	[{"language":"ru-RU","translation":"Цена"}]	\N	\N	t	data	\N	\N
 87	products	seo_keywords	cast-csv	tags	{"whitespace":"-","capitalization":"lowercase"}	\N	\N	f	f	3	full	\N	\N	\N	f	seo	\N	\N
-36	products	date_updated	date-updated	datetime	\N	datetime	{"relative":true}	t	t	3	half	\N	\N	\N	f	\N	\N	\N
-38	products	sort	\N	input	{"iconLeft":"sort_by_alpha","min":0}	\N	\N	t	t	1	full	[{"language":"ru-RU","translation":"Сортировка"}]	Значение от 0 до ∞, где 0 - первая позиция 	\N	f	tech	{"_and":[{"sort":{"_gte":"0"}}]}	\N
-90	products	data	alias,no-data,group	group-detail	{"headerIcon":"database"}	\N	\N	f	f	4	full	[{"language":"ru-RU","translation":"Основные данные"}]	\N	\N	f	\N	\N	\N
 69	products	reason	m2m	list-m2m	{"enableCreate":false,"template":"{{reason_id.name}}"}	\N	\N	f	f	2	half	[{"language":"ru-RU","translation":"Повод"}]	\N	\N	f	attrs	\N	\N
-37	products	available	cast-boolean	boolean	{"label":"Доступно к покупке"}	boolean	{"labelOn":"Доступен","labelOff":"Недоступен"}	f	f	2	full	[{"language":"ru-RU","translation":"В наличии"}]	\N	\N	f	tech	\N	\N
 46	styles	name	\N	input	{"iconLeft":"drive_file_rename_outline"}	raw	\N	f	f	2	full	[{"language":"ru-RU","translation":"Наименование"}]	\N	\N	t	\N	\N	\N
-88	products	attrs	alias,no-data,group	group-detail	{"headerIcon":"tag","start":"closed"}	\N	\N	f	f	5	full	[{"language":"ru-RU","translation":"Атрибуты"}]	\N	\N	f	\N	\N	\N
-35	products	date_created	date-created	datetime	\N	datetime	{"relative":true}	t	t	2	half	\N	\N	\N	f	\N	\N	\N
-84	products	seo	alias,no-data,group	group-detail	{"start":"closed","headerIcon":"settings"}	\N	\N	f	f	7	full	\N	\N	\N	f	\N	\N	\N
 65	structure	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
-34	products	id	\N	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 66	structure	name	\N	input	{"iconLeft":"drive_file_rename_outline"}	raw	\N	f	f	3	full	[{"language":"ru-RU","translation":"Наименование"}]	\N	\N	t	\N	\N	\N
 124	wholesale	faq_title	\N	input	{"iconLeft":"title"}	raw	\N	f	f	1	full	[{"language":"ru-RU","translation":"Заголовок блока"}]	\N	\N	f	faq	\N	\N
 166	home	banner_text	\N	input-multiline	\N	raw	\N	f	f	3	full	[{"language":"ru-RU","translation":"Основной текст баннера"}]	\N	\N	f	banner	\N	\N
 197	home	feedback	alias,no-data,group	group-detail	{"headerIcon":"supervisor_account"}	\N	\N	f	f	9	full	[{"language":"ru-RU","translation":"Блок отзывов"}]	\N	\N	f	\N	\N	\N
 158	home_home_carousels	id	\N	\N	\N	\N	\N	f	t	1	full	\N	\N	\N	f	\N	\N	\N
+34	products	id	\N	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
+35	products	date_created	date-created	datetime	\N	datetime	{"relative":true}	t	t	2	half	\N	\N	\N	f	\N	\N	\N
+36	products	date_updated	date-updated	datetime	\N	datetime	{"relative":true}	t	t	3	half	\N	\N	\N	f	\N	\N	\N
+37	products	available	cast-boolean	boolean	{"label":"Доступно к покупке"}	boolean	{"labelOn":"Доступен","labelOff":"Недоступен"}	f	f	2	full	[{"language":"ru-RU","translation":"В наличии"}]	\N	\N	f	tech	\N	\N
+90	products	data	alias,no-data,group	group-detail	{"headerIcon":"database"}	\N	\N	f	f	4	full	[{"language":"ru-RU","translation":"Основные данные"}]	\N	\N	f	\N	\N	\N
+88	products	attrs	alias,no-data,group	group-detail	{"headerIcon":"tag","start":"closed"}	\N	\N	f	f	5	full	[{"language":"ru-RU","translation":"Атрибуты"}]	\N	\N	f	\N	\N	\N
+89	products	tech	alias,no-data,group	group-detail	{"headerIcon":"admin_panel_settings","start":"closed"}	\N	\N	f	f	6	full	[{"language":"ru-RU","translation":"Настройки"}]	\N	\N	f	\N	\N	\N
+84	products	seo	alias,no-data,group	group-detail	{"start":"closed","headerIcon":"settings"}	\N	\N	f	f	7	full	\N	\N	\N	f	\N	\N	\N
 126	wholesale	faq_blocks	cast-json	list	{"fields":[{"field":"title","name":"title","type":"string","meta":{"field":"title","type":"string","required":true,"interface":"input","options":{"iconLeft":"title","softLength":null},"display":"formatted-value"}},{"field":"content","name":"content","type":"text","meta":{"field":"content","type":"text","required":true,"interface":"input-rich-text-html","options":{"toolbar":["bold","italic","underline","strikethrough","subscript","superscript","h3","h4","h5","h6","alignleft","aligncenter","alignright","numlist","bullist","removeformat","customLink","customImage","hr","fullscreen"]},"display":"formatted-value"}}]}	raw	\N	f	f	3	full	[{"language":"ru-RU","translation":"Блоки аккордеона"}]	\N	\N	f	faq	\N	\N
 96	products_categories	id	\N	\N	\N	\N	\N	f	t	1	full	\N	\N	\N	f	\N	\N	\N
 97	products_categories	products_id	\N	\N	\N	\N	\N	f	t	2	full	\N	\N	\N	f	\N	\N	\N
@@ -3877,6 +3889,8 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 224	categories	title	\N	input	{"iconLeft":"title"}	raw	\N	f	f	4	full	[{"language":"ru-RU","translation":"Заголовок"}]	Для отображения на странице категории в каталоге 	\N	f	\N	\N	\N
 225	categories	description	\N	input-multiline	\N	formatted-value	\N	f	f	5	full	[{"language":"ru-RU","translation":"Описание категории"}]	Для отображения в слайдере футера	\N	f	\N	\N	\N
 226	categories	filters	cast-boolean	boolean	{"label":"Отображать"}	\N	\N	f	f	8	half	[{"language":"ru-RU","translation":"Наличие фильтров"}]	Отображать ли для категории стандартные фильтры каталога	\N	f	\N	\N	\N
+38	products	sort	\N	input	{"iconLeft":"sort_by_alpha","min":0}	\N	\N	t	t	1	full	[{"language":"ru-RU","translation":"Сортировка"}]	Значение от 0 до ∞, где 0 - первая позиция 	\N	f	tech	{"_and":[{"sort":{"_gte":"0"}}]}	\N
+227	products	popular	cast-boolean	boolean	{"label":"Популярно"}	boolean	\N	f	f	3	full	[{"language":"ru-RU","translation":"Отметка популярности"}]	Используется для фильтра по популярности	\N	f	tech	\N	\N
 \.
 
 
@@ -4083,8 +4097,8 @@ abf8a154-5b1c-4a46-ac9c-7300570f4f17	$t:public_label	public	$t:public_descriptio
 
 COPY public.directus_presets (id, bookmark, "user", role, collection, search, layout, layout_query, layout_options, refresh_interval, filter, icon, color) FROM stdin;
 1	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	styles	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
-3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":763}}}	\N	\N	bookmark	\N
 5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available","image"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":328,"available":194,"image":259},"spacing":"cozy"}}	\N	\N	bookmark	\N
+3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":763}}}	\N	\N	bookmark	\N
 7	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	directus_users	\N	cards	{"cards":{"sort":["email"]}}	{"cards":{"icon":"account_circle","title":"{{ first_name }} {{ last_name }}","subtitle":"{{ email }}","size":4}}	\N	\N	bookmark	\N
 6	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	feedback	\N	\N	{"tabular":{"fields":["sort","avatar","name","rate","text"],"sort":["sort"],"page":1}}	{"tabular":{"widths":{"sort":32,"avatar":61,"name":160,"rate":105,"text":412}}}	\N	\N	bookmark	\N
 4	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	structure	\N	tabular	{"tabular":{"page":1,"sort":["name"]},"map":{"limit":1000}}	{"tabular":{"spacing":"cozy"},"cards":{"title":"{{name}}"},"kanban":{"titleField":"name"},"calendar":{"viewInfo":{"type":"dayGridMonth","startDateStr":"2025-10-01T00:00:00+03:00"}}}	\N	\N	bookmark	\N
@@ -5947,6 +5961,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1810	1976	directus_fields	94	{"id":94,"collection":"categories","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать на сайте"},"display":"boolean","display_options":{"labelOn":"Отображается","labelOff":"Скрыто"},"readonly":false,"hidden":false,"sort":7,"width":"full","translations":[{"language":"ru-RU","translation":"Видимость"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"available","sort":7,"group":null}	\N	\N
 1811	1977	directus_fields	132	{"id":132,"collection":"categories","field":"image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":{"circle":true},"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога и слайдера футера","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"image","note":"Для выпадающего каталога и слайдера футера"}	\N	\N
 1812	1978	categories	f2112df7-4000-4c51-b9e1-6bc542d831be	{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be","name":"Букеты","sort":1,"available":true,"image":"09be7688-d281-480b-9a0d-f7966781057a","title":null,"description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	{"image":"09be7688-d281-480b-9a0d-f7966781057a","description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	\N	\N
+1835	2002	directus_fields	37	{"id":37,"collection":"products","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Доступно к покупке"},"display":"boolean","display_options":{"labelOn":"Доступен","labelOff":"Недоступен"},"readonly":false,"hidden":false,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"В наличии"}],"note":null,"conditions":null,"required":false,"group":"tech","validation":null,"validation_message":null}	{"collection":"products","field":"available","sort":2,"group":"tech"}	\N	\N
 1813	1979	categories	92b40a19-2513-441f-830f-f63c8280728f	{"id":"92b40a19-2513-441f-830f-f63c8280728f","name":"Розы","sort":3,"available":true,"image":"c49375f7-06d0-47d3-babd-0515605ec99f","title":"Букеты из роз в Самаре","description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","title":"Букеты из роз в Самаре","description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	\N	\N
 1814	1980	directus_fields	94	{"id":94,"collection":"categories","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать на сайте"},"display":"boolean","display_options":{"labelOn":"Отображается","labelOff":"Скрыто"},"readonly":false,"hidden":false,"sort":7,"width":"half","translations":[{"language":"ru-RU","translation":"Видимость"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"available","width":"half"}	\N	\N
 1815	1981	directus_fields	226	{"sort":8,"interface":"boolean","special":["cast-boolean"],"note":"Отображать ли для категории стандартные фильтры каталога","translations":[{"language":"ru-RU","translation":"Наличие фильтров"}],"options":{"label":"Отображать"},"collection":"categories","field":"filters"}	{"sort":8,"interface":"boolean","special":["cast-boolean"],"note":"Отображать ли для категории стандартные фильтры каталога","translations":[{"language":"ru-RU","translation":"Наличие фильтров"}],"options":{"label":"Отображать"},"collection":"categories","field":"filters"}	\N	\N
@@ -5959,6 +5974,17 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1827	1993	filters_styles	5	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"cfe21f1f-7f66-4097-868c-2057ba9a5f3e"}}	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"cfe21f1f-7f66-4097-868c-2057ba9a5f3e"}}	\N	\N
 1828	1995	categories	a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	{"id":"a679dd91-d1c7-43af-aebb-c4d4e7a5dc69","name":"Букет невесты","sort":6,"available":true,"image":null,"title":null,"description":null,"filters":false}	{"filters":false}	\N	\N
 1829	1996	categories	ba876a60-d0d1-410d-b150-c23729a09b18	{"id":"ba876a60-d0d1-410d-b150-c23729a09b18","name":"Зимняя коллекция","sort":12,"available":true,"image":null,"title":null,"description":null,"filters":false}	{"filters":false}	\N	\N
+1830	1997	directus_fields	227	{"sort":8,"interface":"boolean","special":["cast-boolean"],"translations":[{"language":"ru-RU","translation":"Отметка популярности"}],"note":"Используется для фильтра по популярности","options":{"label":"Популярно"},"display":"boolean","collection":"products","field":"popular"}	{"sort":8,"interface":"boolean","special":["cast-boolean"],"translations":[{"language":"ru-RU","translation":"Отметка популярности"}],"note":"Используется для фильтра по популярности","options":{"label":"Популярно"},"display":"boolean","collection":"products","field":"popular"}	\N	\N
+1831	1998	directus_fields	34	{"id":34,"collection":"products","field":"id","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"id","sort":1,"group":null}	\N	\N
+1832	1999	directus_fields	35	{"id":35,"collection":"products","field":"date_created","special":["date-created"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":2,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"date_created","sort":2,"group":null}	\N	\N
+1833	2000	directus_fields	38	{"id":38,"collection":"products","field":"sort","special":null,"interface":"input","options":{"iconLeft":"sort_by_alpha","min":0},"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":[{"language":"ru-RU","translation":"Сортировка"}],"note":"Значение от 0 до ∞, где 0 - первая позиция ","conditions":null,"required":false,"group":"tech","validation":{"_and":[{"sort":{"_gte":"0"}}]},"validation_message":null}	{"collection":"products","field":"sort","sort":1,"group":"tech"}	\N	\N
+1834	2001	directus_fields	36	{"id":36,"collection":"products","field":"date_updated","special":["date-updated"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":3,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"date_updated","sort":3,"group":null}	\N	\N
+1836	2003	directus_fields	90	{"id":90,"collection":"products","field":"data","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"database"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Основные данные"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"data","sort":4,"group":null}	\N	\N
+1838	2005	directus_fields	88	{"id":88,"collection":"products","field":"attrs","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"tag","start":"closed"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Атрибуты"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"attrs","sort":5,"group":null}	\N	\N
+1839	2006	directus_fields	89	{"id":89,"collection":"products","field":"tech","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"admin_panel_settings","start":"closed"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Настройки"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"tech","sort":6,"group":null}	\N	\N
+1840	2007	directus_fields	84	{"id":84,"collection":"products","field":"seo","special":["alias","no-data","group"],"interface":"group-detail","options":{"start":"closed","headerIcon":"settings"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":7,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"seo","sort":7,"group":null}	\N	\N
+1837	2004	directus_fields	227	{"id":227,"collection":"products","field":"popular","special":["cast-boolean"],"interface":"boolean","options":{"label":"Популярно"},"display":"boolean","display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Отметка популярности"}],"note":"Используется для фильтра по популярности","conditions":null,"required":false,"group":"tech","validation":null,"validation_message":null}	{"collection":"products","field":"popular","sort":3,"group":"tech"}	\N	\N
+1841	2008	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-11-01T20:41:22.751Z","available":true,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":22500,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"popular":true,"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"popular":true,"date_updated":"2025-11-01T20:41:22.751Z"}	\N	\N
 \.
 
 
@@ -5976,8 +6002,8 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 --
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
-MYe_R_2QJ_v2AcVeykNYTLZeLfaVRvZPCjK3mVMEL7SsmT-jJ92e3DtFlZpL3yeC	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:58:55.659+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	gSiSqW6PvmalmJGsLjAXDawvAVSqRl2uAWxtwZqzo7Ngx-HYnEVoDTLBq1GA_nEk
-gSiSqW6PvmalmJGsLjAXDawvAVSqRl2uAWxtwZqzo7Ngx-HYnEVoDTLBq1GA_nEk	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 13:58:45.659+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
+1IwcOpOo7KhYwU6LOq8NwcXFno7N-Q1XDldhx-zoyVSm9Dzq79P5DtrSrdal2Zk6	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:58:43.369+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	UTh-tjpykReEgegkwZJHDAzyDd0JAzLdaw7om01SRJAy-05ReRjCybGoMxPM5QBS
+UTh-tjpykReEgegkwZJHDAzyDd0JAzLdaw7om01SRJAy-05ReRjCybGoMxPM5QBS	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 20:58:33.369+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
 \.
 
 
@@ -6011,8 +6037,8 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 --
 
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-01 20:58:33.382+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	FxohyklfNM_RpJdS7mT8flSiYZIG4W6w	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-01 13:58:45.671+00	/content/categories	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 \.
 
 
@@ -6169,9 +6195,9 @@ eb5341ca-5d2b-4097-892d-e918676f31da	Цветы, которые говорят �
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: directus
 --
 
-COPY public.products (id, date_created, date_updated, available, sort, title, description, size, price, discount, seo_title, seo_description, seo_keywords) FROM stdin;
-8	2025-10-30 10:43:07.899+00	2025-10-30 13:33:25.545+00	t	2	тест	<p>Тестовое описание</p>	10х10х10см	17000	12000	seo_title	seo_вesc	seo,seo1,seo2
-9	2025-10-30 10:46:29.501+00	2025-11-01 08:10:29.902+00	t	1	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	22500	seo_title2	seo_desc2	seo3,seo4,seo5
+COPY public.products (id, date_created, date_updated, available, sort, title, description, size, price, discount, seo_title, seo_description, seo_keywords, popular) FROM stdin;
+8	2025-10-30 10:43:07.899+00	2025-10-30 13:33:25.545+00	t	2	тест	<p>Тестовое описание</p>	10х10х10см	17000	12000	seo_title	seo_вesc	seo,seo1,seo2	f
+9	2025-10-30 10:46:29.501+00	2025-11-01 20:41:22.751+00	t	1	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	22500	seo_title2	seo_desc2	seo3,seo4,seo5	t
 \.
 
 
@@ -6383,14 +6409,14 @@ COPY public.wholesale_wholesale_advant (id, wholesale_id, wholesale_advant_id) F
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 1996, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 2008, true);
 
 
 --
 -- Name: directus_fields_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_fields_id_seq', 226, true);
+SELECT pg_catalog.setval('public.directus_fields_id_seq', 227, true);
 
 
 --
@@ -6425,7 +6451,7 @@ SELECT pg_catalog.setval('public.directus_relations_id_seq', 52, true);
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1829, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1841, true);
 
 
 --
@@ -7665,5 +7691,5 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 8EQp1DF5bPd1mgbTAAXanSG8DPvcgtShUyGK68Z4MgWyISDFxtyWgIZYUdJQGWf
+\unrestrict qB9kY4FrazrktsHJbiAQyHkGLz7r26K6O85LG6G5btudydhdeQBqlG4hLlXzuoN
 

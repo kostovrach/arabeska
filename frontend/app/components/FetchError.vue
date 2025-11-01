@@ -9,8 +9,6 @@
 </template>
 
 <script setup lang="ts">
-    import { refreshNuxtData } from '#app';
-
     function refreshPage() {
         refreshNuxtData();
     }

@@ -26,23 +26,34 @@
         <div class="catalog-head">
             <div class="catalog-head__container">
                 <div class="catalog-head__titlebox">
-                    <h1 class="catalog-head__title">
-                        {{ pageTitle ?? 'Сборные букеты с доставкой в Самаре' }}
-                    </h1>
                     <span v-if="products.length" class="catalog-head__counter">
                         ({{ products.length }})
                     </span>
+                    <h1 class="catalog-head__title">
+                        {{ pageTitle ?? 'Сборные букеты с доставкой в Самаре' }}
+                    </h1>
                 </div>
                 <TheFilters :render-condition="filtersAvailable" />
             </div>
         </div>
         <div class="catalog-list">
             <div class="catalog-list__container">
-                <ul class="catalog-list__body">
-                    <li v-for="product in products" :key="product.id" class="catalog-list__item">
+                <ul class="catalog-list__body" v-if="products.length">
+                    <li v-for="(product, idx) in products" :key="idx" class="catalog-list__item">
                         <ProductCard class="catalog-list__item-card" :data="product" />
                     </li>
                 </ul>
+                <div class="catalog-list__no-result" v-else>
+                    <div class="catalog-list__no-result-wrapper">
+                        <picture class="catalog-list__no-result-image">
+                            <img src="/img/service/fetch-error.svg" alt="Нет совпадений" />
+                        </picture>
+                        <p class="catalog-list__no-result-title">Совпадений не найдено</p>
+                        <p class="catalog-list__no-result-text">
+                            Попробуйте сбросить фильтры или поискать в других категориях
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </NuxtLayout>
@@ -55,13 +66,12 @@
 
     // data ====================================================================
     const route = useRoute();
+    const filterStore = useFiltersStore();
 
     const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
 
-    const products = computed(() =>
-        useFiltersStore().filteredProducts(route.params.category as string)
-    );
+    const products = computed(() => filterStore.filteredProducts(route.params.category as string));
 
     const pageTitle = computed(() => {
         const coincidence = categories.value?.find(
@@ -148,6 +158,38 @@
         &__item {
             &-card {
                 width: 100%;
+            }
+        }
+        &__no-result {
+            padding: rem(40) 0;
+            &-wrapper {
+                width: fit-content;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: rem(32);
+                text-align: center;
+                margin: 0 auto;
+            }
+            &-image {
+                width: rem(240);
+                opacity: 0.8;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+            &-title {
+                font-size: lineScale(24, 20, 480, 1440);
+                font-weight: $fw-semi;
+                opacity: 0.8;
+            }
+            &-text {
+                max-width: 30ch;
+                font-size: lineScale(16, 14, 480, 1440);
+                line-height: 1.4;
+                opacity: 0.5;
             }
         }
     }

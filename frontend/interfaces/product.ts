@@ -65,7 +65,6 @@ export interface IProduct {
     id: number | string;
     date_created: string;
     date_updated?: string | null;
-    available: boolean;
 
     title: string;
     description?: string;
@@ -80,6 +79,9 @@ export interface IProduct {
     structure?: IProductStructure[];
     reason?: IProductReasons[];
     style?: IProductStyle[];
+
+    available: boolean;
+    popular: boolean;
 
     seo_title?: string;
     seo_description?: string;

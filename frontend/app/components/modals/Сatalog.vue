@@ -111,7 +111,7 @@
                 z-index: 2;
                 width: 100%;
                 height: 100%;
-                padding: rem(32);
+                padding: lineScale(32, 16, 480, 1440);
                 backdrop-filter: blur(5px) brightness(80%);
                 transition: backdrop-filter $td $tf;
             }
