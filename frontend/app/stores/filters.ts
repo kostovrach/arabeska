@@ -1,7 +1,6 @@
-// stores/filters.ts
-import type { IProduct } from '~~/interfaces/product';
-import type { Ref } from 'vue';
+import type { LocationQuery } from 'vue-router';
 
+// types ============================================================
 type SortKey = 'price_asc' | 'price_desc' | 'date_new' | null;
 
 interface IFilterStyle {
@@ -50,9 +49,9 @@ interface FilterState {
     priceMax: number | null;
     sortBy: SortKey;
 }
+// ==================================================================
 
 export const useFiltersStore = defineStore('filters', () => {
-    // State as ref
     const filterState: Ref<FilterState> = ref({
         discountOnly: false,
         selectedStructures: [],
@@ -63,38 +62,33 @@ export const useFiltersStore = defineStore('filters', () => {
         sortBy: null,
     });
 
-    // Dictionaries
     const structures: Ref<IFilterStructure[]> = ref([]);
     const reasons: Ref<IFilterReasons[]> = ref([]);
     const styles: Ref<IFilterStyle[]> = ref([]);
 
-    // External products
-    const productsList: ComputedRef<IProduct[]> = computed(
-        () => useProductsStore().productsList ?? []
-    );
+    const productsList = computed(() => useProductsStore().productsList ?? []);
 
-    // Getters as computed
-    const minPrice: ComputedRef<number> = computed(() => {
+    const minPrice = computed(() => {
         const prices = productsList.value
             .map((p) => p.discount ?? p.price)
             .filter((v) => typeof v === 'number');
         return prices.length ? Math.min(...prices) : 0;
     });
 
-    const maxPrice: ComputedRef<number> = computed(() => {
+    const maxPrice = computed(() => {
         const prices = productsList.value
             .map((p) => p.discount ?? p.price)
             .filter((v) => typeof v === 'number');
         return prices.length ? Math.max(...prices) : 0;
     });
 
-    const filteredProducts: ComputedRef<IProduct[]> = computed(() => {
+    const filteredProducts = computed(() => {
         if (!productsList.value.length) return [];
 
         const pMin = filterState.value.priceMin ?? minPrice.value;
         const pMax = filterState.value.priceMax ?? maxPrice.value;
 
-        let res = productsList.value.filter((p: IProduct) => {
+        let res = productsList.value.filter((p) => {
             if (!p.available) return false;
             if (filterState.value.discountOnly && p.discount == null) return false;
 
@@ -124,7 +118,6 @@ export const useFiltersStore = defineStore('filters', () => {
             return true;
         });
 
-        // Sort (без изменений)
         const sort = filterState.value.sortBy;
         if (sort === 'price_asc') {
             res.sort((a, b) => (a.discount ?? a.price) - (b.discount ?? a.price));
@@ -139,7 +132,6 @@ export const useFiltersStore = defineStore('filters', () => {
         return res;
     });
 
-    // Actions as functions
     function loadFilters() {
         const { content: filtersData } = useCms<IFiltersList>('filters', [
             'reasons.*',
@@ -160,19 +152,22 @@ export const useFiltersStore = defineStore('filters', () => {
         });
     }
 
-    function initFromQuery() {
-        const q = useRoute().query;
+    function initFromQuery(query: LocationQuery) {
         filterState.value = {
             ...filterState.value,
-            discountOnly: q.discount === 'true',
-            selectedStructures: q.structure
-                ? String(q.structure).split(',').map(decodeURIComponent)
+            discountOnly: query.discount === 'true',
+            selectedStructures: query.structure
+                ? String(query.structure).split(',').map(decodeURIComponent)
                 : [],
-            selectedReasons: q.reason ? String(q.reason).split(',').map(decodeURIComponent) : [],
-            selectedStyles: q.style ? String(q.style).split(',').map(decodeURIComponent) : [],
-            priceMin: q.price_min ? Number(q.price_min) : minPrice.value,
-            priceMax: q.price_max ? Number(q.price_max) : maxPrice.value,
-            sortBy: (q.sort as SortKey) ?? null,
+            selectedReasons: query.reason
+                ? String(query.reason).split(',').map(decodeURIComponent)
+                : [],
+            selectedStyles: query.style
+                ? String(query.style).split(',').map(decodeURIComponent)
+                : [],
+            priceMin: query.price_min ? Number(query.price_min) : minPrice.value,
+            priceMax: query.price_max ? Number(query.price_max) : maxPrice.value,
+            sortBy: (query.sort as SortKey) ?? null,
         };
     }
 
@@ -186,40 +181,8 @@ export const useFiltersStore = defineStore('filters', () => {
             priceMax: maxPrice.value,
             sortBy: null,
         };
-        useRouter()
-            .replace({ path: useRoute().path, query: {} })
-            .catch(() => {});
     }
 
-    function clearQueryOnLeave() {
-        useRouter()
-            .replace({ path: useRoute().path, query: {} })
-            .catch(() => {});
-    }
-
-    // URL sync (debounced watch inside store)
-    const doSyncToUrl = useDebounceFn(() => {
-        const q: Record<string, any> = {};
-        if (filterState.value.discountOnly) q.discount = 'true';
-        if (filterState.value.selectedStructures.length)
-            q.structure = filterState.value.selectedStructures.join(',');
-        if (filterState.value.selectedReasons.length)
-            q.reason = filterState.value.selectedReasons.join(',');
-        if (filterState.value.selectedStyles.length)
-            q.style = filterState.value.selectedStyles.join(',');
-        if (filterState.value.priceMin != null && filterState.value.priceMax != null) {
-            q.price_min = String(filterState.value.priceMin);
-            q.price_max = String(filterState.value.priceMax);
-        }
-        if (filterState.value.sortBy) q.sort = filterState.value.sortBy;
-        useRouter()
-            .replace({ path: useRoute().path, query: q })
-            .catch(() => {});
-    }, 250);
-
-    watch(filterState, () => doSyncToUrl(), { deep: true });
-
-    // Price init watch
     watch(
         [minPrice, maxPrice],
         ([min, max]) => {
@@ -242,6 +205,5 @@ export const useFiltersStore = defineStore('filters', () => {
         loadFilters,
         initFromQuery,
         resetFilters,
-        clearQueryOnLeave,
     };
 });

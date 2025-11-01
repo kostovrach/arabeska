@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict S9WIviaczO8v5MP8C1pUsyAltyR3y6FbofpRhpUx8pDxosGHcktaxsOeObwSsnF
+\restrict zk7V9kdocu8KwqjPA8h4HLfiqmCkURCPs8NFN7xaIoZhUPhEoDFvVkqQ0yOHlY8
 
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
@@ -3609,6 +3609,7 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 1946	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 18:38:56.964+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_collections	filters_reason	http://localhost:8055
 1947	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 18:38:56.978+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_collections	filters_structure	http://localhost:8055
 1949	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 18:38:56.988+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_collections	filters_styles	http://localhost:8055
+1955	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 08:10:29.908+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products	9	http://localhost:8055
 \.
 
 
@@ -4036,8 +4037,8 @@ abf8a154-5b1c-4a46-ac9c-7300570f4f17	$t:public_label	public	$t:public_descriptio
 COPY public.directus_presets (id, bookmark, "user", role, collection, search, layout, layout_query, layout_options, refresh_interval, filter, icon, color) FROM stdin;
 1	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	styles	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
 3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":763}}}	\N	\N	bookmark	\N
-7	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	directus_users	\N	cards	{"cards":{"sort":["email"]}}	{"cards":{"icon":"account_circle","title":"{{ first_name }} {{ last_name }}","subtitle":"{{ email }}","size":4}}	\N	\N	bookmark	\N
 5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available","image"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":328,"available":271,"image":259},"spacing":"cozy"}}	\N	\N	bookmark	\N
+7	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	directus_users	\N	cards	{"cards":{"sort":["email"]}}	{"cards":{"icon":"account_circle","title":"{{ first_name }} {{ last_name }}","subtitle":"{{ email }}","size":4}}	\N	\N	bookmark	\N
 6	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	feedback	\N	\N	{"tabular":{"fields":["sort","avatar","name","rate","text"],"sort":["sort"],"page":1}}	{"tabular":{"widths":{"sort":32,"avatar":61,"name":160,"rate":105,"text":412}}}	\N	\N	bookmark	\N
 4	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	structure	\N	tabular	{"tabular":{"page":1,"sort":["name"]},"map":{"limit":1000}}	{"tabular":{"spacing":"cozy"},"cards":{"title":"{{name}}"},"kanban":{"titleField":"name"},"calendar":{"viewInfo":{"type":"dayGridMonth","startDateStr":"2025-10-01T00:00:00+03:00"}}}	\N	\N	bookmark	\N
 2	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	reason	\N	\N	{"tabular":{"fields":["name"],"sort":["-name"],"page":1}}	{"tabular":{"widths":{"name":524,"id":160},"align":{"name":"left"}}}	\N	\N	bookmark	\N
@@ -5870,6 +5871,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1783	1949	directus_collections	filters_styles	{"collection":"filters_styles","icon":"import_export","note":null,"display_template":null,"hidden":true,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":3,"group":"filters","collapse":"open","preview_url":null,"versioning":false}	{"sort":3,"group":"filters"}	\N	\N
 1787	1953	directus_collections	seo_settings	{"collection":"seo_settings","icon":"folder","note":"Содержит коллекции, связанные с SEO-настройками страниц","display_template":null,"hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"SEO настройки"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":6,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":6,"group":null}	\N	\N
 1788	1954	directus_collections	pages	{"collection":"pages","icon":"folder","note":"Содержит коллекции, связанные с контентной частью сайта","display_template":null,"hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Страницы"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":7,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":7,"group":null}	\N	\N
+1789	1955	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-11-01T08:10:29.902Z","available":true,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":22500,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"discount":22500,"date_updated":"2025-11-01T08:10:29.902Z"}	\N	\N
 \.
 
 
@@ -5888,8 +5890,8 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
 36P1XWNorryhdRqoMVHwPrjM3WQoCZ4hW5-YD3EzE7DeAPVwktBYfju3jVueHgAv	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 08:54:23.459+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	\N	http://localhost:8055	\N
-zjYYCBdBVGywk0rMZTchqYKrXn8PT848rTmgDvb_w7djXXucTKBe6iYuTS37hA_B	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 17:19:47.935+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	C2HNgEI3IHUAoMv61F_EUbRWz_mcmZqqvh3OrOpSWXZue5MyEkckXykTg7chafEQ
-C2HNgEI3IHUAoMv61F_EUbRWz_mcmZqqvh3OrOpSWXZue5MyEkckXykTg7chafEQ	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 17:19:37.935+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
+C2HNgEI3IHUAoMv61F_EUbRWz_mcmZqqvh3OrOpSWXZue5MyEkckXykTg7chafEQ	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 08:02:58.719+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	MYe_R_2QJ_v2AcVeykNYTLZeLfaVRvZPCjK3mVMEL7SsmT-jJ92e3DtFlZpL3yeC
+MYe_R_2QJ_v2AcVeykNYTLZeLfaVRvZPCjK3mVMEL7SsmT-jJ92e3DtFlZpL3yeC	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 08:02:48.719+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
 \.
 
 
@@ -5923,8 +5925,8 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 --
 
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-01 08:02:48.733+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	FxohyklfNM_RpJdS7mT8flSiYZIG4W6w	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-10-31 17:19:37.944+00	/content/products/9	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 \.
 
 
@@ -6077,8 +6079,8 @@ eb5341ca-5d2b-4097-892d-e918676f31da	Цветы, которые говорят �
 --
 
 COPY public.products (id, date_created, date_updated, available, sort, title, description, size, price, discount, seo_title, seo_description, seo_keywords) FROM stdin;
-9	2025-10-30 10:46:29.501+00	2025-10-30 13:31:33.821+00	t	1	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	100	seo_title2	seo_desc2	seo3,seo4,seo5
 8	2025-10-30 10:43:07.899+00	2025-10-30 13:33:25.545+00	t	2	тест	<p>Тестовое описание</p>	10х10х10см	17000	12000	seo_title	seo_вesc	seo,seo1,seo2
+9	2025-10-30 10:46:29.501+00	2025-11-01 08:10:29.902+00	t	1	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	22500	seo_title2	seo_desc2	seo3,seo4,seo5
 \.
 
 
@@ -6285,7 +6287,7 @@ COPY public.wholesale_wholesale_advant (id, wholesale_id, wholesale_advant_id) F
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 1954, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 1955, true);
 
 
 --
@@ -6327,7 +6329,7 @@ SELECT pg_catalog.setval('public.directus_relations_id_seq', 52, true);
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1788, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1789, true);
 
 
 --
@@ -7567,5 +7569,5 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant
 -- PostgreSQL database dump complete
 --
 
-\unrestrict S9WIviaczO8v5MP8C1pUsyAltyR3y6FbofpRhpUx8pDxosGHcktaxsOeObwSsnF
+\unrestrict zk7V9kdocu8KwqjPA8h4HLfiqmCkURCPs8NFN7xaIoZhUPhEoDFvVkqQ0yOHlY8
 

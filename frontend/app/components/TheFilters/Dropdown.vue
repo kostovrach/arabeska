@@ -1,4 +1,3 @@
-<!-- components/FilterDropdown.vue -->
 <template>
     <div class="cf__item cf__item--dropdown" role="group" :aria-label="`Фильтр по ${label}`">
         <div class="cf__label">{{ label }}</div>

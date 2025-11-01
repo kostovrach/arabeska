@@ -8,6 +8,7 @@
         :aria-label="label"
         tabindex="0"
         @keydown="handleKeydown"
+        @mouseleave="closeDropdown"
         @click="toggleDropdown"
         @blur="closeDropdown"
     >
