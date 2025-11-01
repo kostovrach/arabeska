@@ -82,55 +82,70 @@ export const useFiltersStore = defineStore('filters', () => {
         return prices.length ? Math.max(...prices) : 0;
     });
 
-    const filteredProducts = computed(() => {
-        if (!productsList.value.length) return [];
+    function filteredProducts(category: string) {
+        const products = computed(() => {
+            if (!productsList.value.length) return [];
 
-        const pMin = filterState.value.priceMin ?? minPrice.value;
-        const pMax = filterState.value.priceMax ?? maxPrice.value;
+            const pMin = filterState.value.priceMin ?? minPrice.value;
+            const pMax = filterState.value.priceMax ?? maxPrice.value;
 
-        let res = productsList.value.filter((p) => {
-            if (!p.available) return false;
-            if (filterState.value.discountOnly && p.discount == null) return false;
+            const productsData = productsList.value.filter((el) =>
+                el.category?.some(
+                    (item) => slugify(item.categories_id?.name as string) === slugify(category)
+                )
+            );
 
-            const ep = p.discount ?? p.price;
-            if (ep == null || ep < pMin || ep > pMax) return false;
+            let res = productsData.filter((p) => {
+                if (!p.available) return false;
+                if (filterState.value.discountOnly && p.discount == null) return false;
 
-            if (filterState.value.selectedStructures.length) {
-                const names = (p.structure ?? []).map((s) =>
-                    String(s.structure_id?.name ?? '').trim()
+                const ep = p.discount ?? p.price;
+                if (ep == null || ep < pMin || ep > pMax) return false;
+
+                if (filterState.value.selectedStructures.length) {
+                    const names = (p.structure ?? []).map((s) =>
+                        String(s.structure_id?.name ?? '').trim()
+                    );
+                    if (!filterState.value.selectedStructures.every((sel) => names.includes(sel)))
+                        return false;
+                }
+
+                if (filterState.value.selectedReasons.length) {
+                    const names = (p.reason ?? []).map((r) =>
+                        String(r.reason_id?.name ?? '').trim()
+                    );
+                    if (!filterState.value.selectedReasons.every((sel) => names.includes(sel)))
+                        return false;
+                }
+
+                if (filterState.value.selectedStyles.length) {
+                    const names = (p.style ?? []).map((st) =>
+                        String(st.styles_id?.name ?? '').trim()
+                    );
+                    if (!filterState.value.selectedStyles.every((sel) => names.includes(sel)))
+                        return false;
+                }
+
+                return true;
+            });
+
+            const sort = filterState.value.sortBy;
+            if (sort === 'price_asc') {
+                res.sort((a, b) => (a.discount ?? a.price) - (b.discount ?? a.price));
+            } else if (sort === 'price_desc') {
+                res.sort((a, b) => (b.discount ?? b.price) - (a.discount ?? a.price));
+            } else if (sort === 'date_new') {
+                res.sort(
+                    (a, b) =>
+                        new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
                 );
-                if (!filterState.value.selectedStructures.every((sel) => names.includes(sel)))
-                    return false;
             }
 
-            if (filterState.value.selectedReasons.length) {
-                const names = (p.reason ?? []).map((r) => String(r.reason_id?.name ?? '').trim());
-                if (!filterState.value.selectedReasons.every((sel) => names.includes(sel)))
-                    return false;
-            }
-
-            if (filterState.value.selectedStyles.length) {
-                const names = (p.style ?? []).map((st) => String(st.styles_id?.name ?? '').trim());
-                if (!filterState.value.selectedStyles.every((sel) => names.includes(sel)))
-                    return false;
-            }
-
-            return true;
+            return res;
         });
 
-        const sort = filterState.value.sortBy;
-        if (sort === 'price_asc') {
-            res.sort((a, b) => (a.discount ?? a.price) - (b.discount ?? a.price));
-        } else if (sort === 'price_desc') {
-            res.sort((a, b) => (b.discount ?? b.price) - (a.discount ?? a.price));
-        } else if (sort === 'date_new') {
-            res.sort(
-                (a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
-            );
-        }
-
-        return res;
-    });
+        return products.value;
+    }
 
     function loadFilters() {
         const { content: filtersData } = useCms<IFiltersList>('filters', [
@@ -172,15 +187,27 @@ export const useFiltersStore = defineStore('filters', () => {
     }
 
     function resetFilters() {
-        filterState.value = {
-            discountOnly: false,
-            selectedStructures: [],
-            selectedReasons: [],
-            selectedStyles: [],
-            priceMin: minPrice.value,
-            priceMax: maxPrice.value,
-            sortBy: null,
-        };
+        if (
+            !filterState.value.discountOnly &&
+            !filterState.value.selectedStructures.length &&
+            !filterState.value.selectedReasons.length &&
+            !filterState.value.selectedStyles.length &&
+            filterState.value.priceMax == maxPrice.value &&
+            filterState.value.priceMin == minPrice.value &&
+            !filterState.value.sortBy
+        ) {
+            return;
+        } else {
+            filterState.value = {
+                discountOnly: false,
+                selectedStructures: [],
+                selectedReasons: [],
+                selectedStyles: [],
+                priceMin: minPrice.value,
+                priceMax: maxPrice.value,
+                sortBy: null,
+            };
+        }
     }
 
     watch(

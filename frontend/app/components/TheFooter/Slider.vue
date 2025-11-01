@@ -9,24 +9,32 @@
             @mouseleave="autoplayStart"
         >
             <EmblaSlide
-                v-for="slide in slides"
-                :key="slide.id"
+                v-for="(category, idx) in categories"
+                :key="idx"
                 class="slider__slide"
                 :space-between="16"
             >
                 <picture class="slider__slide-image-container">
                     <img
                         class="slider__slide-image"
-                        :src="slide.image || '/img/service/flowers-placeholder.png'"
-                        :alt="slide.title"
+                        :src="category.image_url || '/img/service/flowers.jpg'"
+                        :alt="category.name ?? '#'"
                     />
                 </picture>
                 <div class="slider__slide-wrapper">
                     <div class="slider__slide-titlebox">
-                        <h3 class="slider__slide-title">{{ slide.title }}</h3>
-                        <p class="slider__slide-desc">{{ slide.desc }}</p>
+                        <h3 class="slider__slide-title">{{ category.name }}</h3>
+                        <p class="slider__slide-desc" v-if="category.description">
+                            {{ category.description }}
+                        </p>
                     </div>
-                    <NuxtLink class="slider__slide-button" :to="slide.link">
+                    <NuxtLink
+                        class="slider__slide-button"
+                        :to="{
+                            name: 'catalog-category',
+                            params: { category: slugify(category.name) },
+                        }"
+                    >
                         <span>Открыть в каталоге</span>
                         <span><SvgSprite type="arrow" /></span>
                     </NuxtLink>
@@ -53,6 +61,12 @@
 <script setup lang="ts">
     // types==========================================================
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
+    import type { ICategories } from '~~/interfaces/categories';
+    // ================================================================
+
+    // data ===========================================================
+    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
+    const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
     // ================================================================
 
     // slider==========================================================
@@ -88,45 +102,6 @@
         updateSnapDisplay();
     });
     // ================================================================
-
-    const slides = [
-        {
-            id: 1,
-            title: 'Букеты на свадьбу',
-            desc: 'Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.',
-            image: '/img/temp/temp1.jpg',
-            link: { name: 'index' },
-        },
-        {
-            id: 2,
-            title: 'Букеты на свадьбу',
-            desc: 'Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.',
-            image: '/img/temp/flowers.gif',
-            link: { name: 'index' },
-        },
-        {
-            id: 3,
-            title: 'Букеты на свадьбу',
-            desc: 'Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.',
-            image: '/img/temp/temp1.jpg',
-            link: { name: 'index' },
-        },
-        {
-            id: 4,
-            title: 'Букеты на свадьбу',
-            desc: 'Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.',
-            image: '/img/temp/flowers.gif',
-            link: { name: 'index' },
-        },
-        {
-            id: 5,
-            title: 'Букеты на свадьбу',
-            desc: 'Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.',
-            image: '/img/temp/temp1.jpg',
-            link: { name: 'index' },
-        },
-    ];
-    // ================================================================
 </script>
 
 <style scoped lang="scss">
@@ -139,7 +114,8 @@
         max-width: rem(484);
         &__slide {
             position: relative;
-            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
             aspect-ratio: 1.2/1;
             border-radius: rem(32);
             overflow: hidden;

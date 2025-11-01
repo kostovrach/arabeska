@@ -1,9 +1,14 @@
 <template>
     <ClientOnly>
-        <section class="filters" aria-label="Фильтры каталога">
-            <form @submit.prevent class="filters__container" role="region" aria-label="Фильтры">
-                <!-- Акция -->
-                <label class="filters__button" for="filter-discount">
+        <form
+            v-if="props.renderCondition"
+            @submit.prevent
+            class="filters"
+            role="region"
+            aria-label="Фильтры"
+        >
+            <div class="filters__group">
+                <label class="filters__item filters__item--button" for="filter-discount">
                     <input
                         type="checkbox"
                         id="filter-discount"
@@ -13,9 +18,8 @@
                     />
                     <span>Акция</span>
                 </label>
-
-                <!-- Dropdowns -->
                 <TheFiltersDropdown
+                    class="filters__item filters__item--multiply"
                     label="Цветы"
                     :items="
                         structures.map((s) => ({
@@ -26,26 +30,49 @@
                     v-model:selected="filterState.selectedStructures"
                 />
                 <TheFiltersDropdown
+                    class="filters__item filters__item--multiply"
                     label="Повод"
                     :items="reasons.map((r) => ({ id: r.reason_id.id, name: r.reason_id.name }))"
                     v-model:selected="filterState.selectedReasons"
                 />
                 <TheFiltersDropdown
+                    class="filters__item filters__item--multiply"
                     label="Стиль"
                     :items="styles.map((st) => ({ id: st.styles_id.id, name: st.styles_id.name }))"
                     v-model:selected="filterState.selectedStyles"
                 />
+                <button
+                    class="filters__item filters__item--reset"
+                    type="button"
+                    @click="
+                        () => {
+                            resetFilters();
+                            doSyncToUrl();
+                        }
+                    "
+                >
+                    <span><SvgSprite type="refresh" :size="18" /></span>
+                </button>
+            </div>
 
-                <!-- Диапазон цен -->
-                <div class="cf__item cf__item--range" role="group" aria-label="Фильтр по цене">
-                    <div class="cf__label">Цена</div>
-                    <div class="cf-range">
+            <div class="filters__range" role="group" aria-label="Фильтр по цене">
+                <div class="filters__range-label">Цена</div>
+                <div class="filters__range-body">
+                    <div class="filters__range-values" aria-hidden="true">
+                        <span class="ruble">
+                            {{ filterState.priceMin?.toLocaleString('ru-RU') }}
+                        </span>
+                        <span class="ruble">
+                            {{ filterState.priceMax?.toLocaleString('ru-RU') }}
+                        </span>
+                    </div>
+                    <div class="filters__range-inputbox">
                         <input
-                            class="cf-range__input cf-range__min"
+                            class="filters__range-input filters__range-input--min"
                             type="range"
                             :min="minPrice"
                             :max="maxPrice"
-                            :RANGE_step="RANGE_STEP"
+                            :step="RANGE_STEP"
                             v-model="filterState.priceMin"
                             @input="normalizeMin"
                             :aria-valuemin="minPrice"
@@ -54,11 +81,11 @@
                             aria-label="Минимальная цена"
                         />
                         <input
-                            class="cf-range__input cf-range__max"
+                            class="filters__range-input filters__range-input--max"
                             type="range"
                             :min="minPrice"
                             :max="maxPrice"
-                            :RANGE_step="RANGE_STEP"
+                            :step="RANGE_STEP"
                             v-model="filterState.priceMax"
                             @input="normalizeMax"
                             :aria-valuemin="minPrice"
@@ -66,46 +93,25 @@
                             :aria-valuenow="filterState.priceMax ?? 0"
                             aria-label="Максимальная цена"
                         />
-                        <div class="cf-range__track" aria-hidden="true">
+                        <div class="filters__range-track" aria-hidden="true">
                             <div
-                                class="cf-range__active"
+                                class="filters__range-active"
                                 :style="{
-                                    left: rangePercentLeft + '%',
-                                    right: rangePercentRight + '%',
+                                    marginLeft: rangePercentLeft + '%',
+                                    marginRight: rangePercentRight + '%',
                                 }"
                             ></div>
                         </div>
-                        <div class="cf-range__values" aria-hidden="true">
-                            <span>{{ filterState.priceMin }} ₽</span>
-                            <span>{{ filterState.priceMax }} ₽</span>
-                        </div>
                     </div>
                 </div>
-
-                <!-- Сортировка -->
-                <TheFiltersSort
-                    label="Сортировка"
-                    :options="sortOptions"
-                    v-model:modelValue="filterState.sortBy"
-                />
-
-                <!-- Сброс -->
-                <div class="cf__item cf__item--reset">
-                    <button
-                        type="button"
-                        @click="
-                            () => {
-                                resetFilters();
-                                doSyncToUrl();
-                            }
-                        "
-                        class="cf-reset"
-                    >
-                        Сбросить
-                    </button>
-                </div>
-            </form>
-        </section>
+            </div>
+            <TheFiltersSort
+                class="filters__sort"
+                label="Сортировка"
+                :options="sortOptions"
+                v-model:modelValue="filterState.sortBy"
+            />
+        </form>
     </ClientOnly>
 </template>
 
@@ -113,6 +119,15 @@
     // types ======================================================================
     import type { LocationQuery } from 'vue-router';
     // ============================================================================
+
+    const props = withDefaults(
+        defineProps<{
+            renderCondition: boolean;
+        }>(),
+        {
+            renderCondition: true,
+        }
+    );
 
     // data =======================================================================
     const route = useRoute();
@@ -144,9 +159,9 @@
 
     const sortOptions = [
         { value: '', label: 'По умолчанию' },
-        { value: 'price_asc', label: 'Цена: по возрастанию' },
-        { value: 'price_desc', label: 'Цена: по убыванию' },
-        { value: 'date_new', label: 'По новизне' },
+        { value: 'price_asc', label: 'По  возрастанию цены' },
+        { value: 'price_desc', label: 'По убыванию цены' },
+        { value: 'date_new', label: 'Сначала новинки' },
     ];
     // ============================================================================
 
@@ -202,9 +217,160 @@
     @use '~/assets/scss/abstracts' as *;
 
     .filters {
-        margin: rem(32) 0;
-        &__container {
-            @include content-container;
+        display: grid;
+        grid-template-areas:
+            'group range'
+            '. sort';
+        justify-content: space-between;
+        gap: rem(32);
+        font-family: 'Inter', sans-serif;
+        &__group {
+            grid-area: group;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: rem(8);
+            user-select: none;
+        }
+        &__item {
+            cursor: pointer;
+            font-size: lineScale(18, 16, 480, 1440);
+            font-weight: $fw-semi;
+            &--button {
+                width: fit-content;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: rem(12) rem(18);
+                border-radius: rem(32);
+                opacity: 0.8;
+                &:has(input[type='checkbox']:checked) {
+                    color: $c-FFFFFF;
+                    background-color: $c-accent;
+                    opacity: 1;
+                }
+                &:has(input[type='checkbox']:not(:checked)):focus-within {
+                    opacity: 1;
+                    background-color: $c-D4E1E7;
+                }
+                &:active {
+                    scale: 0.98;
+                }
+                @media (pointer: fine) {
+                    &:hover {
+                        opacity: 1;
+                        background-color: $c-D4E1E7;
+                    }
+                }
+            }
+            &--reset {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: rem(48);
+                aspect-ratio: 1;
+                border-radius: 50%;
+                @media (pointer: fine) {
+                    > span:has(svg) {
+                        display: block;
+                        width: rem(18);
+                        height: rem(18);
+                        transition: rotate $td $tf-spring;
+                    }
+                    &:hover {
+                        background-color: $c-D4E1E7;
+                        > span:has(svg) {
+                            rotate: 180deg;
+                        }
+                    }
+                }
+                &:focus {
+                    background-color: $c-D4E1E7;
+                }
+                &:active {
+                    scale: 0.9;
+                }
+            }
+        }
+        &__range {
+            grid-area: range;
+            position: relative;
+            width: rem(320);
+            display: flex;
+            align-items: center;
+            gap: rem(32);
+            font-size: rem(16);
+            font-weight: $fw-semi;
+            &-label {
+                opacity: 0.5;
+            }
+            &-body {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: rem(8);
+            }
+            &-values {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: rem(32);
+                opacity: 0.5;
+            }
+            &-inputbox {
+                width: 100%;
+                height: rem(30);
+                position: relative;
+            }
+            &-input[type='range'] {
+                position: absolute;
+                z-index: 1;
+                left: 0;
+                right: 0;
+                top: 50%;
+                translate: 0 -50%;
+                height: 0;
+                background-color: transparent;
+                pointer-events: none;
+                &::-webkit-slider-thumb {
+                    cursor: pointer;
+                    width: rem(12);
+                    aspect-ratio: 1;
+                    border-radius: 50%;
+                    background-color: $c-accent;
+                    box-shadow: 0 0 5px $c-D4E1E7;
+                    pointer-events: auto;
+                    @media (pointer: fine) {
+                        &:not(:active):hover {
+                            scale: 1.2;
+                        }
+                    }
+                    &:active {
+                        scale: 1.2;
+                    }
+                }
+            }
+            &-track {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 50%;
+                translate: 0 -50%;
+                height: rem(4);
+                background-color: $c-D4E1E7;
+                border-radius: rem(16);
+                pointer-events: none;
+            }
+            &-active {
+                position: absolute;
+                inset: 0;
+                background: $c-accent;
+                pointer-events: none;
+            }
+        }
+        &__sort {
+            grid-area: sort;
         }
     }
 

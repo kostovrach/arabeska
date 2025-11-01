@@ -12,7 +12,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-.ruble::before {
+.ruble::after {
     font-family: 'Inter', sans-serif;
     content: '\20BD';
 }

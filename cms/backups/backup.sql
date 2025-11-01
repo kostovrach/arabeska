@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict zk7V9kdocu8KwqjPA8h4HLfiqmCkURCPs8NFN7xaIoZhUPhEoDFvVkqQ0yOHlY8
+\restrict 8EQp1DF5bPd1mgbTAAXanSG8DPvcgtShUyGK68Z4MgWyISDFxtyWgIZYUdJQGWf
 
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
@@ -31,7 +31,10 @@ CREATE TABLE public.categories (
     name character varying(255) NOT NULL,
     sort integer,
     available boolean DEFAULT true,
-    image uuid
+    image uuid,
+    title character varying(255),
+    description text,
+    filters boolean DEFAULT true NOT NULL
 );
 
 
@@ -1619,34 +1622,34 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant ALTER COLUMN id SET DEFAULT n
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: directus
 --
 
-COPY public.categories (id, name, sort, available, image) FROM stdin;
-1917a463-21c7-4d04-926b-d07259019930	Корзины	11	t	\N
-6addc28c-47ea-45da-95a7-501f9fa094e6	8 марта	9	t	\N
-418fbdf9-519a-466f-aa5d-35e277d0857a	Весенняя коллекция	10	t	\N
-ba876a60-d0d1-410d-b150-c23729a09b18	Зимняя коллекция	12	t	\N
-4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f	Кустовые розы	13	t	\N
-d4cee2b2-a9f1-4b77-bbc2-63b260cc28e2	Летняя коллекция	14	t	\N
-5867ef07-53ec-4b1d-887d-7bd674e248bd	Монобукеты	15	t	\N
-21f9bb16-16c2-4d61-82f1-fd2d6c11d567	Новый год	16	t	\N
-0c008a34-fd3f-4ce4-967a-6f45c75ca8e4	Осенняя коллекция	17	t	\N
-dcb8248a-781e-429e-8cde-9bb728b6e1b5	Открытки	18	t	\N
-b655a38a-10c2-458a-9abf-53cbb749bbe8	Пионы	19	t	\N
-429a34dd-6cd9-49da-8efb-f40bc69e786b	Подарки	20	t	\N
-e9a2bde1-47fe-4116-a6b6-c23854d55f57	Популярное	21	t	\N
-8ac35f92-430d-4ee9-8945-f0ae75f4a7c5	Премиум	22	t	\N
-61dd73b1-655e-4ace-a922-b42741961d7d	Свадебные букеты	23	t	\N
-9847eb03-e3bc-42ec-ab47-8966b7380d40	Тюльпаны	24	t	\N
-647d44f1-c459-4ee9-b7f4-65c0bd107999	Цветы в коробке	25	t	\N
-88601e48-6abc-4303-a9a6-f73465a71478	1 сентября	26	t	\N
-e991d516-4de4-4378-aff2-f425417050f2	Эко-букеты	27	t	\N
-f2112df7-4000-4c51-b9e1-6bc542d831be	Букеты	1	t	\N
-2283bf24-7eba-41b2-9fd2-0facadacbd0a	Декор для дома	8	t	\N
-435b14c8-e7e1-4652-bfcb-e33505d51375	Цветы собственного производства	2	f	\N
-7841a067-65d4-479d-9156-9a13a2977d1e	День матери	5	t	\N
-a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	Букет невесты	6	t	\N
-0e35dd7f-aa20-4700-b38e-c175cfd6a3b0	14 февраля	7	f	\N
-c33dd427-fc81-4ae0-9216-d151df0b12c0	День знаний	4	t	\N
-92b40a19-2513-441f-830f-f63c8280728f	Розы	3	t	\N
+COPY public.categories (id, name, sort, available, image, title, description, filters) FROM stdin;
+1917a463-21c7-4d04-926b-d07259019930	Корзины	11	t	\N	\N	\N	t
+6addc28c-47ea-45da-95a7-501f9fa094e6	8 марта	9	t	\N	\N	\N	t
+418fbdf9-519a-466f-aa5d-35e277d0857a	Весенняя коллекция	10	t	\N	\N	\N	t
+4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f	Кустовые розы	13	t	\N	\N	\N	t
+d4cee2b2-a9f1-4b77-bbc2-63b260cc28e2	Летняя коллекция	14	t	\N	\N	\N	t
+5867ef07-53ec-4b1d-887d-7bd674e248bd	Монобукеты	15	t	\N	\N	\N	t
+21f9bb16-16c2-4d61-82f1-fd2d6c11d567	Новый год	16	t	\N	\N	\N	t
+0c008a34-fd3f-4ce4-967a-6f45c75ca8e4	Осенняя коллекция	17	t	\N	\N	\N	t
+dcb8248a-781e-429e-8cde-9bb728b6e1b5	Открытки	18	t	\N	\N	\N	t
+b655a38a-10c2-458a-9abf-53cbb749bbe8	Пионы	19	t	\N	\N	\N	t
+429a34dd-6cd9-49da-8efb-f40bc69e786b	Подарки	20	t	\N	\N	\N	t
+e9a2bde1-47fe-4116-a6b6-c23854d55f57	Популярное	21	t	\N	\N	\N	t
+8ac35f92-430d-4ee9-8945-f0ae75f4a7c5	Премиум	22	t	\N	\N	\N	t
+61dd73b1-655e-4ace-a922-b42741961d7d	Свадебные букеты	23	t	\N	\N	\N	t
+9847eb03-e3bc-42ec-ab47-8966b7380d40	Тюльпаны	24	t	\N	\N	\N	t
+647d44f1-c459-4ee9-b7f4-65c0bd107999	Цветы в коробке	25	t	\N	\N	\N	t
+88601e48-6abc-4303-a9a6-f73465a71478	1 сентября	26	t	\N	\N	\N	t
+e991d516-4de4-4378-aff2-f425417050f2	Эко-букеты	27	t	\N	\N	\N	t
+2283bf24-7eba-41b2-9fd2-0facadacbd0a	Декор для дома	8	t	\N	\N	\N	t
+435b14c8-e7e1-4652-bfcb-e33505d51375	Цветы собственного производства	2	f	\N	\N	\N	t
+7841a067-65d4-479d-9156-9a13a2977d1e	День матери	5	t	\N	\N	\N	t
+0e35dd7f-aa20-4700-b38e-c175cfd6a3b0	14 февраля	7	f	\N	\N	\N	t
+c33dd427-fc81-4ae0-9216-d151df0b12c0	День знаний	4	t	\N	\N	\N	t
+92b40a19-2513-441f-830f-f63c8280728f	Розы	3	t	c49375f7-06d0-47d3-babd-0515605ec99f	Букеты из роз в Самаре	Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.	t
+f2112df7-4000-4c51-b9e1-6bc542d831be	Букеты	1	t	09be7688-d281-480b-9a0d-f7966781057a	\N	Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.	f
+a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	Букет невесты	6	t	\N	\N	\N	f
+ba876a60-d0d1-410d-b150-c23729a09b18	Зимняя коллекция	12	t	\N	\N	\N	f
 \.
 
 
@@ -3610,6 +3613,47 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 1947	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 18:38:56.978+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_collections	filters_structure	http://localhost:8055
 1949	update	d28ea43e-0087-4264-aad7-f52329173439	2025-10-31 18:38:56.988+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_collections	filters_styles	http://localhost:8055
 1955	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 08:10:29.908+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products	9	http://localhost:8055
+1956	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:53:47.584+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	91	http://localhost:8055
+1957	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:53:47.622+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	93	http://localhost:8055
+1958	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:53:47.643+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	92	http://localhost:8055
+1959	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:53:47.665+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	132	http://localhost:8055
+1960	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:53:47.682+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	94	http://localhost:8055
+1961	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:52.305+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	224	http://localhost:8055
+1962	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:55.173+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	91	http://localhost:8055
+1963	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:55.186+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	93	http://localhost:8055
+1964	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:55.197+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	92	http://localhost:8055
+1965	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:55.21+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	224	http://localhost:8055
+1966	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:55.225+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	132	http://localhost:8055
+1967	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:54:55.245+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	94	http://localhost:8055
+1968	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:55:10.045+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	132	http://localhost:8055
+1969	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:05.296+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	225	http://localhost:8055
+1970	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.485+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	91	http://localhost:8055
+1971	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.498+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	93	http://localhost:8055
+1972	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.51+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	92	http://localhost:8055
+1973	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.523+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	224	http://localhost:8055
+1974	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.538+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	225	http://localhost:8055
+1975	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.549+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	132	http://localhost:8055
+1976	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:08.574+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	94	http://localhost:8055
+1977	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:56:17.862+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	132	http://localhost:8055
+1978	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:58:06.226+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	f2112df7-4000-4c51-b9e1-6bc542d831be	http://localhost:8055
+1979	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:58:26.196+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	92b40a19-2513-441f-830f-f63c8280728f	http://localhost:8055
+1980	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:24:25.309+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	94	http://localhost:8055
+1981	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:25:32.523+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	226	http://localhost:8055
+1982	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:25:35.752+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	226	http://localhost:8055
+1983	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:32:03.495+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	f2112df7-4000-4c51-b9e1-6bc542d831be	http://localhost:8055
+1984	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:46:59.707+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	styles	c70e7101-22cc-4cfc-914d-fc2bc345a7d4	http://localhost:8055
+1985	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:09.15+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	styles	3e807728-05bb-459f-bd7e-8cd5f963293b	http://localhost:8055
+1986	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:18.696+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	styles	addc1ad4-3931-423d-aba8-fb75c6439b20	http://localhost:8055
+1987	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:27.6+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	styles	9362455b-d892-4145-a24c-f70971f57db1	http://localhost:8055
+1988	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:33.483+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	styles	cfe21f1f-7f66-4097-868c-2057ba9a5f3e	http://localhost:8055
+1989	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.406+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters_styles	1	http://localhost:8055
+1990	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.41+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters_styles	2	http://localhost:8055
+1991	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.415+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters_styles	3	http://localhost:8055
+1992	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.421+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters_styles	4	http://localhost:8055
+1993	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.425+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters_styles	5	http://localhost:8055
+1994	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 14:47:44.429+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	filters	257ab47c-3b72-4c39-835d-48937ca5f848	http://localhost:8055
+1995	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 15:09:48.079+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	http://localhost:8055
+1996	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 15:09:53.027+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	categories	ba876a60-d0d1-410d-b150-c23729a09b18	http://localhost:8055
 \.
 
 
@@ -3713,7 +3757,6 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 87	products	seo_keywords	cast-csv	tags	{"whitespace":"-","capitalization":"lowercase"}	\N	\N	f	f	3	full	\N	\N	\N	f	seo	\N	\N
 36	products	date_updated	date-updated	datetime	\N	datetime	{"relative":true}	t	t	3	half	\N	\N	\N	f	\N	\N	\N
 38	products	sort	\N	input	{"iconLeft":"sort_by_alpha","min":0}	\N	\N	t	t	1	full	[{"language":"ru-RU","translation":"Сортировка"}]	Значение от 0 до ∞, где 0 - первая позиция 	\N	f	tech	{"_and":[{"sort":{"_gte":"0"}}]}	\N
-91	categories	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 90	products	data	alias,no-data,group	group-detail	{"headerIcon":"database"}	\N	\N	f	f	4	full	[{"language":"ru-RU","translation":"Основные данные"}]	\N	\N	f	\N	\N	\N
 69	products	reason	m2m	list-m2m	{"enableCreate":false,"template":"{{reason_id.name}}"}	\N	\N	f	f	2	half	[{"language":"ru-RU","translation":"Повод"}]	\N	\N	f	attrs	\N	\N
 37	products	available	cast-boolean	boolean	{"label":"Доступно к покупке"}	boolean	{"labelOn":"Доступен","labelOff":"Недоступен"}	f	f	2	full	[{"language":"ru-RU","translation":"В наличии"}]	\N	\N	f	tech	\N	\N
@@ -3721,7 +3764,6 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 88	products	attrs	alias,no-data,group	group-detail	{"headerIcon":"tag","start":"closed"}	\N	\N	f	f	5	full	[{"language":"ru-RU","translation":"Атрибуты"}]	\N	\N	f	\N	\N	\N
 35	products	date_created	date-created	datetime	\N	datetime	{"relative":true}	t	t	2	half	\N	\N	\N	f	\N	\N	\N
 84	products	seo	alias,no-data,group	group-detail	{"start":"closed","headerIcon":"settings"}	\N	\N	f	f	7	full	\N	\N	\N	f	\N	\N	\N
-92	categories	name	\N	input	{"iconLeft":"drive_file_rename_outline"}	raw	\N	f	f	3	full	[{"language":"ru-RU","translation":"Наименование"}]	\N	\N	t	\N	\N	\N
 65	structure	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 34	products	id	\N	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 66	structure	name	\N	input	{"iconLeft":"drive_file_rename_outline"}	raw	\N	f	f	3	full	[{"language":"ru-RU","translation":"Наименование"}]	\N	\N	t	\N	\N	\N
@@ -3738,8 +3780,6 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 136	home_slider	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 100	wholesale	image	file	file-image	\N	image	\N	f	f	1	full	[{"language":"ru-RU","translation":"Фоновое изображение"}]	\N	\N	t	hero	\N	\N
 104	wholesale	description	\N	input-multiline	\N	\N	\N	f	f	4	full	[{"language":"ru-RU","translation":"Описание страницы"}]	\N	\N	f	hero	\N	\N
-93	categories	sort	\N	input	{"min":0,"iconLeft":"sort_by_alpha"}	raw	\N	t	t	2	full	[{"language":"ru-RU","translation":"Сортировка"}]	Значение от 0 до ∞, где 0 начало	\N	f	\N	{"_and":[{"sort":{"_gte":"0"}}]}	\N
-94	categories	available	cast-boolean	boolean	{"label":"Отображать на сайте"}	boolean	{"labelOn":"Отображается","labelOff":"Скрыто"}	f	f	4	full	[{"language":"ru-RU","translation":"Видимость"}]	\N	\N	f	\N	\N	\N
 99	structure	sort	\N	input	{"min":0}	raw	\N	t	t	2	full	[{"language":"ru-RU","translation":"Сортировка"}]	\N	\N	f	\N	{"_and":[{"sort":{"_gte":"0"}}]}	\N
 108	wholesale_advant	image	file	file-image	\N	image	\N	f	f	2	full	[{"language":"ru-RU","translation":"Изображение"}]	\N	\N	f	\N	\N	\N
 109	wholesale_advant	content	\N	input-rich-text-html	{"toolbar":["bold","italic","underline","strikethrough","subscript","superscript","h2","h3","h4","h5","h6","alignleft","aligncenter","alignright","numlist","bullist","removeformat","customLink","hr","fullscreen"]}	\N	\N	f	f	3	full	[{"language":"ru-RU","translation":"Содержание"}]	\N	\N	f	\N	\N	\N
@@ -3752,7 +3792,6 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 129	wholesale	banner_image	file	file-image	\N	image	\N	f	f	1	full	[{"language":"ru-RU","translation":"Фоновое изображение"}]	\N	\N	f	banner	\N	\N
 119	wholesale	advant	m2m	list-m2m	{"enableSelect":false}	related-values	{"template":"{{wholesale_advant_id.image}}{{wholesale_advant_id.content}}"}	f	f	1	full	[{"language":"ru-RU","translation":"Блок"}]	\N	\N	f	list	\N	\N
 130	wholesale	banner_title	\N	input	{"iconLeft":"title"}	raw	\N	f	f	2	full	[{"language":"ru-RU","translation":"Заголовок баннера"}]	\N	\N	f	banner	\N	\N
-132	categories	image	file	file-image	\N	image	{"circle":true}	f	f	5	full	[{"language":"ru-RU","translation":"Изображение для категории"}]	Для выпадающего каталога	\N	f	\N	\N	\N
 138	home_home_slider	id	\N	\N	\N	\N	\N	f	t	1	full	\N	\N	\N	f	\N	\N	\N
 139	home_home_slider	home_id	\N	\N	\N	\N	\N	f	t	2	full	\N	\N	\N	f	\N	\N	\N
 140	home_home_slider	home_slider_id	\N	\N	\N	\N	\N	f	t	3	full	\N	\N	\N	f	\N	\N	\N
@@ -3776,6 +3815,8 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 179	home_home_advant	id	\N	\N	\N	\N	\N	f	t	1	full	\N	\N	\N	f	\N	\N	\N
 165	home	banner_subtitle	\N	input-multiline	\N	raw	\N	f	f	2	full	[{"language":"ru-RU","translation":"Подзаголовок баннера"}]	\N	\N	f	banner	\N	\N
 159	home_home_carousels	home_id	\N	\N	\N	\N	\N	f	t	2	full	\N	\N	\N	f	\N	\N	\N
+132	categories	image	file	file-image	\N	image	{"circle":true}	f	f	6	full	[{"language":"ru-RU","translation":"Изображение для категории"}]	Для выпадающего каталога и слайдера футера	\N	f	\N	\N	\N
+94	categories	available	cast-boolean	boolean	{"label":"Отображать на сайте"}	boolean	{"labelOn":"Отображается","labelOff":"Скрыто"}	f	f	7	half	[{"language":"ru-RU","translation":"Видимость"}]	\N	\N	f	\N	\N	\N
 160	home_home_carousels	home_carousels_id	\N	\N	\N	\N	\N	f	t	3	full	\N	\N	\N	f	\N	\N	\N
 157	home	carousels	m2m	list-m2m	\N	related-values	{"template":"{{home_carousels_id.title}}{{home_carousels_id.category}}"}	f	f	1	full	[{"language":"ru-RU","translation":"Карусели"}]	\N	\N	f	carousels_items	\N	\N
 154	home_carousels	autoplay	cast-boolean	boolean	\N	boolean	\N	f	f	1	half	[{"language":"ru-RU","translation":"Авто-прокрутка карусели"}]	\N	\N	f	tech	\N	\N
@@ -3830,6 +3871,12 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 223	filters_reason	reason_id	\N	\N	\N	\N	\N	f	t	3	full	\N	\N	\N	f	\N	\N	\N
 220	filters	reasons	m2m	list-m2m	{"enableCreate":false}	related-values	\N	f	f	4	full	[{"language":"ru-RU","translation":"Опции для фильтра по поводам"}]	\N	\N	f	\N	\N	\N
 212	filters	structure	m2m	list-m2m	{"enableCreate":false}	related-values	{"template":"{{structure_id.name}}"}	f	f	2	full	[{"language":"ru-RU","translation":"Опции для фильтра по составу"}]	\N	\N	f	\N	\N	\N
+91	categories	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
+93	categories	sort	\N	input	{"min":0,"iconLeft":"sort_by_alpha"}	raw	\N	t	t	2	full	[{"language":"ru-RU","translation":"Сортировка"}]	Значение от 0 до ∞, где 0 начало	\N	f	\N	{"_and":[{"sort":{"_gte":"0"}}]}	\N
+92	categories	name	\N	input	{"iconLeft":"drive_file_rename_outline"}	raw	\N	f	f	3	full	[{"language":"ru-RU","translation":"Наименование"}]	\N	\N	t	\N	\N	\N
+224	categories	title	\N	input	{"iconLeft":"title"}	raw	\N	f	f	4	full	[{"language":"ru-RU","translation":"Заголовок"}]	Для отображения на странице категории в каталоге 	\N	f	\N	\N	\N
+225	categories	description	\N	input-multiline	\N	formatted-value	\N	f	f	5	full	[{"language":"ru-RU","translation":"Описание категории"}]	Для отображения в слайдере футера	\N	f	\N	\N	\N
+226	categories	filters	cast-boolean	boolean	{"label":"Отображать"}	\N	\N	f	f	8	half	[{"language":"ru-RU","translation":"Наличие фильтров"}]	Отображать ли для категории стандартные фильтры каталога	\N	f	\N	\N	\N
 \.
 
 
@@ -4037,7 +4084,7 @@ abf8a154-5b1c-4a46-ac9c-7300570f4f17	$t:public_label	public	$t:public_descriptio
 COPY public.directus_presets (id, bookmark, "user", role, collection, search, layout, layout_query, layout_options, refresh_interval, filter, icon, color) FROM stdin;
 1	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	styles	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
 3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":763}}}	\N	\N	bookmark	\N
-5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available","image"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":328,"available":271,"image":259},"spacing":"cozy"}}	\N	\N	bookmark	\N
+5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available","image"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":328,"available":194,"image":259},"spacing":"cozy"}}	\N	\N	bookmark	\N
 7	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	directus_users	\N	cards	{"cards":{"sort":["email"]}}	{"cards":{"icon":"account_circle","title":"{{ first_name }} {{ last_name }}","subtitle":"{{ email }}","size":4}}	\N	\N	bookmark	\N
 6	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	feedback	\N	\N	{"tabular":{"fields":["sort","avatar","name","rate","text"],"sort":["sort"],"page":1}}	{"tabular":{"widths":{"sort":32,"avatar":61,"name":160,"rate":105,"text":412}}}	\N	\N	bookmark	\N
 4	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	structure	\N	tabular	{"tabular":{"page":1,"sort":["name"]},"map":{"limit":1000}}	{"tabular":{"spacing":"cozy"},"cards":{"title":"{{name}}"},"kanban":{"titleField":"name"},"calendar":{"viewInfo":{"type":"dayGridMonth","startDateStr":"2025-10-01T00:00:00+03:00"}}}	\N	\N	bookmark	\N
@@ -5791,6 +5838,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1704	1867	directus_collections	reason	{"collection":"reason","icon":"settings_suggest","note":null,"display_template":null,"hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Поводы","singular":"Повод","plural":"Поводы"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":3,"group":"attrs","collapse":"open","preview_url":null,"versioning":false}	{"sort":3,"group":"attrs"}	\N	\N
 1705	1868	directus_collections	categories	{"collection":"categories","icon":"category_search","note":null,"display_template":"{{image}}{{name}}","hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Категории","singular":"Категория","plural":"Категории"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":"sort","accountability":"all","color":null,"item_duplication_fields":["sort"],"sort":2,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"icon":"category_search"}	\N	\N
 1706	1870	directus_users	d28ea43e-0087-4264-aad7-f52329173439	{"id":"d28ea43e-0087-4264-aad7-f52329173439","first_name":"Admin","last_name":"User","email":"melnikov.works166@gmail.com","password":"**********","location":null,"title":null,"description":null,"tags":null,"avatar":null,"language":null,"tfa_secret":"**********","status":"active","role":"b7c96db7-0bcc-4ff4-8722-a320af6909dd","token":null,"last_access":"2025-10-31T16:27:13.303Z","last_page":"/users/d28ea43e-0087-4264-aad7-f52329173439","provider":"default","external_identifier":null,"auth_data":null,"email_notifications":true,"appearance":null,"theme_dark":null,"theme_light":"Directus Minimal","theme_light_overrides":null,"theme_dark_overrides":null,"text_direction":"auto","policies":[]}	{"theme_light":"Directus Minimal"}	\N	\N
+1818	1984	styles	c70e7101-22cc-4cfc-914d-fc2bc345a7d4	{"name":"Новогодний"}	{"name":"Новогодний"}	\N	\N
 1707	1871	directus_users	d28ea43e-0087-4264-aad7-f52329173439	{"id":"d28ea43e-0087-4264-aad7-f52329173439","first_name":"Admin","last_name":"User","email":"melnikov.works166@gmail.com","password":"**********","location":null,"title":null,"description":null,"tags":null,"avatar":null,"language":null,"tfa_secret":"**********","status":"active","role":"b7c96db7-0bcc-4ff4-8722-a320af6909dd","token":null,"last_access":"2025-10-31T16:27:13.303Z","last_page":"/users/d28ea43e-0087-4264-aad7-f52329173439","provider":"default","external_identifier":null,"auth_data":null,"email_notifications":true,"appearance":null,"theme_dark":null,"theme_light":null,"theme_light_overrides":null,"theme_dark_overrides":null,"text_direction":"auto","policies":[]}	{"theme_light":null}	\N	\N
 1708	1872	directus_users	5e7d0719-f6fa-4e9b-a681-d24bc8947984	{"id":"5e7d0719-f6fa-4e9b-a681-d24bc8947984","first_name":"frontend","last_name":null,"email":null,"password":null,"location":null,"title":null,"description":null,"tags":null,"avatar":null,"language":null,"tfa_secret":null,"status":"active","role":null,"token":"**********","last_access":null,"last_page":null,"provider":"default","external_identifier":null,"auth_data":null,"email_notifications":true,"appearance":null,"theme_dark":null,"theme_light":null,"theme_light_overrides":null,"theme_dark_overrides":null,"text_direction":"auto","policies":["50c87726-ebc9-4502-9708-10e4a787ab29"]}	{"token":"**********"}	\N	\N
 1709	1873	directus_collections	home_home_slider	{"collection":"home_home_slider","icon":"import_export","note":null,"display_template":null,"hidden":true,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":1,"group":"home_slider","collapse":"open","preview_url":null,"versioning":false}	{"sort":1,"group":"home_slider"}	\N	\N
@@ -5837,6 +5885,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1751	1915	directus_collections	structure	{"collection":"structure","icon":"settings_suggest","note":null,"display_template":"{{name}}","hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Состав","singular":"Состав","plural":"Составы"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":"sort","accountability":"all","color":null,"item_duplication_fields":null,"sort":2,"group":"attrs","collapse":"open","preview_url":null,"versioning":false}	{"display_template":"{{name}}"}	\N	\N
 1753	1917	directus_collections	reason	{"collection":"reason","icon":"settings_suggest","note":null,"display_template":"{{name}}","hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Поводы","singular":"Повод","plural":"Поводы"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":3,"group":"attrs","collapse":"open","preview_url":null,"versioning":false}	{"display_template":"{{name}}"}	\N	\N
 1754	1918	directus_permissions	43	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters","action":"read"}	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters","action":"read"}	\N	\N
+1819	1985	styles	3e807728-05bb-459f-bd7e-8cd5f963293b	{"name":"Весенний"}	{"name":"Весенний"}	\N	\N
 1755	1919	directus_permissions	44	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters_reason","action":"read"}	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters_reason","action":"read"}	\N	\N
 1756	1920	directus_permissions	45	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters_structure","action":"read"}	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters_structure","action":"read"}	\N	\N
 1757	1921	directus_permissions	46	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters_styles","action":"read"}	{"policy":"7b920119-42aa-47ac-a60c-656664a5150d","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"filters_styles","action":"read"}	\N	\N
@@ -5852,6 +5901,9 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1767	1933	directus_collections	filters_structure	{"collection":"filters_structure","icon":"import_export","note":null,"display_template":null,"hidden":true,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":8,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":8,"group":null}	\N	\N
 1768	1934	directus_collections	filters_styles	{"collection":"filters_styles","icon":"import_export","note":null,"display_template":null,"hidden":true,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":9,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":9,"group":null}	\N	\N
 1769	1935	directus_collections	filters_reason	{"collection":"filters_reason","icon":"import_export","note":null,"display_template":null,"hidden":true,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":1,"group":"filters","collapse":"open","preview_url":null,"versioning":false}	{"sort":1,"group":"filters"}	\N	\N
+1820	1986	styles	addc1ad4-3931-423d-aba8-fb75c6439b20	{"name":"Красный"}	{"name":"Красный"}	\N	\N
+1821	1987	styles	9362455b-d892-4145-a24c-f70971f57db1	{"name":"Нежный"}	{"name":"Нежный"}	\N	\N
+1822	1988	styles	cfe21f1f-7f66-4097-868c-2057ba9a5f3e	{"name":"Траурный"}	{"name":"Траурный"}	\N	\N
 1770	1936	directus_collections	products	{"collection":"products","icon":"stacks","note":null,"display_template":null,"hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Товары","singular":"Товар","plural":"Товары"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":"sort","accountability":"all","color":null,"item_duplication_fields":null,"sort":1,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":1,"group":null}	\N	\N
 1772	1938	directus_collections	categories	{"collection":"categories","icon":"category_search","note":null,"display_template":"{{image}}{{name}}","hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Категории","singular":"Категория","plural":"Категории"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":"sort","accountability":"all","color":null,"item_duplication_fields":["sort"],"sort":2,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":2,"group":null}	\N	\N
 1773	1939	directus_collections	filters	{"collection":"filters","icon":"filter_alt","note":null,"display_template":null,"hidden":false,"singleton":true,"translations":[{"language":"ru-RU","translation":"Фильтры","singular":"Фильтр","plural":"Фильтры"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":3,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":3,"group":null}	\N	\N
@@ -5872,6 +5924,41 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1787	1953	directus_collections	seo_settings	{"collection":"seo_settings","icon":"folder","note":"Содержит коллекции, связанные с SEO-настройками страниц","display_template":null,"hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"SEO настройки"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":6,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":6,"group":null}	\N	\N
 1788	1954	directus_collections	pages	{"collection":"pages","icon":"folder","note":"Содержит коллекции, связанные с контентной частью сайта","display_template":null,"hidden":false,"singleton":false,"translations":[{"language":"ru-RU","translation":"Страницы"}],"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":7,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"sort":7,"group":null}	\N	\N
 1789	1955	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-11-01T08:10:29.902Z","available":true,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":22500,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"discount":22500,"date_updated":"2025-11-01T08:10:29.902Z"}	\N	\N
+1790	1956	directus_fields	91	{"id":91,"collection":"categories","field":"id","special":["uuid"],"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"id","sort":1,"group":null}	\N	\N
+1791	1957	directus_fields	93	{"id":93,"collection":"categories","field":"sort","special":null,"interface":"input","options":{"min":0,"iconLeft":"sort_by_alpha"},"display":"raw","display_options":null,"readonly":true,"hidden":true,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Сортировка"}],"note":"Значение от 0 до ∞, где 0 начало","conditions":null,"required":false,"group":null,"validation":{"_and":[{"sort":{"_gte":"0"}}]},"validation_message":null}	{"collection":"categories","field":"sort","sort":2,"group":null}	\N	\N
+1792	1958	directus_fields	92	{"id":92,"collection":"categories","field":"name","special":null,"interface":"input","options":{"iconLeft":"drive_file_rename_outline"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Наименование"}],"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"name","sort":3,"group":null}	\N	\N
+1793	1959	directus_fields	132	{"id":132,"collection":"categories","field":"image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":{"circle":true},"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"image","sort":4,"group":null}	\N	\N
+1794	1960	directus_fields	94	{"id":94,"collection":"categories","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать на сайте"},"display":"boolean","display_options":{"labelOn":"Отображается","labelOff":"Скрыто"},"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Видимость"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"available","sort":5,"group":null}	\N	\N
+1795	1961	directus_fields	224	{"sort":6,"interface":"input","special":null,"note":"Для отображения на странице категории в каталоге ","translations":[{"language":"ru-RU","translation":"Заголовок"}],"options":{"iconLeft":"title"},"display":"raw","collection":"categories","field":"title"}	{"sort":6,"interface":"input","special":null,"note":"Для отображения на странице категории в каталоге ","translations":[{"language":"ru-RU","translation":"Заголовок"}],"options":{"iconLeft":"title"},"display":"raw","collection":"categories","field":"title"}	\N	\N
+1796	1962	directus_fields	91	{"id":91,"collection":"categories","field":"id","special":["uuid"],"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"id","sort":1,"group":null}	\N	\N
+1797	1963	directus_fields	93	{"id":93,"collection":"categories","field":"sort","special":null,"interface":"input","options":{"min":0,"iconLeft":"sort_by_alpha"},"display":"raw","display_options":null,"readonly":true,"hidden":true,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Сортировка"}],"note":"Значение от 0 до ∞, где 0 начало","conditions":null,"required":false,"group":null,"validation":{"_and":[{"sort":{"_gte":"0"}}]},"validation_message":null}	{"collection":"categories","field":"sort","sort":2,"group":null}	\N	\N
+1798	1964	directus_fields	92	{"id":92,"collection":"categories","field":"name","special":null,"interface":"input","options":{"iconLeft":"drive_file_rename_outline"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Наименование"}],"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"name","sort":3,"group":null}	\N	\N
+1799	1965	directus_fields	224	{"id":224,"collection":"categories","field":"title","special":null,"interface":"input","options":{"iconLeft":"title"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Заголовок"}],"note":"Для отображения на странице категории в каталоге ","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"title","sort":4,"group":null}	\N	\N
+1800	1966	directus_fields	132	{"id":132,"collection":"categories","field":"image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":{"circle":true},"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"image","sort":5,"group":null}	\N	\N
+1801	1967	directus_fields	94	{"id":94,"collection":"categories","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать на сайте"},"display":"boolean","display_options":{"labelOn":"Отображается","labelOff":"Скрыто"},"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Видимость"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"available","sort":6,"group":null}	\N	\N
+1802	1968	directus_fields	132	{"id":132,"collection":"categories","field":"image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":{"circle":true},"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога и слайдера в футере","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"image","note":"Для выпадающего каталога и слайдера в футере"}	\N	\N
+1803	1969	directus_fields	225	{"sort":7,"special":null,"interface":"input-multiline","note":"Для отображения в слайдере футера","translations":[{"language":"ru-RU","translation":"Описание категории"}],"display":"formatted-value","collection":"categories","field":"description"}	{"sort":7,"special":null,"interface":"input-multiline","note":"Для отображения в слайдере футера","translations":[{"language":"ru-RU","translation":"Описание категории"}],"display":"formatted-value","collection":"categories","field":"description"}	\N	\N
+1804	1970	directus_fields	91	{"id":91,"collection":"categories","field":"id","special":["uuid"],"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"id","sort":1,"group":null}	\N	\N
+1805	1971	directus_fields	93	{"id":93,"collection":"categories","field":"sort","special":null,"interface":"input","options":{"min":0,"iconLeft":"sort_by_alpha"},"display":"raw","display_options":null,"readonly":true,"hidden":true,"sort":2,"width":"full","translations":[{"language":"ru-RU","translation":"Сортировка"}],"note":"Значение от 0 до ∞, где 0 начало","conditions":null,"required":false,"group":null,"validation":{"_and":[{"sort":{"_gte":"0"}}]},"validation_message":null}	{"collection":"categories","field":"sort","sort":2,"group":null}	\N	\N
+1806	1972	directus_fields	92	{"id":92,"collection":"categories","field":"name","special":null,"interface":"input","options":{"iconLeft":"drive_file_rename_outline"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Наименование"}],"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"name","sort":3,"group":null}	\N	\N
+1807	1973	directus_fields	224	{"id":224,"collection":"categories","field":"title","special":null,"interface":"input","options":{"iconLeft":"title"},"display":"raw","display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Заголовок"}],"note":"Для отображения на странице категории в каталоге ","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"title","sort":4,"group":null}	\N	\N
+1808	1974	directus_fields	225	{"id":225,"collection":"categories","field":"description","special":null,"interface":"input-multiline","options":null,"display":"formatted-value","display_options":null,"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Описание категории"}],"note":"Для отображения в слайдере футера","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"description","sort":5,"group":null}	\N	\N
+1809	1975	directus_fields	132	{"id":132,"collection":"categories","field":"image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":{"circle":true},"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога и слайдера в футере","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"image","sort":6,"group":null}	\N	\N
+1810	1976	directus_fields	94	{"id":94,"collection":"categories","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать на сайте"},"display":"boolean","display_options":{"labelOn":"Отображается","labelOff":"Скрыто"},"readonly":false,"hidden":false,"sort":7,"width":"full","translations":[{"language":"ru-RU","translation":"Видимость"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"available","sort":7,"group":null}	\N	\N
+1811	1977	directus_fields	132	{"id":132,"collection":"categories","field":"image","special":["file"],"interface":"file-image","options":null,"display":"image","display_options":{"circle":true},"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Изображение для категории"}],"note":"Для выпадающего каталога и слайдера футера","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"image","note":"Для выпадающего каталога и слайдера футера"}	\N	\N
+1812	1978	categories	f2112df7-4000-4c51-b9e1-6bc542d831be	{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be","name":"Букеты","sort":1,"available":true,"image":"09be7688-d281-480b-9a0d-f7966781057a","title":null,"description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	{"image":"09be7688-d281-480b-9a0d-f7966781057a","description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	\N	\N
+1813	1979	categories	92b40a19-2513-441f-830f-f63c8280728f	{"id":"92b40a19-2513-441f-830f-f63c8280728f","name":"Розы","sort":3,"available":true,"image":"c49375f7-06d0-47d3-babd-0515605ec99f","title":"Букеты из роз в Самаре","description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	{"image":"c49375f7-06d0-47d3-babd-0515605ec99f","title":"Букеты из роз в Самаре","description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру."}	\N	\N
+1814	1980	directus_fields	94	{"id":94,"collection":"categories","field":"available","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать на сайте"},"display":"boolean","display_options":{"labelOn":"Отображается","labelOff":"Скрыто"},"readonly":false,"hidden":false,"sort":7,"width":"half","translations":[{"language":"ru-RU","translation":"Видимость"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"available","width":"half"}	\N	\N
+1815	1981	directus_fields	226	{"sort":8,"interface":"boolean","special":["cast-boolean"],"note":"Отображать ли для категории стандартные фильтры каталога","translations":[{"language":"ru-RU","translation":"Наличие фильтров"}],"options":{"label":"Отображать"},"collection":"categories","field":"filters"}	{"sort":8,"interface":"boolean","special":["cast-boolean"],"note":"Отображать ли для категории стандартные фильтры каталога","translations":[{"language":"ru-RU","translation":"Наличие фильтров"}],"options":{"label":"Отображать"},"collection":"categories","field":"filters"}	\N	\N
+1816	1982	directus_fields	226	{"id":226,"collection":"categories","field":"filters","special":["cast-boolean"],"interface":"boolean","options":{"label":"Отображать"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":8,"width":"half","translations":[{"language":"ru-RU","translation":"Наличие фильтров"}],"note":"Отображать ли для категории стандартные фильтры каталога","conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"categories","field":"filters","width":"half"}	\N	\N
+1817	1983	categories	f2112df7-4000-4c51-b9e1-6bc542d831be	{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be","name":"Букеты","sort":1,"available":true,"image":"09be7688-d281-480b-9a0d-f7966781057a","title":null,"description":"Описание — основной смысл. Используйте 1–2 предложения в 1–3 строчки, если выравнивание по центру.","filters":false}	{"filters":false}	\N	\N
+1823	1989	filters_styles	1	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"3e807728-05bb-459f-bd7e-8cd5f963293b"}}	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"3e807728-05bb-459f-bd7e-8cd5f963293b"}}	\N	\N
+1824	1990	filters_styles	2	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"9362455b-d892-4145-a24c-f70971f57db1"}}	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"9362455b-d892-4145-a24c-f70971f57db1"}}	\N	\N
+1825	1991	filters_styles	3	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"addc1ad4-3931-423d-aba8-fb75c6439b20"}}	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"addc1ad4-3931-423d-aba8-fb75c6439b20"}}	\N	\N
+1826	1992	filters_styles	4	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"c70e7101-22cc-4cfc-914d-fc2bc345a7d4"}}	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"c70e7101-22cc-4cfc-914d-fc2bc345a7d4"}}	\N	\N
+1827	1993	filters_styles	5	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"cfe21f1f-7f66-4097-868c-2057ba9a5f3e"}}	{"filters_id":"257ab47c-3b72-4c39-835d-48937ca5f848","styles_id":{"id":"cfe21f1f-7f66-4097-868c-2057ba9a5f3e"}}	\N	\N
+1828	1995	categories	a679dd91-d1c7-43af-aebb-c4d4e7a5dc69	{"id":"a679dd91-d1c7-43af-aebb-c4d4e7a5dc69","name":"Букет невесты","sort":6,"available":true,"image":null,"title":null,"description":null,"filters":false}	{"filters":false}	\N	\N
+1829	1996	categories	ba876a60-d0d1-410d-b150-c23729a09b18	{"id":"ba876a60-d0d1-410d-b150-c23729a09b18","name":"Зимняя коллекция","sort":12,"available":true,"image":null,"title":null,"description":null,"filters":false}	{"filters":false}	\N	\N
 \.
 
 
@@ -5889,9 +5976,8 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 --
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
-36P1XWNorryhdRqoMVHwPrjM3WQoCZ4hW5-YD3EzE7DeAPVwktBYfju3jVueHgAv	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 08:54:23.459+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition std-2)	\N	http://localhost:8055	\N
-C2HNgEI3IHUAoMv61F_EUbRWz_mcmZqqvh3OrOpSWXZue5MyEkckXykTg7chafEQ	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 08:02:58.719+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	MYe_R_2QJ_v2AcVeykNYTLZeLfaVRvZPCjK3mVMEL7SsmT-jJ92e3DtFlZpL3yeC
-MYe_R_2QJ_v2AcVeykNYTLZeLfaVRvZPCjK3mVMEL7SsmT-jJ92e3DtFlZpL3yeC	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 08:02:48.719+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
+MYe_R_2QJ_v2AcVeykNYTLZeLfaVRvZPCjK3mVMEL7SsmT-jJ92e3DtFlZpL3yeC	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 13:58:55.659+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	gSiSqW6PvmalmJGsLjAXDawvAVSqRl2uAWxtwZqzo7Ngx-HYnEVoDTLBq1GA_nEk
+gSiSqW6PvmalmJGsLjAXDawvAVSqRl2uAWxtwZqzo7Ngx-HYnEVoDTLBq1GA_nEk	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 13:58:45.659+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
 \.
 
 
@@ -5925,8 +6011,8 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 --
 
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-01 08:02:48.733+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	FxohyklfNM_RpJdS7mT8flSiYZIG4W6w	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-01 13:58:45.671+00	/content/categories	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 \.
 
 
@@ -5999,6 +6085,11 @@ COPY public.filters_structure (id, filters_id, structure_id) FROM stdin;
 --
 
 COPY public.filters_styles (id, filters_id, styles_id) FROM stdin;
+1	257ab47c-3b72-4c39-835d-48937ca5f848	3e807728-05bb-459f-bd7e-8cd5f963293b
+2	257ab47c-3b72-4c39-835d-48937ca5f848	9362455b-d892-4145-a24c-f70971f57db1
+3	257ab47c-3b72-4c39-835d-48937ca5f848	addc1ad4-3931-423d-aba8-fb75c6439b20
+4	257ab47c-3b72-4c39-835d-48937ca5f848	c70e7101-22cc-4cfc-914d-fc2bc345a7d4
+5	257ab47c-3b72-4c39-835d-48937ca5f848	cfe21f1f-7f66-4097-868c-2057ba9a5f3e
 \.
 
 
@@ -6243,6 +6334,11 @@ f119a603-67c6-4478-8c67-9101bab7cda9	Пион	55
 --
 
 COPY public.styles (id, name) FROM stdin;
+c70e7101-22cc-4cfc-914d-fc2bc345a7d4	Новогодний
+3e807728-05bb-459f-bd7e-8cd5f963293b	Весенний
+addc1ad4-3931-423d-aba8-fb75c6439b20	Красный
+9362455b-d892-4145-a24c-f70971f57db1	Нежный
+cfe21f1f-7f66-4097-868c-2057ba9a5f3e	Траурный
 \.
 
 
@@ -6287,14 +6383,14 @@ COPY public.wholesale_wholesale_advant (id, wholesale_id, wholesale_advant_id) F
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 1955, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 1996, true);
 
 
 --
 -- Name: directus_fields_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_fields_id_seq', 223, true);
+SELECT pg_catalog.setval('public.directus_fields_id_seq', 226, true);
 
 
 --
@@ -6329,7 +6425,7 @@ SELECT pg_catalog.setval('public.directus_relations_id_seq', 52, true);
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1789, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1829, true);
 
 
 --
@@ -6364,7 +6460,7 @@ SELECT pg_catalog.setval('public.filters_structure_id_seq', 9, true);
 -- Name: filters_styles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.filters_styles_id_seq', 1, false);
+SELECT pg_catalog.setval('public.filters_styles_id_seq', 5, true);
 
 
 --
@@ -7569,5 +7665,5 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant
 -- PostgreSQL database dump complete
 --
 
-\unrestrict zk7V9kdocu8KwqjPA8h4HLfiqmCkURCPs8NFN7xaIoZhUPhEoDFvVkqQ0yOHlY8
+\unrestrict 8EQp1DF5bPd1mgbTAAXanSG8DPvcgtShUyGK68Z4MgWyISDFxtyWgIZYUdJQGWf
 

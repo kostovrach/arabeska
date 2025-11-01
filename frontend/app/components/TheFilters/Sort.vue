@@ -1,38 +1,40 @@
-<!-- components/SortDropdown.vue -->
 <template>
     <div
-        class="cf__item cf__item--sort custom-select"
+        class="filters__sort"
         role="combobox"
         :aria-expanded="isOpen"
         :aria-owns="listboxId"
-        :aria-label="label"
+        :aria-label="props.label"
+        :aria-activedescendant="ariaActivedescendant"
         tabindex="0"
         @keydown="handleKeydown"
         @mouseleave="closeDropdown"
-        @click="toggleDropdown"
         @blur="closeDropdown"
     >
-        <button class="custom-select__trigger" :aria-controls="listboxId" :aria-expanded="isOpen">
-            <span>{{ selectedLabel || 'По умолчанию' }}</span>
-            <span class="arrow" :class="{ 'arrow--up': isOpen }">&#9660;</span>
-            <!-- Стрелка -->
-        </button>
-        <ul
-            v-if="isOpen"
-            class="custom-select__options"
-            role="listbox"
-            :id="listboxId"
-            tabindex="-1"
+        <button
+            :class="['filters__sort-button', { open: isOpen }]"
+            :aria-controls="listboxId"
+            :aria-expanded="isOpen"
+            @click="toggleDropdown"
         >
+            {{ selectedLabel || 'По умолчанию' }}
+            <span class="filters__sort-button-icon">
+                <SvgSprite type="chevron" :size="16" />
+            </span>
+        </button>
+        <ul v-if="isOpen" class="filters__sort-list" role="listbox" :id="listboxId" tabindex="-1">
             <li
-                v-for="(option, index) in options"
+                v-for="(option, idx) in props.options"
                 :key="option.value"
                 role="option"
                 :aria-selected="value === option.value"
-                :id="`${listboxId}-option-${index}`"
-                :class="{ selected: value === option.value }"
+                :id="`${listboxId}-option-${idx}`"
+                :class="[
+                    'filters__sort-option',
+                    { selected: value === option.value || activeIndex === idx },
+                ]"
                 @click="selectOption(option.value)"
-                @mouseenter="activeIndex = index"
+                @mouseenter="activeIndex = idx"
             >
                 {{ option.label }}
             </li>
@@ -41,11 +43,18 @@
 </template>
 
 <script setup lang="ts">
-    const props = defineProps<{
-        label: string;
-        options: { value: string; label: string }[];
-    }>();
+    const props = withDefaults(
+        defineProps<{
+            label: string;
+            options: { value: string; label: string }[];
+        }>(),
+        {
+            label: '',
+            options: () => [],
+        }
+    );
 
+    // state ===================================================================================
     const emit = defineEmits<{ (e: 'update:modelValue', value: string | null): void }>();
 
     const value = defineModel<string | null>('modelValue', { default: '' });
@@ -58,6 +67,14 @@
         () => props.options.find((opt) => opt.value === value.value)?.label || ''
     );
 
+    const ariaActivedescendant = computed(() =>
+        isOpen.value && activeIndex.value !== -1
+            ? `${listboxId.value}-option-${activeIndex.value}`
+            : undefined
+    );
+    // =========================================================================================
+
+    // handlers ================================================================================
     function toggleDropdown() {
         isOpen.value = !isOpen.value;
         if (isOpen.value)
@@ -110,67 +127,64 @@
         }
     }
 
-    // ARIA activedescendant update
-    const ariaActivedescendant = computed(() =>
-        isOpen.value && activeIndex.value !== -1
-            ? `${listboxId.value}-option-${activeIndex.value}`
-            : undefined
-    );
-
-    // Добавьте в div: :aria-activedescendant="ariaActivedescendant"
-    onMounted(() => {
-        // Для фокуса
-    });
+    // =========================================================================================
 </script>
 
-<style lang="scss" scoped>
-    .custom-select {
+<style scoped lang="scss">
+    @use '~/assets/scss/abstracts' as *;
+
+    .filters__sort {
+        $p: &;
+
         position: relative;
-        min-width: 180px;
-    }
-
-    .custom-select__trigger {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.45rem 0.6rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background: #fff;
-        cursor: pointer;
         width: 100%;
-    }
-
-    .arrow {
-        transition: transform 0.2s;
-    }
-
-    .arrow--up {
-        transform: rotate(180deg);
-    }
-
-    .custom-select__options {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 10;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .custom-select__options li {
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        &:hover,
-        &.selected {
-            background: #f0f0f0;
+        max-width: rem(320);
+        &-button {
+            cursor: pointer;
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: rem(64);
+            padding: rem(18) rem(24);
+            border: rem(1) solid $c-D4E1E7;
+            border-radius: rem(32);
+            background-color: rgba($c-D4E1E7, 0.15);
+            &-icon {
+                transition: transform calc($td / 2) $tf;
+            }
+            &.open {
+                border-radius: rem(32) rem(32) 0 0;
+                #{$p}-button-icon {
+                    transform: scaleY(-1);
+                }
+            }
+        }
+        &-list {
+            position: absolute;
+            z-index: 5;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: $c-FFFFFF;
+            border: rem(1) solid $c-D4E1E7;
+            border-top: none;
+            border-radius: 0 0 rem(32) rem(32);
+            box-shadow: 1px 1px 5px $c-D4E1E7;
+            overflow: hidden;
+        }
+        &-option {
+            cursor: pointer;
+            padding: rem(12) rem(24);
+            &.selected {
+                background-color: rgba($c-D4E1E7, 0.15);
+            }
+            @media (pointer: fine) {
+                &:hover {
+                    background-color: rgba($c-D4E1E7, 0.15);
+                }
+            }
         }
     }
 </style>

@@ -1,7 +1,10 @@
 export interface ICategories {
     id: string;
     name: string;
-    available: boolean;
+    title?: string | null;
+    description?: string | null;
     image?: string;
     image_url?: string;
+    available: boolean;
+    filters: boolean;
 }
