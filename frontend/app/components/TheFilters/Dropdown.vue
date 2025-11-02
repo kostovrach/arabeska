@@ -29,14 +29,14 @@
             :aria-expanded="isOpen"
         >
             <label
-                v-for="(item, idx) in orderedItems"
-                :key="idx"
+                v-for="item in orderedItems"
+                :key="item.id"
                 class="filters__item-option"
                 role="listitem"
-                :for="`filter-${slugify(props.label)}-${idx + 1}`"
+                :for="`filter-${slugify(props.label)}-${item.id}`"
             >
                 <input
-                    :id="`filter-${slugify(props.label)}-${idx + 1}`"
+                    :id="`filter-${slugify(props.label)}-${item.id}`"
                     type="checkbox"
                     v-model="selected"
                     :value="item.name"

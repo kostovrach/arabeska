@@ -106,17 +106,15 @@
     .slider {
         &--main {
             width: 100%;
-            aspect-ratio: 1;
+            max-width: rem(680);
             border-radius: rem(32);
+            overflow: hidden;
             &-slide {
-                min-width: 100%;
-                max-width: 100%;
-                height: 100%;
+                display: block;
                 margin-right: 0;
-                overflow: hidden;
                 &-image {
                     width: 100%;
-                    height: 100%;
+                    aspect-ratio: 1.1/1;
                     img {
                         width: 100%;
                         height: 100%;

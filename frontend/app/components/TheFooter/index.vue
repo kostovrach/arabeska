@@ -153,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ModalsСatalog, ModalsPrivacy } from '#components';
+    import { ModalsCatalog, ModalsPrivacy } from '#components';
     import { useModal } from 'vue-final-modal';
 
     const { open: openPrivacy, close: closePrivacy } = useModal({
@@ -166,7 +166,7 @@
     });
 
     const { open: openCatalog, close: closeCatalog } = useModal({
-        component: ModalsСatalog,
+        component: ModalsCatalog,
         attrs: {
             onClose() {
                 closeCatalog();

@@ -22,7 +22,7 @@
                     class="product__image"
                     :src="
                         `${cmsUrl}/assets/${product.images?.[0]?.directus_files_id.id}` ||
-                        '/img/temp/placeholder-900x900.jpg'
+                        '/img/temp/flowers-placeholder.jpg'
                     "
                     :alt="product.title || '#'"
                 />
@@ -30,36 +30,34 @@
             <div class="product__content">
                 <div class="product__titlebox">
                     <h3 class="product__title">{{ product.title || '' }}</h3>
-                    <div class="product__id">{{ product.id }}</div>
+                    <div class="product__id">арт. {{ product.id }}</div>
                 </div>
                 <ul v-if="product.structure" class="product__desc">
-                    <li
-                        v-for="(item, idx) in product.structure.slice(0, 2)"
-                        :key="idx"
-                        class="product__desc-item"
-                    >
-                        {{ item.structure_id?.name }}
-                    </li>
+                    {{
+                        product.structure.map((el) => el.structure_id?.name).join(', ')
+                    }}
                 </ul>
                 <div class="product__footer">
                     <ul class="product__price">
                         <li
-                            v-if="product.discount && typeof product.discount === 'number'"
+                            v-if="product.discount"
                             class="product__price-item product__price-item--crossed"
                         >
                             <div>
-                                {{ product.price.toLocaleString() }}
-                                <span class="ruble"></span>
+                                <span class="ruble">
+                                    {{ product.price.toLocaleString('ru-RU') }}
+                                </span>
                             </div>
                         </li>
                         <li class="product__price-item product__price-item--current">
                             <div>
-                                {{
-                                    product.discount
-                                        ? product.discount.toLocaleString()
-                                        : product.price.toLocaleString()
-                                }}
-                                <span class="ruble"></span>
+                                <span class="ruble">
+                                    {{
+                                        product.discount
+                                            ? product.discount.toLocaleString('ru-RU')
+                                            : product.price.toLocaleString('ru-RU')
+                                    }}
+                                </span>
                             </div>
                         </li>
                     </ul>
@@ -68,10 +66,10 @@
                         @click.prevent="toggleCart"
                     >
                         <span class="product__button-icon product__button-icon--default">
-                            <SvgSprite type="cart" :size="36" />
+                            <SvgSprite type="cart" :size="28" />
                         </span>
                         <span class="product__button-icon product__button-icon--checked">
-                            <SvgSprite type="checkmark" :size="40" />
+                            <SvgSprite type="checkmark" :size="28" />
                         </span>
                     </button>
                 </div>
@@ -185,29 +183,22 @@
         &__title {
             font-size: lineScale(22, 16, 480, 1440);
             font-weight: $fw-semi;
+            text-wrap: balance;
         }
         &__id {
-            max-width: 7ch;
+            // max-width: 15ch;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
             font-size: rem(14);
             opacity: 0.5;
         }
         &__desc {
             width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5ch;
-            margin-top: rem(4);
-            &-item {
-                width: fit-content;
-                font-size: lineScale(16, 14, 480, 1440);
-                opacity: 0.5;
-                &:not(:last-child)::after {
-                    content: ',';
-                }
-            }
+            font-size: lineScale(16, 14, 480, 1440);
+            margin-top: rem(8);
+            opacity: 0.5;
+            @include lineClamp(1);
         }
         &__footer {
             display: flex;
@@ -244,7 +235,7 @@
         &__button {
             cursor: pointer;
             position: relative;
-            width: rem(64);
+            width: rem(48);
             aspect-ratio: 1;
             color: $c-FFFFFF;
             background-color: $c-secondary;

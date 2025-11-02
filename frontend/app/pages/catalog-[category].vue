@@ -39,21 +39,25 @@
         <div class="catalog-list">
             <div class="catalog-list__container">
                 <ul class="catalog-list__body" v-if="products.length">
-                    <li v-for="(product, idx) in products" :key="idx" class="catalog-list__item">
+                    <li v-for="product in products" :key="product.id" class="catalog-list__item">
                         <ProductCard class="catalog-list__item-card" :data="product" />
                     </li>
                 </ul>
-                <div class="catalog-list__no-result" v-else>
-                    <div class="catalog-list__no-result-wrapper">
-                        <picture class="catalog-list__no-result-image">
-                            <img src="/img/service/fetch-error.svg" alt="Нет совпадений" />
-                        </picture>
-                        <p class="catalog-list__no-result-title">Совпадений не найдено</p>
-                        <p class="catalog-list__no-result-text">
-                            Попробуйте сбросить фильтры или поискать в других категориях
-                        </p>
-                    </div>
-                </div>
+                <template v-else>
+                    <ClientOnly>
+                        <div class="catalog-list__no-result">
+                            <div class="catalog-list__no-result-wrapper">
+                                <picture class="catalog-list__no-result-image">
+                                    <img src="/img/service/fetch-error.svg" alt="Нет совпадений" />
+                                </picture>
+                                <p class="catalog-list__no-result-title">Совпадений не найдено</p>
+                                <p class="catalog-list__no-result-text">
+                                    Попробуйте сбросить фильтры или поискать в других категориях
+                                </p>
+                            </div>
+                        </div>
+                    </ClientOnly>
+                </template>
             </div>
         </div>
     </NuxtLayout>

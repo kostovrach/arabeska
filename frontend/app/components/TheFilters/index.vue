@@ -158,7 +158,7 @@
     initFromQuery(route.query);
     loadFilters();
 
-    const RANGE_STEP = 100;
+    const RANGE_STEP = 1;
 
     const rangePercentLeft = computed(() => {
         const min = Number(minPrice.value ?? 0);

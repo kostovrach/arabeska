@@ -14,6 +14,18 @@
 
                 <nav class="menu__nav">
                     <NuxtLink
+                        :class="[
+                            'menu__nav-link',
+                            routeName === 'index' ? 'menu__nav-link--current' : '',
+                        ]"
+                        :to="{ name: 'index' }"
+                    >
+                        <span>Главная</span>
+                    </NuxtLink>
+                    <button class="menu__nav-link" type="button" @click="openCatalog">
+                        <span>Каталог</span>
+                    </button>
+                    <NuxtLink
                         v-for="(link, idx) in navLinks"
                         :key="idx"
                         :class="[
@@ -53,6 +65,8 @@
 
 <script setup lang="ts">
     import { VueFinalModal } from 'vue-final-modal';
+    import { useModal } from 'vue-final-modal';
+    import { ModalsCatalog } from '#components';
 
     // types ===================================================
     import type { RouteParamsRawGeneric } from 'vue-router';
@@ -74,19 +88,19 @@
         (e: 'close'): void;
     }>();
 
+    const { open: openCatalog, close: closeCatalog } = useModal({
+        component: ModalsCatalog,
+        attrs: {
+            onClose() {
+                closeCatalog();
+            },
+        },
+    });
+
     // data ====================================================
     const routeName = useRoute().name;
 
     const navLinks: INavLink[] = [
-        {
-            label: 'Главная',
-            routeName: 'index',
-        },
-        {
-            label: 'каталог',
-            routeName: 'catalog-category',
-            routeParams: { category: 'flowers' },
-        },
         {
             label: 'цветочная подписка',
             routeName: 'subscription',
@@ -207,6 +221,7 @@
             }
             @include hide-scrollbar;
             &-link {
+                cursor: pointer;
                 width: fit-content;
                 text-transform: lowercase;
                 font-size: lineScale(40, 32, 480, 1440);

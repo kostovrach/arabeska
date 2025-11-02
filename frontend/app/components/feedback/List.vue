@@ -23,8 +23,8 @@
             <ClientOnly>
                 <div v-show="status === 'success'" class="feedback-list__body">
                     <button
-                        v-for="(card, idx) in items"
-                        :key="idx"
+                        v-for="card in items"
+                        :key="card.id"
                         class="feedback-list__item"
                         type="button"
                         @click="openFeedback(card.id)"

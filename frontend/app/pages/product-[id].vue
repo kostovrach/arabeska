@@ -166,7 +166,7 @@
                                 <p>Состав</p>
                                 <ul>
                                     <li v-for="(item, idx) in product?.structure" :key="idx">
-                                        <span>{{ item.structure_id?.name }}</span>
+                                        <span>- {{ item.structure_id?.name }}</span>
                                         <!-- <span v-if="item.quantity">&mdash;{{ item.quantity }}</span> -->
                                     </li>
                                 </ul>

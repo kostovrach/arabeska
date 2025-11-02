@@ -42,7 +42,16 @@
                     <span>Самара</span>
                 </div>
                 <TheHeaderNumberList class="header__number-list" />
-                <TheHeaderSearchbar class="header__searchbar" />
+                <ClientOnly>
+                    <button
+                        v-if="useProductsStore().productsList?.length"
+                        class="header__action header__action-searchbar"
+                        type="button"
+                        @click="openSearchbar"
+                    >
+                        <SvgSprite type="search" :size="24" />
+                    </button>
+                </ClientOnly>
                 <NuxtLink class="header__action header__action--profile" :to="{ name: 'index' }">
                     <SvgSprite type="user" :size="24" />
                 </NuxtLink>
@@ -57,16 +66,29 @@
 </template>
 
 <script setup lang="ts">
+    // types ===============================================================================
     import type { ICategories } from '~~/interfaces/categories';
+    // =====================================================================================
 
-    import { ModalsSideMenu, ModalsСatalog } from '#components';
+    import { ModalsSearchbar, ModalsSideMenu, ModalsCatalog } from '#components';
     import { useModal } from 'vue-final-modal';
 
-    const { content: categoriesRaw, status } = useCms<ICategories[]>('categories');
+    // data ================================================================================
+    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
 
     const route = useRoute();
+    // =====================================================================================
 
+    // modals ==============================================================================
+    const { open: openSearchbar, close: closeSearchbar } = useModal({
+        component: ModalsSearchbar,
+        attrs: {
+            onClose() {
+                closeSearchbar();
+            },
+        },
+    });
     const { open: openMenu, close: closeMenu } = useModal({
         component: ModalsSideMenu,
         attrs: {
@@ -75,15 +97,15 @@
             },
         },
     });
-
     const { open: openCatalog, close: closeCatalog } = useModal({
-        component: ModalsСatalog,
+        component: ModalsCatalog,
         attrs: {
             onClose() {
                 closeCatalog();
             },
         },
     });
+    // =====================================================================================
 </script>
 
 <style scoped lang="scss">

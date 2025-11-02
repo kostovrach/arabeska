@@ -3,7 +3,6 @@
         overlay-transition="vfm-fade"
         content-transition="vfm-slide-up"
         swipe-to-close="up"
-        :z-index-fn="({ index }: { index: number }) => 9 + 1 * index"
     >
         <div class="catalog">
             <div class="catalog__container">
@@ -54,7 +53,7 @@
     import { VueFinalModal } from 'vue-final-modal';
     import type { ICategories } from '~~/interfaces/categories';
 
-    const { content: categoriesRaw, status } = useCms<ICategories[]>('categories');
+    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
 
     const route = useRoute();
@@ -76,11 +75,22 @@
         width: 100%;
         color: $c-FFFFFF;
         background-color: $c-secondary;
+        border-radius: 0 0 rem(64) rem(64);
         &__container {
-            @include content-container;
+            @include content-container($padding: 0);
         }
         &__body {
-            margin-top: rem(96);
+            padding: 0 rem(32);
+            margin: rem(32) 0 rem(16) 0;
+            @supports (mask-image: url()) {
+                mask-image: linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    #000 5%,
+                    #000 95%,
+                    transparent 100%
+                );
+            }
         }
         &__item {
             flex: 1;
@@ -99,6 +109,16 @@
                         &-image-container {
                             scale: 1.1;
                         }
+                    }
+                }
+            }
+            &:focus-within {
+                #{$p}__item {
+                    &-wrapper {
+                        backdrop-filter: none;
+                    }
+                    &-image-container {
+                        scale: 1.1;
                     }
                 }
             }

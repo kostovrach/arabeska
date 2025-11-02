@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict qB9kY4FrazrktsHJbiAQyHkGLz7r26K6O85LG6G5btudydhdeQBqlG4hLlXzuoN
+\restrict tdk5cbbJqjYL8yB0xIqCfxcfKKBiAKr6ivxRJxr1u5mDjObWCGrs80MLb8dl8ea
 
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
@@ -3667,6 +3667,29 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 2006	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.79+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	89	http://localhost:8055
 2007	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.804+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	84	http://localhost:8055
 2008	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:22.753+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products	9	http://localhost:8055
+2009	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.898+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_categories	9	http://localhost:8055
+2010	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.915+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_categories	10	http://localhost:8055
+2011	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.922+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_categories	11	http://localhost:8055
+2012	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.929+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_categories	12	http://localhost:8055
+2013	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.935+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_categories	13	http://localhost:8055
+2014	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.943+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_files	3	http://localhost:8055
+2015	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.948+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_files	4	http://localhost:8055
+2016	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.956+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	6	http://localhost:8055
+2017	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.961+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	7	http://localhost:8055
+2018	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.965+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	8	http://localhost:8055
+2019	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.97+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	9	http://localhost:8055
+2020	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.974+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	10	http://localhost:8055
+2021	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.979+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	11	http://localhost:8055
+2022	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.983+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_reason	12	http://localhost:8055
+2023	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.991+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_structure	14	http://localhost:8055
+2024	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:46.997+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_structure	15	http://localhost:8055
+2025	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.001+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_structure	16	http://localhost:8055
+2026	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.005+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_structure	17	http://localhost:8055
+2027	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.009+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_structure	18	http://localhost:8055
+2028	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.017+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_styles	3	http://localhost:8055
+2029	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.02+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_styles	4	http://localhost:8055
+2030	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.025+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products_styles	5	http://localhost:8055
+2031	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 09:21:47.031+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	products	10	http://localhost:8055
 \.
 
 
@@ -4098,9 +4121,9 @@ abf8a154-5b1c-4a46-ac9c-7300570f4f17	$t:public_label	public	$t:public_descriptio
 COPY public.directus_presets (id, bookmark, "user", role, collection, search, layout, layout_query, layout_options, refresh_interval, filter, icon, color) FROM stdin;
 1	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	styles	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
 5	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	categories	\N	\N	{"tabular":{"page":1,"fields":["sort","name","available","image"],"sort":["sort"],"limit":100}}	{"tabular":{"widths":{"sort":32,"name":328,"available":194,"image":259},"spacing":"cozy"}}	\N	\N	bookmark	\N
-3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":763}}}	\N	\N	bookmark	\N
 7	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	directus_users	\N	cards	{"cards":{"sort":["email"]}}	{"cards":{"icon":"account_circle","title":"{{ first_name }} {{ last_name }}","subtitle":"{{ email }}","size":4}}	\N	\N	bookmark	\N
 6	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	feedback	\N	\N	{"tabular":{"fields":["sort","avatar","name","rate","text"],"sort":["sort"],"page":1}}	{"tabular":{"widths":{"sort":32,"avatar":61,"name":160,"rate":105,"text":412}}}	\N	\N	bookmark	\N
+3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description","id"],"sort":["sort"]}}	{"tabular":{"widths":{"sort":32,"title":160,"available":167,"price":106,"description":176,"id":97}}}	\N	\N	bookmark	\N
 4	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	structure	\N	tabular	{"tabular":{"page":1,"sort":["name"]},"map":{"limit":1000}}	{"tabular":{"spacing":"cozy"},"cards":{"title":"{{name}}"},"kanban":{"titleField":"name"},"calendar":{"viewInfo":{"type":"dayGridMonth","startDateStr":"2025-10-01T00:00:00+03:00"}}}	\N	\N	bookmark	\N
 2	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	reason	\N	\N	{"tabular":{"fields":["name"],"sort":["-name"],"page":1}}	{"tabular":{"widths":{"name":524,"id":160},"align":{"name":"left"}}}	\N	\N	bookmark	\N
 \.
@@ -5985,6 +6008,29 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 1840	2007	directus_fields	84	{"id":84,"collection":"products","field":"seo","special":["alias","no-data","group"],"interface":"group-detail","options":{"start":"closed","headerIcon":"settings"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":7,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"products","field":"seo","sort":7,"group":null}	\N	\N
 1837	2004	directus_fields	227	{"id":227,"collection":"products","field":"popular","special":["cast-boolean"],"interface":"boolean","options":{"label":"Популярно"},"display":"boolean","display_options":null,"readonly":false,"hidden":false,"sort":3,"width":"full","translations":[{"language":"ru-RU","translation":"Отметка популярности"}],"note":"Используется для фильтра по популярности","conditions":null,"required":false,"group":"tech","validation":null,"validation_message":null}	{"collection":"products","field":"popular","sort":3,"group":"tech"}	\N	\N
 1841	2008	products	9	{"id":"9","date_created":"2025-10-30T10:46:29.501Z","date_updated":"2025-11-01T20:41:22.751Z","available":true,"sort":1,"title":"тест 2","description":"<p>Тестовое описание 2</p>","size":"20х20х20см","price":25000,"discount":22500,"seo_title":"seo_title2","seo_description":"seo_desc2","seo_keywords":["seo3","seo4","seo5"],"popular":true,"images":[2],"style":[],"reason":[4,5],"structure":[8,9,10,11,12,13],"category":[4,5,6,7,8]}	{"popular":true,"date_updated":"2025-11-01T20:41:22.751Z"}	\N	\N
+1864	2031	products	10	{"title":"Букет из красных роз","price":7499,"description":"<p>Нестареющая классика. Универсальный букет к любому случаю.</p>","images":{"create":[{"products_id":"+","directus_files_id":{"id":"09be7688-d281-480b-9a0d-f7966781057a"}},{"products_id":"+","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}],"update":[],"delete":[]},"style":{"create":[{"products_id":"+","styles_id":{"id":"addc1ad4-3931-423d-aba8-fb75c6439b20"}},{"products_id":"+","styles_id":{"id":"9362455b-d892-4145-a24c-f70971f57db1"}},{"products_id":"+","styles_id":{"id":"3e807728-05bb-459f-bd7e-8cd5f963293b"}}],"update":[],"delete":[]},"reason":{"create":[{"products_id":"+","reason_id":{"id":"e28a40e5-9360-41b1-85ff-60766ea4a980"}},{"products_id":"+","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}},{"products_id":"+","reason_id":{"id":"b859a8d7-dffb-4f76-bd96-ee254285ecce"}},{"products_id":"+","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}},{"products_id":"+","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}},{"products_id":"+","reason_id":{"id":"a923bcc4-931a-4709-bade-317c342fedf1"}},{"products_id":"+","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}],"update":[],"delete":[]},"structure":{"create":[{"products_id":"+","structure_id":{"id":"74267c8e-6ddd-429a-bc74-c113517c73ff"}},{"products_id":"+","structure_id":{"id":"92a43dc2-c2f5-454a-9439-60e4c0592f88"}},{"products_id":"+","structure_id":{"id":"9506efda-91ac-4a62-a882-b71ee65f3e44"}},{"products_id":"+","structure_id":{"id":"73d6b923-98d6-4438-a9d4-9281d3870534"}},{"products_id":"+","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}}],"update":[],"delete":[]},"category":{"create":[{"products_id":"+","categories_id":{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be"}},{"products_id":"+","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}},{"products_id":"+","categories_id":{"id":"6addc28c-47ea-45da-95a7-501f9fa094e6"}},{"products_id":"+","categories_id":{"id":"418fbdf9-519a-466f-aa5d-35e277d0857a"}},{"products_id":"+","categories_id":{"id":"4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f"}}],"update":[],"delete":[]},"popular":true,"seo_title":"Букет из роз"}	{"title":"Букет из красных роз","price":7499,"description":"<p>Нестареющая классика. Универсальный букет к любому случаю.</p>","images":{"create":[{"products_id":"+","directus_files_id":{"id":"09be7688-d281-480b-9a0d-f7966781057a"}},{"products_id":"+","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}],"update":[],"delete":[]},"style":{"create":[{"products_id":"+","styles_id":{"id":"addc1ad4-3931-423d-aba8-fb75c6439b20"}},{"products_id":"+","styles_id":{"id":"9362455b-d892-4145-a24c-f70971f57db1"}},{"products_id":"+","styles_id":{"id":"3e807728-05bb-459f-bd7e-8cd5f963293b"}}],"update":[],"delete":[]},"reason":{"create":[{"products_id":"+","reason_id":{"id":"e28a40e5-9360-41b1-85ff-60766ea4a980"}},{"products_id":"+","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}},{"products_id":"+","reason_id":{"id":"b859a8d7-dffb-4f76-bd96-ee254285ecce"}},{"products_id":"+","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}},{"products_id":"+","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}},{"products_id":"+","reason_id":{"id":"a923bcc4-931a-4709-bade-317c342fedf1"}},{"products_id":"+","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}],"update":[],"delete":[]},"structure":{"create":[{"products_id":"+","structure_id":{"id":"74267c8e-6ddd-429a-bc74-c113517c73ff"}},{"products_id":"+","structure_id":{"id":"92a43dc2-c2f5-454a-9439-60e4c0592f88"}},{"products_id":"+","structure_id":{"id":"9506efda-91ac-4a62-a882-b71ee65f3e44"}},{"products_id":"+","structure_id":{"id":"73d6b923-98d6-4438-a9d4-9281d3870534"}},{"products_id":"+","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}}],"update":[],"delete":[]},"category":{"create":[{"products_id":"+","categories_id":{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be"}},{"products_id":"+","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}},{"products_id":"+","categories_id":{"id":"6addc28c-47ea-45da-95a7-501f9fa094e6"}},{"products_id":"+","categories_id":{"id":"418fbdf9-519a-466f-aa5d-35e277d0857a"}},{"products_id":"+","categories_id":{"id":"4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f"}}],"update":[],"delete":[]},"popular":true,"seo_title":"Букет из роз"}	\N	\N
+1842	2009	products_categories	9	{"products_id":"10","categories_id":{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be"}}	{"products_id":"10","categories_id":{"id":"f2112df7-4000-4c51-b9e1-6bc542d831be"}}	1864	\N
+1843	2010	products_categories	10	{"products_id":"10","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}}	{"products_id":"10","categories_id":{"id":"92b40a19-2513-441f-830f-f63c8280728f"}}	1864	\N
+1844	2011	products_categories	11	{"products_id":"10","categories_id":{"id":"6addc28c-47ea-45da-95a7-501f9fa094e6"}}	{"products_id":"10","categories_id":{"id":"6addc28c-47ea-45da-95a7-501f9fa094e6"}}	1864	\N
+1845	2012	products_categories	12	{"products_id":"10","categories_id":{"id":"418fbdf9-519a-466f-aa5d-35e277d0857a"}}	{"products_id":"10","categories_id":{"id":"418fbdf9-519a-466f-aa5d-35e277d0857a"}}	1864	\N
+1846	2013	products_categories	13	{"products_id":"10","categories_id":{"id":"4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f"}}	{"products_id":"10","categories_id":{"id":"4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f"}}	1864	\N
+1847	2014	products_files	3	{"products_id":"10","directus_files_id":{"id":"09be7688-d281-480b-9a0d-f7966781057a"}}	{"products_id":"10","directus_files_id":{"id":"09be7688-d281-480b-9a0d-f7966781057a"}}	1864	\N
+1848	2015	products_files	4	{"products_id":"10","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}	{"products_id":"10","directus_files_id":{"id":"c49375f7-06d0-47d3-babd-0515605ec99f"}}	1864	\N
+1849	2016	products_reason	6	{"products_id":"10","reason_id":{"id":"e28a40e5-9360-41b1-85ff-60766ea4a980"}}	{"products_id":"10","reason_id":{"id":"e28a40e5-9360-41b1-85ff-60766ea4a980"}}	1864	\N
+1850	2017	products_reason	7	{"products_id":"10","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}}	{"products_id":"10","reason_id":{"id":"097fb6db-20ea-47d8-a585-342b1bfd11eb"}}	1864	\N
+1851	2018	products_reason	8	{"products_id":"10","reason_id":{"id":"b859a8d7-dffb-4f76-bd96-ee254285ecce"}}	{"products_id":"10","reason_id":{"id":"b859a8d7-dffb-4f76-bd96-ee254285ecce"}}	1864	\N
+1852	2019	products_reason	9	{"products_id":"10","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}	{"products_id":"10","reason_id":{"id":"6371556d-6178-4fd7-891d-259db73c76bc"}}	1864	\N
+1853	2020	products_reason	10	{"products_id":"10","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}}	{"products_id":"10","reason_id":{"id":"b9350ae7-2ec4-429a-95d8-0178f036fc53"}}	1864	\N
+1854	2021	products_reason	11	{"products_id":"10","reason_id":{"id":"a923bcc4-931a-4709-bade-317c342fedf1"}}	{"products_id":"10","reason_id":{"id":"a923bcc4-931a-4709-bade-317c342fedf1"}}	1864	\N
+1855	2022	products_reason	12	{"products_id":"10","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}	{"products_id":"10","reason_id":{"id":"1cfd6194-2a22-4624-9113-920dde9b8cbb"}}	1864	\N
+1856	2023	products_structure	14	{"products_id":"10","structure_id":{"id":"74267c8e-6ddd-429a-bc74-c113517c73ff"}}	{"products_id":"10","structure_id":{"id":"74267c8e-6ddd-429a-bc74-c113517c73ff"}}	1864	\N
+1857	2024	products_structure	15	{"products_id":"10","structure_id":{"id":"92a43dc2-c2f5-454a-9439-60e4c0592f88"}}	{"products_id":"10","structure_id":{"id":"92a43dc2-c2f5-454a-9439-60e4c0592f88"}}	1864	\N
+1858	2025	products_structure	16	{"products_id":"10","structure_id":{"id":"9506efda-91ac-4a62-a882-b71ee65f3e44"}}	{"products_id":"10","structure_id":{"id":"9506efda-91ac-4a62-a882-b71ee65f3e44"}}	1864	\N
+1859	2026	products_structure	17	{"products_id":"10","structure_id":{"id":"73d6b923-98d6-4438-a9d4-9281d3870534"}}	{"products_id":"10","structure_id":{"id":"73d6b923-98d6-4438-a9d4-9281d3870534"}}	1864	\N
+1860	2027	products_structure	18	{"products_id":"10","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}}	{"products_id":"10","structure_id":{"id":"23e7926b-f2a1-4068-908c-6bb690233bc8"}}	1864	\N
+1861	2028	products_styles	3	{"products_id":"10","styles_id":{"id":"addc1ad4-3931-423d-aba8-fb75c6439b20"}}	{"products_id":"10","styles_id":{"id":"addc1ad4-3931-423d-aba8-fb75c6439b20"}}	1864	\N
+1862	2029	products_styles	4	{"products_id":"10","styles_id":{"id":"9362455b-d892-4145-a24c-f70971f57db1"}}	{"products_id":"10","styles_id":{"id":"9362455b-d892-4145-a24c-f70971f57db1"}}	1864	\N
+1863	2030	products_styles	5	{"products_id":"10","styles_id":{"id":"3e807728-05bb-459f-bd7e-8cd5f963293b"}}	{"products_id":"10","styles_id":{"id":"3e807728-05bb-459f-bd7e-8cd5f963293b"}}	1864	\N
 \.
 
 
@@ -6002,8 +6048,8 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 --
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
-1IwcOpOo7KhYwU6LOq8NwcXFno7N-Q1XDldhx-zoyVSm9Dzq79P5DtrSrdal2Zk6	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:58:43.369+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	UTh-tjpykReEgegkwZJHDAzyDd0JAzLdaw7om01SRJAy-05ReRjCybGoMxPM5QBS
-UTh-tjpykReEgegkwZJHDAzyDd0JAzLdaw7om01SRJAy-05ReRjCybGoMxPM5QBS	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 20:58:33.369+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
+AQKRMC3HPJL9vMHfdx_-a9GU0L1SzeZ4IXa4D8Znhyx8mhMa4wlv22NCokx0a08j	d28ea43e-0087-4264-aad7-f52329173439	2025-11-02 12:18:55.165+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	Cfb_gOv574CGaT2Y98jHbxUQseQR6ieoJ6zpmxyn_6ElfTZP9dgQNWliQsRSCmFA
+Cfb_gOv574CGaT2Y98jHbxUQseQR6ieoJ6zpmxyn_6ElfTZP9dgQNWliQsRSCmFA	d28ea43e-0087-4264-aad7-f52329173439	2025-11-03 12:18:45.165+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
 \.
 
 
@@ -6037,8 +6083,8 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 --
 
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-01 20:58:33.382+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	FxohyklfNM_RpJdS7mT8flSiYZIG4W6w	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	FVEQKZCLNZDSCSCX	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-11-02 12:18:45.194+00	/content/products	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 \.
 
 
@@ -6196,8 +6242,9 @@ eb5341ca-5d2b-4097-892d-e918676f31da	Цветы, которые говорят �
 --
 
 COPY public.products (id, date_created, date_updated, available, sort, title, description, size, price, discount, seo_title, seo_description, seo_keywords, popular) FROM stdin;
-8	2025-10-30 10:43:07.899+00	2025-10-30 13:33:25.545+00	t	2	тест	<p>Тестовое описание</p>	10х10х10см	17000	12000	seo_title	seo_вesc	seo,seo1,seo2	f
-9	2025-10-30 10:46:29.501+00	2025-11-01 20:41:22.751+00	t	1	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	22500	seo_title2	seo_desc2	seo3,seo4,seo5	t
+10	2025-11-02 09:21:46.875+00	\N	t	1	Букет из красных роз	<p>Нестареющая классика. Универсальный букет к любому случаю.</p>	\N	7499	\N	Букет из роз	\N	\N	t
+8	2025-10-30 10:43:07.899+00	2025-10-30 13:33:25.545+00	t	3	тест	<p>Тестовое описание</p>	10х10х10см	17000	12000	seo_title	seo_вesc	seo,seo1,seo2	f
+9	2025-10-30 10:46:29.501+00	2025-11-01 20:41:22.751+00	t	2	тест 2	<p>Тестовое описание 2</p>	20х20х20см	25000	22500	seo_title2	seo_desc2	seo3,seo4,seo5	t
 \.
 
 
@@ -6214,6 +6261,11 @@ COPY public.products_categories (id, products_id, categories_id) FROM stdin;
 6	9	7841a067-65d4-479d-9156-9a13a2977d1e
 7	9	a679dd91-d1c7-43af-aebb-c4d4e7a5dc69
 8	9	2283bf24-7eba-41b2-9fd2-0facadacbd0a
+9	10	f2112df7-4000-4c51-b9e1-6bc542d831be
+10	10	92b40a19-2513-441f-830f-f63c8280728f
+11	10	6addc28c-47ea-45da-95a7-501f9fa094e6
+12	10	418fbdf9-519a-466f-aa5d-35e277d0857a
+13	10	4fd5c56a-c30c-41ce-9ce8-43d6e0c8756f
 \.
 
 
@@ -6224,6 +6276,8 @@ COPY public.products_categories (id, products_id, categories_id) FROM stdin;
 COPY public.products_files (id, products_id, directus_files_id) FROM stdin;
 1	8	c49375f7-06d0-47d3-babd-0515605ec99f
 2	9	c49375f7-06d0-47d3-babd-0515605ec99f
+3	10	09be7688-d281-480b-9a0d-f7966781057a
+4	10	c49375f7-06d0-47d3-babd-0515605ec99f
 \.
 
 
@@ -6237,6 +6291,13 @@ COPY public.products_reason (id, products_id, reason_id) FROM stdin;
 3	8	1cfd6194-2a22-4624-9113-920dde9b8cbb
 4	9	b9350ae7-2ec4-429a-95d8-0178f036fc53
 5	9	6371556d-6178-4fd7-891d-259db73c76bc
+6	10	e28a40e5-9360-41b1-85ff-60766ea4a980
+7	10	097fb6db-20ea-47d8-a585-342b1bfd11eb
+8	10	b859a8d7-dffb-4f76-bd96-ee254285ecce
+9	10	6371556d-6178-4fd7-891d-259db73c76bc
+10	10	b9350ae7-2ec4-429a-95d8-0178f036fc53
+11	10	a923bcc4-931a-4709-bade-317c342fedf1
+12	10	1cfd6194-2a22-4624-9113-920dde9b8cbb
 \.
 
 
@@ -6258,6 +6319,11 @@ COPY public.products_structure (id, products_id, structure_id) FROM stdin;
 11	9	50b586b8-025a-44ec-a397-ce1e46373686
 12	9	f119a603-67c6-4478-8c67-9101bab7cda9
 13	9	513d8e30-8a1c-457d-a9ac-dc80c0060d5d
+14	10	74267c8e-6ddd-429a-bc74-c113517c73ff
+15	10	92a43dc2-c2f5-454a-9439-60e4c0592f88
+16	10	9506efda-91ac-4a62-a882-b71ee65f3e44
+17	10	73d6b923-98d6-4438-a9d4-9281d3870534
+18	10	23e7926b-f2a1-4068-908c-6bb690233bc8
 \.
 
 
@@ -6268,6 +6334,9 @@ COPY public.products_structure (id, products_id, structure_id) FROM stdin;
 COPY public.products_styles (id, products_id, styles_id) FROM stdin;
 1	\N	\N
 2	\N	\N
+3	10	addc1ad4-3931-423d-aba8-fb75c6439b20
+4	10	9362455b-d892-4145-a24c-f70971f57db1
+5	10	3e807728-05bb-459f-bd7e-8cd5f963293b
 \.
 
 
@@ -6409,7 +6478,7 @@ COPY public.wholesale_wholesale_advant (id, wholesale_id, wholesale_advant_id) F
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 2008, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 2031, true);
 
 
 --
@@ -6451,7 +6520,7 @@ SELECT pg_catalog.setval('public.directus_relations_id_seq', 52, true);
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1841, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 1864, true);
 
 
 --
@@ -6514,42 +6583,42 @@ SELECT pg_catalog.setval('public.home_home_slider_id_seq', 2, true);
 -- Name: products_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_categories_id_seq', 8, true);
+SELECT pg_catalog.setval('public.products_categories_id_seq', 13, true);
 
 
 --
 -- Name: products_files_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_files_id_seq', 2, true);
+SELECT pg_catalog.setval('public.products_files_id_seq', 4, true);
 
 
 --
 -- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_id_seq', 9, true);
+SELECT pg_catalog.setval('public.products_id_seq', 10, true);
 
 
 --
 -- Name: products_reason_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_reason_id_seq', 5, true);
+SELECT pg_catalog.setval('public.products_reason_id_seq', 12, true);
 
 
 --
 -- Name: products_structure_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_structure_id_seq', 13, true);
+SELECT pg_catalog.setval('public.products_structure_id_seq', 18, true);
 
 
 --
 -- Name: products_styles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.products_styles_id_seq', 2, true);
+SELECT pg_catalog.setval('public.products_styles_id_seq', 5, true);
 
 
 --
@@ -7691,5 +7760,5 @@ ALTER TABLE ONLY public.wholesale_wholesale_advant
 -- PostgreSQL database dump complete
 --
 
-\unrestrict qB9kY4FrazrktsHJbiAQyHkGLz7r26K6O85LG6G5btudydhdeQBqlG4hLlXzuoN
+\unrestrict tdk5cbbJqjYL8yB0xIqCfxcfKKBiAKr6ivxRJxr1u5mDjObWCGrs80MLb8dl8ea
 

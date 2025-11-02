@@ -13,7 +13,7 @@ export const useProductsStore = defineStore('products', () => {
         'reason.*',
         'reason.reason_id.*',
         'style.*',
-        'style.style_id.*',
+        'style.styles_id.*',
         'structure.*',
         'structure.structure_id.*',
     ];
@@ -30,7 +30,15 @@ export const useProductsStore = defineStore('products', () => {
     // Fussy-search========================================
     const fuse = shallowRef<FuseType<IProduct> | null>(null);
     const fuseOptions: Record<string, any> = {
-        keys: ['title', 'description', 'reason', 'style', 'structure.name', 'id'],
+        keys: [
+            'id',
+            'title',
+            'description',
+            'category.categories_id.name',
+            'reason.reason_id.name',
+            'style.styles_id.name',
+            'structure.structure_id.name',
+        ],
         threshold: 0.35,
         ignoreLocation: true,
         includeScore: false,
