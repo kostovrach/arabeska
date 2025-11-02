@@ -18,7 +18,7 @@
             </div>
 
             <picture class="home-banner__image-container">
-                <img class="home-banner__image" src="/img/temp/temp1.jpg" alt="#" />
+                <img class="home-banner__image" :src="props.imageUrl" alt="#" />
             </picture>
 
             <div class="home-banner__decorative-group home-banner__decorative-group--variant-1">
@@ -44,12 +44,14 @@
 <script setup lang="ts">
     const props = withDefaults(
         defineProps<{
+            imageUrl: string;
             title: string;
             subtitle: string;
             description: string;
             buttonText?: string;
         }>(),
         {
+            imageUrl: '',
             title: '',
             subtitle: '',
             description: '',
@@ -101,6 +103,7 @@
             position: absolute;
             right: 0;
             top: 50%;
+            font-size: lineScale(20, 18, 480, 1440);
         }
         &__image-container {
             position: absolute;

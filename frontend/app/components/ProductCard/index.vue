@@ -21,7 +21,7 @@
                 <img
                     class="product__image"
                     :src="
-                        `${cmsUrl}/assets/${product.images?.[0]?.directus_files_id.id}` ||
+                        `/api/cms/assets/${product.images?.[0]?.directus_files_id.id}` ||
                         '/img/temp/flowers-placeholder.jpg'
                     "
                     :alt="product.title || '#'"

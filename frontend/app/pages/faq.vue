@@ -40,6 +40,44 @@
 </template>
 
 <script setup lang="ts">
+    // types =========================================================
+    interface IFaqPage {
+        id: number | string;
+        head_image: string;
+        head_image_url: string;
+
+        delivery_title: string;
+        delivery_content: string;
+        delivery_additional: {
+            title: string;
+            content: string;
+        }[];
+        delivery_footnote: string;
+        delivery_advant_title: string;
+        delivery_advant_subtitle: string;
+        delivery_advant_cards: {
+            title: string;
+            content: string;
+        }[];
+
+        additional_blocks: {
+            title: string;
+            content: string;
+        }[];
+
+        accordion_title: string;
+        accordion_description: string;
+        accordion_blocks: {
+            title: string;
+            content: string;
+        }[];
+    }
+    // ===============================================================
+
+    // data ==========================================================
+    const { content: page } = useCms<IFaqPage>('faq');
+    // ===============================================================
+
     // mock-data =====================================================
     const faqList = [
         {

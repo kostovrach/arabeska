@@ -50,6 +50,7 @@
         &__title {
             font-family: 'Inter', sans-serif;
             font-size: lineScale(64, 32, 480, 1440);
+            text-wrap: balance;
         }
         &__image-container {
             position: absolute;

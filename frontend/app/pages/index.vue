@@ -1,41 +1,46 @@
 <template>
     <NuxtLayout>
-        <HomeHero :slides="page?.hero_slides" />
-        <HomeCarousel
-            v-for="(carousel, idx) in page?.carousels"
-            :key="idx"
-            :title="carousel.home_carousels_id.title"
-            :content-ref="
-                computed(
-                    () =>
-                        productsList?.filter((element) =>
-                            element.category?.some(
-                                (el) =>
-                                    el.categories_id?.name?.trim().toLowerCase() ==
-                                    carousel.home_carousels_id.category.name.trim().toLowerCase()
-                            )
-                        ) ?? null
-                )
-            "
-            :status-ref="ref(productsStatus)"
-            :wtith-link="carousel.home_carousels_id.link"
-            :autoplay="carousel.home_carousels_id.autoplay"
-        />
-        <HomeBanner
-            :title="page?.banner_title ?? ''"
-            :subtitle="page?.banner_subtitle ?? ''"
-            :description="page?.banner_text ?? ''"
-            :button-text="page?.banner_button_text ?? 'Подписаться на цветы'"
-        />
-        <HomeAdvant :title="page?.advant_title" :content-list="page?.advant_blocks ?? []" />
-        <HomeFeedback :title="page?.feedback_title" :subtitle="page?.feedback_subtitle" />
-        <HomeMap />
+        <template v-if="page">
+            <HomeHero :slides="page?.hero_slides" />
+            <HomeCarousel
+                v-for="carousel in page?.carousels"
+                :key="carousel.id"
+                :title="carousel.home_carousels_id.title"
+                :content-ref="
+                    computed(
+                        () =>
+                            productsList?.filter((element) =>
+                                element.category?.some(
+                                    (el) =>
+                                        el.categories_id?.name?.trim().toLowerCase() ==
+                                        carousel.home_carousels_id.category.name
+                                            .trim()
+                                            .toLowerCase()
+                                )
+                            ) ?? null
+                    )
+                "
+                :status-ref="ref(productsStatus)"
+                :wtith-link="carousel.home_carousels_id.link"
+                :autoplay="carousel.home_carousels_id.autoplay"
+            />
+            <HomeBanner
+                :image-url="page?.banner_image_url"
+                :title="page?.banner_title ?? ''"
+                :subtitle="page?.banner_subtitle ?? ''"
+                :description="page?.banner_text ?? ''"
+                :button-text="page?.banner_button_text ?? 'Подписаться на цветы'"
+            />
+            <HomeAdvant :title="page?.advant_title" :content-list="page?.advant_blocks ?? []" />
+            <HomeFeedback :title="page?.feedback_title" :subtitle="page?.feedback_subtitle" />
+            <HomeMap />
+        </template>
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
     // types ===============================================
-    interface HomePage {
+    interface IHomePage {
         id: number | string;
         date_updated: string;
         hero_slides: {
@@ -70,6 +75,8 @@
                 };
             };
         }[];
+        banner_image: string;
+        banner_image_url: string;
         banner_title: string;
         banner_subtitle: string;
         banner_text: string;
@@ -113,7 +120,7 @@
     const { productsList, productsStatus } = storeToRefs(productsStore);
     //======================================================
 
-    const { content: page, status } = useCms<HomePage>('home', [
+    const { content: page, status } = useCms<IHomePage>('home', [
         'hero_slides.*',
         'hero_slides.home_slider_id.*',
         'carousels.*',

@@ -13,7 +13,7 @@
                 >
                     <picture class="slider--main-slide-image">
                         <img
-                            :src="`${cmsUrl}/assets/${slide.directus_files_id.id}`"
+                            :src="`api/cms/assets/${slide.directus_files_id.id}`"
                             :alt="`Фото ${idx + 1}`"
                         />
                     </picture>
@@ -36,7 +36,7 @@
         >
             <picture class="slider--thumbs-slide-image">
                 <img
-                    :src="`${cmsUrl}/assets/${slide.directus_files_id.id}`"
+                    :src="`/api/cms/assets/${slide.directus_files_id.id}`"
                     :alt="`Фото ${idx + 1}`"
                 />
             </picture>

@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
     // types ===================================================================
-    type TypeWholesalePage = {
+    interface IWholesalePage {
         id: number | string;
         tag?: string;
         title?: string;
@@ -92,10 +92,10 @@
         banner_content?: string;
         banner_image?: string;
         banner_image_url?: string;
-    };
+    }
     // =========================================================================
 
-    const { content: page, status } = useCms<TypeWholesalePage>('wholesale', [
+    const { content: page, status } = useCms<IWholesalePage>('wholesale', [
         'advant.*',
         'advant.wholesale_advant_id.*',
     ]);

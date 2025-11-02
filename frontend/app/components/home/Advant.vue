@@ -180,7 +180,7 @@
             &-image-container {
                 grid-area: image;
                 width: 100%;
-                height: 100%;
+                aspect-ratio: 1.2/1;
                 max-height: rem(720);
                 border-radius: rem(64);
                 overflow: hidden;

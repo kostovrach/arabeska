@@ -58,7 +58,6 @@ export default defineCachedEventHandler(
             const opts = { resolveFiles, force, memoryTtl: undefined as number | undefined };
             const params = { fields: fields ?? ['*', ...(relations ?? [])], filter, sort, limit };
 
-            // Универсальный вызов
             const data = await fetchCollection(collection, params, opts);
 
             return { data };

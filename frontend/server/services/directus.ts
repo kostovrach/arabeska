@@ -11,5 +11,5 @@ export const directus = createDirectus(API_URL).with(rest()).with(staticToken(TO
 export function assetUrl(id: string, params: Record<string, any> = {}) {
     if (!id) return null;
     const qs = new URLSearchParams(params).toString();
-    return `${API_URL}/assets/${id}${qs ? `?${qs}` : ''}`;
+    return `/api/cms/assets/${id}${qs ? `?${qs}` : ''}`;
 }
