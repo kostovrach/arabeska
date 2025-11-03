@@ -10,17 +10,26 @@
                     <SvgSprite type="cross" :size="32" />
                 </button>
                 <div class="modal-privacy__titlebox">
-                    <h1 class="modal-privacy__title">Политика конфиденциальности</h1>
-                    <span class="modal-privacy__tag">Последнее обновление:</span>
+                    <h1 class="modal-privacy__title">{{ props.title }}</h1>
+                    <span v-if="props.dateUpdated" class="modal-privacy__tag">
+                        Последнее обновление: {{ normalizeDate(props.dateUpdated) }}
+                    </span>
                 </div>
                 <div class="modal-privacy__body">
-                    <div v-show="1 !== 1" class="modal-privacy__loader">
+                    <div
+                        v-show="status === 'idle' || status === 'pending'"
+                        class="modal-privacy__loader"
+                    >
                         <TextModalLoader />
                     </div>
-                    <div v-show="1 !== 1" class="modal-privacy__error">
+                    <div v-show="status === 'error'" class="modal-privacy__error">
                         <FetchError />
                     </div>
-                    <!-- <div class="modal-privacy__content" v-html=""></div> -->
+                    <div
+                        v-show="status === 'success'"
+                        class="modal-privacy__content"
+                        v-html="props.content"
+                    ></div>
                 </div>
             </div>
         </div>
@@ -28,7 +37,25 @@
 </template>
 
 <script setup lang="ts">
+    import type { AsyncDataRequestStatus } from '#app';
     import { VueFinalModal } from 'vue-final-modal';
+
+    const props = withDefaults(
+        defineProps<{
+            title: string;
+            dateUpdated: string;
+            content: string;
+            status: AsyncDataRequestStatus;
+        }>(),
+        {
+            title: '',
+            dateUpdated: '',
+            content: '',
+            status: 'idle',
+        }
+    );
+
+    const status = computed(() => props.status);
 
     const emit = defineEmits<{
         (e: 'close'): void;
@@ -47,8 +74,10 @@
         width: 100%;
         max-width: rem(754);
         height: 100lvh;
+        overflow-y: auto;
         color: $c-FFFFFF;
         background-color: $c-secondary;
+        @include hide-scrollbar;
         &__container {
             display: flex;
             flex-direction: column;
@@ -77,11 +106,13 @@
             margin-top: rem(64);
         }
         &__content {
+            display: flex;
+            flex-direction: column;
             font-family: 'Inter', sans-serif;
             h2 {
                 text-transform: uppercase;
-                font-size: lineScale(32, 18, 480, 1440);
-                font-weight: $fw-semi;
+                font-size: lineScale(24, 18, 480, 1440);
+                // font-weight: $fw-semi;
                 margin: rem(32) 0 rem(8);
             }
             h3,
@@ -89,7 +120,7 @@
             h5,
             h6 {
                 font-size: rem(16);
-                font-weight: $fw-bold;
+                // font-weight: $fw-bold;
                 margin: rem(24) 0 rem(8);
             }
 

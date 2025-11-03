@@ -42,23 +42,9 @@
                     <NuxtLink
                         v-show="route.name !== 'faq'"
                         class="footer__nav-link"
-                        :to="{ name: 'faq', hash: '#delivery-rules' }"
+                        :to="{ name: 'faq' }"
                     >
-                        Доставка
-                    </NuxtLink>
-                    <NuxtLink
-                        v-show="route.name !== 'faq'"
-                        class="footer__nav-link"
-                        :to="{ name: 'faq', hash: '#payment' }"
-                    >
-                        Оплата
-                    </NuxtLink>
-                    <NuxtLink
-                        v-show="route.name !== 'faq'"
-                        class="footer__nav-link"
-                        :to="{ name: 'faq', hash: '#terms-of-return' }"
-                    >
-                        Возврат
+                        Частые вопросы
                     </NuxtLink>
                     <NuxtLink
                         v-show="route.name !== 'wholesale'"
@@ -140,9 +126,23 @@
             </div>
             <div class="footer__info">
                 <span class="footer__info-copy">2019 Arabeska. All Rights Reserved</span>
-                <button class="footer__info-button" type="button" @click="openPrivacy">
-                    Политика конфиденциальности
-                </button>
+                <div class="footer__info-buttons">
+                    <button
+                        class="footer__info-button"
+                        type="button"
+                        v-for="modal in docsData"
+                        :key="modal.id"
+                        @click="
+                            openDocsModal(
+                                modal.title,
+                                modal.date_updated ?? modal.date_created,
+                                modal.content
+                            )
+                        "
+                    >
+                        {{ modal.title }}
+                    </button>
+                </div>
                 <span class="footer__info-footnote">
                     *Instagram — продукт компании Meta, которая признана экстремистской организацией
                     в России
@@ -153,17 +153,36 @@
 </template>
 
 <script setup lang="ts">
-    import { ModalsCatalog, ModalsPrivacy } from '#components';
+    import { ModalsCatalog, ModalsDocs } from '#components';
     import { useModal } from 'vue-final-modal';
 
-    const { open: openPrivacy, close: closePrivacy } = useModal({
-        component: ModalsPrivacy,
-        attrs: {
-            onClose() {
-                closePrivacy();
+    interface IDocs {
+        id: number | string;
+        date_created: string;
+        date_updated?: string;
+        title: string;
+        content: string;
+    }
+
+    const route = useRoute();
+
+    const { content: docsData, status: docsStatus } = useCms<IDocs[]>('docs');
+
+    function openDocsModal(title: string, dateUpdated: string, content: string) {
+        const { open: openModal, close: closeModal } = useModal({
+            component: ModalsDocs,
+            attrs: {
+                title: title,
+                dateUpdated: dateUpdated,
+                content: content,
+                status: docsStatus.value,
+                onClose() {
+                    closeModal();
+                },
             },
-        },
-    });
+        });
+        openModal();
+    }
 
     const { open: openCatalog, close: closeCatalog } = useModal({
         component: ModalsCatalog,
@@ -173,8 +192,6 @@
             },
         },
     });
-
-    const route = useRoute();
 </script>
 
 <style scoped lang="scss">
@@ -270,12 +287,15 @@
         }
         &__info {
             grid-area: info;
-            display: flex;
+            display: grid;
+            grid-template-areas:
+                'copy buttons'
+                'footnote footnote';
             justify-content: space-between;
-            flex-wrap: wrap;
             gap: rem(32);
             color: $c-98BBD7;
             &-copy {
+                grid-area: copy;
                 cursor: default;
                 font-size: rem(14);
                 opacity: 0.5;
@@ -284,6 +304,12 @@
                     content: '\00A9';
                     font-family: 'Inter', sans-serif;
                 }
+            }
+            &-buttons {
+                grid-area: buttons;
+                display: flex;
+                flex-wrap: wrap;
+                gap: rem(16);
             }
             &-button {
                 cursor: pointer;
@@ -297,6 +323,7 @@
                 }
             }
             &-footnote {
+                grid-area: footnote;
                 font-size: rem(12);
                 font-family: 'Inter', sans-serif;
                 opacity: 0.5;
@@ -328,6 +355,15 @@
             }
             &__nav {
                 justify-content: initial;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer {
+            &__info {
+                display: flex;
+                flex-direction: column;
             }
         }
     }

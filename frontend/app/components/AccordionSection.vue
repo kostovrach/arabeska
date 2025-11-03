@@ -1,10 +1,14 @@
 <template>
-    <section :class="['faq-section', props.vertical ? 'faq-section--vertical' : '']">
+    <section :class="['faq-section', { 'faq-section--vertical': props.vertical }]">
         <div class="faq-section__container">
             <div class="faq-section__titlebox">
                 <h3 class="faq-section__title">{{ props.title }}</h3>
                 <ClientOnly>
-                    <p class="faq-section__desc" v-html="props.description"></p>
+                    <p
+                        v-if="props.description"
+                        class="faq-section__desc"
+                        v-html="props.description"
+                    ></p>
                 </ClientOnly>
             </div>
             <div class="faq-section__body">
@@ -37,8 +41,6 @@
 </template>
 
 <script setup lang="ts">
-    // import type { IFaqItem } from '~~/interfaces/faq-item';
-
     const props = defineProps<{
         vertical?: boolean;
         title: string;
@@ -84,10 +86,11 @@
             font-size: lineScale(32, 24, 480, 1440);
         }
         &__desc {
-            max-width: 50ch;
+            max-width: 75ch;
             font-family: 'Inter', sans-serif;
             font-size: lineScale(18, 16, 480, 1440);
             line-height: 1.3;
+            text-wrap: balance;
             a {
                 color: $c-accent;
                 text-decoration: underline;
@@ -112,7 +115,7 @@
         }
         &__item {
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 3px 5px rgba($c-secondary, 0.2);
+            box-shadow: 1px 1px 5px rgba($c-D4E1E7, 0.7);
             border-radius: rem(16);
             &-icon {
                 display: block;

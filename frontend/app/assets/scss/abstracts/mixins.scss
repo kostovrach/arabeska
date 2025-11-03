@@ -64,6 +64,9 @@
         overflow: hidden;
         rotate: -45deg;
     }
+    &:active {
+        scale: 0.97;
+    }
     @media (pointer: fine) {
         &:hover {
             color: $hover-color;
@@ -441,6 +444,9 @@
         opacity: 0;
         pointer-events: none;
         transition: all $td $tf;
+    }
+    &:active {
+        scale: 0.95;
     }
     @media (pointer: fine) {
         &:hover {

@@ -2,7 +2,7 @@
     <NuxtLayout>
         <SubscriptionHero />
         <SubscriptionPricing />
-        <FaqSection
+        <AccordionSection
             title="Что вы получаете с подпиской?"
             description=' Это самые часто задаваемые вопросы и ответы на них. Если ты не нашел свой вопрос - напиши нам на почту: <a href="mailto:">info@intheplace.ru</a>'
             :content="faqList"

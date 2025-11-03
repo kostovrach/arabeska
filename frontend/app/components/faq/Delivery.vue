@@ -1,15 +1,20 @@
 <template>
     <section class="faq-delivery">
-        <h2 class="faq-delivery__title">{{ section.title }}</h2>
-        <p class="faq-delivery__desc">{{ section.desc }}</p>
+        <h2 class="faq-delivery__title">{{ props.title }}</h2>
+        <ClientOnly>
+            <p class="faq-delivery__desc" v-if="props.content" v-html="props.content"></p>
+        </ClientOnly>
         <ul class="faq-delivery__info">
-            <li
-                v-for="item in section.info"
-                :key="item.id"
-                class="faq-delivery__info-item"
-                v-html="item.content"
-            ></li>
+            <li v-for="(item, idx) in props.infoBlocks" :key="idx" class="faq-delivery__info-item">
+                <h4 class="faq-delivery__info-title" v-if="item.title">{{ item.title }}</h4>
+                <div
+                    class="faq-delivery__info-content"
+                    v-if="item.content"
+                    v-html="item.content"
+                ></div>
+            </li>
         </ul>
+        <!-- temp map -->
         <div class="faq-delivery__address">
             <h3 class="faq-delivery__subtitle">Зоны доставки</h3>
             <p class="faq-delivery__desc">Проверьте свой адрес</p>
@@ -33,20 +38,21 @@
             <picture class="faq-delivery__address-image">
                 <img src="/img/temp/map.jpg" alt="#" />
             </picture>
-            <div class="faq-delivery__hint" v-html="section.hint"></div>
+            <div class="faq-delivery__hint" v-html="props.mapFootnote"></div>
         </div>
+        <!-- temp map -->
 
-        <div class="faq-delivery__advant">
-            <h3 class="faq-delivery__subtitle">{{ advant.title }}</h3>
-            <p class="faq-delivery__desc">{{ advant.desc }}</p>
+        <div class="faq-delivery__advant" v-if="props.advantCards.length">
+            <h3 class="faq-delivery__subtitle" v-if="props.advantTitle">{{ props.advantTitle }}</h3>
+            <p class="faq-delivery__desc" v-if="props.advantSubtitle">{{ props.advantSubtitle }}</p>
             <ul class="faq-delivery__advant-list">
                 <li
-                    v-for="(card, idx) in advant.items"
+                    v-for="(card, idx) in props.advantCards"
                     :key="idx"
                     class="faq-delivery__advant-item"
                 >
-                    <h4>{{ card.title }}</h4>
-                    <p>{{ card.text }}</p>
+                    <h4 v-if="card.title">{{ card.title }}</h4>
+                    <div v-if="card.content" v-html="card.content"></div>
                 </li>
             </ul>
         </div>
@@ -54,78 +60,32 @@
 </template>
 
 <script setup lang="ts">
-    const section = {
-        title: 'Доставка',
-        desc: 'Мы осуществляем доставку по Самаре и пригородным районам. Заказы принимаем с 9:00 до 23:00, а доставляем круглосуточно. Заказы можно забрать самовывозом в одном из салонов в Самаре.',
-        info: [
-            {
-                id: 1,
-                content: `
-                    <h4>Салоны в Самаре</h4>
-                    <p>Самара, Проспект Кирова, 22 (БЦ Бигбен)</p>
-                    <p>Самара, Улица Ленина, 15, ТЦ «Аврора», офис 21</p>
-                    <p>Самара, Площадь Славы, 5</p>
-                `,
-            },
-            {
-                id: 2,
-                content: `
-                    <h4>Время работы</h4>
-                    <p>Время работы салонов: ежедневно, c 09:00 до 23:00</p>
-                    <p>Принимаем заказы: c 09:00 до 23:00</p>
-                    <p>Доставка заказов: круглосуточно</p>
-                `,
-            },
-            {
-                id: 3,
-                content: `
-                    <h4>Условия доставки</h4>
-                    <p><strong>9:00 - 21:00</strong></p>
-                    <ul>
-                        <li>С 9:00 - 21:00 доставим цветы по Самаре бесплатно при заказе от 1500₽;</li>
-                        <li>Если стоимость заказа менее 1500₽, то стоимость доставки 300₽.</li>
-                    </ul>
-                    <p><strong>21:00 - 9:00</strong></p>
-                    <ul>
-                        <li>C 23:00 до 9:00 стоимость доставки 500₽ и не зависит от стоимости букета.</li>
-                    </ul>
-                `,
-            },
-        ],
-        hint: `
-                <p>
-                    Более подробную информацию по возможности и стоимости доставки уточняйте у
-                    менеджера компании Арабеска по телефону
-                    <a href="tel:+7(812)200-50-76">+7 (812) 200-50-76</a>
-                </p>
-            `,
-    };
-    const advant = {
-        title: 'Наши преимущества',
-        desc: 'Вы можете выбрать интересующие опции при оформления заказа.',
-        items: [
-            {
-                title: 'Анонимная доставка',
-                text: 'Сохраните сюрприз до последнего момента с анонимной доставкой цветов. Напишите об этом в поле для комментария при оформлении заказа.',
-            },
-            {
-                title: 'Если не знаете адрес получателя',
-                text: 'Доставим заказ по номеру телефона получателя — мы созвонимся с получателем букета, выясним удобное время и адрес доставки. По телефону сохраним сюрприз, можем представиться курьерской службой.',
-            },
-            {
-                title: 'Доставка к указанному времени',
-                text: 'Вы можете заказать цветы у нас и быть уверенными в доставке ровно к указанному времени, чтобы порадовать своих любимых.',
-            },
-            {
-                title: 'Встреча в аэропорту или на вокзале',
-                text: 'Мы доставим свежие цветы сразу в руки, чтобы порадовать и оживить эмоции после путешествия.',
-            },
-            {
-                title: 'SMS-уведомления',
-                text: 'Мы доставим свежие цветы сразу в руки, чтобы порадовать и оживить эмоции после путешествия.',
-            },
-        ],
-    };
+    const props = withDefaults(
+        defineProps<{
+            title: string;
+            content: string;
+            infoBlocks: {
+                title: string;
+                content: string;
+            }[];
+            mapFootnote: string;
+            advantTitle: string;
+            advantSubtitle: string;
+            advantCards: {
+                title: string;
+                content: string;
+            }[];
+        }>(),
+        {
+            title: '',
+            content: '',
+            infoBlocks: () => [],
+            cardFootnote: '',
+            advantTitle: '',
+            advantsubtitle: '',
+            advantCards: () => [],
+        }
+    );
 </script>
 
 <style lang="scss">
@@ -169,8 +129,8 @@
         &__desc {
             max-width: 70ch;
             font-size: lineScale(18, 16, 480, 1440);
-            line-height: 1.4;
             opacity: 0.8;
+            @include text-content();
         }
         &__subtitle {
             font-size: lineScale(32, 20, 480, 1440);
@@ -197,6 +157,12 @@
             &-item {
                 flex: 1 1 30%;
                 min-width: rem(260);
+            }
+            &-title {
+                font-size: lineScale(24, 18, 480, 1440);
+                margin-bottom: rem(16);
+            }
+            &-content {
                 text-wrap: balance;
                 @include text-content;
                 > p,

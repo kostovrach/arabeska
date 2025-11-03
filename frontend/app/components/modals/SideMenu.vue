@@ -118,19 +118,8 @@
             routeName: '',
         },
         {
-            label: 'оплата',
+            label: 'Частые вопросы',
             routeName: 'faq',
-            routeHash: '#payment',
-        },
-        {
-            label: 'доставка',
-            routeName: 'faq',
-            routeHash: '#delivery-rules',
-        },
-        {
-            label: 'возврат',
-            routeName: 'faq',
-            routeHash: '#terms-of-return',
         },
         {
             label: 'отзывы',

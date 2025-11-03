@@ -3,26 +3,32 @@
         <div class="feedback-hero__container">
             <div class="feedback-hero__titlebox">
                 <StarsOverlay class="feedback-hero__title">
-                    <h1>Более 2500 клиентам нравятся наши цветы</h1>
+                    <h1>{{ props.title }}</h1>
                 </StarsOverlay>
-                <p class="feedback-hero__desc">
-                    За более чем 20 лет работы более 2500 клиентов доверили нам свои дела. Более 90%
-                    наших клиентов обращаются к нам снова!
-                </p>
+                <p v-if="props.subtitle" class="feedback-hero__desc">{{ props.subtitle }}</p>
                 <RateWidgets class="feedback-hero__widgets" />
             </div>
             <picture class="feedback-hero__image-container">
-                <img
-                    class="feedback-hero__image"
-                    src="/img/temp/temp1.jpg"
-                    alt="Более 2500 клиентам нравятся наши цветы"
-                />
+                <img class="feedback-hero__image" :src="props.imageUrl" :alt="props.title ?? '#'" />
             </picture>
         </div>
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            title: string;
+            subtitle?: string;
+            imageUrl: string;
+        }>(),
+        {
+            title: '',
+            subtitle: '',
+            imageUrl: '',
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

@@ -19,7 +19,7 @@
                 </div>
                 <nav class="header__nav">
                     <NuxtLink
-                        v-for="(category, idx) in categories?.slice(0, 4)"
+                        v-for="(category, idx) in categories?.slice(0, 3)"
                         :key="idx"
                         :class="
                             route.name === 'catalog-category' &&

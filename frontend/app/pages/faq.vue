@@ -3,7 +3,11 @@
         <div class="faq">
             <div class="faq__header">
                 <picture class="faq__header-image-container">
-                    <img class="faq__header-image" src="/img/service/flowers.jpg" alt="#" />
+                    <img
+                        class="faq__header-image"
+                        :src="page?.head_image_url ?? '/img/service/flowers.jpg'"
+                        alt="#"
+                    />
                 </picture>
             </div>
             <div class="faq__container">
@@ -11,24 +15,48 @@
                     <article class="faq__body">
                         <aside class="faq__sider">
                             <nav class="faq__nav">
-                                <a class="faq__nav-link" href="#delivery-rules">
-                                    <span>Доставка</span>
+                                <a
+                                    class="faq__nav-link"
+                                    :href="`#${slugify(page?.delivery_title ?? '') ?? '#delivery-rules'}`"
+                                >
+                                    <span>{{ page?.delivery_title ?? 'Доставка' }}</span>
                                 </a>
-                                <a class="faq__nav-link" href="#payment"><span>Оплата</span></a>
-                                <a class="faq__nav-link" href="#terms-of-return">
-                                    <span>Условия возврата</span>
+                                <a
+                                    v-for="(link, idx) in page?.additional_blocks"
+                                    :key="idx"
+                                    class="faq__nav-link"
+                                    :href="`#${slugify(link.title) ?? '#'}`"
+                                >
+                                    <span>{{ link.title }}</span>
                                 </a>
                             </nav>
                         </aside>
                         <div class="faq__content">
-                            <FaqDelivery id="delivery-rules" class="faq__section" />
-                            <FaqPayment id="payment" class="faq__section" />
-                            <FaqTermsOfReturn id="terms-of-return" class="faq__section" />
-                            <FaqSection
+                            <FaqDelivery
+                                :id="slugify(page?.delivery_title ?? '') ?? 'delivery-rules'"
                                 class="faq__section"
-                                title="Популярные вопросы"
-                                description="Это самые часто задаваемые вопросы и ответы на них. Если вы не нашли ответа на свой вопрос - напишите нам на почту: <a href='mailto:'>info@intheplace.ru</a>"
-                                :content="faqList"
+                                :title="page?.delivery_title ?? ''"
+                                :content="page?.delivery_content ?? ''"
+                                :info-blocks="page?.delivery_additional ?? []"
+                                :map-footnote="page?.delivery_footnote ?? ''"
+                                :advant-title="page?.delivery_advant_title ?? ''"
+                                :advant-subtitle="page?.delivery_advant_subtitle ?? ''"
+                                :advant-cards="page?.delivery_advant_cards ?? []"
+                            />
+                            <FaqTypeSection
+                                v-for="(section, idx) in page?.additional_blocks"
+                                :key="idx"
+                                :id="slugify(section.title)"
+                                class="faq__section"
+                                :title="section.title"
+                                :content="section.content"
+                            />
+                            <AccordionSection
+                                v-if="page?.accordion_blocks.length"
+                                class="faq__section"
+                                :title="page?.accordion_title ?? 'Популярные вопросы'"
+                                :description="page?.accordion_description"
+                                :content="page?.accordion_blocks"
                                 vertical
                             />
                         </div>
@@ -77,36 +105,6 @@
     // data ==========================================================
     const { content: page } = useCms<IFaqPage>('faq');
     // ===============================================================
-
-    // mock-data =====================================================
-    const faqList = [
-        {
-            title: 'Как я могу присоединиться к бонусной программе?',
-            content: `
-            <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-            `,
-        },
-        {
-            title: 'Сколько бонусов я могу накопить за один заказ?',
-            content: `
-            <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-            `,
-        },
-        {
-            title: 'Какие преимущества мне дает бонусная программа?',
-            content: `
-            <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-            `,
-        },
-        {
-            title: 'Какой срок действия скидки?',
-            content: `
-                        <p>За каждый заказ на сумму не менее 500 рублей вы получаете бонусы. Количество бонусов зависит от суммы заказа, но повторные заказы одного и того же блюда не учитываются</p>
-                    `,
-        },
-    ];
-
-    // ===============================================================
 </script>
 
 <style lang="scss">
@@ -116,7 +114,7 @@
         $p: &;
 
         &__header {
-            $cover-height: lineScale(320, 160, 480, 1440);
+            $cover-height: lineScale(240, 160, 480, 1440);
 
             height: $cover-height;
             &-image-container {
@@ -154,7 +152,7 @@
             display: flex;
             flex-direction: column;
             border-radius: rem(32);
-            box-shadow: 5px 5px 15px rgba(#000, 0.3);
+            box-shadow: 1px 1px 5px rgba($c-D4E1E7, 0.7);
             &-link {
                 font-size: lineScale(24, 18, 480, 1440);
                 @include frame-scale($padding: rem(18) rem(32), $border-radius: rem(32));

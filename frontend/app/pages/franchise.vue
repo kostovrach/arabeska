@@ -17,7 +17,7 @@
         <div class="franchise">
             <FranchiseAbout />
             <FranchiseList />
-            <FaqSection
+            <AccordionSection
                 title="Что включает обучение по нашей программе"
                 description="Мы ценим каждого партнера и стремимся создать для Вас комфортные условия работы, чтобы помочь им достичь своих целей и обеспечить стабильный и прибыльный источник дохода."
                 :content="faqList"

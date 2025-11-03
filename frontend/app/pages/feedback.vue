@@ -1,40 +1,31 @@
 <template>
     <NuxtLayout>
-        <FeedbackHero />
+        <FeedbackHero
+            :title="page?.hero_title ?? ''"
+            :subtitle="page?.hero_subtitle"
+            :image-url="page?.hero_image_url ?? ''"
+        />
         <FeedbackList />
         <Banner
+            v-if="page?.banner_image_url"
             class="feedback-banner"
-            title="Поделитесь своими впечатлениями"
-            image-url="/img/temp/flowers.gif"
+            :title="page?.banner_title ?? ''"
+            :image-url="page.banner_image_url"
         >
             <div class="feedback-banner__content">
-                <p class="feedback-banner__text">Оставьте свой отзыв о вашем опыте заказа цветов</p>
-                <div class="feedback-banner__links">
+                <p class="feedback-banner__text" v-if="page?.banner_subtitle">
+                    {{ page?.banner_subtitle }}
+                </p>
+                <div class="feedback-banner__links" v-if="page.banner_buttons.length">
                     <a
+                        v-for="(button, idx) in page.banner_buttons"
+                        :key="idx"
                         class="feedback-banner__link"
-                        href="https://example.com"
+                        :href="button.link"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <span>Мы в 2GIS</span>
-                        <span><SvgSprite type="arrow" :size="24" /></span>
-                    </a>
-                    <a
-                        class="feedback-banner__link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <span>Мы на Яндекс.Картах</span>
-                        <span><SvgSprite type="arrow" :size="24" /></span>
-                    </a>
-                    <a
-                        class="feedback-banner__link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <span>Мы на картах Google</span>
+                        <span>{{ button.title }}</span>
                         <span><SvgSprite type="arrow" :size="24" /></span>
                     </a>
                 </div>
@@ -43,7 +34,30 @@
     </NuxtLayout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    // types ==============================================
+    interface IFeedbackPage {
+        id: number | string;
+        hero_title: string;
+        hero_subtitle: string;
+        hero_image: string;
+        hero_image_url: string;
+
+        banner_title: string;
+        banner_subtitle: string;
+        banner_buttons: {
+            title: string;
+            link: string;
+        }[];
+        banner_image: string;
+        banner_image_url: string;
+    }
+    // ====================================================
+
+    // data ===============================================
+    const { content: page } = useCms<IFeedbackPage>('feedback_page');
+    // ====================================================
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
