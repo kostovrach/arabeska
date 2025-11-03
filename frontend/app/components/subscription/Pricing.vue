@@ -65,12 +65,12 @@
                                     <span
                                         class="subscription-pricing__item-button-icon subscription-pricing__item-button-icon--default"
                                     >
-                                        <SvgSprite type="cart" :size="36" />
+                                        <SvgSprite type="cart" :size="32" />
                                     </span>
                                     <span
                                         class="subscription-pricing__item-button-icon subscription-pricing__item-button-icon--checked"
                                     >
-                                        <SvgSprite type="checkmark" :size="40" />
+                                        <SvgSprite type="checkmark" :size="32" />
                                     </span>
                                 </button>
                             </div>
@@ -189,13 +189,12 @@
         }
         &__list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(rem(360), 1fr));
-            gap: rem(32);
+            grid-template-columns: repeat(4, 1fr);
+            gap: lineScale(32, 8, 480, 1440);
             margin-top: rem(96);
         }
         &__item {
             position: relative;
-            flex: 1 1 rem(440);
             aspect-ratio: 1/1.3;
             @media (pointer: fine) {
                 &:hover {
@@ -227,7 +226,7 @@
                 position: absolute;
                 z-index: -1;
                 inset: 0;
-                filter: brightness(80%);
+                filter: brightness(70%);
             }
             &-image {
                 width: 100%;
@@ -240,8 +239,8 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-end;
-                gap: rem(24);
-                padding: rem(24) rem(32);
+                gap: rem(16);
+                padding: lineScale(24, 16, 480, 1440) lineScale(32, 16, 480, 1440);
                 &::before {
                     content: '';
                     position: absolute;
@@ -259,13 +258,14 @@
                 }
             }
             &-title {
-                font-size: lineScale(48, 24, 480, 1440);
+                font-size: lineScale(32, 20, 480, 1440);
                 font-weight: $fw-semi;
             }
             &-desc {
                 font-family: 'Inter', sans-serif;
-                font-size: lineScale(18, 16, 480, 1440);
-                line-height: 1.3;
+                font-size: rem(16);
+                line-height: 1.2;
+                opacity: 0.8;
                 @media (pointer: fine) {
                     flex: 0;
                     min-height: 0;
@@ -304,7 +304,7 @@
             &-button {
                 cursor: pointer;
                 position: relative;
-                width: rem(64);
+                width: rem(48);
                 aspect-ratio: 1;
                 color: $c-FFFFFF;
                 border-radius: 50%;
@@ -365,8 +365,39 @@
                 }
                 &-current {
                     width: fit-content;
-                    font-size: lineScale(24, 18, 480, 1440);
+                    font-size: lineScale(20, 16, 480, 1440);
                 }
+            }
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .subscription-pricing {
+            &__list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            &__item {
+                aspect-ratio: 1.2/1;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .subscription-pricing {
+            &__item {
+                aspect-ratio: 1/1.2;
+            }
+        }
+    }
+
+    @media (max-width: 540px) {
+        .subscription-pricing {
+            &__list {
+                display: flex;
+                flex-direction: column;
+            }
+            &__item {
+                aspect-ratio: 1.1/1;
             }
         }
     }

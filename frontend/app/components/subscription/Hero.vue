@@ -72,7 +72,7 @@
             padding: rem(6) rem(16);
         }
         &__title {
-            font-size: lineScale(64, 32, 480, 1440);
+            font-size: lineScale(48, 28, 480, 1440);
             font-weight: $fw-semi;
         }
         &__list {
@@ -81,7 +81,7 @@
             gap: rem(16);
             &-item {
                 flex: 1 1 rem(300);
-                font-size: lineScale(24, 18, 480, 1440);
+                font-size: lineScale(20, 16, 480, 1440);
                 background-color: $c-E5F2D8;
                 border-radius: rem(16) rem(16) rem(16) 0;
                 padding: rem(16) rem(24);

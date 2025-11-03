@@ -166,6 +166,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all $td $tf 0s;
             @media (pointer: fine) {
                 &:hover {
                     &::before {
@@ -176,6 +177,18 @@
                         rotate: 30deg;
                         translate: rem(-4) 0;
                     }
+                }
+            }
+            &:active {
+                scale: 0.95;
+                opacity: 0.5;
+                &::before {
+                    rotate: -20deg;
+                    translate: rem(1) 0;
+                }
+                &::after {
+                    rotate: 20deg;
+                    translate: rem(-1) 0;
                 }
             }
             &::before,

@@ -43,6 +43,44 @@
 </template>
 
 <script setup lang="ts">
+    // types ======================================================
+    interface ISubscriptionPage {
+        id: number | string;
+        date_created: string;
+        date_updated?: string;
+
+        hero_image: string;
+        hero_image_url: string;
+        hero_tag?: string;
+        hero_title: string;
+        hero_description?: string;
+        hero_info?: string[];
+        hero_button_text?: string;
+
+        pricing_title?: string;
+        pricing_description?: string;
+
+        faq_title: string;
+        faq_description?: string;
+        faq_blocks?: {
+            title: string;
+            content: string;
+        }[];
+
+        banner_image: string;
+        banner_image_url: string;
+        banner_title: string;
+        banner_content?: string;
+        banner_buttons?: {
+            title: string;
+            link: string;
+        }[];
+    }
+    // ============================================================
+
+    // data =======================================================
+    const { content: page } = useCms<ISubscriptionPage>('subscription');
+    // ============================================================
     const faqList = [
         {
             title: 'Как я могу присоединиться к бонусной программе?',

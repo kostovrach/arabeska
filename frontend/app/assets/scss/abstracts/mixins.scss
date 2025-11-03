@@ -176,6 +176,11 @@
             }
         }
     }
+    &:active {
+        &::before {
+            width: rem(40);
+        }
+    }
     &[disabled] {
         opacity: 0.5;
         &::before {
