@@ -1,39 +1,46 @@
 <template>
     <NuxtLayout>
-        <SubscriptionHero />
-        <SubscriptionPricing />
+        <SubscriptionHero
+            :image-url="page?.hero_image_url ?? ''"
+            :tag="page?.hero_tag"
+            :description="page?.hero_description"
+            :title="page?.hero_title ?? ''"
+            :info-tags="page?.hero_info"
+            :button-text="page?.hero_button_text ?? 'Выбрать тариф'"
+        />
+        <SubscriptionPricing
+            :title="page?.pricing_title ?? 'Тарифы'"
+            :description="page?.pricing_description"
+        />
         <AccordionSection
-            title="Что вы получаете с подпиской?"
-            description=' Это самые часто задаваемые вопросы и ответы на них. Если ты не нашел свой вопрос - напиши нам на почту: <a href="mailto:">info@intheplace.ru</a>'
-            :content="faqList"
+            :title="page?.faq_title ?? ''"
+            :description="page?.faq_description"
+            :content="page?.faq_blocks"
         />
         <Banner
+            v-if="page?.banner_image_url"
             class="subscription-banner"
-            title="Остались вопросы?"
-            image-url="/img/temp/flowers.gif"
+            :title="page.banner_title"
+            :image-url="page.banner_image_url"
         >
             <div class="subscription-banner__content">
-                <p class="subscription-banner__text">
-                    Напишите нам в официальный профиль в telegram или whatsapp. Отвечаем в течение
-                    24 часов
-                </p>
-                <div class="subscription-banner__links">
+                <ClientOnly>
+                    <p
+                        class="subscription-banner__text"
+                        v-if="page.banner_content"
+                        v-html="page.banner_content"
+                    ></p>
+                </ClientOnly>
+                <div class="subscription-banner__links" v-if="page.banner_buttons?.length">
                     <a
+                        v-for="(button, idx) in page.banner_buttons"
+                        :key="idx"
                         class="subscription-banner__link"
-                        href="https://example.com"
+                        :href="button.link"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <span>Мы в Telegram</span>
-                        <span><SvgSprite type="arrow" :size="24" /></span>
-                    </a>
-                    <a
-                        class="subscription-banner__link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <span>Мы в Whatsapp</span>
+                        <span>{{ button.title }}</span>
                         <span><SvgSprite type="arrow" :size="24" /></span>
                     </a>
                 </div>
@@ -81,32 +88,6 @@
     // data =======================================================
     const { content: page } = useCms<ISubscriptionPage>('subscription');
     // ============================================================
-    const faqList = [
-        {
-            title: 'Как я могу присоединиться к бонусной программе?',
-            content: `
-                        <p>Мы узнаем все важные детали: какие букеты вам нравятся, какая упаковка, какая цветовая гамма. Какую задачу решают букеты: оправляем одному человеку с учетом его вкусов, или разным под каждый важный для вас повод.</p>
-                    `,
-        },
-        {
-            title: 'Сколько бонусов я могу накопить за один заказ?',
-            content: `
-                        <p>Мы узнаем все важные детали: какие букеты вам нравятся, какая упаковка, какая цветовая гамма. Какую задачу решают букеты: оправляем одному человеку с учетом его вкусов, или разным под каждый важный для вас повод.</p>
-                    `,
-        },
-        {
-            title: 'Какие преимущества мне дает бонусная программа?',
-            content: `
-                        <p>Мы узнаем все важные детали: какие букеты вам нравятся, какая упаковка, какая цветовая гамма. Какую задачу решают букеты: оправляем одному человеку с учетом его вкусов, или разным под каждый важный для вас повод.</p>
-                    `,
-        },
-        {
-            title: 'Какой срок действия скидки?',
-            content: `
-                        <p>Мы узнаем все важные детали: какие букеты вам нравятся, какая упаковка, какая цветовая гамма. Какую задачу решают букеты: оправляем одному человеку с учетом его вкусов, или разным под каждый важный для вас повод.</p>
-                    `,
-        },
-    ];
 </script>
 
 <style scoped lang="scss">

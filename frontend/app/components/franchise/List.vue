@@ -1,86 +1,32 @@
 <template>
-    <section class="franchise-list">
+    <section class="franchise-list" v-if="props.content.length">
         <ul class="franchise-list__container">
-            <li v-for="(item, idx) in listItems" :key="idx" class="franchise-list__item">
+            <li v-for="(item, idx) in props.content" :key="idx" class="franchise-list__item">
                 <picture class="franchise-list__item-image-container">
                     <img class="franchise-list__item-image" :src="item.imageUrl" :alt="`${idx}`" />
                 </picture>
-                <div class="franchise-list__item-content" v-html="item.content"></div>
+                <div class="franchise-list__item-body">
+                    <h2 class="franchise-list__item-title" v-if="item.title">{{ item.title }}</h2>
+                    <div class="franchise-list__item-content" v-html="item.body"></div>
+                </div>
             </li>
         </ul>
     </section>
 </template>
 
 <script setup lang="ts">
-    interface IListItem {
-        imageUrl: string;
-        content: string;
-    }
-
-    const listItems: IListItem[] = [
+    const props = withDefaults(
+        defineProps<{
+            content: {
+                imageUrl: string;
+                title: string;
+                body: string;
+            }[];
+        }>(),
         {
-            imageUrl: '/img/temp/temp1.jpg',
-            content: `
-            <h2>Для флористов, маркетинговых и свадебных агентств</h2>
-            <p>Покупая цветы оптом у нас, вы получаете множество преимуществ:</p>
-            <ul>
-            <li>
-            Накопление бонусов: За каждую покупку на сумму от 5000 рублей вы
-            получаете бонусы, которые можно использовать для получения скидок.
-            </li>
-            <li>
-                                Эксклюзивные скидки: Чем больше вы покупаете, тем выше ваша скидка в
-                                следующем месяце.
-                            </li>
-                            <li>
-                            Качество от производителя: Все цветы поступают с нашей фермы, что
-                            гарантирует свежесть и высокое качество.
-                            </li>
-                            </ul>
-                            `,
-        },
-        {
-            imageUrl: '/img/temp/temp1.jpg',
-            content: `
-                            <h2>Минимальные партии для заказа</h2>
-                            <p>
-                            При оптовых покупках цветов с нашей фермы вы можете воспользоваться
-                            следующими условиями:
-                            </p>
-                            <ol>
-                            <li>Минимальная партия составляет всего 10 букетов.</li>
-                            <li>
-                            Заказы на сумму от 5000 рублей дают вам право на накопление бонусов,
-                            которые можно использовать для получения скидок на будущие покупки.
-                            </li>
-                            <li>
-                            Для доступа к личному кабинету, где вы сможете отслеживать свои бонусы и
-                            прогресс, необходимо зарегистрироваться на нашем сайте или ввести номер
-                            телефона, указанный при оформлении заказа. Обратите внимание, что
-                            информация о бонусах обновляется с небольшой задержкой.
-                            </li>
-                            </ol>
-                            `,
-        },
-        {
-            imageUrl: '/img/temp/temp1.jpg',
-            content: `
-            <h2>Оптовые цены</h2>
-                        <p>
-                        При оптовых закупках цветов с нашей фермы вы можете воспользоваться
-                        уникальной системой скидок, которая зависит от объёма ваших покупок. Чем
-                        больше вы заказываете, тем выше ваша скидка на следующие заказы!
-                        </p>
-                        <p>Уровни скидок:</p>
-                        <ul>
-                        <li>Начальный — скидка 0% для новых клиентов.</li>
-                        <li>Постоянный — скидка 5% при заказе от 100 000 рублей.</li>
-                        <li>Премиум — скидка 15% при заказе от 300 000 рублей.</li>
-                        <li>Элитный — скидка 25% при заказе от 1 000 000 рублей.</li>
-                        </ul>
-                        `,
-        },
-    ];
+            content: () => [],
+        }
+    );
 </script>
 
 <style lang="scss">
@@ -117,6 +63,13 @@
                 height: 100%;
                 object-fit: cover;
             }
+            &-body {
+                padding: rem(32);
+            }
+            &-title {
+                font-size: lineScale(32, 24, 480, 1440);
+                margin-bottom: rem(32);
+            }
             &-content {
                 grid-area: content;
                 display: flex;
@@ -125,9 +78,12 @@
                 font-family: 'Inter', sans-serif;
                 font-size: lineScale(18, 16, 480, 1440);
                 line-height: 1.3;
-                padding: rem(32);
-                h2 {
-                    font-size: lineScale(32, 24, 480, 1440);
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    font-size: lineScale(20, 18, 480, 1440);
                     margin-bottom: rem(16);
                 }
                 ul,
@@ -161,7 +117,7 @@
                     aspect-ratio: auto;
                     height: rem(320);
                 }
-                &-content {
+                &-body {
                     padding: 0;
                 }
             }

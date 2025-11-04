@@ -5,21 +5,28 @@
         </picture>
         <div class="info-hero__container">
             <span class="info-hero__tag" v-if="props.tag">{{ props.tag }}</span>
-            <h1 class="info-hero__title" v-html="props.title"></h1>
-            <p v-if="props.desc" class="info-hero__desc" v-html="props.desc"></p>
+            <h1 class="info-hero__title">{{ props.title }}</h1>
+            <p class="info-hero__desc" v-if="props.desc">{{ props.desc }}</p>
             <slot name="button"></slot>
         </div>
     </section>
 </template>
 
 <script setup lang="ts">
-    const props = defineProps<{
-        imageUrl: string;
-        tag: string;
-        title: string;
-        desc?: string;
-        button?: string;
-    }>();
+    const props = withDefaults(
+        defineProps<{
+            imageUrl: string;
+            tag: string;
+            title: string;
+            desc?: string;
+        }>(),
+        {
+            imageUrl: '',
+            tag: '',
+            title: '',
+            desc: '',
+        }
+    );
 </script>
 
 <style scoped lang="scss">
@@ -62,6 +69,7 @@
         }
         &__title {
             max-width: 18ch;
+            font-family: 'Inter', sans-serif;
             font-size: lineScale(96, 48, 480, 1440);
             line-height: 0.8;
             font-weight: $fw-semi;

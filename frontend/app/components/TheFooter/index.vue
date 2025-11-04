@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="footer__info">
-                <span class="footer__info-copy">2019 Arabeska. All Rights Reserved</span>
+                <span class="footer__info-copy">2019 Arabeska. Все права защищены</span>
                 <div class="footer__info-buttons">
                     <button
                         class="footer__info-button"

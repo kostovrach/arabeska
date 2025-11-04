@@ -2,33 +2,38 @@
     <section id="about" class="franchise-about">
         <div class="franchise-about__container">
             <div class="franchise-about__titlebox">
-                <h2 class="franchise-about__title">
-                    Мы понимаем, как тяжело во всем разобраться самостоятельно
-                </h2>
-                <p class="franchise-about__desc">
-                    Мы имеем 15-летний опыт по упаковке бизнеса. С нами работают более 40 тысяч
-                    клиентов. Среди них - Redmond, Ozon, Додо Пицца, Гарант, Nikon, Grow Food и др.
+                <h2 class="franchise-about__title">{{ props.title }}</h2>
+                <p class="franchise-about__desc" v-if="props.description">
+                    {{ props.description }}
                 </p>
             </div>
-            <ul class="franchise-about__body">
-                <li class="franchise-about__item">
-                    <span class="franchise-about__item-value">+12%</span>
-                    <p class="franchise-about__item-desc">к среднему чеку</p>
-                </li>
-                <li class="franchise-about__item">
-                    <span class="franchise-about__item-value">+40%</span>
-                    <p class="franchise-about__item-desc">к конверсии покупателей</p>
-                </li>
-                <li class="franchise-about__item">
-                    <span class="franchise-about__item-value">+35%</span>
-                    <p class="franchise-about__item-desc">к охвату в социальных сетях</p>
+            <ul class="franchise-about__body" v-if="props.metrics.length">
+                <li class="franchise-about__item" v-for="(item, idx) in props.metrics" :key="idx">
+                    <span class="franchise-about__item-value">{{ item.value }}</span>
+                    <p class="franchise-about__item-desc">{{ item.label }}</p>
                 </li>
             </ul>
         </div>
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            title: string;
+            description?: string;
+            metrics: {
+                value: string;
+                label: string;
+            }[];
+        }>(),
+        {
+            title: '',
+            description: '',
+            metrics: () => [],
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

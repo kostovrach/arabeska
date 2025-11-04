@@ -2,10 +2,9 @@
     <section id="pricing" class="subscription-pricing">
         <div class="subscription-pricing__container">
             <div class="subscription-pricing__titlebox">
-                <h2 class="subscription-pricing__title">Тарифы</h2>
-                <p class="subscription-pricing__desc">
-                    Вам больше не нужно заботиться о поиске цветов каждую неделю. Вы оформляете
-                    подписку один раз и наслаждаетесь цветами целый месяц.
+                <h2 class="subscription-pricing__title">{{ props.title }}</h2>
+                <p class="subscription-pricing__desc" v-if="props.description">
+                    {{ props.description }}
                 </p>
             </div>
             <ul class="subscription-pricing__list">
@@ -84,6 +83,17 @@
 
 <script setup lang="ts">
     import type { ISubscriptionItem } from '~~/interfaces/subscription-item';
+
+    const props = withDefaults(
+        defineProps<{
+            title?: string;
+            description?: string;
+        }>(),
+        {
+            title: 'Тарифы',
+            description: '',
+        }
+    );
 
     // temp cart processing==============================
 

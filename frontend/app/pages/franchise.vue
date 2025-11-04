@@ -2,42 +2,74 @@
     <NuxtLayout>
         <InfoHero
             class="franchise-hero"
-            image-url="/img/temp/temp1.jpg"
-            tag="Франшиза Arabeska"
-            title="Благоухайте вместе с нами<span class='symbol'>!</span>🌸"
-            desc="Полная упаковка и обучение бизнесу по франшизе от АРАБЕСКА"
+            :image-url="page?.hero_image_url ?? ''"
+            :tag="page?.hero_tag ?? ''"
+            :title="page?.hero_title ?? ''"
+            :desc="page?.hero_description ?? ''"
         >
             <template #button>
                 <a class="franchise-hero__button" href="#about">
-                    <span>О франшизе</span>
+                    <span>{{ page?.hero_button_text ?? 'О франшизе' }}</span>
                     <span><SvgSprite type="arrow" :size="24" /></span>
                 </a>
             </template>
         </InfoHero>
         <div class="franchise">
-            <FranchiseAbout />
-            <FranchiseList />
-            <AccordionSection
-                title="Что включает обучение по нашей программе"
-                description="Мы ценим каждого партнера и стремимся создать для Вас комфортные условия работы, чтобы помочь им достичь своих целей и обеспечить стабильный и прибыльный источник дохода."
-                :content="faqList"
+            <FranchiseAbout
+                :title="page?.advant_title ?? ''"
+                :description="page?.advant_description"
+                :metrics="
+                    page?.advant_metrics?.map((el) => ({
+                        label: el.description,
+                        value: el.value,
+                    })) ?? []
+                "
             />
-            <FranchiseFeedback />
+            <FranchiseList
+                :content="
+                    page?.advant_info.map((el) => ({
+                        imageUrl: el.franchise_advant_id.image_url,
+                        title: el.franchise_advant_id.title,
+                        body: el.franchise_advant_id.content,
+                    })) ?? []
+                "
+            />
+            <AccordionSection
+                :title="page?.faq_title ?? ''"
+                :description="page?.faq_description"
+                :content="page?.faq_blocks"
+            />
+            <FranchiseFeedback
+                v-if="page?.feedback_available"
+                :title="page?.feedback_title ?? ''"
+                :description="page?.feedback_description ?? ''"
+            />
             <Banner
+                v-if="page?.banner_image_url"
                 class="franchise-banner"
-                title="Начните работать с нами!"
-                image-url="/img/temp/flowers.gif"
+                :title="page.banner_title ?? ''"
+                :image-url="page.banner_image_url"
             >
                 <div class="franchise-banner__content">
-                    <p class="franchise-banner__text">
-                        Наши официальные оптовики получают неоспоримые преимущества партнёрства:
-                        доступ к многоуровневой партнёрской программе, скидки на продукцию, подарки
-                        и многое другое
-                    </p>
-                    <button class="franchise-banner__button" type="button">
-                        <span>Подать заявку</span>
+                    <ClientOnly>
+                        <div
+                            class="franchise-banner__text"
+                            v-if="page.banner_content"
+                            v-html="page.banner_content"
+                        ></div>
+                    </ClientOnly>
+                    <a
+                        v-for="(button, idx) in page.banner_buttons"
+                        :key="idx"
+                        class="franchise-banner__button"
+                        :href="button.link"
+                        type="button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span>{{ button.title }}</span>
                         <span><SvgSprite type="arrow" :size="24" /></span>
-                    </button>
+                    </a>
                 </div>
             </Banner>
         </div>
@@ -45,35 +77,68 @@
 </template>
 
 <script setup lang="ts">
-    const faqList = [
-        {
-            title: 'Первый этап — консультации и планирование',
-            content: `
-                        <p>На этом этапе наши дизайнеры встретятся с вами, чтобы обсудить ваши предпочтения, цели и бюджет. Мы также проверим вашу недвижимость, чтобы понять ее потенциал и характеристики. На основе этой информации мы разработаем план действий для улучшения стиля и привлекательности вашего дома.</p>
-                    `,
-        },
-        {
-            title: 'Второй этап — дизайн и выбор площадок.',
-            content: `
-                        <p>На этом этапе наши дизайнеры встретятся с вами, чтобы обсудить ваши предпочтения, цели и бюджет. Мы также проверим вашу недвижимость, чтобы понять ее потенциал и характеристики. На основе этой информации мы разработаем план действий для улучшения стиля и привлекательности вашего дома.</p>
-                    `,
-        },
-        {
-            title: 'Третий этап — сопровождение разработки.',
-            content: `
-                        <p>На этом этапе наши дизайнеры встретятся с вами, чтобы обсудить ваши предпочтения, цели и бюджет. Мы также проверим вашу недвижимость, чтобы понять ее потенциал и характеристики. На основе этой информации мы разработаем план действий для улучшения стиля и привлекательности вашего дома.</p>
-                    `,
-        },
-        {
-            title: 'Последний этап — консультации и обучение долгосрочному планированию',
-            content: `
-                        <p>На этом этапе наши дизайнеры встретятся с вами, чтобы обсудить ваши предпочтения, цели и бюджет. Мы также проверим вашу недвижимость, чтобы понять ее потенциал и характеристики. На основе этой информации мы разработаем план действий для улучшения стиля и привлекательности вашего дома.</p>
-                    `,
-        },
-    ];
+    // types ===========================================================
+    interface IFranchisePage {
+        id: number | string;
+        date_created: string;
+        date_updated?: string;
+
+        hero_image: string;
+        hero_image_url: string;
+        hero_title: string;
+        hero_tag?: string;
+        hero_description?: string;
+        hero_button_text?: string;
+
+        advant_title: string;
+        advant_description?: string;
+        advant_metrics?: {
+            value: string;
+            description: string;
+        }[];
+        advant_info: {
+            id: number | string;
+            franchise_id: any;
+            franchise_advant_id: {
+                id: number | string;
+                image: string;
+                image_url: string;
+                title: string;
+                content: string;
+            };
+        }[];
+
+        faq_title: string;
+        faq_description?: string;
+        faq_blocks?: {
+            title: string;
+            content: string;
+        }[];
+
+        feedback_available: boolean;
+        feedback_title: string;
+        feedback_description?: string;
+
+        banner_image?: string;
+        banner_image_url?: string;
+        banner_title?: string;
+        banner_content?: string;
+        banner_buttons?: {
+            title: string;
+            link: string;
+        }[];
+    }
+    // =================================================================
+
+    // data ============================================================
+    const { content: page } = useCms<IFranchisePage>('franchise', [
+        'advant_info.*',
+        'advant_info.franchise_advant_id.*',
+    ]);
+    // =================================================================
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
     .franchise {
@@ -83,6 +148,9 @@
         &__button {
             margin-top: rem(64);
             @include button-primary($anim-color: $c-accent, $gap: rem(16));
+            > span:has(svg) {
+                rotate: 90deg;
+            }
         }
     }
     .franchise-banner {
@@ -92,8 +160,33 @@
             gap: rem(32);
         }
         &__text {
-            text-wrap: balance;
-            line-height: 1.3;
+            display: flex;
+            flex-direction: column;
+            gap: rem(16);
+            line-height: 1.6;
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-size: lineScale(24, 18, 480, 1440);
+                margin-bottom: rem(16);
+            }
+            ul,
+            ol {
+                display: flex;
+                flex-direction: column;
+                gap: rem(8);
+                li {
+                    margin-left: rem(22);
+                }
+            }
+            ul > li {
+                list-style: disc outside;
+            }
+            ol > li {
+                list-style: decimal outside;
+            }
         }
         &__button {
             @include button-primary($anim-color: $c-accent, $gap: rem(16));

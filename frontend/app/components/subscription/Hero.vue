@@ -2,26 +2,31 @@
     <section class="subscription-hero">
         <div class="subscription-hero__container">
             <picture class="subscription-hero__image-container">
-                <img class="subscription-hero__image" src="/img/temp/temp1.jpg" alt="#" />
+                <img
+                    class="subscription-hero__image"
+                    :src="props.imageUrl"
+                    :alt="props.title ?? '#'"
+                />
             </picture>
             <div class="subscription-hero__content">
                 <div class="subscription-hero__titlebox">
-                    <span class="subscription-hero__tag">Цветочная подписка</span>
-                    <h1 class="subscription-hero__title">Красота свежих цветов каждую неделю!</h1>
+                    <span class="subscription-hero__tag" v-if="props.tag">{{ props.tag }}</span>
+                    <h1 class="subscription-hero__title">{{ props.title }}</h1>
                 </div>
-                <ul class="subscription-hero__list">
-                    <li class="subscription-hero__list-item">4 тарифа на выбор</li>
-                    <li class="subscription-hero__list-item">Бесплатная доставка</li>
-                    <li class="subscription-hero__list-item">Ваза в подарок</li>
-                    <li class="subscription-hero__list-item">Подарочный сертификат</li>
+                <ul class="subscription-hero__list" v-if="props.infoTags.length">
+                    <li
+                        class="subscription-hero__list-item"
+                        v-for="(item, idx) in props.infoTags"
+                        :key="idx"
+                    >
+                        {{ item }}
+                    </li>
                 </ul>
-                <p class="subscription-hero__desc">
-                    Букет для подарка в нашей цветочной подписке — это букет, собранный точно в
-                    соответствии с вашими пожеланиями, с заданными Вами параметрами доставки и
-                    приятной скидкой.
+                <p class="subscription-hero__desc" v-if="props.description">
+                    {{ props.description }}
                 </p>
                 <a class="subscription-hero__button" href="#pricing">
-                    <span>Выбрать тариф</span>
+                    <span>{{ props.buttonText }}</span>
                     <span><SvgSprite type="arrow" :size="18" /></span>
                 </a>
             </div>
@@ -29,7 +34,26 @@
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            imageUrl: string;
+            tag?: string;
+            title: string;
+            infoTags?: string[];
+            description?: string;
+            buttonText?: string;
+        }>(),
+        {
+            imageUrl: '',
+            tag: '',
+            title: '',
+            infoTags: () => [],
+            description: '',
+            buttonText: 'Выбрать тариф',
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
@@ -38,7 +62,7 @@
         @include content-block($margin: rem(32));
         &__container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 45% auto;
             @include content-container;
         }
         &__image-container {

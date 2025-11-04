@@ -2,11 +2,9 @@
     <section class="franchise-feedback">
         <div class="franchise-feedback__container">
             <div class="franchise-feedback__titlebox">
-                <h2 class="franchise-feedback__title">>100 человек уже прошли обучение</h2>
-                <p class="franchise-feedback__desc">
-                    Мы ценим каждого партнера и стремимся создать для Вас комфортные условия работы,
-                    чтобы помочь им достичь своих целей и обеспечить стабильный и прибыльный
-                    источник дохода.
+                <h2 class="franchise-feedback__title">{{ props.title }}</h2>
+                <p class="franchise-feedback__desc" v-if="props.description.length">
+                    {{ props.description }}
                 </p>
             </div>
             <div class="franchise-feedback__body">
@@ -16,7 +14,18 @@
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            title: string;
+            description?: string;
+        }>(),
+        {
+            title: '',
+            description: '',
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

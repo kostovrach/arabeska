@@ -30,6 +30,7 @@ export default defineNuxtConfig({
         '@vueuse/nuxt',
         '@primevue/nuxt-module',
         '@vue-final-modal/nuxt',
+        'vue-yandex-maps/nuxt',
     ],
     css: ['vue-final-modal/style.css', '~/assets/css/main.css'],
 
@@ -39,6 +40,13 @@ export default defineNuxtConfig({
         defaultSprite: 'icons',
         elementClass: 'icon',
         optimize: false,
+    },
+
+    yandexMaps: {
+        apikey: process.env.YANDEX_API_KEY,
+        strictMode: true,
+        lang: 'ru_RU',
+        version: 'v3'
     },
 
     build: {
