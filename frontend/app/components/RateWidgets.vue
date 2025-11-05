@@ -1,9 +1,9 @@
 <template>
     <div style="overflow: hidden; position: relative">
-        <iframe
+        <!-- <iframe
             style="border: 1px solid #e6e6e6; border-radius: 8px; box-sizing: border-box"
             src="https://yandex.ru/maps-reviews-widget/175037687485?comments"
-        ></iframe>
+        ></iframe> -->
     </div>
     <ul class="rate-widgets">
         <li class="rate-widgets__item">

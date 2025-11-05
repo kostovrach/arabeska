@@ -9,7 +9,6 @@
                 v-model="map"
                 class="map-zones__map"
                 width="100%"
-                @mouseleave="activeMarker = null"
                 :settings="{
                     location: {
                         center: [50.18, 53.22],

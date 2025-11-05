@@ -30,11 +30,11 @@ pnpm db:enter
 
 Далее внутри контейнера postgres:
 
-```bash
+```sql
 DROP DATABASE directus;
 ```
 
-```bash
+```sql
 CREATE DATABASE directus;
 ```
 

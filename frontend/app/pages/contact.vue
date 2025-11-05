@@ -222,7 +222,7 @@
             }
         }
         &__title {
-            font-size: lineScale(96, 64, 480, 1440);
+            font-size: lineScale(64, 48, 480, 1440);
             font-weight: $fw-semi;
         }
         &__addresses {
