@@ -17,8 +17,9 @@
         <!-- temp map -->
         <div class="faq-delivery__address">
             <h3 class="faq-delivery__subtitle">Зоны доставки</h3>
-            <p class="faq-delivery__desc">Проверьте свой адрес</p>
-            <div class="faq-delivery__address-validator">
+            <MapWrapperZones />
+
+            <!-- <div class="faq-delivery__address-validator">
                 <FloatLabel
                     class="faq-delivery__address-validator-input"
                     variant="on"
@@ -33,11 +34,11 @@
                 <span class="faq-delivery__address-validator-result">
                     ✅ Доставка по указанному адресу возможна
                 </span>
-            </div>
+            </div> -->
 
-            <picture class="faq-delivery__address-image">
+            <!-- <picture class="faq-delivery__address-image">
                 <img src="/img/temp/map.jpg" alt="#" />
-            </picture>
+            </picture> -->
             <div class="faq-delivery__hint" v-html="props.mapFootnote"></div>
         </div>
         <!-- temp map -->

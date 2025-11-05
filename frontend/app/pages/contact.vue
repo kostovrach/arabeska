@@ -26,11 +26,6 @@
                     </div>
                     <div class="contact__item-sider">
                         <div class="contact__item-sider-wrapper">
-                            <!-- <div class="contact__map">
-                                <picture class="contact__map-image-container">
-                                    <img src="/img/temp/map.jpg" alt="#" />
-                                </picture>
-                            </div> -->
                             <div class="contact__map">
                                 <MapWrapper />
                             </div>

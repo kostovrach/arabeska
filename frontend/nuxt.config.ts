@@ -44,9 +44,12 @@ export default defineNuxtConfig({
 
     yandexMaps: {
         apikey: process.env.YANDEX_API_KEY,
+        servicesApikeys: {
+            suggest: process.env.YANDEX_SUGGEST_KEY,
+        },
         strictMode: true,
         lang: 'ru_RU',
-        version: 'v3'
+        version: 'v3',
     },
 
     build: {
