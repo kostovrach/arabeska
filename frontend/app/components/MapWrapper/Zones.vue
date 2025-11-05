@@ -3,11 +3,13 @@
         <div class="map-zones">
             <div class="map-zones__header">
                 <h3 class="map-zones__title">Проверьте адрес доставки</h3>
-                <div class="map-zones__validator"></div>
             </div>
 
             <YandexMap
+                v-model="map"
                 class="map-zones__map"
+                width="100%"
+                @mouseleave="activeMarker = null"
                 :settings="{
                     location: {
                         center: [50.18, 53.22],
@@ -22,13 +24,26 @@
                     <YandexMapZoomControl />
                     <YandexMapGeolocationControl />
                 </YandexMapControls>
-                <YandexMapControls :settings="{ position: 'left top' }">
-                    <YandexMapSearchControl
+
+                <YandexMapControls :settings="{ position: 'top left' }">
+                    <yandex-map-search-control
                         :settings="{
-                            searchResult: (val) => {},
+                            placeholder: 'Введите улицу и № дома',
+                            searchResult: (val) =>
+                                (selectedInput = val[0]?.geometry?.coordinates ?? null),
                         }"
                     />
                 </YandexMapControls>
+
+                <YandexMapUiMarker
+                    v-if="selectedInput"
+                    :settings="{
+                        coordinates: selectedInput,
+                        color: 'green',
+                        title: 'Результат поиска',
+                    }"
+                />
+
                 <YandexMapControls :settings="{ position: 'left bottom' }">
                     <YandexMapOpenMapsButton />
                 </YandexMapControls>
@@ -57,8 +72,10 @@
 </template>
 
 <script setup lang="ts">
-    import type { LngLat, YMapFeatureProps } from '@yandex/ymaps3-types';
+    // types ===========================================================================
+    import type { YMap, LngLat, YMapFeatureProps } from '@yandex/ymaps3-types';
     import type { MapEvent } from '@yandex/ymaps3-types/imperative/YMapFeature/types';
+    // =================================================================================
 
     import {
         YandexMap,
@@ -71,11 +88,35 @@
         YandexMapOpenMapsButton,
         YandexMapSearchControl,
         YandexMapFeature,
-        YandexMapDefaultMarker,
     } from 'vue-yandex-maps';
 
+    // state =========================================================================
     const markerCoordinates = ref<LngLat>([0, 0]);
     const activeMarker = ref<number | null>(null);
+
+    const selectedSearch = ref<LngLat | null>(null);
+    const selectedInput = ref<LngLat | null>(null);
+
+    const search = ref('');
+    const map = shallowRef<YMap | null>(null);
+
+    function sleep(ms: number) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    watch(search, async (val) => {
+        if (!val) return;
+
+        if (val.split(/[,.]/).length === 4) {
+            selectedSearch.value = val.split(',').map((x) => parseFloat(x)) as LngLat;
+            return;
+        }
+
+        await sleep(300);
+        if (val !== search.value) return;
+    });
+    // ===============================================================================
+
     function setMarkerCoordinates(event: MouseEvent, mapEvent: MapEvent, idx: number): void {
         markerCoordinates.value = mapEvent.coordinates;
         activeMarker.value = idx;
@@ -177,6 +218,7 @@
         display: flex;
         flex-direction: column;
         gap: rem(16);
+        font-family: 'Inter', sans-serif;
         &__title {
             font-size: lineScale(18, 16, 480, 1440);
             opacity: 0.5;
@@ -186,6 +228,10 @@
             aspect-ratio: 2/1;
             border-radius: rem(32);
             overflow: hidden;
+
+            @media (max-width: 768px) {
+                aspect-ratio: 1.4/1;
+            }
         }
     }
 </style>

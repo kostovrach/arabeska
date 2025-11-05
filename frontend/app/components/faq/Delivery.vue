@@ -18,31 +18,8 @@
         <div class="faq-delivery__address">
             <h3 class="faq-delivery__subtitle">Зоны доставки</h3>
             <MapWrapperZones />
-
-            <!-- <div class="faq-delivery__address-validator">
-                <FloatLabel
-                    class="faq-delivery__address-validator-input"
-                    variant="on"
-                    autocomplete="off"
-                >
-                    <InputText id="address-validator" />
-                    <label for="address-validator">Введите улицу и № дома</label>
-                </FloatLabel>
-                <button class="faq-delivery__address-validator-button" type="button">
-                    <span>Проверить адрес</span>
-                </button>
-                <span class="faq-delivery__address-validator-result">
-                    ✅ Доставка по указанному адресу возможна
-                </span>
-            </div> -->
-
-            <!-- <picture class="faq-delivery__address-image">
-                <img src="/img/temp/map.jpg" alt="#" />
-            </picture> -->
             <div class="faq-delivery__hint" v-html="props.mapFootnote"></div>
         </div>
-        <!-- temp map -->
-
         <div class="faq-delivery__advant" v-if="props.advantCards.length">
             <h3 class="faq-delivery__subtitle" v-if="props.advantTitle">{{ props.advantTitle }}</h3>
             <p class="faq-delivery__desc" v-if="props.advantSubtitle">{{ props.advantSubtitle }}</p>
@@ -177,86 +154,7 @@
             display: flex;
             flex-direction: column;
             gap: rem(32);
-            &-validator {
-                display: grid;
-                grid-template-columns: auto minmax(25%, max-content);
-                grid-template-areas:
-                    'input button'
-                    'result result';
-                gap: rem(24) rem(8);
-                &-input {
-                    $py: rem(18);
-                    $px: rem(24);
-
-                    grid-area: input;
-                    width: 100%;
-                    &:has(input:focus) {
-                        > input {
-                            border-color: $c-accent !important;
-                            background-color: transparent;
-                        }
-                        > label {
-                            background: $c-main !important;
-                            opacity: 1;
-                        }
-                    }
-                    @media (pointer: fine) {
-                        &:hover {
-                            > input {
-                                border-color: $c-accent !important;
-                            }
-                        }
-                    }
-                    > input {
-                        width: 100%;
-                        height: 100%;
-                        padding: $py $px;
-                        border-radius: rem(32);
-                        background-color: rgba($c-D4E1E7, 0.25);
-                        border: rem(1) solid transparent;
-                    }
-                    > label {
-                        display: block;
-                        z-index: 5;
-                        left: $px !important;
-                        transition-duration: $td !important;
-                        padding: 0 rem(4) !important;
-                        opacity: 0.5;
-                    }
-                }
-                &-button {
-                    grid-area: button;
-                    background-color: $c-E5F2D8;
-                    @include button-primary(
-                        $font-size: lineScale(18, 16, 480, 1440),
-                        $border-color: transparent,
-                        $anim-color: $c-98BBD7,
-                        $padding: rem(18) rem(64)
-                    );
-                    @media (pointer: fine) {
-                        &:hover {
-                            background-color: transparent;
-                        }
-                    }
-                }
-                &-result {
-                    grid-area: result;
-                    color: $c-accent;
-                }
-            }
-            //temp
-            &-image {
-                width: 100%;
-                aspect-ratio: 2/1;
-                border-radius: rem(32);
-                overflow: hidden;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            }
-            //
+            width: 100%;
         }
         &__advant {
             display: flex;
@@ -286,29 +184,6 @@
             &__advant {
                 &-item {
                     aspect-ratio: initial;
-                }
-            }
-            &__address {
-                &-validator {
-                    display: flex;
-                    flex-direction: column;
-                    &-button {
-                        align-self: flex-end;
-                    }
-                }
-            }
-        }
-    }
-
-    @media (max-width: 480px) {
-        .faq-delivery {
-            &__address {
-                &-validator {
-                    &-button {
-                        width: 100%;
-                        align-items: center;
-                        justify-content: center;
-                    }
                 }
             }
         }

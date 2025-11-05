@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="home-map__map">
-                <img src="/img/temp/map.jpg" alt="#" />
+                <MapWrapperZones />
             </div>
         </div>
     </section>
@@ -93,27 +93,14 @@
         }
         &__map {
             width: 100%;
-            height: rem(512);
-            border-radius: rem(32);
-            overflow: hidden;
-            // temp==========================
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            // ==============================
         }
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1240px) {
         .home-map {
             &__container {
                 display: flex;
                 flex-direction: column;
-            }
-            &__map {
-                height: rem(320);
             }
         }
     }
