@@ -342,6 +342,7 @@
                 justify-self: flex-end;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
                 gap: rem(32);
                 &-button {
                     @include slider-buttons;
@@ -456,11 +457,27 @@
             &__slide {
                 min-height: initial;
                 padding: rem(64) rem(16);
+                overflow: hidden;
                 &-wrapper {
                     grid-template-columns: 100%;
+                    // gap: rem(186);
                 }
                 &-media {
-                    display: none;
+                    max-height: rem(240);
+                }
+                &-image-container {
+                    translate: 0 rem(128);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .home-hero {
+            &__slide {
+                &-nav {
+                    width: 100%;
+                    justify-content: space-evenly;
                 }
             }
         }

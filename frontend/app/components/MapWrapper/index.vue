@@ -21,34 +21,37 @@
                 <YandexMapOpenMapsButton />
             </YandexMapControls>
             <YandexMapUiMarker
-                v-for="(marker, idx) in markers"
+                v-for="(marker, idx) in markers?.addresses"
                 :key="idx"
                 :settings="{
                     onClick: () => (markersIdx === idx ? (markersIdx = null) : (markersIdx = idx)),
-                    coordinates: marker.coordinates as LngLat,
-                    title: marker.title,
+                    coordinates: marker.point.coordinates,
+                    title: 'Arabeska',
                     color: 'green',
                     popup: { show: markersIdx === idx, position: 'bottom right', offset: 10 },
                 }"
             >
                 <template #popup>
                     <div class="map__marker">
-                        <div class="map__marker-head" v-if="marker.content.head">
-                            {{ marker.content.head }}
+                        <div class="map__marker-head">
+                            {{ marker.short_address }}
                         </div>
-                        <div
-                            class="map__marker-body"
-                            v-if="marker.content.body"
-                            v-html="marker.content.body"
-                        ></div>
-                        <div class="map__marker-footer" v-if="marker.content.footer">
-                            {{ marker.content.footer }}
+                        <div class="map__marker-body" v-if="marker.phone">
+                            Телефон:
+                            <a :href="`tel:${marker.phone.trim().split(' ').join('')}`">
+                                {{ marker.phone }}
+                            </a>
+                        </div>
+                        <div class="map__marker-footer" v-if="marker.working_hours">
+                            {{ marker.working_hours }}
                         </div>
                     </div>
                 </template>
             </YandexMapUiMarker>
             <YandexMapSignpost
-                :settings="{ points: markers.map((el) => el.coordinates) as LngLat[] }"
+                :settings="{
+                    points: markers?.addresses.map((el) => el.point.coordinates) as LngLat[],
+                }"
             />
         </YandexMap>
     </ClientOnly>
@@ -56,6 +59,7 @@
 
 <script setup lang="ts">
     import type { LngLat } from '@yandex/ymaps3-types';
+    import type { IContacts } from '~~/interfaces/contacts';
 
     import {
         YandexMap,
@@ -73,35 +77,7 @@
     const markersIdx = ref<number | null>(null);
 
     // data
-    const markers = [
-        {
-            coordinates: [50.17642, 53.20713],
-            title: 'Arabeska',
-            content: {
-                head: 'ул. Революционная 101 Б',
-                body: 'Телефон: <a href="tel:+7(846)202-03-33">+7 (846) 202-03-33</a>',
-                footer: 'Ежедневно с 8.00 до 20.00',
-            },
-        },
-        {
-            coordinates: [50.09415, 53.19515],
-            title: 'Arabeska',
-            content: {
-                head: 'ул. Куйбышева, 147',
-                body: 'Телефон: <a href="tel:+7(987)430-86-79">+7 (987) 430-86-79</a>',
-                footer: 'Ежедневно с 8.00 до 20.00',
-            },
-        },
-        {
-            coordinates: [50.25308, 53.24717],
-            title: 'Arabeska',
-            content: {
-                head: 'ул. Ташкентская, 99',
-                body: 'Телефон: <a href="tel:+7(917)956-91-65">+7 (987) 430-86-79</a>',
-                footer: 'Ежедневно с 8.00 до 20.00',
-            },
-        },
-    ];
+    const { content: markers } = useCms<IContacts>('contact');
 </script>
 
 <style lang="scss">

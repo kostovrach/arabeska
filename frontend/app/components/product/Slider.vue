@@ -9,7 +9,7 @@
                 <a
                     class="slider--main-slide-wrapper"
                     :data-fancybox="product?.title"
-                    :href="`${cmsUrl}/assets/${slide.directus_files_id.id}`"
+                    :href="`/api/cms/assets/${slide.directus_files_id.id}`"
                 >
                     <picture class="slider--main-slide-image">
                         <img

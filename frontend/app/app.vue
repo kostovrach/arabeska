@@ -19,6 +19,11 @@
             lang: 'ru',
         },
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+        meta: [
+            { name: 'theme-color', content: '#082535' },
+            { name: 'robots', content: 'index, follow' },
+            { property: 'og:type', content: 'website' },
+        ],
     });
     // =============================================================
 </script>

@@ -41,7 +41,12 @@
                     <SvgSprite type="map-pin" :size="20" />
                     <span>Самара</span>
                 </div>
-                <TheHeaderNumberList class="header__number-list" />
+                <a
+                    class="header__number"
+                    :href="`tel:${contacts?.phone.trim().split(' ').join('')}`"
+                >
+                    {{ contacts?.phone }}
+                </a>
                 <ClientOnly>
                     <button
                         v-if="useProductsStore().productsList?.length"
@@ -72,10 +77,13 @@
 
     import { ModalsSearchbar, ModalsSideMenu, ModalsCatalog } from '#components';
     import { useModal } from 'vue-final-modal';
+    import type { IContacts } from '~~/interfaces/contacts';
 
     // data ================================================================================
     const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+
+    const { content: contacts } = useCms<IContacts>('contact');
 
     const route = useRoute();
     // =====================================================================================
@@ -191,6 +199,15 @@
             gap: lineScale(16, 8, 480, 1440);
             font-weight: $fw-semi;
         }
+        &__number {
+            font-family: 'Inter', sans-serif;
+            font-size: lineScale(16, 14, 480, 1440);
+            @media (pointer: fine) {
+                &:hover {
+                    opacity: 0.5;
+                }
+            }
+        }
         &__location {
             cursor: default;
             display: flex;
@@ -238,7 +255,7 @@
     @media (max-width: 1300px) {
         .header {
             &__location,
-            &__number-list {
+            &__number {
                 display: none;
             }
         }

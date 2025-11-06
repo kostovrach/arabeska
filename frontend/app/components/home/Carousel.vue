@@ -127,7 +127,7 @@
     @use '~/assets/scss/abstracts' as *;
 
     .home-carousel {
-        @include content-block;
+        @include content-block($margin: lineScale(128, 96, 480, 1440));
         &__container {
             @include content-container($padding: 0);
         }

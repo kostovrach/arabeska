@@ -1,6 +1,6 @@
 <template>
     <form class="subscribe-form">
-        <h3 class="subscribe-form__title" v-html="props.title"></h3>
+        <h3 class="subscribe-form__title" v-if="props.title" v-html="props.title"></h3>
         <div class="subscribe-form__inputbox">
             <InputMask
                 id="subscribe-phone"
@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
     const props = defineProps<{
-        title: string;
+        title?: string;
     }>();
 
     const form = reactive({

@@ -7,8 +7,10 @@
                     <SvgSprite type="logo-full" size="100%" />
                 </NuxtLink>
                 <div class="footer__links">
-                    <a href="tel:+">8 846 489-31-17</a>
-                    <a href="mailto:">info@arabeska.ru</a>
+                    <a :href="`tel:${contacts?.phone.trim().split(' ').join('')}`">
+                        {{ contacts?.phone }}
+                    </a>
+                    <a :href="`mailto:${contacts?.mail.trim()}`">{{ contacts?.mail }}</a>
                 </div>
                 <SubscribeForm class="footer__form" title="Сэкономьте 5% за подписку!" />
             </div>
@@ -70,62 +72,33 @@
                 </div>
                 <div class="footer__nav-list footer__nav-list--socials">
                     <h4 class="footer__nav-title">Мы в соцсетях</h4>
-                    <a
-                        class="footer__nav-link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        VK
-                    </a>
-                    <a
-                        class="footer__nav-link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Instagram
-                        <span class="symbol">*</span>
-                    </a>
-                    <a
-                        class="footer__nav-link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Telegram
-                    </a>
+                    <ClientOnly>
+                        <a
+                            v-for="(link, idx) in socials.filter((el) => el.link.length)"
+                            class="footer__nav-link"
+                            :href="link.link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {{ link.label }}
+                            <span v-if="link.marked" class="symbol">*</span>
+                        </a>
+                    </ClientOnly>
                 </div>
                 <div class="footer__nav-list footer__nav-list--address">
                     <h4 class="footer__nav-title">Магазины</h4>
-                    <a
+                    <NuxtLink
+                        v-for="(item, idx) in contacts?.addresses"
+                        :key="idx"
                         class="footer__nav-link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        :to="{ name: 'contact' }"
                     >
-                        Проспект Кирова, 22
-                    </a>
-                    <a
-                        class="footer__nav-link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Улица Ленина, 15, ТЦ «БигБэн», офис 21
-                    </a>
-                    <a
-                        class="footer__nav-link"
-                        href="https://example.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Площадь Славы, 5
-                    </a>
+                        {{ item.short_address }}
+                    </NuxtLink>
                 </div>
             </div>
             <div class="footer__info">
-                <span class="footer__info-copy">2019 Arabeska. Все права защищены</span>
+                <span class="footer__info-copy">&copy; {{ contacts?.copyright }}</span>
                 <div class="footer__info-buttons">
                     <button
                         class="footer__info-button"
@@ -153,6 +126,8 @@
 </template>
 
 <script setup lang="ts">
+    import type { IContacts } from '~~/interfaces/contacts';
+
     import { ModalsCatalog, ModalsDocs } from '#components';
     import { useModal } from 'vue-final-modal';
 
@@ -167,6 +142,31 @@
     const route = useRoute();
 
     const { content: docsData, status: docsStatus } = useCms<IDocs[]>('docs');
+    const { content: contacts } = useCms<IContacts>('contact');
+
+    const socials: {
+        label: string;
+        link: string;
+        marked?: boolean;
+    }[] = [
+        {
+            label: 'VK',
+            link: contacts?.value?.vk ?? '',
+        },
+        {
+            label: 'instagram',
+            link: contacts?.value?.instagram ?? '',
+            marked: true,
+        },
+        {
+            label: 'Telegram',
+            link: contacts?.value?.telegram ?? '',
+        },
+        {
+            label: 'OK',
+            link: contacts?.value?.ok ?? '',
+        },
+    ];
 
     function openDocsModal(title: string, dateUpdated: string, content: string) {
         const { open: openModal, close: closeModal } = useModal({
@@ -300,10 +300,7 @@
                 font-size: rem(14);
                 opacity: 0.5;
                 white-space: nowrap;
-                &::before {
-                    content: '\00A9';
-                    font-family: 'Inter', sans-serif;
-                }
+                font-family: 'Inter', sans-serif;
             }
             &-buttons {
                 grid-area: buttons;

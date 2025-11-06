@@ -37,7 +37,7 @@
                         </li>
                     </ul>
                 </section>
-                <FaqSection
+                <AccordionSection
                     :title="page.faq_title ?? ''"
                     :description="page.faq_description"
                     :content="page.faq_blocks"

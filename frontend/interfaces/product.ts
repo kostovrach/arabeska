@@ -1,3 +1,5 @@
+import type { ISeo } from './seo';
+
 // images ========================================
 interface IProductImages {
     id: number | string;
@@ -61,7 +63,7 @@ interface IProductStyle {
 }
 // ===============================================
 
-export interface IProduct {
+export interface IProduct extends ISeo {
     id: number | string;
     date_created: string;
     date_updated?: string | null;
@@ -82,8 +84,4 @@ export interface IProduct {
 
     available: boolean;
     popular: boolean;
-
-    seo_title?: string;
-    seo_description?: string;
-    seo_keywords?: string[];
 }

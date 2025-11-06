@@ -202,6 +202,8 @@
 
 <script setup lang="ts">
     // data =================================================================
+    const baseUrl = useRuntimeConfig().public.urlBase;
+
     const route = useRoute();
 
     const productsStore = useProductsStore();
@@ -215,31 +217,62 @@
     // =====================================================================
 
     // SEO & Meta ===========================================================
-    // useHead(() => ({
-    //     title: `Букет "${product.value?.title}" - Arabeska`,
-    //     meta: [
-    //         {
-    //             name: 'description',
-    //             content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
-    //         },
-    //         {
-    //             property: 'og:title',
-    //             content: `Купить букет "${product.value?.title}" в Самаре или заказать с доставкой.`,
-    //         },
-    //         {
-    //             property: 'og:description',
-    //             content: `${product.value?.description}`,
-    //         },
-    //         {
-    //             property: 'og:image',
-    //             content: product.value?.images[0],
-    //         },
-    //         {
-    //             name: 'twitter:card',
-    //             content: 'summary_large_image',
-    //         },
-    //     ],
-    // }));
+    const productMeta = computed(() => ({
+        '@context': 'https://schema.org/',
+        '@type': 'Product',
+        name: `${product.value?.meta_title ?? product.value?.title} | Арабеска - магазин цветов в Самаре`,
+        image: `${baseUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
+        description: product.value?.meta_description ?? '',
+        sku: product.value?.id,
+        brand: 'Arabeska',
+        offers: {
+            '@type': 'Offer',
+            url: `${baseUrl}${route.fullPath}`,
+            priceCurrency: 'RUB',
+            price: product.value?.discount ? product.value?.discount : product.value?.price,
+            availability: 'https://schema.org/InStock',
+        },
+    }));
+
+    useHead(() => ({
+        title: `${product.value?.meta_title ?? product.value?.title} | Арабеска - магазин цветов в Самаре`,
+        meta: [
+            { name: 'description', content: product.value?.meta_description },
+            { name: 'keywords', content: product.value?.meta_keywords?.join(',') ?? '' },
+            { property: 'og:type', content: 'product' },
+            {
+                property: 'og:title',
+                content: `${product.value?.og_title ?? product.value?.title} | Арабеска - магазин цветов в Самаре`,
+            },
+            { property: 'og:description', content: product.value?.og_description ?? '' },
+            {
+                property: 'og:image',
+                content: product.value?.og_image
+                    ? `${baseUrl}/api/cms/assets/${product.value.og_image}`
+                    : `${baseUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
+            },
+            { property: 'og:url', content: `${baseUrl}${route.fullPath}` },
+            { property: 'og:site:name', content: 'Arabeska' },
+            { name: 'twitter:card', content: 'summary_large_image' },
+            {
+                name: 'twitter:title',
+                content: `${product.value?.og_title ?? product.value?.title} | Арабеска - магазин цветов в Самаре`,
+            },
+            { name: 'twitter:description', content: product.value?.og_description ?? '' },
+            {
+                name: 'twitter:image',
+                content: product.value?.og_image
+                    ? `${baseUrl}/api/cms/assets/${product.value.og_image}`
+                    : `${baseUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
+            },
+        ],
+        script: [
+            {
+                type: 'application/ld+json',
+                innerHTML: JSON.stringify(productMeta.value),
+            },
+        ],
+    }));
     // ======================================================================
 
     // product processing ===================================================

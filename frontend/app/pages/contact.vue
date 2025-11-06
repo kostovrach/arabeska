@@ -4,10 +4,10 @@
             <div class="contact__container">
                 <div class="contact__item">
                     <div class="contact__item-content">
-                        <h1 class="contact__title">Адреса магазинов</h1>
+                        <h1 class="contact__title">{{ page?.title ?? 'Адреса магазинов' }}</h1>
                         <ul class="contact__addresses">
                             <li
-                                v-for="(item, idx) in addresses"
+                                v-for="(item, idx) in page?.addresses"
                                 :key="idx"
                                 class="contact__addresses-item"
                             >
@@ -15,11 +15,21 @@
                                     <SvgSprite type="globe" :size="32" />
                                 </span>
                                 <div class="contact__addresses-item-content">
-                                    <h3 class="contact__addresses-item-title">{{ item.title }}</h3>
-                                    <p class="contact__addresses-item-desc">{{ item.desc }}</p>
+                                    <h3 class="contact__addresses-item-title">
+                                        {{ item.full_address }}
+                                    </h3>
+                                    <p class="contact__addresses-item-desc" v-if="item.description">
+                                        {{ item.description }}
+                                    </p>
                                     <span class="contact__addresses-item-footnote">
-                                        {{ item.footnote }}
+                                        {{ item.working_hours }}
                                     </span>
+                                    <div class="contact__addresses-item-tel" v-if="item.phone">
+                                        Телефон:
+                                        <a :href="`tel:${item.phone.trim().split(' ').join('')}`">
+                                            {{ item.phone }}
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
@@ -35,53 +45,52 @@
                 <div class="contact__item">
                     <div class="contact__item-content">
                         <ul class="contact__info">
-                            <li class="contact__info-item">
-                                <span class="contact__info-item-title">Головной офис</span>
-                                <p class="contact__info-item-text">
-                                    Самара, ул. Пресненская набережная, 12, башня «Федерация.
-                                    Восток», 30 этаж
-                                </p>
-                            </li>
-                            <li class="contact__info-item">
-                                <span class="contact__info-item-title">Рабочие часы</span>
-                                <ul class="contact__info-item-list">
-                                    <li class="contact__info-item-text">
-                                        ПН – ПТ: cс 09:00 до 16:00
-                                    </li>
-                                    <li class="contact__info-item-text">СБ – ВС: Выходной</li>
-                                </ul>
+                            <li
+                                v-for="(item, idx) in page?.info_blocks"
+                                :key="idx"
+                                class="contact__info-item"
+                            >
+                                <span class="contact__info-item-title">{{ item.title }}</span>
+                                <div class="contact__info-item-content" v-html="item.content"></div>
                             </li>
                             <li class="contact__info-item">
                                 <span class="contact__info-item-title">
                                     Следите за нами в соцсетях
                                 </span>
                                 <div class="contact__info-item-socials">
-                                    <a
-                                        v-for="(link, idx) in socialsLinks"
-                                        :key="idx"
-                                        class="contact__info-item-socials-link"
-                                        :href="link.link"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        :style="`--mask: url('${link.maskPath}'); --anim-color: ${link.hoverColor}`"
-                                    ></a>
+                                    <ClientOnly>
+                                        <a
+                                            v-for="(link, idx) in socialsLinks.filter(
+                                                (el) => el.link.length
+                                            )"
+                                            :key="idx"
+                                            class="contact__info-item-socials-link"
+                                            :href="link.link"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            :style="`--mask: url('${link.maskPath}'); --anim-color: ${link.hoverColor}`"
+                                        ></a>
+                                    </ClientOnly>
                                 </div>
                             </li>
                             <li class="contact__info-item">
                                 <span class="contact__info-item-title">
                                     Для вопросов и предложений
                                 </span>
-                                <a class="contact__info-item-link" href="mailto:">
-                                    hello@fsarabeska.ru
+                                <a
+                                    class="contact__info-item-link"
+                                    :href="`mailto:${page?.mail.trim()}`"
+                                >
+                                    {{ page?.mail }}
                                 </a>
                             </li>
                             <li class="contact__info-item">
-                                <span class="contact__info-item-title">Горячая линия 24/7</span>
+                                <span class="contact__info-item-title">Единый номер</span>
                                 <a
                                     class="contact__info-item-link contact__info-item-link--large"
-                                    href="tel:"
+                                    :href="`tel:${page?.phone.trim().split(' ').join('')}`"
                                 >
-                                    +7 (999) 856-74-31
+                                    {{ page?.phone }}
                                 </a>
                             </li>
                         </ul>
@@ -89,13 +98,16 @@
                     <div class="contact__item-sider">
                         <div class="contact__item-sider-wrapper">
                             <div class="contact__decorative">
-                                <StarsOverlay class="contact__decorative-title">
-                                    <h2>Свежие цветы рядом с вашим домом</h2>
+                                <StarsOverlay
+                                    class="contact__decorative-title"
+                                    v-if="page?.info_title"
+                                >
+                                    <h2>{{ page?.info_title }}</h2>
                                 </StarsOverlay>
                                 <picture class="contact__decorative-image-container">
                                     <img
                                         class="contact__decorative-image"
-                                        src="/img/temp/temp1.jpg"
+                                        :src="page?.info_image_url ?? '/img/service/flowers.jpg'"
                                         alt="decorative"
                                     />
                                 </picture>
@@ -106,23 +118,22 @@
             </div>
         </section>
         <Banner
+            v-if="page?.banner_image_url"
             class="contact__banner"
-            title="Будьте в курсе новых скидок и предложений!"
-            image-url="/img/temp/flowers.gif"
+            :title="page.banner_title ?? ''"
+            :image-url="page.banner_image_url"
         >
-            <SubscribeForm
-                title="Подпишитесь на нашу рассылку! Обещаем присылать письма не чаще раза в неделю, только важное и по делу."
-            />
+            <p class="contact__banner-content" v-if="page.banner_content">
+                {{ page.banner_content }}
+            </p>
+
+            <SubscribeForm v-if="page.banner_form_enabled" />
         </Banner>
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-    interface IAddressesItem {
-        title: string;
-        desc?: string;
-        footnote?: string;
-    }
+    import type { IContacts } from '~~/interfaces/contacts';
 
     interface ISocialsLink {
         maskPath: string;
@@ -130,57 +141,45 @@
         hoverColor: string;
     }
 
-    const addresses: IAddressesItem[] = [
-        {
-            title: 'г. Самара, ул. Ленина, 45, 443011, Россия',
-            desc: 'Рядом со станкозаводом',
-            footnote: 'пн–пт 10.00–19.00, сб 10.00–16.00, вс — выходной',
-        },
-        {
-            title: 'г. Самара, пр.. Карла Маркса, 78, 443072, Россия',
-            desc: 'Вблизи завода по производству станков',
-            footnote: 'пн–пт 8.00–17.00, сб — выходной, вс — выходной',
-        },
-        {
-            title: 'г. Самара, ул. Советская, 21, 443028, Россия',
-            desc: 'Соседство с заводом станкостроения',
-            footnote: 'пн–пт 9.00 - 18.00, сб–вс - выходной',
-        },
-        {
-            title: 'г. Самара, ул. Гагарина, 10, 443020, Россия',
-            desc: 'Недалеко от станкостроительного предприятия',
-            footnote: 'пн–пт 9.00 - 17.00, сб–вс - выходной',
-        },
-        {
-            title: 'г. Самара, пр. Строителей, 5, 443002, Россия',
-            desc: 'Поблизости от завода по изготовлению станков',
-            footnote: 'пн–пт 9.00 - 18.00, сб–вс - выходной',
-        },
-    ];
+    const { content: page } = useCms<IContacts>('contact');
 
     const socialsLinks: ISocialsLink[] = [
         {
             maskPath: '/img/masks/vk.svg',
-            link: 'https://example.com',
+            link: page.value?.vk ?? '',
             hoverColor: '#016FCC',
         },
         {
             maskPath: '/img/masks/telegram.svg',
-            link: 'https://example.com',
+            link: page.value?.telegram ?? '',
             hoverColor: '#03A4DF',
         },
         {
             maskPath: '/img/masks/ok.svg',
-            link: 'https://example.com',
+            link: page.value?.ok ?? '',
             hoverColor: '#FF7700',
         },
         {
             maskPath: '/img/masks/instagram.svg',
-            link: 'https://example.com',
+            link: page.value?.instagram ?? '',
             hoverColor:
                 'linear-gradient(45deg, #feda75 0%, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%)',
         },
     ];
+
+    // SEO & Meta ============================================================
+    useHead({
+        title: 'Контакты | Арабеска - магазин цветов в Самаре',
+        meta: [
+            {
+                name: 'description',
+                content:
+                    'Магазин цветов в Самаре Арабеска: адрес, телефон и режим работы. Доставка свежих цветов по Самаре и области.',
+            },
+            {},
+        ],
+    });
+    // =======================================================================
 </script>
 
 <style scoped lang="scss">
@@ -242,6 +241,19 @@
                     flex-direction: column;
                     gap: rem(8);
                 }
+                &-tel {
+                    font-family: 'Inter', sans-serif;
+                    font-size: lineScale(16, 16, 480, 1440);
+                    > a {
+                        color: $c-accent;
+                        text-decoration: underline;
+                        @media (pointer: fine) {
+                            &:hover {
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
                 &-title {
                     font-size: lineScale(22, 18, 480, 1440);
                     font-weight: $fw-semi;
@@ -256,15 +268,6 @@
             aspect-ratio: 1.5/1;
             border-radius: rem(32);
             overflow: hidden;
-            &-image-container {
-                width: 100%;
-                height: 100%;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-            }
         }
         &__info {
             display: flex;
@@ -284,6 +287,38 @@
                 &-link {
                     font-size: lineScale(22, 18, 480, 1440);
                     font-weight: $fw-semi;
+                }
+                &-content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: rem(8);
+                    font-size: lineScale(20, 18, 480, 1440);
+                    font-weight: $fw-semi;
+                    line-height: 1.6;
+                    h2,
+                    h3,
+                    h4,
+                    h5,
+                    h6 {
+                        font-size: lineScale(24, 18, 480, 1440);
+                        margin-bottom: rem(16);
+                        font-weight: $fw-bold;
+                    }
+                    ul,
+                    ol {
+                        display: flex;
+                        flex-direction: column;
+                        gap: rem(8);
+                        li {
+                            margin-left: rem(22);
+                        }
+                    }
+                    ul > li {
+                        list-style: disc outside;
+                    }
+                    ol > li {
+                        list-style: decimal outside;
+                    }
                 }
                 &-list {
                     display: flex;
@@ -341,6 +376,12 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+        }
+        &__banner {
+            &-content {
+                font-size: lineScale(18, 16, 480, 1440);
+                line-height: 1.4;
             }
         }
     }
