@@ -6,12 +6,7 @@
     >
         <div class="catalog">
             <div class="catalog__container">
-                <EmblaContainer
-                    class="catalog__body"
-                    :options="{
-                        dragFree: true,
-                    }"
-                >
+                <EmblaContainer class="catalog__body" :options="{ dragFree: true }">
                     <EmblaSlide
                         v-for="(card, idx) in categories"
                         :key="idx"
@@ -75,7 +70,7 @@
         width: 100%;
         color: $c-FFFFFF;
         background-color: $c-secondary;
-        border-radius: 0 0 rem(64) rem(64);
+        border-radius: 0 0 rem(32) rem(32);
         &__container {
             @include content-container($padding: 0);
         }

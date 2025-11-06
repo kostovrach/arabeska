@@ -7,7 +7,7 @@
                 </StarsOverlay>
                 <NuxtLink
                     v-if="props.wtithLink"
-                    :to="{ name: 'catalog-category', params: { category: 'flowers' } }"
+                    :to="{ name: 'catalog-category', params: { category: props.category } }"
                     class="home-carousel__link"
                 >
                     <span>Смотреть все</span>
@@ -68,7 +68,6 @@
 <script setup lang="ts">
     // types==================================================
     import type { AsyncDataRequestStatus } from '#app';
-    import type { Ref } from 'vue';
     import type { IProduct } from '~~/interfaces/product';
 
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
@@ -81,6 +80,7 @@
         autoplay?: boolean;
         title?: string;
         wtithLink?: boolean;
+        category: string;
     }
 
     const props = withDefaults(defineProps<IProps>(), {

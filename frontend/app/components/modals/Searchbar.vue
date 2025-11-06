@@ -200,7 +200,7 @@
             height: 100%;
             background-color: $c-secondary;
             padding: rem(32) 0;
-            border-radius: 0 0 rem(64) rem(64);
+            border-radius: 0 0 rem(32) rem(32);
             overflow: hidden;
             &-list {
                 height: 100%;

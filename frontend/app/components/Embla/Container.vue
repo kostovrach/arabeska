@@ -1,6 +1,12 @@
 <template>
     <div ref="emblaRef" class="embla" :style="{ overflow: props.overflow }">
-        <div class="embla__container" :style="{ padding: props.padding }">
+        <div
+            class="embla__container"
+            :style="{
+                padding: props.padding,
+                flexDirection: props.axis === 'x' ? 'row' : 'column',
+            }"
+        >
             <slot></slot>
         </div>
     </div>
@@ -20,6 +26,7 @@
         autoplayEnable?: boolean;
         autoplay?: AutoplayOptionsType;
         overflow?: 'hidden' | 'visible';
+        axis?: 'x' | 'y';
     }
 
     const props = withDefaults(defineProps<IProps>(), {
@@ -29,6 +36,7 @@
         padding: '0',
         autoplayEnable: false,
         overflow: 'hidden',
+        axis: 'x',
     });
 
     const plugins: EmblaPluginType[] = [];

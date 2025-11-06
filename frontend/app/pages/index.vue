@@ -6,6 +6,7 @@
                 v-for="carousel in page?.carousels"
                 :key="carousel.id"
                 :title="carousel.home_carousels_id.title"
+                :category="slugify(carousel.home_carousels_id.category.name)"
                 :content-ref="
                     computed(
                         () =>

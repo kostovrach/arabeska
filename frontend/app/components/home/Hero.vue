@@ -64,11 +64,13 @@
                 <div class="home-hero__runline home-hero__runline--nav">
                     <ul v-for="n in 2" :key="n" class="home-hero__runline-wrapper">
                         <li
-                            v-for="item in navItems"
-                            :key="item.key"
+                            v-for="(item, idx) in navItems"
+                            :key="idx"
                             class="home-hero__runline-item"
                         >
-                            <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
+                            <NuxtLink
+                                :to="{ name: item.path.name, params: item.path.params ?? {} }"
+                            >
                                 {{ item.title }}
                             </NuxtLink>
                         </li>
@@ -77,12 +79,17 @@
                 <div class="home-hero__runline home-hero__runline--filters">
                     <ul v-for="n in 2" :key="n" class="home-hero__runline-wrapper">
                         <li
-                            v-for="item in filterItems"
-                            :key="item.key"
+                            v-for="(item, idx) in categories?.slice(0, 8)"
+                            :key="idx"
                             class="home-hero__runline-item"
                         >
-                            <NuxtLink :to="{ name: item.path.name, params: item.path.params }">
-                                {{ item.title }}
+                            <NuxtLink
+                                :to="{
+                                    name: 'catalog-category',
+                                    params: { category: slugify(item.name) },
+                                }"
+                            >
+                                {{ item.name }}
                             </NuxtLink>
                         </li>
                     </ul>
@@ -94,6 +101,7 @@
 
 <script setup lang="ts">
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
+    import type { ICategories } from '~~/interfaces/categories';
 
     interface Slide {
         id: number | string;
@@ -128,120 +136,49 @@
     const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
     const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
 
-    const navItems = [
+    const { content: categories } = useCms<ICategories[]>('categories');
+
+    const navItems: {
+        title: string;
+        path: {
+            name: string;
+            params?: {};
+        };
+    }[] = [
         {
-            key: '1',
-            title: 'букеты',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '2',
-            title: 'дополнительное',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'accessory' },
-            },
-        },
-        {
-            key: '3',
             title: 'цветы оптом',
             path: {
                 name: 'wholesale',
-                params: {},
             },
         },
         {
-            key: '4',
-            title: 'сертификаты',
+            title: 'Отзывы',
             path: {
-                name: 'catalog-category',
-                params: { category: 'certificates' },
+                name: 'feedback',
             },
         },
         {
-            key: '5',
+            title: 'Частые вопросы',
+            path: {
+                name: 'faq',
+            },
+        },
+        {
             title: 'цветочная подписка',
             path: {
                 name: 'subscription',
-                params: {},
             },
         },
         {
-            key: '6',
-            title: 'открытки',
+            title: 'Контакты',
             path: {
-                name: 'catalog-category',
-                params: { category: 'accessory' },
-            },
-        },
-    ];
-
-    const filterItems = [
-        {
-            key: '1',
-            title: 'розы',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
+                name: 'contact',
             },
         },
         {
-            key: '2',
-            title: 'гвоздики',
+            title: 'Франшиза',
             path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '3',
-            title: 'тюльпаны',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '4',
-            title: 'хризантемы',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '5',
-            title: 'астры',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '6',
-            title: 'подсолнухи',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '7',
-            title: 'калы',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
-            },
-        },
-        {
-            key: '8',
-            title: 'ромашки',
-            path: {
-                name: 'catalog-category',
-                params: { category: 'flowers' },
+                name: 'franchise',
             },
         },
     ];
