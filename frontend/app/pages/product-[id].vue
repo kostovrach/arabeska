@@ -39,18 +39,18 @@
                             <div class="product-view__titlebox">
                                 <h1 class="product-view__title">{{ product?.title }}</h1>
                                 <ClientOnly>
-                                    <p
+                                    <div
                                         class="product-view__desc"
                                         v-if="product?.description"
                                         v-html="product?.description"
-                                    ></p>
+                                    ></div>
                                 </ClientOnly>
                                 <div class="product-view__share-menu">
                                     <ProductShare />
                                 </div>
                             </div>
                             <div class="product-view__controls">
-                                <ul class="product-view__variant">
+                                <ul class="product-view__variant" v-if="!isControlsDisabled">
                                     <li class="product-view__variant-item">
                                         <div class="product-view__variant-toggler">
                                             <input
@@ -117,7 +117,7 @@
                                     </CircleButton>
                                 </div>
 
-                                <div class="product-view__counter">
+                                <div class="product-view__counter" v-if="!isSubscriptionPricing">
                                     <button
                                         type="button"
                                         :disabled="productModel.quantity <= 1"
@@ -158,7 +158,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div v-if="product?.structure" class="product-view__sider">
+                        <div v-if="product?.structure?.length" class="product-view__sider">
                             <picture class="product-view__sider-image">
                                 <img src="/img/service/flowers-placeholder.png" alt="Состав" />
                             </picture>
@@ -191,16 +191,26 @@
                         </ul>
                     </div>
                     <div class="product-view__info">
-                        <ProductAccordion :multiply="true" />
+                        <ProductAccordion
+                            :spoilers="
+                                settings?.products_info.map((el) => ({
+                                    title: el.title,
+                                    content: el.content,
+                                })) ?? []
+                            "
+                            :multiply="true"
+                        />
                     </div>
                 </div>
             </div>
         </section>
-        <AccessorySlider title="Идеальное дополнение к букету" />
+        <HintCarousel title="Вам стоит взглянуть" />
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+    import type { ISettings } from '~~/interfaces/settings';
+
     // data =================================================================
     const baseUrl = useRuntimeConfig().public.urlBase;
 
@@ -212,8 +222,32 @@
 
     const { productsItem, singleProductStatus } = storeToRefs(productsStore);
 
+    const { content: settings } = useCms<ISettings>('settings', [
+        'disable_controls.*',
+        'disable_controls.categories_id.*',
+        'subscription_category.*',
+    ]);
+
     const product = computed(() => productsItem.value);
     const status = computed(() => singleProductStatus.value);
+
+    const productCategories = computed(() =>
+        product.value?.category?.map((el) => slugify(el.categories_id?.name as string))
+    );
+
+    const disabledCategories = computed(() =>
+        settings.value?.disable_controls.map((el) => slugify(el.categories_id?.name as string))
+    );
+
+    const isControlsDisabled = computed(() =>
+        productCategories.value?.some((el) => disabledCategories.value?.includes(el))
+    );
+
+    const isSubscriptionPricing = computed(() =>
+        productCategories.value?.some((el) =>
+            el.includes(slugify(settings.value?.subscription_category.name as string))
+        )
+    );
     // =====================================================================
 
     // SEO & Meta ===========================================================
@@ -314,7 +348,7 @@
     // =====================================================================
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
     .product-view {
@@ -395,7 +429,33 @@
         }
         &__desc {
             grid-area: desc;
+            display: flex;
+            flex-direction: column;
+            gap: rem(24);
             font-size: lineScale(18, 16, 480, 1440);
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-size: lineScale(20, 18, 480, 1440);
+                font-weight: $fw-semi;
+            }
+            ul,
+            ol {
+                display: flex;
+                flex-direction: column;
+                gap: rem(8);
+                li {
+                    margin-left: rem(22);
+                }
+            }
+            ul > li {
+                list-style: disc outside;
+            }
+            ol > li {
+                list-style: decimal outside;
+            }
         }
         &__controls {
             display: flex;

@@ -11,6 +11,7 @@
         <SubscriptionPricing
             :title="page?.pricing_title ?? 'Тарифы'"
             :description="page?.pricing_description"
+            :pricing-cards="pricingCards ?? []"
         />
         <AccordionSection
             :title="page?.faq_title ?? ''"
@@ -50,6 +51,8 @@
 </template>
 
 <script setup lang="ts">
+    import type { ISettings } from '~~/interfaces/settings';
+
     // types ======================================================
     interface ISubscriptionPage {
         id: number | string;
@@ -87,6 +90,29 @@
 
     // data =======================================================
     const { content: page } = useCms<ISubscriptionPage>('subscription');
+
+    const productsStore = useProductsStore();
+
+    const { content: settings } = useCms<ISettings>('settings', [
+        'disable_controls.*',
+        'disable_controls.categories_id.*',
+        'subscription_category.*',
+    ]);
+    // ============================================================
+
+    // computed ===================================================
+    const subscriptionCategory = computed(() =>
+        slugify(settings.value?.subscription_category.name as string)
+    );
+
+    const pricingCards = computed(() => {
+        return productsStore.productsList?.filter((el) =>
+            el.category?.some(
+                (c) => slugify(c.categories_id?.name as string) === subscriptionCategory.value
+            )
+        );
+    });
+
     // ============================================================
 </script>
 

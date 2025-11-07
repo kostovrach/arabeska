@@ -1,7 +1,7 @@
 <template>
     <Accordion class="product-spoilers" :multiple="props.multiply">
         <AccordionPanel
-            v-for="(item, idx) in spoilers"
+            v-for="(item, idx) in props.spoilers"
             :key="idx"
             :value="idx"
             class="product-spoilers__item"
@@ -17,6 +17,10 @@
 <script setup lang="ts">
     const props = defineProps<{
         multiply?: boolean;
+        spoilers?: {
+            title: string;
+            content: string;
+        }[];
     }>();
     // mock-data
     const spoilers = [

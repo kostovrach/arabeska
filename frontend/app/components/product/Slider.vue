@@ -4,6 +4,7 @@
             <EmblaSlide
                 v-for="(slide, idx) in props.product?.images"
                 :key="idx"
+                width="100%"
                 class="slider--main-slide"
             >
                 <a
@@ -110,8 +111,12 @@
             border-radius: rem(32);
             overflow: hidden;
             &-slide {
-                display: block;
                 margin-right: 0;
+                &-wrapper {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
                 &-image {
                     width: 100%;
                     aspect-ratio: 1.1/1;
