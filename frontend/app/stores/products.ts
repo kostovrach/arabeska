@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { AsyncDataRequestStatus } from '#app';
-import type { IProduct } from '~~/interfaces/product';
+import type { IProduct } from '~~/interfaces/entities/product';
 import type FuseType from 'fuse.js';
 
 export const useProductsStore = defineStore('products', () => {

@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
     // types ================================================================
-    import type { IProduct } from '~~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/entities/product';
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
 
     const props = defineProps<{

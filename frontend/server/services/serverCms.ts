@@ -21,7 +21,7 @@ function expandFields(fields?: string[], relations?: string[]) {
 }
 
 function normalize(res: any) {
-    if (res == null) return null;
+    if (!res) return null;
     // { data: [...] } или { data: { ... } }
     if (typeof res === 'object' && 'data' in res) {
         const d = res.data;
@@ -37,7 +37,7 @@ function normalize(res: any) {
     return null;
 }
 
-export async function serverCms(
+export async function getDirectusCollection<T = any>(
     collection: string,
     params: {
         fields?: string[];
@@ -46,7 +46,7 @@ export async function serverCms(
         sort?: string;
         limit?: number;
     } = {}
-) {
+): Promise<T> {
     const fields = expandFields(params.fields, params.relations);
 
     const query: any = { fields };
@@ -60,14 +60,14 @@ export async function serverCms(
     return normalize(res);
 }
 
-export async function serverCmsItem(
+export async function getDirectusItem<T = any>(
     collection: string,
-    id: string,
+    id: string | number,
     params: {
         fields?: string[];
         relations?: string[];
     } = {}
-) {
+): Promise<T | null> {
     const fields = expandFields(params.fields, params.relations);
 
     const query: any = { fields };

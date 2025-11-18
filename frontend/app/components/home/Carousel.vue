@@ -68,7 +68,7 @@
 <script setup lang="ts">
     // types==================================================
     import type { AsyncDataRequestStatus } from '#app';
-    import type { IProduct } from '~~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/entities/product';
 
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';

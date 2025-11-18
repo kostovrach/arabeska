@@ -1,6 +1,5 @@
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
-    devtools: { enabled: true },
     ssr: true,
 
     typescript: {
@@ -9,17 +8,24 @@ export default defineNuxtConfig({
     },
 
     nitro: {
-        preset: 'vercel',
+        preset: 'node-server',
     },
 
     runtimeConfig: {
         public: {
-            apiBase: process.env.DIRECTUS_URL || '',
-            urlBase: process.env.BASE_URL || '',
+            cmsUrl: process.env.DIRECTUS_URL || '',
+            siteUrl: process.env.SITE_URL || '',
         },
         directus: {
             url: process.env.DIRECTUS_URL || '',
             token: process.env.DIRECTUS_TOKEN || '',
+        },
+        amo: {
+            domain: process.env.AMO_DOMAIN || '',
+            clientId: process.env.AMO_CLIENT_ID || '',
+            clientSecret: process.env.AMO_CLIENT_SECRET || '',
+            redirectUri: process.env.AMO_REDIRECT_URI || '',
+            bearer: process.env.AMO_BEARER || '',
         },
     },
 
