@@ -43,7 +43,6 @@
         "@vue/eslint-config-prettier": "^10.2.0",
         "@yandex/ymaps3-types": "^1.0.17818622",
         "eslint-config-prettier": "^10.1.8",
-        "h3": "2.0.1-rc.2",
         "json-server": "1.0.0-beta.3",
         "prettier": "^3.6.2",
         "sass": "^1.93.2",
