@@ -21,7 +21,7 @@ export interface IOrder {
     // Отправитель
     sender: {
         name?: string;
-        telephone: string | number;
+        phone: string | number;
         email?: string;
         self_recipient: boolean;
     };
@@ -29,7 +29,7 @@ export interface IOrder {
     // Получатель
     recipient?: {
         name?: string;
-        telephone?: string | number;
+        phone?: string | number;
         anonymous: boolean; // Отправить анонимно
         notification: boolean; // Позвонить получателю для уточнения
         secret: boolean; // Не говорить, что цветы

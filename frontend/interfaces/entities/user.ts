@@ -5,7 +5,7 @@ export interface IUser {
     date_updated?: string | null;
 
     name?: string | null;
-    telephone: string | number;
+    phone: string | number;
     email?: string | null;
 
     amocrm_contact_id?: string | number | null;

@@ -209,18 +209,13 @@
 </template>
 
 <script setup lang="ts">
+    import type { IProduct } from '~~/interfaces/entities/product';
     import type { ISettings } from '~~/interfaces/settings';
 
     // data =================================================================
-    const baseUrl = useRuntimeConfig().public.urlBase;
+    const baseUrl = useRuntimeConfig().public.siteUrl;
 
     const route = useRoute();
-
-    const productsStore = useProductsStore();
-
-    productsStore.getProductById(route.params.id as string);
-
-    const { productsItem, singleProductStatus } = storeToRefs(productsStore);
 
     const { content: settings } = useCms<ISettings>('settings', [
         'disable_controls.*',
@@ -228,8 +223,18 @@
         'subscription_category.*',
     ]);
 
-    const product = computed(() => productsItem.value);
-    const status = computed(() => singleProductStatus.value);
+    const { item: product, status } = useCmsItem<IProduct>('products', route.params.id as string, [
+        'images.*',
+        'images.directus_files_id.*',
+        'category.*',
+        'category.categories_id.*',
+        'reason.*',
+        'reason.reason_id.*',
+        'style.*',
+        'style.styles_id.*',
+        'structure.*',
+        'structure.structure_id.*',
+    ]);
 
     const productCategories = computed(() =>
         product.value?.category?.map((el) => slugify(el.categories_id?.name as string))
@@ -269,7 +274,7 @@
     }));
 
     useHead(() => ({
-        title: `${product.value?.meta_title ?? product.value?.title} | Арабеска - магазин цветов в Самаре`,
+        title: `${product.value?.meta_title ?? product.value?.title ?? ''} | Арабеска - магазин цветов в Самаре`,
         meta: [
             { name: 'description', content: product.value?.meta_description },
             { name: 'keywords', content: product.value?.meta_keywords?.join(',') ?? '' },

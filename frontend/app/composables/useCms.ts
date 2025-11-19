@@ -19,7 +19,7 @@ export function useCms<T = any>(
         getCachedData(k, nuxtApp) {
             return nuxtApp.payload.data?.[k];
         },
-        immediate: !opts.force,
+        immediate: true,
         ...requestOpt,
     });
 

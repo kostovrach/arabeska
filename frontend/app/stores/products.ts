@@ -82,20 +82,16 @@ export const useProductsStore = defineStore('products', () => {
         });
     }
 
+    /**@deprecated лучше напрямую использовать useCmsItem */
     async function getProductById(id: number | string) {
         if (!id) {
             singleProductStatus.value = 'error';
             return;
         } else {
-            const { content: productRaw, status } = useCms<IProduct[]>(
+            const { item: product, status } = useCmsItem<IProduct>(
                 'products',
-                productRelations,
-                {
-                    lazy: true,
-                }
-            );
-            const product = computed(() =>
-                productRaw.value?.find((el) => el.id == id && el.available === true)
+                id,
+                productRelations
             );
 
             watchEffect(() => {
