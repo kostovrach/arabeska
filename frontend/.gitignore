@@ -18,6 +18,7 @@ logs
 .DS_Store
 .fleet
 .idea
+app/assets/svg/gen
 
 # Local env files
 .env

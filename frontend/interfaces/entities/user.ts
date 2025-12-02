@@ -1,3 +1,5 @@
+import { ICartItem } from './cart-item';
+
 export interface IUser {
     id: string | number;
 
@@ -7,6 +9,8 @@ export interface IUser {
     name?: string | null;
     phone: string | number;
     email?: string | null;
+    addresses?: string[] | null;
+    cart?: ICartItem[] | null;
 
     amocrm_contact_id?: string | number | null;
 }

@@ -18,7 +18,16 @@ export default defineNuxtConfig({
         },
         directus: {
             url: process.env.DIRECTUS_URL || '',
-            token: process.env.DIRECTUS_TOKEN || '',
+            readToken: process.env.DIRECTUS_READ_TOKEN || '',
+            crudToken: process.env.DIRECTUS_CRUD_TOKEN || '',
+        },
+        smsru: {
+            id: process.env.SMSRU_API_ID || '',
+            from: process.env.SMSRU_FROM || '',
+        },
+        jwt: {
+            secret: process.env.JWT_SECRET || '',
+            expiration: process.env.JWT_EXPIRATION || '7d',
         },
         amo: {
             domain: process.env.AMO_DOMAIN || '',

@@ -21,11 +21,12 @@
 
 <script setup lang="ts">
     import { NuxtLink } from '#components';
+    import type { RouteLocationAsPathGeneric, RouteLocationAsRelativeGeneric } from 'vue-router';
 
     interface IProps {
         type?: 'button' | 'a' | 'NuxtLink';
         logic?: 'double-line' | 'noanim' | 'basic';
-        to?: string;
+        to?: string | RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric;
         href?: string;
         buttonType?: string;
         target?: '' | '_blank' | '_self' | '_parent' | '_top';
@@ -35,7 +36,7 @@
     const props = withDefaults(defineProps<IProps>(), {
         type: 'a',
         logic: 'basic',
-        to: '/',
+        to: () => ({ name: 'index' }),
         href: '/',
         buttonType: 'button',
         target: '',
@@ -53,6 +54,7 @@
             default:
                 return 'a';
         }
+        
     });
 
     const attrs = computed(() => {
@@ -106,7 +108,7 @@
         justify-content: center;
         text-transform: uppercase;
         white-space: nowrap;
-        font-size: lineScale(32, 18, 480, 1440);
+        font-size: lineScale(24, 18, 480, 1440);
         font-weight: $fw-semi;
         color: $c-FFFFFF;
         border-radius: 50%;

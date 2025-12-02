@@ -493,7 +493,7 @@
             pointer-events: none;
         }
         &__button {
-            font-size: lineScale(24, 20, 480, 1440);
+            font-size: lineScale(20, 16, 480, 1440);
             pointer-events: auto;
         }
         &__counter {
