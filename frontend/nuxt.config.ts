@@ -24,10 +24,11 @@ export default defineNuxtConfig({
         smsru: {
             id: process.env.SMSRU_API_ID || '',
             from: process.env.SMSRU_FROM || '',
+            phoneCountry: process.env.SMSRU_COUNTRY || 'RU',
+            phoneFormat: process.env.SMSRU_FORMAT || 'E.164',
         },
         jwt: {
             secret: process.env.JWT_SECRET || '',
-            expiration: process.env.JWT_EXPIRATION || '7d',
         },
         amo: {
             domain: process.env.AMO_DOMAIN || '',

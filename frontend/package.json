@@ -44,6 +44,7 @@
     "devDependencies": {
         "@nuxt/types": "^2.18.1",
         "@nuxt/typescript-build": "^3.0.2",
+        "@types/jsonwebtoken": "^9.0.10",
         "@vue/eslint-config-prettier": "^10.2.0",
         "@yandex/ymaps3-types": "^1.0.17818622",
         "eslint-config-prettier": "^10.1.8",

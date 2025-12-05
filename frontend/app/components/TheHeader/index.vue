@@ -57,7 +57,11 @@
                         <SvgSprite type="search" :size="24" />
                     </button>
                 </ClientOnly>
-                <NuxtLink class="header__action header__action--profile" :to="{ name: 'index' }">
+                <NuxtLink
+                    class="header__action header__action--profile"
+                    :to="{ name: 'index' }"
+                    @click.prevent="openAuth"
+                >
                     <SvgSprite type="user" :size="24" />
                 </NuxtLink>
                 <NuxtLink class="header__action header__action--cart" :to="{ name: 'index' }">
@@ -75,7 +79,7 @@
     import type { ICategories } from '~~/interfaces/categories';
     // =====================================================================================
 
-    import { ModalsSearchbar, ModalsSideMenu, ModalsCatalog } from '#components';
+    import { ModalsSearchbar, ModalsSideMenu, ModalsCatalog, ModalsAuth } from '#components';
     import { useModal } from 'vue-final-modal';
     import type { IContacts } from '~~/interfaces/contacts';
 
@@ -110,6 +114,15 @@
         attrs: {
             onClose() {
                 closeCatalog();
+            },
+        },
+    });
+
+    const { open: openAuth, close: closeAuth } = useModal({
+        component: ModalsAuth,
+        attrs: {
+            onClose() {
+                closeAuth();
             },
         },
     });

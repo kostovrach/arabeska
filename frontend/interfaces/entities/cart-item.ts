@@ -1,4 +1,4 @@
-import { ProductModifiersType } from '../product-modifiers';
+import type { ProductModifiersType } from '../product-modifiers';
 
 export interface ICartItem {
     product_id: string | number;

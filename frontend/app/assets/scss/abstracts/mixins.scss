@@ -192,14 +192,14 @@
     }
 }
 
-@mixin close-button() {
+@mixin close-button($position: relative) {
     cursor: pointer;
     width: fit-content;
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    @include frame-scale($padding: rem(8), $border-radius: 50%);
+    @include frame-scale($position: $position, $padding: rem(8), $border-radius: 50%);
     @media (pointer: fine) {
         transition: rotate $td $tf;
         &:hover {
@@ -213,6 +213,8 @@
     position: relative;
     width: $size;
     height: $size;
+    min-width: $size;
+    min-height: $size;
     aspect-ratio: 1/1;
     border: rem(1) solid $accent-color;
     > input[type='checkbox'] {
@@ -220,8 +222,8 @@
         position: absolute;
         z-index: 1;
         inset: 0;
-        width: 100%;
-        height: 100%;
+        width: $size;
+        height: $size;
         appearance: none;
         -moz-appearance: none;
         -webkit-appearance: none;
@@ -422,13 +424,14 @@
     }
 }
 @mixin frame-scale(
+    $position: relative,
     $padding: rem(8) rem(16),
     $border-radius: rem(16),
     $finally-border-radius: inherit,
     $anim-color: $c-accent,
     $finally-color: $c-FFFFFF
 ) {
-    position: relative;
+    position: $position;
     border-radius: $border-radius;
     padding: $padding;
     transition:

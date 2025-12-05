@@ -1,4 +1,4 @@
-import { ICartItem } from './cart-item';
+import type { ICartItem } from './cart-item';
 
 export interface IUser {
     id: string | number;

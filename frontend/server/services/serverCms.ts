@@ -1,5 +1,20 @@
-import { directus } from './directus';
-import { readItems, readItem } from '@directus/sdk';
+import {
+    createDirectus,
+    rest,
+    staticToken,
+    readItems,
+    readItem,
+    createItem,
+    updateItem,
+    deleteItem,
+} from '@directus/sdk';
+
+const config = useRuntimeConfig();
+
+const API_URL = config.directus.url;
+const TOKEN = config.directus.crudToken;
+
+const directus = createDirectus(API_URL).with(rest()).with(staticToken(TOKEN));
 
 function expandFields(fields?: string[], relations?: string[]) {
     let f: string[] = [];
@@ -22,16 +37,13 @@ function expandFields(fields?: string[], relations?: string[]) {
 
 function normalize(res: any) {
     if (!res) return null;
-    // { data: [...] } или { data: { ... } }
     if (typeof res === 'object' && 'data' in res) {
         const d = res.data;
         if (Array.isArray(d)) return d;
         if (d && typeof d === 'object') return d;
         return null;
     }
-    // массив
     if (Array.isArray(res)) return res;
-    // одиночный объект
     if (typeof res === 'object') return res;
 
     return null;
@@ -75,4 +87,73 @@ export async function getDirectusItem<T = any>(
     const res = await directus.request(readItem(collection, id, query));
 
     return normalize(res);
+}
+
+export async function createDirectusItem<T = any>(
+    collection: string,
+    data: Partial<T>,
+    params: {
+        fields?: string[];
+        relations?: string[];
+        checkFilter?: any;
+    } = {}
+): Promise<T | null> {
+    try {
+        if (params.checkFilter) {
+            const existing = await getDirectusCollection<T>(collection, {
+                filter: params.checkFilter,
+                limit: 1,
+            });
+            if (existing && Array.isArray(existing) && existing.length > 0) {
+                return null;
+            }
+        }
+
+        const fields = expandFields(params.fields, params.relations);
+
+        const query: any = { fields };
+
+        const res = await directus.request(createItem(collection, data, query));
+
+        return normalize(res);
+    } catch (error) {
+        console.error(`Error creating item in ${collection}:`, error);
+        return null;
+    }
+}
+
+export async function updateDirectusItem<T = any>(
+    collection: string,
+    id: string | number,
+    data: Partial<T>,
+    params: {
+        fields?: string[];
+        relations?: string[];
+    } = {}
+): Promise<T | null> {
+    try {
+        const fields = expandFields(params.fields, params.relations);
+
+        const query: any = { fields };
+
+        const res = await directus.request(updateItem(collection, id, data, query));
+
+        return normalize(res);
+    } catch (error) {
+        console.error(`Error updating item in ${collection} (id: ${id}):`, error);
+        return null;
+    }
+}
+
+export async function deleteDirectusItem(
+    collection: string,
+    id: string | number
+): Promise<boolean> {
+    try {
+        await directus.request(deleteItem(collection, id));
+        return true;
+    } catch (error) {
+        console.error(`Error deleting item in ${collection} (id: ${id}):`, error);
+        return false;
+    }
 }

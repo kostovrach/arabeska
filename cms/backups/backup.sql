@@ -1366,19 +1366,21 @@ CREATE TABLE public.home_slider (
 ALTER TABLE public.home_slider OWNER TO directus;
 
 --
--- Name: opt_codes; Type: TABLE; Schema: public; Owner: directus
+-- Name: otp_codes; Type: TABLE; Schema: public; Owner: directus
 --
 
-CREATE TABLE public.opt_codes (
+CREATE TABLE public.otp_codes (
     id uuid NOT NULL,
     date_created timestamp with time zone,
+    date_updated timestamp with time zone,
+    code character varying(6) DEFAULT NULL::character varying,
     expires_at time without time zone,
     attempts integer,
-    code character varying(6)
+    phone character varying(255)
 );
 
 
-ALTER TABLE public.opt_codes OWNER TO directus;
+ALTER TABLE public.otp_codes OWNER TO directus;
 
 --
 -- Name: products; Type: TABLE; Schema: public; Owner: directus
@@ -5637,6 +5639,32 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 3601	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-02 14:34:05.959+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_policies	d551eb95-87ab-452b-8859-7b458040d910	http://localhost:8055
 3602	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-02 14:34:05.971+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_access	7d55f828-7ddb-4754-a766-63ab95f219d4	http://localhost:8055
 3603	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-02 14:34:05.979+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_users	2fe28487-d3cc-46c7-bb17-77b03923174f	http://localhost:8055
+3604	login	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 08:05:01.751+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_users	d28ea43e-0087-4264-aad7-f52329173439	http://localhost:8055
+3605	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:27:51.123+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	415	http://localhost:8055
+3606	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:27:51.147+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	416	http://localhost:8055
+3607	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:27:51.154+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	417	http://localhost:8055
+3608	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:27:51.164+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_collections	otp_codes	http://localhost:8055
+3609	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:08.613+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	418	http://localhost:8055
+3610	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:15.824+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	419	http://localhost:8055
+3611	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:24.735+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	420	http://localhost:8055
+3612	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:33.723+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_collections	opt_codes	http://localhost:8055
+3613	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:33.728+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	410	http://localhost:8055
+3614	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:33.73+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	411	http://localhost:8055
+3615	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:33.731+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	412	http://localhost:8055
+3616	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:33.732+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	413	http://localhost:8055
+3617	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:33.733+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	414	http://localhost:8055
+3618	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:28:42.776+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_collections	otp_codes	http://localhost:8055
+3619	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:37:08.527+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	418	http://localhost:8055
+3620	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:37:12.135+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	419	http://localhost:8055
+3621	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:37:17.198+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	420	http://localhost:8055
+3622	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:51.974+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	421	http://localhost:8055
+3623	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.163+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	415	http://localhost:8055
+3624	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.179+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	416	http://localhost:8055
+3625	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.191+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	417	http://localhost:8055
+3626	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.207+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	421	http://localhost:8055
+3627	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.226+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	418	http://localhost:8055
+3628	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.25+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	419	http://localhost:8055
+3629	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-05 09:55:54.297+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	directus_fields	420	http://localhost:8055
 \.
 
 
@@ -5685,7 +5713,7 @@ settings	settings	\N	\N	f	t	[{"language":"ru-RU","translation":"Общие на�
 pages	folder	Содержит коллекции, связанные с контентной частью сайта	\N	f	f	[{"language":"ru-RU","translation":"Страницы"}]	\N	t	\N	\N	\N	all	\N	\N	9	\N	open	\N	f
 seo_settings	folder	Содержит коллекции, связанные с SEO-настройками страниц	\N	f	f	[{"language":"ru-RU","translation":"SEO настройки"}]	\N	t	\N	\N	\N	all	\N	\N	10	\N	open	\N	f
 users	supervised_user_circle	\N	\N	f	f	\N	\N	t	\N	\N	\N	all	\N	\N	11	\N	open	\N	f
-opt_codes	timer	\N	\N	f	f	\N	\N	t	\N	\N	\N	all	\N	\N	12	\N	open	\N	f
+otp_codes	timer	\N	\N	f	f	\N	\N	t	\N	\N	\N	all	\N	\N	\N	\N	open	\N	f
 \.
 
 
@@ -5996,7 +6024,6 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 358	contact	banner_form_enabled	cast-boolean	boolean	{"label":"Отображать"}	boolean	\N	f	f	5	full	[{"language":"ru-RU","translation":"Форма обратной связи в баннере"}]	\N	\N	f	banner	\N	\N
 357	contact	notice-qsq-9c	alias,no-data	presentation-notice	{"color":"info","text":"В баннере зафиксирована форма обратной связи, ее можно отключить соответствующим чекбоксом и наполнить баннер текстовым содержимым. Для отключения баннера не заполняйте поле с изображением"}	\N	\N	f	f	1	full	\N	\N	\N	f	banner	\N	\N
 409	users	cart	cast-json	list	{"fields":[{"field":"product_id","name":"product_id","type":"string","meta":{"field":"product_id","type":"string","required":true,"interface":null}},{"field":"quantity","name":"quantity","type":"integer","meta":{"field":"quantity","type":"integer","required":false,"interface":null}},{"field":"modifier","name":"modifier","type":"string","meta":{"field":"modifier","type":"string","interface":null}}]}	\N	\N	f	f	10	full	\N	\N	\N	f	\N	\N	\N
-413	opt_codes	attempts	\N	input	\N	\N	\N	f	f	5	full	\N	\N	\N	f	\N	\N	\N
 340	contact	addresses	cast-json	list	{"fields":[{"field":"full_address","name":"full_address","type":"string","meta":{"field":"full_address","type":"string","required":true,"note":"Расширенный формат адреса вида: \\"г. Самара, ул. Ленина, 45, 443011, Россия\\". Для отображения на странице контактов","interface":"input","options":{"iconLeft":"globe_location_pin"}}},{"field":"short_address","name":"short_address","type":"string","meta":{"field":"short_address","type":"string","required":true,"note":"Короткий формат адреса вида \\"ул. Ленина, 45\\". Для отображения в других местах сайта","interface":"input","options":{"iconLeft":"globe_location_pin"}}},{"field":"working_hours","name":"working_hours","type":"string","meta":{"field":"working_hours","type":"string","interface":"input","options":{"format":"short","iconLeft":"timer"},"note":"График работы магазина. Например в формате: \\"Ежедневно с 09:00 до 20:00\\"","width":"half"}},{"field":"phone","name":"phone","type":"string","meta":{"field":"phone","type":"string","note":"Номер телефона магазина. Строго в формате \\"+7 (777) 777-77-77\\" или \\"8 (888) 888-88-88\\"","interface":"input","options":{"iconLeft":"phone_enabled"},"width":"half"}},{"field":"description","name":"description","type":"text","meta":{"field":"description","type":"text","note":"Короткое описание адреса. Можно указать подсказку как пройти до магазина или номер телефона","interface":"input-multiline"}},{"field":"point","name":"point","type":"json","meta":{"field":"point","type":"json","required":true,"note":"Метка магазина на карте. Необходимо указать одну метку (в левой боковой панели выбрать \\"Marker tool\\"). В противном случае будут отображена только первая метка","interface":"map","options":{"defaultView":{"center":{"lng":50.20264013797646,"lat":53.206962323819766},"zoom":10.781183929122525,"bearing":0,"pitch":0},"geometryType":"Point"},"display":"formatted-json-value"}}]}	formatted-json-value	\N	f	f	5	full	[{"language":"ru-RU","translation":"Адреса магазинов"}]	\N	\N	t	\N	\N	\N
 359	contact	copyright	\N	input	{"iconLeft":"copyright"}	formatted-value	{"prefix":"©"}	f	f	7	full	[{"language":"ru-RU","translation":"Метка копирайта"}]	Введите только текст вида "2019 Arabeska. Все права защищены". Символ "©" добавится автоматически	\N	t	contacts	\N	\N
 360	delivery_zones	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
@@ -6029,10 +6056,13 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 405	users	name	\N	input	\N	\N	\N	f	f	6	full	\N	\N	\N	f	\N	\N	\N
 406	users	email	\N	input	\N	\N	\N	f	f	8	full	\N	\N	\N	f	\N	\N	\N
 408	users	addresses	cast-json	tags	\N	\N	\N	f	f	9	full	\N	\N	\N	f	\N	\N	\N
-412	opt_codes	expires_at	\N	\N	\N	\N	\N	f	f	4	full	\N	\N	\N	f	\N	\N	\N
-410	opt_codes	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
-411	opt_codes	date_created	date-created	datetime	\N	datetime	{"relative":true}	t	t	2	full	\N	\N	\N	f	\N	\N	\N
-414	opt_codes	code	\N	input	\N	\N	\N	f	f	3	full	\N	\N	\N	f	\N	\N	\N
+415	otp_codes	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
+416	otp_codes	date_created	date-created	datetime	\N	datetime	{"relative":true}	t	t	2	half	\N	\N	\N	f	\N	\N	\N
+417	otp_codes	date_updated	date-updated	datetime	\N	datetime	{"relative":true}	t	t	3	half	\N	\N	\N	f	\N	\N	\N
+421	otp_codes	phone	\N	input	\N	\N	\N	f	f	4	full	\N	\N	\N	f	\N	\N	\N
+418	otp_codes	code	\N	input	\N	\N	\N	f	f	5	full	\N	\N	\N	t	\N	\N	\N
+419	otp_codes	expires_at	\N	\N	\N	\N	\N	f	f	6	full	\N	\N	\N	t	\N	\N	\N
+420	otp_codes	attempts	\N	input	\N	\N	\N	f	f	7	full	\N	\N	\N	t	\N	\N	\N
 \.
 
 
@@ -6240,10 +6270,6 @@ COPY public.directus_permissions (id, collection, action, permissions, validatio
 60	users	read	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
 61	users	update	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
 62	users	delete	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
-63	opt_codes	create	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
-64	opt_codes	read	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
-65	opt_codes	update	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
-66	opt_codes	delete	\N	\N	\N	*	d551eb95-87ab-452b-8859-7b458040d910
 \.
 
 
@@ -8695,6 +8721,7 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 2342	2520	directus_fields	275	{"id":275,"collection":"subscription","field":"date_updated","special":["date-updated"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":3,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"subscription","field":"date_updated","sort":3,"group":null}	\N	\N
 2343	2521	directus_fields	282	{"id":282,"collection":"subscription","field":"hero","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"frame_source"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":[{"language":"ru-RU","translation":"Хироскрин"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"subscription","field":"hero","sort":4,"group":null}	\N	\N
 2344	2522	directus_fields	287	{"id":287,"collection":"subscription","field":"faq_title","special":null,"interface":"input","options":{"iconLeft":"title"},"display":"formatted-value","display_options":null,"readonly":false,"hidden":false,"sort":1,"width":"full","translations":[{"language":"ru-RU","translation":"Заголовок блока вопросов"}],"note":null,"conditions":null,"required":true,"group":"faq","validation":null,"validation_message":null}	{"collection":"subscription","field":"faq_title","sort":1,"group":"faq"}	\N	\N
+3378	3605	directus_fields	415	{"sort":1,"hidden":true,"readonly":true,"interface":"input","special":["uuid"],"field":"id","collection":"otp_codes"}	{"sort":1,"hidden":true,"readonly":true,"interface":"input","special":["uuid"],"field":"id","collection":"otp_codes"}	\N	\N
 2345	2523	directus_fields	283	{"id":283,"collection":"subscription","field":"pricing","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"price_change"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":5,"width":"full","translations":[{"language":"ru-RU","translation":"Блок тарифов"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"subscription","field":"pricing","sort":5,"group":null}	\N	\N
 2346	2524	directus_fields	289	{"id":289,"collection":"subscription","field":"notice-_ojtay","special":["alias","no-data"],"interface":"presentation-notice","options":{"text":"При добавлении ссылок с номером телефона или почтой необходимо указать перед адресом ссылки префиксы \\"tel:\\" и \\"mailto:\\" соответственно, например \\"tel:+7(777)777-77-77\\" или \\"mailto:example@mail.com\\". Также, в адресах ссылок не должно присутствовать пробелов","color":"info"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":2,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":"faq","validation":null,"validation_message":null}	{"collection":"subscription","field":"notice-_ojtay","sort":2,"group":"faq"}	\N	\N
 2347	2525	directus_fields	286	{"id":286,"collection":"subscription","field":"faq","special":["alias","no-data","group"],"interface":"group-detail","options":{"headerIcon":"question_mark"},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":6,"width":"full","translations":[{"language":"ru-RU","translation":"Блок вопросов"}],"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"subscription","field":"faq","sort":6,"group":null}	\N	\N
@@ -9709,6 +9736,24 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 3375	3599	directus_permissions	65	{"policy":"d551eb95-87ab-452b-8859-7b458040d910","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"opt_codes","action":"update"}	{"policy":"d551eb95-87ab-452b-8859-7b458040d910","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"opt_codes","action":"update"}	\N	\N
 3376	3600	directus_permissions	66	{"policy":"d551eb95-87ab-452b-8859-7b458040d910","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"opt_codes","action":"delete"}	{"policy":"d551eb95-87ab-452b-8859-7b458040d910","permissions":null,"validation":null,"fields":["*"],"presets":null,"collection":"opt_codes","action":"delete"}	\N	\N
 3377	3602	directus_access	7d55f828-7ddb-4754-a766-63ab95f219d4	{"id":"7d55f828-7ddb-4754-a766-63ab95f219d4","role":null,"user":"2fe28487-d3cc-46c7-bb17-77b03923174f","policy":"d551eb95-87ab-452b-8859-7b458040d910","sort":1}	{"policy":"d551eb95-87ab-452b-8859-7b458040d910"}	\N	\N
+3379	3606	directus_fields	416	{"sort":2,"special":["date-created"],"interface":"datetime","readonly":true,"hidden":true,"width":"half","display":"datetime","display_options":{"relative":true},"field":"date_created","collection":"otp_codes"}	{"sort":2,"special":["date-created"],"interface":"datetime","readonly":true,"hidden":true,"width":"half","display":"datetime","display_options":{"relative":true},"field":"date_created","collection":"otp_codes"}	\N	\N
+3380	3607	directus_fields	417	{"sort":3,"special":["date-updated"],"interface":"datetime","readonly":true,"hidden":true,"width":"half","display":"datetime","display_options":{"relative":true},"field":"date_updated","collection":"otp_codes"}	{"sort":3,"special":["date-updated"],"interface":"datetime","readonly":true,"hidden":true,"width":"half","display":"datetime","display_options":{"relative":true},"field":"date_updated","collection":"otp_codes"}	\N	\N
+3381	3608	directus_collections	otp_codes	{"singleton":false,"collection":"otp_codes"}	{"singleton":false,"collection":"otp_codes"}	\N	\N
+3382	3609	directus_fields	418	{"sort":4,"collection":"otp_codes","field":"code","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"validation":null,"validation_message":null}	{"sort":4,"collection":"otp_codes","field":"code","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"validation":null,"validation_message":null}	\N	\N
+3383	3610	directus_fields	419	{"sort":5,"collection":"otp_codes","field":"expires_at","special":null,"interface":null,"options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"validation":null,"validation_message":null}	{"sort":5,"collection":"otp_codes","field":"expires_at","special":null,"interface":null,"options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"validation":null,"validation_message":null}	\N	\N
+3384	3611	directus_fields	420	{"sort":6,"collection":"otp_codes","field":"attempts","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"validation":null,"validation_message":null}	{"sort":6,"collection":"otp_codes","field":"attempts","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"validation":null,"validation_message":null}	\N	\N
+3385	3618	directus_collections	otp_codes	{"collection":"otp_codes","icon":"timer","note":null,"display_template":null,"hidden":false,"singleton":false,"translations":null,"archive_field":null,"archive_app_filter":true,"archive_value":null,"unarchive_value":null,"sort_field":null,"accountability":"all","color":null,"item_duplication_fields":null,"sort":null,"group":null,"collapse":"open","preview_url":null,"versioning":false}	{"icon":"timer"}	\N	\N
+3386	3619	directus_fields	418	{"id":418,"collection":"otp_codes","field":"code","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"code","required":true}	\N	\N
+3387	3620	directus_fields	419	{"id":419,"collection":"otp_codes","field":"expires_at","special":null,"interface":null,"options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":5,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"expires_at","required":true}	\N	\N
+3388	3621	directus_fields	420	{"id":420,"collection":"otp_codes","field":"attempts","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":6,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"attempts","required":true}	\N	\N
+3389	3622	directus_fields	421	{"sort":7,"interface":"input","special":null,"collection":"otp_codes","field":"phone"}	{"sort":7,"interface":"input","special":null,"collection":"otp_codes","field":"phone"}	\N	\N
+3390	3623	directus_fields	415	{"id":415,"collection":"otp_codes","field":"id","special":["uuid"],"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"id","sort":1,"group":null}	\N	\N
+3391	3624	directus_fields	416	{"id":416,"collection":"otp_codes","field":"date_created","special":["date-created"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":2,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"date_created","sort":2,"group":null}	\N	\N
+3392	3625	directus_fields	417	{"id":417,"collection":"otp_codes","field":"date_updated","special":["date-updated"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":3,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"date_updated","sort":3,"group":null}	\N	\N
+3393	3626	directus_fields	421	{"id":421,"collection":"otp_codes","field":"phone","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":4,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"phone","sort":4,"group":null}	\N	\N
+3394	3627	directus_fields	418	{"id":418,"collection":"otp_codes","field":"code","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":5,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"code","sort":5,"group":null}	\N	\N
+3395	3628	directus_fields	419	{"id":419,"collection":"otp_codes","field":"expires_at","special":null,"interface":null,"options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":6,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"expires_at","sort":6,"group":null}	\N	\N
+3396	3629	directus_fields	420	{"id":420,"collection":"otp_codes","field":"attempts","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":7,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"otp_codes","field":"attempts","sort":7,"group":null}	\N	\N
 \.
 
 
@@ -9726,8 +9771,7 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 --
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
-ES8NWWfpUeen-AawF_9KRa2YUKDGzMZ4MYdAlKhYgkFtX-ZMwFrDqicfnuGdNoVY	d28ea43e-0087-4264-aad7-f52329173439	2025-12-02 12:35:34.724+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	1EeSSF1DBe_1B5MbX7V7D7ikL1TW34H9dNJVQSuYd7sIQwQ6iEPsbJa7nuEcOETG
-1EeSSF1DBe_1B5MbX7V7D7ikL1TW34H9dNJVQSuYd7sIQwQ6iEPsbJa7nuEcOETG	d28ea43e-0087-4264-aad7-f52329173439	2025-12-03 12:35:24.724+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
+nlf5lqqs3doX1gJM13UR4mcFcDBd9s96Leki5Ol5vcDXh1gfZw2PglxlHAs_75Z4	d28ea43e-0087-4264-aad7-f52329173439	2025-12-12 08:05:01.724+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
 \.
 
 
@@ -9762,7 +9806,7 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	FxohyklfNM_RpJdS7mT8flSiYZIG4W6w	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	\N	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-12-02 12:35:24.742+00	/settings/data-model/users/cart	default	\N	\N	t	\N	\N	\N	\N	\N	auto
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	\N	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-12-05 08:05:01.766+00	/settings/data-model/otp_codes	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 2fe28487-d3cc-46c7-bb17-77b03923174f	backend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	ze67Tiy3rUT7HwEclV3_7bd-cVnabDRp	\N	\N	default	\N	\N	f	\N	\N	\N	\N	\N	auto
 \.
 
@@ -9975,10 +10019,10 @@ eb5341ca-5d2b-4097-892d-e918676f31da	Цветы, которые говорят �
 
 
 --
--- Data for Name: opt_codes; Type: TABLE DATA; Schema: public; Owner: directus
+-- Data for Name: otp_codes; Type: TABLE DATA; Schema: public; Owner: directus
 --
 
-COPY public.opt_codes (id, date_created, expires_at, attempts, code) FROM stdin;
+COPY public.otp_codes (id, date_created, date_updated, code, expires_at, attempts, phone) FROM stdin;
 \.
 
 
@@ -10309,14 +10353,14 @@ COPY topology.layer (topology_id, layer_id, schema_name, table_name, feature_col
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 3603, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 3629, true);
 
 
 --
 -- Name: directus_fields_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_fields_id_seq', 414, true);
+SELECT pg_catalog.setval('public.directus_fields_id_seq', 421, true);
 
 
 --
@@ -10351,7 +10395,7 @@ SELECT pg_catalog.setval('public.directus_relations_id_seq', 75, true);
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 3377, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 3396, true);
 
 
 --
@@ -10929,11 +10973,19 @@ ALTER TABLE ONLY public.home_slider
 
 
 --
--- Name: opt_codes opt_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: directus
+-- Name: otp_codes otp_codes_phone_unique; Type: CONSTRAINT; Schema: public; Owner: directus
 --
 
-ALTER TABLE ONLY public.opt_codes
-    ADD CONSTRAINT opt_codes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.otp_codes
+    ADD CONSTRAINT otp_codes_phone_unique UNIQUE (phone);
+
+
+--
+-- Name: otp_codes otp_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: directus
+--
+
+ALTER TABLE ONLY public.otp_codes
+    ADD CONSTRAINT otp_codes_pkey PRIMARY KEY (id);
 
 
 --
@@ -11086,6 +11138,13 @@ ALTER TABLE ONLY public.wholesale
 
 ALTER TABLE ONLY public.wholesale_wholesale_advant
     ADD CONSTRAINT wholesale_wholesale_advant_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: otp_codes_phone_index; Type: INDEX; Schema: public; Owner: directus
+--
+
+CREATE INDEX otp_codes_phone_index ON public.otp_codes USING btree (phone);
 
 
 --

@@ -54,7 +54,6 @@
             default:
                 return 'a';
         }
-        
     });
 
     const attrs = computed(() => {
