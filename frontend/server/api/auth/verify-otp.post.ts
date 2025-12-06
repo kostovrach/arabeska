@@ -11,7 +11,6 @@ import {
 import type { IUser } from '~~/interfaces/entities/user';
 import type { IOtp } from '~~/interfaces/entities/otp';
 import type { PhoneNumber, CountryCode } from 'libphonenumber-js';
-import type {} from 'jsonwebtoken';
 
 const config = useRuntimeConfig();
 
@@ -28,7 +27,7 @@ const phoneFormat = config.smsru.phoneFormat as
     | 'IDD';
 
 export default defineEventHandler(
-    async (event): Promise<{ error: string } | { success: boolean; user: IUser }> => {
+    async (event): Promise<{ status: number; error?: string; success: boolean; user?: IUser }> => {
         const { phone, code } = await readBody<IOtp>(event);
 
         let parsedPhone: PhoneNumber;
@@ -36,10 +35,10 @@ export default defineEventHandler(
         try {
             parsedPhone = parsePhoneNumberWithError(phone, phoneCountry);
             if (!parsedPhone.isValid()) {
-                return { error: 'Invalid phone number' };
+                return { status: 400, error: 'Invalid phone number', success: false };
             }
         } catch {
-            return { error: 'Phone validation error' };
+            return { status: 500, error: 'Phone validation error', success: false };
         }
 
         const formattedPhone = parsedPhone.format(phoneFormat);
@@ -51,24 +50,32 @@ export default defineEventHandler(
             limit: 1,
         });
         const otp = Array.isArray(otps) ? otps[0] : null;
-        if (!otp || new Date(otp.expires_at) < new Date() || otp.code !== code) {
+        if (
+            !otp ||
+            new Date(otp.expires_at + (otp.expires_at.endsWith('Z') ? '' : 'Z')) < new Date() ||
+            otp.code !== code
+        ) {
             if (otp) {
                 const newAttempts = otp.attempts++;
                 const updatedOtp = await updateDirectusItem<IOtp>('otp_codes', otp.id, {
                     attempts: newAttempts,
                 });
                 if (!updatedOtp) {
-                    return { error: 'Failed to update attempts' };
+                    return { status: 500, error: 'Failed to update attempts', success: false };
                 }
                 if (newAttempts >= maxAttemps) {
                     const deleted = await deleteDirectusItem('otp_codes', otp.id);
                     if (!deleted) {
-                        return { error: 'Failed to delete OTP after max attempts' };
+                        return {
+                            status: 500,
+                            error: 'Failed to delete OTP after max attempts',
+                            success: false,
+                        };
                     }
-                    return { error: 'Max attempts reached' };
+                    return { status: 429, error: 'Max attempts reached', success: false };
                 }
             }
-            return { error: 'Invalid or expired code' };
+            return { status: 403, error: 'Invalid or expired code', success: false };
         }
 
         // Find/create user
@@ -91,7 +98,7 @@ export default defineEventHandler(
                 }
             );
             if (!user) {
-                return { error: 'Failed to create user' };
+                return { status: 500, error: 'Failed to create user', success: false };
             }
         }
 
@@ -108,6 +115,6 @@ export default defineEventHandler(
             path: '/',
         });
 
-        return { success: true, user };
+        return { status: 200, success: true, user };
     }
 );

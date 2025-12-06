@@ -44,6 +44,8 @@ export default defineEventHandler(
         // 1 min cooldown
         if (lastOtp && new Date(lastOtp.date_created).getTime() > Date.now() - 60 * 1000) {
             return { status: 429, error: 'Cooldown: wait 1 minute', success: false };
+        } else if (lastOtp && new Date(lastOtp.date_created).getTime() < Date.now() - 60 * 1000) {
+            return { status: 208, error: 'Otp already exists', success: false };
         }
 
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digits

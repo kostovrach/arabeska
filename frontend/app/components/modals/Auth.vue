@@ -8,7 +8,13 @@
                 <LoadSpinner />
             </div>
             <div class="modal-auth__container">
-                <div class="modal-auth__step modal-auth__step--auth">
+                <div
+                    :class="[
+                        'modal-auth__step',
+                        'modal-auth__step--auth',
+                        { active: authStep === 'auth' },
+                    ]"
+                >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Вход в личный кабинет</span>
                         <p class="modal-auth__desc">
@@ -27,7 +33,7 @@
                                 name="auth-phone"
                                 @focus="authErrors.phone = false"
                             />
-                            <div v-if="authErrors.phone" class="modal-auth__error">
+                            <div v-if="authErrors.phone" class="modal-auth__error" style="left: 5%">
                                 <span>i</span>
                                 <p>Необходимо заполнить поле</p>
                             </div>
@@ -59,28 +65,41 @@
                                 Согласен с политикой конфиденциальности и обработки персональных
                                 данных
                             </p>
-                            <div v-if="authErrors.agreement" class="modal-auth__error">
+                            <div
+                                v-if="authErrors.agreement"
+                                class="modal-auth__error"
+                                style="left: -8.5%"
+                            >
                                 <span>i</span>
                                 <p>Без вашего согласия мы не сможем продолжить</p>
                             </div>
                         </label>
                     </form>
                 </div>
-                <div class="modal-auth__step modal-auth__step--otp">
+                <div
+                    :class="[
+                        'modal-auth__step',
+                        'modal-auth__step--otp',
+                        { active: authStep === 'otp' },
+                    ]"
+                >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Введите код</span>
                         <p class="modal-auth__desc">
                             Отправили код на номер {{ partialHiddenPhone(authData.phone) }}
                         </p>
-                        <button type="button" class="modal-auth__button-swch">
+                        <button
+                            type="button"
+                            class="modal-auth__button--swch"
+                            @click.prevent="authStep = 'auth'"
+                        >
                             <span>
-                                <SvgSprite type="arrow" :size="14" style="rotate: -180deg" />
+                                <SvgSprite type="arrow" :size="12" style="rotate: -180deg" />
                             </span>
                             <span>Изменить</span>
                         </button>
                     </div>
                     <form id="otp" class="modal-auth__form">
-                        {{ authOtp.code }}
                         <InputOtp
                             v-model="authOtp.code"
                             id="auth-otp"
@@ -97,6 +116,7 @@
                                     :name="`auth-otp-item-${index}`"
                                     class="modal-auth__input--otp-item"
                                     placeholder="0"
+                                    @input="submitOtp"
                                 />
                                 <span
                                     v-if="index === 3"
@@ -108,9 +128,14 @@
                             class="modal-auth__button modal-auth__button--otp"
                             type="submit"
                             @click.prevent="submitPhone"
+                            :disabled="!retryState.isAllowed"
                         >
                             <span>Отправить код повторно</span>
+                            <span v-if="retryState.timer.length">{{ retryState.timer }}</span>
                         </button>
+                        <p class="modal-auth__info" v-if="otpError && otpError.length">
+                            {{ otpError }}
+                        </p>
                     </form>
                 </div>
             </div>
@@ -123,6 +148,7 @@
 
     // types ===============================================================
     import type { IContacts } from '~~/interfaces/contacts';
+    type AuthStep = 'auth' | 'otp' | 'authorized';
     // =====================================================================
 
     // data ================================================================
@@ -135,7 +161,13 @@
     }>();
 
     const isLoading = ref(false);
-    const step = ref<'auth' | 'otp'>('auth');
+    const authStep = ref<AuthStep>('auth');
+    const retryTimerId = ref<NodeJS.Timeout | null>(null);
+
+    const retryState = reactive({
+        timer: '',
+        isAllowed: true,
+    });
 
     const authData = reactive({
         phone: '',
@@ -148,15 +180,60 @@
         agreement: false,
     });
 
+    const otpError = ref('');
+
     const authOtp = reactive({
         code: '',
     });
 
     // =====================================================================
 
+    // methods =============================================================
+    function setRetryTimer(): void {
+        if (retryTimerId.value !== null) {
+            clearInterval(retryTimerId.value);
+            retryTimerId.value = null;
+        }
+
+        let remainingSeconds = 120;
+
+        const formatTime = (seconds: number): string => {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        };
+
+        retryState.isAllowed = false;
+        retryState.timer = formatTime(remainingSeconds);
+
+        if (import.meta.client) {
+            retryTimerId.value = setInterval(() => {
+                remainingSeconds -= 1;
+
+                if (remainingSeconds <= 0) {
+                    clearInterval(retryTimerId.value!);
+                    retryTimerId.value = null;
+
+                    retryState.isAllowed = true;
+                    retryState.timer = '';
+                    return;
+                }
+
+                retryState.timer = formatTime(remainingSeconds);
+            }, 1000);
+        }
+    }
+    // =====================================================================
+
     // proccessing =========================================================
-    const submitPhone = async () => {
+    const submitPhone = async (): Promise<void> => {
         isLoading.value = true;
+        authOtp.code = '';
+        if (!retryState.isAllowed && authStep.value === 'otp') {
+            isLoading.value = false;
+            return;
+        }
+
         if (!authData.agreement || !authData.phone || !authData.phone.length) {
             if (!authData.agreement) authErrors.agreement = true;
             if (!authData.phone || !authData.phone.length) authErrors.phone = true;
@@ -183,9 +260,15 @@
                             'Слишком частые запросы запрещены, повторите попытку через 60 секунд';
                         break;
                     case 200:
-                        authData.phone = '';
+                        authStep.value = 'otp';
+                        setRetryTimer();
+                        break;
+                    case 208:
+                        authStep.value = 'otp';
+                        setRetryTimer();
+                        break;
                     default:
-                        authErrors.general = '';
+                        authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
                         break;
                 }
             } catch {
@@ -195,7 +278,59 @@
             }
         }
     };
+
+    const submitOtp = async (): Promise<void> => {
+        if (authOtp.code.length !== 6) return;
+        isLoading.value = true;
+        try {
+            const res = await $fetch<{ status: number; error?: string; success: boolean }>(
+                '/api/auth/verify-otp',
+                {
+                    method: 'POST',
+                    body: {
+                        phone: authData.phone,
+                        code: authOtp.code,
+                    },
+                }
+            );
+
+            switch (res.status) {
+                case 500:
+                    otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                    break;
+                case 400:
+                    otpError.value = `Некорректный номер телефона, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                    break;
+                case 429:
+                    otpError.value = `Достигнуто максимальное количество попыток, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                    break;
+                case 403:
+                    otpError.value = 'Неверный код';
+                    break;
+                case 200:
+                    authOtp.code = '';
+                    authStep.value = 'authorized';
+                    emit('close');
+                    break;
+                default:
+                    otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                    break;
+            }
+        } catch {
+            otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+        } finally {
+            isLoading.value = false;
+        }
+    };
     // =====================================================================
+
+    watch(authStep, () => (authOtp.code = ''));
+
+    onBeforeUnmount(() => {
+        if (retryTimerId.value !== null) {
+            clearInterval(retryTimerId.value);
+        }
+    });
 </script>
 
 <style scoped lang="scss">
@@ -241,7 +376,6 @@
             position: absolute;
             z-index: 5;
             top: 115%;
-            left: -7%;
             display: flex;
             align-items: flex-start;
             gap: rem(8);
@@ -283,6 +417,25 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: rem(32);
+            background-color: $c-FFFFFF;
+            transition: translate $td $tf;
+            &--auth {
+                position: relative;
+                z-index: 2;
+                &:not(.active) {
+                    translate: -110% 0;
+                    pointer-events: none;
+                }
+            }
+            &--otp {
+                position: absolute;
+                z-index: 3;
+                inset: 0;
+                &:not(.active) {
+                    translate: 110% 0;
+                    pointer-events: none;
+                }
+            }
         }
         &__titlebox {
             display: flex;
@@ -344,15 +497,17 @@
                 }
             }
             &--otp {
+                width: 100%;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
                 gap: rem(8);
                 &-item {
-                    width: lineScale(64, 48, 480, 1920);
+                    width: lineScale(56, 48, 480, 1920);
                     aspect-ratio: 1;
                     text-align: center;
                     font-size: lineScale(18, 16, 480, 1920);
-                    border-radius: rem(16);
+                    border-radius: rem(12);
                     background-color: rgba($c-D4E1E7, 0.25);
                     border: rem(2) solid transparent;
                     &::placeholder {
@@ -367,11 +522,30 @@
                         background-color: transparent;
                     }
                 }
+                &-divider {
+                    width: rem(16);
+                    height: rem(2);
+                    background-color: $c-082535;
+                    opacity: 0.5;
+                }
             }
         }
         &__button {
             margin-top: rem(32);
             justify-content: center;
+            &:disabled {
+                pointer-events: none;
+                opacity: 0.75;
+            }
+            &--swch {
+                cursor: pointer;
+                width: fit-content;
+                display: flex;
+                align-items: center;
+                gap: rem(6);
+                font-size: lineScale(16, 14, 480, 1920);
+                font-weight: $fw-semi;
+            }
             &--auth {
                 @include button-primary(
                     $width: 100%,
