@@ -18,7 +18,7 @@ const phoneFormat = config.smsru.phoneFormat as
     | 'IDD';
 
 export default defineEventHandler(
-    async (event): Promise<{ error: string } | { success: boolean }> => {
+    async (event): Promise<{ status: number; error?: string; success: boolean }> => {
         const { phone } = await readBody<{ phone: string }>(event);
 
         let parsedPhone: PhoneNumber;
@@ -26,10 +26,10 @@ export default defineEventHandler(
         try {
             parsedPhone = parsePhoneNumberWithError(phone, phoneCountry);
             if (!parsedPhone.isValid()) {
-                return { error: 'Invalid phone number' };
+                return { status: 400, error: 'Invalid phone number', success: false };
             }
         } catch {
-            return { error: 'Phone validation error' };
+            return { status: 500, error: 'Phone validation error', success: false };
         }
         const formattedPhone = parsedPhone.format(phoneFormat);
 
@@ -43,7 +43,7 @@ export default defineEventHandler(
 
         // 1 min cooldown
         if (lastOtp && new Date(lastOtp.date_created).getTime() > Date.now() - 60 * 1000) {
-            return { error: 'Cooldown: wait 1 minute' };
+            return { status: 429, error: 'Cooldown: wait 1 minute', success: false };
         }
 
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digits
@@ -55,15 +55,17 @@ export default defineEventHandler(
             attempts: 0,
         });
         if (!createOtp) {
-            return { error: 'Failed to create OTP' };
+            return { status: 500, error: 'Failed to create OTP', success: false };
         }
 
         // test
-        const smsUrl = `https://sms.ru/sms/send?api_id=${smsruApiId}&to=${formattedPhone}&msg=Ваш код для входа на сайт: ${otpCode}&from=${smsruFrom}&test=1}`;
+        const smsUrl = `https://sms.ru/sms/send?api_id=${smsruApiId}&to=${formattedPhone}&msg=Ваш код для входа на сайт: ${otpCode}&from=${smsruFrom}&test=1&json=1}`;
         const smsRes = await fetch(smsUrl);
         const smsResult = await smsRes.text();
+        console.log(smsResult);
+
         console.log('Ваш код для входа на сайт (dev):', otpCode);
 
-        return { success: true };
+        return { status: 200, success: true };
     }
 );

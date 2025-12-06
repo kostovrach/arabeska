@@ -20,6 +20,8 @@
     $font-size: lineScale(24, 18, 480, 1440),
     $color: currentColor,
     $border-color: currentColor,
+    $anim-border-color: transparent,
+    $background: transparent,
     $padding: rem(18) rem(24),
     $border-radius: rem(64),
     $hover-color: $c-FFFFFF,
@@ -41,6 +43,7 @@
     border: rem(2) solid $border-color;
     border-radius: $border-radius;
     padding: $padding;
+    background-color: $background;
     transition:
         color $td $tf,
         border-color $td $tf;
@@ -70,7 +73,7 @@
     @media (pointer: fine) {
         &:hover {
             color: $hover-color;
-            border-color: transparent;
+            border-color: $anim-border-color;
             &::before {
                 scale: 1;
                 opacity: 1;

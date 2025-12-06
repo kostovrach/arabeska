@@ -35,12 +35,10 @@
                         <span><SvgSprite type="arrow" :size="16" /></span>
                     </NuxtLink>
                 </div>
-                <div
+                <LoadSpinner
                     v-if="!searchResult?.length && inputModel && isLoading"
                     class="searchbar__result-loading"
-                >
-                    <span></span>
-                </div>
+                ></LoadSpinner>
                 <ul class="searchbar__result-list">
                     <li
                         v-for="product in searchResult"
@@ -135,7 +133,7 @@
 
     const productsStore = useProductsStore();
 
-    const inputSetFocus = (): void => inputRef.value?.focus();
+    // const inputSetFocus = (): void => inputRef.value?.focus();
 
     const search = useDebounceFn(async () => {
         searchResult.value = (await productsStore.searchProductsFuzzy(inputModel.value)).slice(
@@ -310,34 +308,34 @@
                     }
                 }
             }
-            &-loading {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                > span {
-                    position: relative;
-                    display: block;
-                    width: rem(40);
-                    aspect-ratio: 1;
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        inset: 0;
-                        border-radius: 50%;
-                        border: {
-                            top: rem(2) solid $c-accent;
-                            right: rem(2) solid transparent;
-                        }
-                        animation: loader 1s linear infinite;
-                    }
-                }
-                @keyframes loader {
-                    to {
-                        rotate: 360deg;
-                    }
-                }
-            }
+            // &-loading {
+            //     width: 100%;
+            //     display: flex;
+            //     align-items: center;
+            //     justify-content: center;
+            //     > span {
+            //         position: relative;
+            //         display: block;
+            //         width: rem(40);
+            //         aspect-ratio: 1;
+            //         &::before {
+            //             content: '';
+            //             position: absolute;
+            //             inset: 0;
+            //             border-radius: 50%;
+            //             border: {
+            //                 top: rem(2) solid $c-accent;
+            //                 right: rem(2) solid transparent;
+            //             }
+            //             animation: loader 1s linear infinite;
+            //         }
+            //     }
+            //     @keyframes loader {
+            //         to {
+            //             rotate: 360deg;
+            //         }
+            //     }
+            // }
             &-empty {
                 display: flex;
                 flex-direction: column;

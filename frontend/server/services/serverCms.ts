@@ -117,7 +117,7 @@ export async function createDirectusItem<T = any>(
 
         return normalize(res);
     } catch (error) {
-        console.error(`Error creating item in ${collection}:`, error);
+        console.error(`Error creating item in ${collection}:`, JSON.stringify(error, null, 2));
         return null;
     }
 }

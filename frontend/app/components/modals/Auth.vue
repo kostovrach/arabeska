@@ -4,6 +4,9 @@
             <button class="modal-auth__close-btn" type="button" @click="emit('close')">
                 <SvgSprite type="cross" :size="24" />
             </button>
+            <div class="modal-auth__loading" v-if="isLoading">
+                <LoadSpinner />
+            </div>
             <div class="modal-auth__container">
                 <div class="modal-auth__step modal-auth__step--auth">
                     <div class="modal-auth__titlebox">
@@ -29,9 +32,19 @@
                                 <p>Необходимо заполнить поле</p>
                             </div>
                         </div>
-                        <button class="modal-auth__button" type="submit">
+                        <button
+                            class="modal-auth__button modal-auth__button--auth"
+                            type="submit"
+                            @click.prevent="submitPhone"
+                        >
                             <span>Получить код</span>
                         </button>
+                        <p
+                            class="modal-auth__info"
+                            v-if="authErrors.general && authErrors.general.length"
+                        >
+                            {{ authErrors.general }}
+                        </p>
                         <label class="modal-auth__agreement" for="auth-agreement">
                             <div class="modal-auth__agreement-checkbox">
                                 <input
@@ -53,7 +66,53 @@
                         </label>
                     </form>
                 </div>
-                <div class="modal-auth__step modal-auth__step--otp"></div>
+                <div class="modal-auth__step modal-auth__step--otp">
+                    <div class="modal-auth__titlebox">
+                        <span class="modal-auth__title">Введите код</span>
+                        <p class="modal-auth__desc">
+                            Отправили код на номер {{ partialHiddenPhone(authData.phone) }}
+                        </p>
+                        <button type="button" class="modal-auth__button-swch">
+                            <span>
+                                <SvgSprite type="arrow" :size="14" style="rotate: -180deg" />
+                            </span>
+                            <span>Изменить</span>
+                        </button>
+                    </div>
+                    <form id="otp" class="modal-auth__form">
+                        {{ authOtp.code }}
+                        <InputOtp
+                            v-model="authOtp.code"
+                            id="auth-otp"
+                            class="modal-auth__input modal-auth__input--otp"
+                            :length="6"
+                            integerOnly
+                        >
+                            <template #default="{ attrs, events, index }">
+                                <input
+                                    v-bind="attrs"
+                                    v-on="events"
+                                    :id="`auth-otp-item-${index}`"
+                                    type="text"
+                                    :name="`auth-otp-item-${index}`"
+                                    class="modal-auth__input--otp-item"
+                                    placeholder="0"
+                                />
+                                <span
+                                    v-if="index === 3"
+                                    class="modal-auth__input--otp-divider"
+                                ></span>
+                            </template>
+                        </InputOtp>
+                        <button
+                            class="modal-auth__button modal-auth__button--otp"
+                            type="submit"
+                            @click.prevent="submitPhone"
+                        >
+                            <span>Отправить код повторно</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </VueFinalModal>
@@ -62,9 +121,21 @@
 <script setup lang="ts">
     import { VueFinalModal } from 'vue-final-modal';
 
+    // types ===============================================================
+    import type { IContacts } from '~~/interfaces/contacts';
+    // =====================================================================
+
+    // data ================================================================
+    const { content: contacts } = useCms<IContacts>('contact');
+    // =====================================================================
+
+    // state ===============================================================
     const emit = defineEmits<{
         (e: 'close'): void;
     }>();
+
+    const isLoading = ref(false);
+    const step = ref<'auth' | 'otp'>('auth');
 
     const authData = reactive({
         phone: '',
@@ -72,11 +143,59 @@
     });
 
     const authErrors = reactive({
-        phone: true,
-        agreement: true,
+        general: '',
+        phone: false,
+        agreement: false,
     });
 
-    const submitPhone = () => {};
+    const authOtp = reactive({
+        code: '',
+    });
+
+    // =====================================================================
+
+    // proccessing =========================================================
+    const submitPhone = async () => {
+        isLoading.value = true;
+        if (!authData.agreement || !authData.phone || !authData.phone.length) {
+            if (!authData.agreement) authErrors.agreement = true;
+            if (!authData.phone || !authData.phone.length) authErrors.phone = true;
+            isLoading.value = false;
+            return;
+        } else {
+            try {
+                const res = await $fetch<{ status: number; error?: string; success: boolean }>(
+                    '/api/auth/send-otp',
+                    {
+                        method: 'POST',
+                        body: authData,
+                    }
+                );
+                switch (res.status) {
+                    case 500:
+                        authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                        break;
+                    case 400:
+                        authErrors.general = `Некорректный номер телефона, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                        break;
+                    case 429:
+                        authErrors.general =
+                            'Слишком частые запросы запрещены, повторите попытку через 60 секунд';
+                        break;
+                    case 200:
+                        authData.phone = '';
+                    default:
+                        authErrors.general = '';
+                        break;
+                }
+            } catch {
+                authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+            } finally {
+                isLoading.value = false;
+            }
+        }
+    };
+    // =====================================================================
 </script>
 
 <style scoped lang="scss">
@@ -96,31 +215,27 @@
         border-radius: rem(32);
         overflow-x: hidden;
         &__close-btn {
+            z-index: 5;
             top: rem(16);
             right: rem(16);
             @include close-button($position: absolute);
         }
-        &__container {
-            position: relative;
-        }
-        &__step {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: rem(32);
-        }
-        &__titlebox {
+        &__loading {
+            position: absolute;
+            z-index: 6;
+            inset: 0;
             display: flex;
-            flex-direction: column;
-            gap: rem(16);
+            align-items: center;
+            justify-content: center;
+            background-color: rgba($c-000000, 0.5);
         }
-        &__title {
-            font-size: lineScale(32, 24, 480, 1920);
-        }
-        &__desc {
-            font-family: 'Inter', sans-serif;
-            font-size: lineScale(16, 14, 480, 1920);
-            line-height: 1.3;
-            opacity: 0.5;
+        &__info {
+            color: $c-F5142B;
+            font-size: rem(1);
+            line-height: 1.4;
+            text-align: center;
+            text-wrap: balance;
+            margin-top: rem(16);
         }
         &__error {
             position: absolute;
@@ -160,6 +275,28 @@
                 background-color: $c-accent;
                 border-radius: 50%;
             }
+        }
+        &__container {
+            position: relative;
+        }
+        &__step {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: rem(32);
+        }
+        &__titlebox {
+            display: flex;
+            flex-direction: column;
+            gap: rem(16);
+        }
+        &__title {
+            font-size: lineScale(32, 24, 480, 1920);
+        }
+        &__desc {
+            font-family: 'Inter', sans-serif;
+            font-size: lineScale(16, 14, 480, 1920);
+            line-height: 1.3;
+            opacity: 0.5;
         }
         &__form {
             font-family: 'Inter', sans-serif;
@@ -206,18 +343,58 @@
                     }
                 }
             }
+            &--otp {
+                display: flex;
+                align-items: center;
+                gap: rem(8);
+                &-item {
+                    width: lineScale(64, 48, 480, 1920);
+                    aspect-ratio: 1;
+                    text-align: center;
+                    font-size: lineScale(18, 16, 480, 1920);
+                    border-radius: rem(16);
+                    background-color: rgba($c-D4E1E7, 0.25);
+                    border: rem(2) solid transparent;
+                    &::placeholder {
+                        opacity: 0;
+                    }
+                    &:focus {
+                        border-color: $c-accent;
+                        background-color: transparent;
+                    }
+                    &:not(:placeholder-shown) {
+                        border-color: $c-98BBD7;
+                        background-color: transparent;
+                    }
+                }
+            }
         }
         &__button {
             margin-top: rem(32);
             justify-content: center;
-            @include button-primary(
-                $width: 100%,
-                $gap: rem(8),
-                $font-size: lineScale(18, 16, 480, 1920),
-                $padding: rem(12) rem(40),
-                $border-color: $c-D4E1E7,
-                $anim-color: $c-accent
-            );
+            &--auth {
+                @include button-primary(
+                    $width: 100%,
+                    $gap: rem(8),
+                    $font-size: lineScale(18, 16, 480, 1920),
+                    $padding: rem(12) rem(40),
+                    $border-color: $c-D4E1E7,
+                    $anim-color: $c-accent
+                );
+            }
+            &--otp {
+                @include button-primary(
+                    $width: 100%,
+                    $gap: rem(8),
+                    $font-size: lineScale(18, 16, 480, 1920),
+                    $color: $c-FFFFFF,
+                    $padding: rem(12) rem(40),
+                    $background: $c-082535,
+                    $border-color: transparent,
+                    $anim-border-color: $c-FFFFFF,
+                    $anim-color: $c-accent
+                );
+            }
         }
         &__agreement {
             position: relative;
