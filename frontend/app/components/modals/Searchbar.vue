@@ -1,5 +1,9 @@
 <template>
-    <VueFinalModal overlay-transition="vfm-fade" content-transition="vfm-slide-up" @opened="inputSetFocus">
+    <VueFinalModal
+        overlay-transition="vfm-fade"
+        content-transition="vfm-slide-up"
+        @opened="inputSetFocus"
+    >
         <div class="searchbar">
             <div class="searchbar__head">
                 <div class="searchbar__inputbox">

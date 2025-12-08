@@ -18,6 +18,7 @@
                         'modal-auth__step--auth',
                         { active: authStep === 'auth' },
                     ]"
+                    :aria-hidden="authStep !== 'auth'"
                 >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Вход в личный кабинет</span>
@@ -87,6 +88,7 @@
                         'modal-auth__step--otp',
                         { active: authStep === 'otp' },
                     ]"
+                    :aria-hidden="authStep !== 'otp'"
                 >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Введите код</span>
@@ -155,6 +157,7 @@
 
     // types ===============================================================
     import type { IContacts } from '~~/interfaces/contacts';
+    import type { InputMaskEmitsOptions } from 'primevue/inputmask';
     type AuthStep = 'auth' | 'otp' | 'authorized';
     // =====================================================================
 
