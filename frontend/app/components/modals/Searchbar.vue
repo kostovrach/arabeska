@@ -1,5 +1,5 @@
 <template>
-    <VueFinalModal overlay-transition="vfm-fade" content-transition="vfm-slide-up">
+    <VueFinalModal overlay-transition="vfm-fade" content-transition="vfm-slide-up" @opened="inputSetFocus">
         <div class="searchbar">
             <div class="searchbar__head">
                 <div class="searchbar__inputbox">
@@ -133,7 +133,7 @@
 
     const productsStore = useProductsStore();
 
-    // const inputSetFocus = (): void => inputRef.value?.focus();
+    const inputSetFocus = (): void => inputRef.value?.focus();
 
     const search = useDebounceFn(async () => {
         searchResult.value = (await productsStore.searchProductsFuzzy(inputModel.value)).slice(

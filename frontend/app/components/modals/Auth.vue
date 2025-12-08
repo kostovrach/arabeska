@@ -1,5 +1,9 @@
 <template>
-    <VueFinalModal overlay-transition="vfm-fade" content-transition="vfm-fade">
+    <VueFinalModal
+        overlay-transition="vfm-fade"
+        content-transition="vfm-fade"
+        @opened="setPhoneInputFocus"
+    >
         <div class="modal-auth hide-scrollbar">
             <button class="modal-auth__close-btn" type="button" @click="emit('close')">
                 <SvgSprite type="cross" :size="24" />
@@ -25,6 +29,7 @@
                     <form id="auth" class="modal-auth__form">
                         <div class="modal-auth__inputbox">
                             <InputMask
+                                ref="phoneInput"
                                 v-model="authData.phone"
                                 id="auth-phone"
                                 class="modal-auth__input modal-auth__input--auth"
@@ -109,6 +114,7 @@
                         >
                             <template #default="{ attrs, events, index }">
                                 <input
+                                    ref="otpInputs"
                                     v-bind="attrs"
                                     v-on="events"
                                     :id="`auth-otp-item-${index}`"
@@ -172,6 +178,9 @@
 
     const userStore = useUserStore();
 
+    const phoneInput = ref<{ $el: HTMLInputElement } | null>(null);
+    const otpInputs = ref<HTMLInputElement[] | null>(null);
+
     const isLoading = ref(false);
     const authStep = ref<AuthStep>('auth');
     const retryTimerId = ref<NodeJS.Timeout | null>(null);
@@ -201,6 +210,10 @@
     // =====================================================================
 
     // methods =============================================================
+    function setPhoneInputFocus(): void {
+        phoneInput?.value?.$el.focus();
+    }
+
     function setRetryTimer(): void {
         if (retryTimerId.value !== null) {
             clearInterval(retryTimerId.value);
@@ -275,6 +288,7 @@
                         break;
                     case 208:
                         authStep.value = 'otp';
+                        otpInputs?.value?.[0]?.focus();
                         setRetryTimer();
                         break;
                     default:
