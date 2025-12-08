@@ -9,7 +9,12 @@ export interface IUser {
     name?: string | null;
     phone: string | number;
     email?: string | null;
+
+    notifications: boolean;
+    promo_subscribe: boolean;
+
     addresses?: string[] | null;
+
     cart?: ICartItem[] | null;
 
     amocrm_contact_id?: string | number | null;

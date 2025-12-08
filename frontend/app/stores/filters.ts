@@ -1,4 +1,3 @@
-import type { AsyncDataRequestStatus } from '#app';
 import type { LocationQuery } from 'vue-router';
 
 // types ============================================================

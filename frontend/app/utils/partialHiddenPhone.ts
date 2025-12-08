@@ -1,11 +1,12 @@
 export function partialHiddenPhone(
-    phone: string,
+    phone: string | number,
     positions: number[] = [5, 6, 9, 10, 11],
     replacement: string = '*'
 ): string {
-    if (phone.length < Math.max(...positions)) return phone;
+    const phoneString = phone.toString();
+    if (phoneString.length < Math.max(...positions)) return phoneString;
 
-    let digits = phone.split('');
+    let digits = phoneString.split('');
     positions.forEach((pos) => {
         digits[pos] = replacement;
     });

@@ -117,6 +117,7 @@
                                     class="modal-auth__input--otp-item"
                                     placeholder="0"
                                     @input="submitOtp"
+                                    @paste="submitOtp"
                                 />
                                 <span
                                     v-if="index === 3"
@@ -156,9 +157,20 @@
     // =====================================================================
 
     // state ===============================================================
+    const props = withDefaults(
+        defineProps<{
+            redirect?: string;
+        }>(),
+        {
+            redirect: undefined,
+        }
+    );
     const emit = defineEmits<{
+        (e: 'loggedIn'): void;
         (e: 'close'): void;
     }>();
+
+    const userStore = useUserStore();
 
     const isLoading = ref(false);
     const authStep = ref<AuthStep>('auth');
@@ -241,13 +253,11 @@
             return;
         } else {
             try {
-                const res = await $fetch<{ status: number; error?: string; success: boolean }>(
-                    '/api/auth/send-otp',
-                    {
-                        method: 'POST',
-                        body: authData,
-                    }
-                );
+                const res = await $fetch('/api/auth/send-otp', {
+                    method: 'POST',
+                    body: authData,
+                });
+
                 switch (res.status) {
                     case 500:
                         authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
@@ -283,16 +293,13 @@
         if (authOtp.code.length !== 6) return;
         isLoading.value = true;
         try {
-            const res = await $fetch<{ status: number; error?: string; success: boolean }>(
-                '/api/auth/verify-otp',
-                {
-                    method: 'POST',
-                    body: {
-                        phone: authData.phone,
-                        code: authOtp.code,
-                    },
-                }
-            );
+            const res = await $fetch('/api/auth/verify-otp', {
+                method: 'POST',
+                body: {
+                    phone: authData.phone,
+                    code: authOtp.code,
+                },
+            });
 
             switch (res.status) {
                 case 500:
@@ -309,8 +316,11 @@
                     break;
                 case 200:
                     authOtp.code = '';
-                    authStep.value = 'authorized';
-                    emit('close');
+                    userStore.setUser(res.user!);
+                    if (props.redirect && props.redirect !== '/') {
+                        navigateTo(props.redirect);
+                    }
+                    emit('loggedIn');
                     break;
                 default:
                     otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;

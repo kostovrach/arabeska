@@ -10,6 +10,7 @@ import {
 // types
 import type { IUser } from '~~/interfaces/entities/user';
 import type { IOtp } from '~~/interfaces/entities/otp';
+import type { IJwtPayload } from '~~/interfaces/jwt-payload';
 import type { PhoneNumber, CountryCode } from 'libphonenumber-js';
 
 const config = useRuntimeConfig();
@@ -103,9 +104,13 @@ export default defineEventHandler(
         }
 
         // JWT
-        const token = jwt.sign({ id: user.id, phone: user.phone, role: 'client' }, jwtSecret, {
-            expiresIn: jwtExpiration,
-        });
+        const token = jwt.sign(
+            { id: user.id, phone: user.phone, role: 'client' } as Partial<IJwtPayload>,
+            jwtSecret,
+            {
+                expiresIn: jwtExpiration,
+            }
+        );
 
         setCookie(event, 'authorization', token, {
             httpOnly: true,

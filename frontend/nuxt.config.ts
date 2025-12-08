@@ -11,6 +11,10 @@ export default defineNuxtConfig({
         preset: 'node-server',
     },
 
+    routeRules: {
+        '/profile': { ssr: false },
+    },
+
     runtimeConfig: {
         public: {
             cmsUrl: process.env.DIRECTUS_URL || '',

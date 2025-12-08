@@ -107,7 +107,7 @@
         },
         {
             label: 'личный кабинет',
-            routeName: '',
+            routeName: 'profile',
         },
         {
             label: 'корзина',

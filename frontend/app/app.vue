@@ -5,7 +5,6 @@
 
 <script setup lang="ts">
     import { ModalsContainer } from 'vue-final-modal';
-
     // data ========================================================
     const productsStore = useProductsStore();
 
