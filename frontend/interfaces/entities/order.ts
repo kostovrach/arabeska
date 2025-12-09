@@ -3,6 +3,7 @@ import type { IUser } from './user';
 import type { PaymentStatusType } from '../statuses/payment-status';
 import type { OrderStatusType } from '../statuses/order-status';
 import type { ProductModifiersType } from '../product-modifiers';
+import type { IUserAddress } from './user-address';
 
 export interface IOrder {
     id: string | number; // Идентификатор сделки
@@ -43,12 +44,7 @@ export interface IOrder {
         date: string;
         time: string;
 
-        address: {
-            target: string; // Полный адрес
-            flat?: string | number; // Квартира
-            entrance?: string | number; // Подъезд
-            floor?: string | number; // Этаж
-        };
+        address: IUserAddress;
     };
 
     // Открытка

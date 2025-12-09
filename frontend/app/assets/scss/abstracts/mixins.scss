@@ -322,6 +322,13 @@
             background-color: $c-FFFFFF;
         }
     }
+    &:not(:has(input:checked)):hover,
+    &:not(:has(input:checked)):has(input:focus) {
+        border-color: $active-color;
+        &::before {
+            background-color: $active-color;
+        }
+    }
 }
 
 // effects

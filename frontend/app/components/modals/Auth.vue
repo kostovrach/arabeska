@@ -506,7 +506,8 @@
                     transition: opacity $td $tf;
                 }
                 @media (pointer: fine) {
-                    &:hover {
+                    &:hover,
+                    &:focus {
                         background-color: transparent;
                         border-color: $c-D4E1E7 !important;
                         &::placeholder {

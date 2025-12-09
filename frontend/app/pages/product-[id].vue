@@ -210,6 +210,7 @@
 
 <script setup lang="ts">
     import type { IProduct } from '~~/interfaces/entities/product';
+    import type { ProductModifiersType } from '~~/interfaces/product-modifiers';
     import type { ISettings } from '~~/interfaces/settings';
 
     // data =================================================================
@@ -253,7 +254,47 @@
             el.includes(slugify(settings.value?.subscription_category.name as string))
         )
     );
-    // =====================================================================
+    // =======================================================================
+
+    // product processing ====================================================
+    // model
+    const productModel: { id: IProduct['id']; type: ProductModifiersType; quantity: number } =
+        reactive({
+            id: product?.value?.id!,
+            type: 'standart',
+            quantity: 1,
+        });
+
+    // multipliers
+    const variantMultipliers: Record<string, number> = {
+        standart: 1,
+        large: 1.5,
+        premium: 2,
+    };
+
+    // price
+    const discountPrice = computed(() => {
+        if (!product?.value?.discount) return 0;
+
+        const multiplier = variantMultipliers[productModel.type] || 1;
+        return product?.value?.discount * multiplier * productModel.quantity;
+    });
+
+    const totalPrice = computed(() => {
+        if (!product?.value?.price) return 0;
+
+        const multiplier = variantMultipliers[productModel.type] || 1;
+        return product?.value?.price * multiplier * productModel.quantity;
+    });
+
+    // counter
+    const addQuantity = () => {
+        if (productModel.quantity < 5) productModel.quantity++;
+    };
+    const removeQuantity = () => {
+        if (productModel.quantity > 1) productModel.quantity--;
+    };
+    // ======================================================================
 
     // SEO & Meta ===========================================================
     const productMeta = computed(() => ({
@@ -313,44 +354,6 @@
         ],
     }));
     // ======================================================================
-
-    // product processing ===================================================
-    // model
-    const productModel = reactive({
-        type: 'standart',
-        quantity: 1,
-    });
-
-    // multipliers
-    const variantMultipliers: Record<string, number> = {
-        standart: 1,
-        large: 1.5,
-        premium: 2,
-    };
-
-    // price
-    const discountPrice = computed(() => {
-        if (!product?.value?.discount) return 0;
-
-        const multiplier = variantMultipliers[productModel.type] || 1;
-        return product?.value?.discount * multiplier * productModel.quantity;
-    });
-
-    const totalPrice = computed(() => {
-        if (!product?.value?.price) return 0;
-
-        const multiplier = variantMultipliers[productModel.type] || 1;
-        return product?.value?.price * multiplier * productModel.quantity;
-    });
-
-    // counter
-    const addQuantity = () => {
-        if (productModel.quantity < 5) productModel.quantity++;
-    };
-    const removeQuantity = () => {
-        if (productModel.quantity > 1) productModel.quantity--;
-    };
-    // =====================================================================
 </script>
 
 <style lang="scss">

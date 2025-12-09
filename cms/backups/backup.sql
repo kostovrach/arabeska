@@ -1733,10 +1733,10 @@ CREATE TABLE public.users (
     name character varying(255),
     email character varying(255),
     phone character varying(255) DEFAULT NULL::character varying,
-    addresses json,
     cart json,
     notifications boolean DEFAULT false,
-    promo_subscribe boolean DEFAULT false
+    promo_subscribe boolean DEFAULT false,
+    addresses json
 );
 
 
@@ -4055,6 +4055,7 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 1997	create	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:05.674+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	227	http://localhost:8055
 1998	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.649+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	34	http://localhost:8055
 1999	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.676+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	35	http://localhost:8055
+3725	create	2fe28487-d3cc-46c7-bb17-77b03923174f	2025-12-09 07:21:32.276+00	172.18.0.1	node	otp_codes	bb4e423d-570d-47c5-ada6-0b11279f9284	\N
 2000	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.696+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	38	http://localhost:8055
 2001	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.717+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	36	http://localhost:8055
 2002	update	d28ea43e-0087-4264-aad7-f52329173439	2025-11-01 20:41:09.733+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0 (Edition Yx GX 03)	directus_fields	37	http://localhost:8055
@@ -5761,6 +5762,24 @@ COPY public.directus_activity (id, action, "user", "timestamp", ip, user_agent, 
 3720	create	2fe28487-d3cc-46c7-bb17-77b03923174f	2025-12-08 12:17:55.439+00	172.18.0.1	node	otp_codes	5eef7148-ec73-4538-89e8-91f3da3cbf87	\N
 3721	create	2fe28487-d3cc-46c7-bb17-77b03923174f	2025-12-08 12:18:04.186+00	172.18.0.1	node	users	f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	\N
 3722	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-08 12:26:30.965+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	otp_codes	5eef7148-ec73-4538-89e8-91f3da3cbf87	http://localhost:8055
+3724	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:20:38.071+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	otp_codes	afaad0de-a7ba-43f0-8c2b-3b1927ccffb5	http://localhost:8055
+3726	delete	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:32:26.433+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	408	http://localhost:8055
+3727	create	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:14.883+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	425	http://localhost:8055
+3728	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.042+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	400	http://localhost:8055
+3729	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.052+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	401	http://localhost:8055
+3730	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.061+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	402	http://localhost:8055
+3731	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.076+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	403	http://localhost:8055
+3732	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.092+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	404	http://localhost:8055
+3733	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.106+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	405	http://localhost:8055
+3734	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.119+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	407	http://localhost:8055
+3735	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.13+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	406	http://localhost:8055
+3736	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.138+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	425	http://localhost:8055
+3737	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.149+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	423	http://localhost:8055
+3738	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.159+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	424	http://localhost:8055
+3739	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 07:35:19.169+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	409	http://localhost:8055
+3740	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 09:18:49.249+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	users	f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	http://localhost:8055
+3741	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 12:01:28.244+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	directus_fields	425	http://localhost:8055
+3742	update	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 12:02:05.841+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	users	f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	http://localhost:8055
 \.
 
 
@@ -6148,19 +6167,19 @@ COPY public.directus_fields (id, collection, field, special, interface, options,
 34	products	id	\N	input	\N	\N	\N	t	t	1	full	[{"language":"ru-RU","translation":"Арт."}]	\N	\N	f	\N	\N	\N
 415	otp_codes	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 418	otp_codes	code	\N	input	\N	\N	\N	f	f	5	full	\N	\N	\N	t	\N	\N	\N
-405	users	name	\N	input	\N	\N	\N	f	f	6	full	\N	\N	\N	f	\N	\N	\N
 406	users	email	\N	input	\N	\N	\N	f	f	8	full	\N	\N	\N	f	\N	\N	\N
-408	users	addresses	cast-json	tags	\N	\N	\N	f	f	11	full	\N	\N	\N	f	\N	\N	\N
 404	users	date_updated	date-updated	datetime	\N	datetime	{"relative":true}	t	t	5	half	\N	\N	\N	f	\N	\N	\N
+405	users	name	\N	input	\N	\N	\N	f	f	6	full	\N	\N	\N	f	\N	\N	\N
 421	otp_codes	phone	\N	input	\N	\N	\N	f	f	4	full	\N	\N	\N	t	\N	\N	\N
 422	otp_codes	expires_at	\N	datetime	{"includeSeconds":true}	\N	\N	f	f	6	full	\N	\N	\N	t	\N	\N	\N
 400	users	id	uuid	input	\N	\N	\N	t	t	1	full	\N	\N	\N	f	\N	\N	\N
 401	users	user_created	user-created	select-dropdown-m2o	{"template":"{{avatar}} {{first_name}} {{last_name}}"}	user	\N	t	t	2	half	\N	\N	\N	f	\N	\N	\N
 402	users	date_created	date-created	datetime	\N	datetime	{"relative":true}	t	t	3	half	\N	\N	\N	f	\N	\N	\N
 403	users	user_updated	user-updated	select-dropdown-m2o	{"template":"{{avatar}} {{first_name}} {{last_name}}"}	user	\N	t	t	4	half	\N	\N	\N	f	\N	\N	\N
-423	users	notifications	cast-boolean	boolean	\N	\N	\N	f	f	9	full	\N	\N	\N	t	\N	\N	\N
-424	users	promo_subscribe	cast-boolean	boolean	\N	\N	\N	f	f	10	full	\N	\N	\N	t	\N	\N	\N
+423	users	notifications	cast-boolean	boolean	\N	\N	\N	f	f	10	full	\N	\N	\N	t	\N	\N	\N
+424	users	promo_subscribe	cast-boolean	boolean	\N	\N	\N	f	f	11	full	\N	\N	\N	t	\N	\N	\N
 409	users	cart	cast-json	list	{"fields":[{"field":"product_id","name":"product_id","type":"string","meta":{"field":"product_id","type":"string","required":true,"interface":null}},{"field":"quantity","name":"quantity","type":"integer","meta":{"field":"quantity","type":"integer","required":false,"interface":null}},{"field":"modifier","name":"modifier","type":"string","meta":{"field":"modifier","type":"string","interface":null}}]}	\N	\N	f	f	12	full	\N	\N	\N	f	\N	\N	\N
+425	users	addresses	cast-json	list	{"fields":[{"field":"id","name":"id","type":"string","meta":{"field":"id","type":"string","required":true,"interface":"input"}},{"field":"street","name":"street","type":"string","meta":{"field":"street","type":"string","required":true,"interface":"input"}},{"field":"flat","name":"flat","type":"integer","meta":{"field":"flat","type":"integer","required":false,"interface":"input"}},{"field":"floor","name":"floor","type":"integer","meta":{"field":"floor","type":"integer","required":false,"interface":"input"}},{"field":"doorway","name":"doorway","type":"integer","meta":{"field":"doorway","type":"integer","required":false,"interface":"input"}}]}	\N	\N	f	f	9	full	\N	\N	\N	f	\N	\N	\N
 \.
 
 
@@ -6402,8 +6421,8 @@ COPY public.directus_presets (id, bookmark, "user", role, collection, search, la
 10	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	delivery_zones	\N	\N	{"tabular":{"fields":["color","title","price"],"page":1}}	{"tabular":{"widths":{"color":32,"title":217,"price":226}}}	\N	\N	bookmark	\N
 11	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	directus_activity	\N	tabular	{"tabular":{"sort":["-timestamp"],"fields":["action","collection","timestamp","user"],"page":1}}	{"tabular":{"widths":{"action":120,"collection":210,"timestamp":240,"user":240}}}	\N	\N	bookmark	\N
 3	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	products		\N	{"tabular":{"page":1,"fields":["sort","title","available","price","description","id"],"sort":["sort"]}}	{"tabular":{"widths":{"sort":32,"title":211,"available":167,"price":106,"description":198,"id":93}}}	\N	\N	bookmark	\N
-12	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	users	\N	\N	{"tabular":{"page":1}}	\N	\N	\N	bookmark	\N
 13	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	otp_codes	\N	\N	{"tabular":{"fields":["attempts","code","expires_at","phone"]}}	{"tabular":{"widths":{"attempts":160,"code":160,"expires_at":247,"phone":160}}}	\N	\N	bookmark	\N
+12	\N	d28ea43e-0087-4264-aad7-f52329173439	\N	users	\N	\N	{"tabular":{"page":1,"fields":["phone","name","email"]}}	{"tabular":{"widths":{"phone":177,"name":160,"email":249}}}	\N	\N	bookmark	\N
 \.
 
 
@@ -9926,6 +9945,23 @@ COPY public.directus_revisions (id, activity, collection, item, data, delta, par
 3463	3720	otp_codes	5eef7148-ec73-4538-89e8-91f3da3cbf87	{"phone":"+79297160973","code":"838363","expires_at":"2025-12-08T12:22:55","attempts":0}	{"phone":"+79297160973","code":"838363","expires_at":"2025-12-08T12:22:55","attempts":0}	\N	\N
 3464	3721	users	f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	{"phone":"+79297160973","addresses":[],"cart":[]}	{"phone":"+79297160973","addresses":[],"cart":[]}	\N	\N
 3465	3723	otp_codes	afaad0de-a7ba-43f0-8c2b-3b1927ccffb5	{"phone":"+79297160973","code":"538257","expires_at":"2025-12-08T12:38:02","attempts":0}	{"phone":"+79297160973","code":"538257","expires_at":"2025-12-08T12:38:02","attempts":0}	\N	\N
+3466	3725	otp_codes	bb4e423d-570d-47c5-ada6-0b11279f9284	{"phone":"+79297160973","code":"172798","expires_at":"2025-12-09T07:26:32","attempts":0}	{"phone":"+79297160973","code":"172798","expires_at":"2025-12-09T07:26:32","attempts":0}	\N	\N
+3467	3727	directus_fields	425	{"sort":13,"interface":"list","special":["cast-json"],"options":{"fields":[{"field":"street","name":"street","type":"string","meta":{"field":"street","type":"string","required":true,"interface":"input"}},{"field":"flat","name":"flat","type":"integer","meta":{"field":"flat","type":"integer","required":false,"interface":"input"}},{"field":"floor","name":"floor","type":"integer","meta":{"field":"floor","type":"integer","required":false,"interface":"input"}},{"field":"doorway","name":"doorway","type":"integer","meta":{"field":"doorway","type":"integer","required":false,"interface":"input"}}]},"collection":"users","field":"addresses"}	{"sort":13,"interface":"list","special":["cast-json"],"options":{"fields":[{"field":"street","name":"street","type":"string","meta":{"field":"street","type":"string","required":true,"interface":"input"}},{"field":"flat","name":"flat","type":"integer","meta":{"field":"flat","type":"integer","required":false,"interface":"input"}},{"field":"floor","name":"floor","type":"integer","meta":{"field":"floor","type":"integer","required":false,"interface":"input"}},{"field":"doorway","name":"doorway","type":"integer","meta":{"field":"doorway","type":"integer","required":false,"interface":"input"}}]},"collection":"users","field":"addresses"}	\N	\N
+3468	3728	directus_fields	400	{"id":400,"collection":"users","field":"id","special":["uuid"],"interface":"input","options":null,"display":null,"display_options":null,"readonly":true,"hidden":true,"sort":1,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"id","sort":1,"group":null}	\N	\N
+3469	3729	directus_fields	401	{"id":401,"collection":"users","field":"user_created","special":["user-created"],"interface":"select-dropdown-m2o","options":{"template":"{{avatar}} {{first_name}} {{last_name}}"},"display":"user","display_options":null,"readonly":true,"hidden":true,"sort":2,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"user_created","sort":2,"group":null}	\N	\N
+3470	3730	directus_fields	402	{"id":402,"collection":"users","field":"date_created","special":["date-created"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":3,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"date_created","sort":3,"group":null}	\N	\N
+3471	3731	directus_fields	403	{"id":403,"collection":"users","field":"user_updated","special":["user-updated"],"interface":"select-dropdown-m2o","options":{"template":"{{avatar}} {{first_name}} {{last_name}}"},"display":"user","display_options":null,"readonly":true,"hidden":true,"sort":4,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"user_updated","sort":4,"group":null}	\N	\N
+3472	3732	directus_fields	404	{"id":404,"collection":"users","field":"date_updated","special":["date-updated"],"interface":"datetime","options":null,"display":"datetime","display_options":{"relative":true},"readonly":true,"hidden":true,"sort":5,"width":"half","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"date_updated","sort":5,"group":null}	\N	\N
+3473	3733	directus_fields	405	{"id":405,"collection":"users","field":"name","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":6,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"name","sort":6,"group":null}	\N	\N
+3474	3734	directus_fields	407	{"id":407,"collection":"users","field":"phone","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":7,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"phone","sort":7,"group":null}	\N	\N
+3475	3735	directus_fields	406	{"id":406,"collection":"users","field":"email","special":null,"interface":"input","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":8,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"email","sort":8,"group":null}	\N	\N
+3476	3736	directus_fields	425	{"id":425,"collection":"users","field":"addresses","special":["cast-json"],"interface":"list","options":{"fields":[{"field":"street","name":"street","type":"string","meta":{"field":"street","type":"string","required":true,"interface":"input"}},{"field":"flat","name":"flat","type":"integer","meta":{"field":"flat","type":"integer","required":false,"interface":"input"}},{"field":"floor","name":"floor","type":"integer","meta":{"field":"floor","type":"integer","required":false,"interface":"input"}},{"field":"doorway","name":"doorway","type":"integer","meta":{"field":"doorway","type":"integer","required":false,"interface":"input"}}]},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":9,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"addresses","sort":9,"group":null}	\N	\N
+3477	3737	directus_fields	423	{"id":423,"collection":"users","field":"notifications","special":["cast-boolean"],"interface":"boolean","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":10,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"notifications","sort":10,"group":null}	\N	\N
+3478	3738	directus_fields	424	{"id":424,"collection":"users","field":"promo_subscribe","special":["cast-boolean"],"interface":"boolean","options":null,"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":11,"width":"full","translations":null,"note":null,"conditions":null,"required":true,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"promo_subscribe","sort":11,"group":null}	\N	\N
+3479	3739	directus_fields	409	{"id":409,"collection":"users","field":"cart","special":["cast-json"],"interface":"list","options":{"fields":[{"field":"product_id","name":"product_id","type":"string","meta":{"field":"product_id","type":"string","required":true,"interface":null}},{"field":"quantity","name":"quantity","type":"integer","meta":{"field":"quantity","type":"integer","required":false,"interface":null}},{"field":"modifier","name":"modifier","type":"string","meta":{"field":"modifier","type":"string","interface":null}}]},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":12,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"cart","sort":12,"group":null}	\N	\N
+3480	3740	users	f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	{"id":"f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6","user_created":"2fe28487-d3cc-46c7-bb17-77b03923174f","date_created":"2025-12-08T12:18:04.184Z","user_updated":"d28ea43e-0087-4264-aad7-f52329173439","date_updated":"2025-12-09T09:18:49.238Z","name":"Антон М.","email":"example@gmail.com","phone":"+79297160973","cart":[],"notifications":true,"promo_subscribe":false,"addresses":[{"street":"Самара, улица Пролетарская 8","flat":32,"floor":5,"doorway":2},{"street":"Самара, ул. Ленина 25","flat":12,"floor":2,"doorway":2},{"street":"Самара, ул. Ленина 25","doorway":2}]}	{"name":"Антон М.","email":"example@gmail.com","notifications":true,"addresses":[{"street":"Самара, улица Пролетарская 8","flat":32,"floor":5,"doorway":2},{"street":"Самара, ул. Ленина 25","flat":12,"floor":2,"doorway":2},{"street":"Самара, ул. Ленина 25","doorway":2}],"user_updated":"d28ea43e-0087-4264-aad7-f52329173439","date_updated":"2025-12-09T09:18:49.238Z"}	\N	\N
+3481	3741	directus_fields	425	{"id":425,"collection":"users","field":"addresses","special":["cast-json"],"interface":"list","options":{"fields":[{"field":"id","name":"id","type":"string","meta":{"field":"id","type":"string","required":true,"interface":"input"}},{"field":"street","name":"street","type":"string","meta":{"field":"street","type":"string","required":true,"interface":"input"}},{"field":"flat","name":"flat","type":"integer","meta":{"field":"flat","type":"integer","required":false,"interface":"input"}},{"field":"floor","name":"floor","type":"integer","meta":{"field":"floor","type":"integer","required":false,"interface":"input"}},{"field":"doorway","name":"doorway","type":"integer","meta":{"field":"doorway","type":"integer","required":false,"interface":"input"}}]},"display":null,"display_options":null,"readonly":false,"hidden":false,"sort":9,"width":"full","translations":null,"note":null,"conditions":null,"required":false,"group":null,"validation":null,"validation_message":null}	{"collection":"users","field":"addresses","options":{"fields":[{"field":"id","name":"id","type":"string","meta":{"field":"id","type":"string","required":true,"interface":"input"}},{"field":"street","name":"street","type":"string","meta":{"field":"street","type":"string","required":true,"interface":"input"}},{"field":"flat","name":"flat","type":"integer","meta":{"field":"flat","type":"integer","required":false,"interface":"input"}},{"field":"floor","name":"floor","type":"integer","meta":{"field":"floor","type":"integer","required":false,"interface":"input"}},{"field":"doorway","name":"doorway","type":"integer","meta":{"field":"doorway","type":"integer","required":false,"interface":"input"}}]}}	\N	\N
+3482	3742	users	f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	{"id":"f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6","user_created":"2fe28487-d3cc-46c7-bb17-77b03923174f","date_created":"2025-12-08T12:18:04.184Z","user_updated":"d28ea43e-0087-4264-aad7-f52329173439","date_updated":"2025-12-09T12:02:05.838Z","name":"Антон М.","email":"example@gmail.com","phone":"+79297160973","cart":[],"notifications":true,"promo_subscribe":false,"addresses":[{"street":"Самара, улица Пролетарская 8","flat":32,"floor":5,"doorway":2,"id":"651468165135843"},{"street":"Самара, ул. Ленина 25","flat":12,"floor":2,"doorway":2,"id":"68162135438661411"},{"street":"Самара, ул. Ленина 25","doorway":2,"id":"61652119898741"}]}	{"addresses":[{"street":"Самара, улица Пролетарская 8","flat":32,"floor":5,"doorway":2,"id":"651468165135843"},{"street":"Самара, ул. Ленина 25","flat":12,"floor":2,"doorway":2,"id":"68162135438661411"},{"street":"Самара, ул. Ленина 25","doorway":2,"id":"61652119898741"}],"user_updated":"d28ea43e-0087-4264-aad7-f52329173439","date_updated":"2025-12-09T12:02:05.838Z"}	\N	\N
 \.
 
 
@@ -9944,8 +9980,8 @@ b7c96db7-0bcc-4ff4-8722-a320af6909dd	Administrator	verified	$t:admin_description
 
 COPY public.directus_sessions (token, "user", expires, ip, user_agent, share, origin, next_token) FROM stdin;
 nlf5lqqs3doX1gJM13UR4mcFcDBd9s96Leki5Ol5vcDXh1gfZw2PglxlHAs_75Z4	d28ea43e-0087-4264-aad7-f52329173439	2025-12-12 08:05:01.724+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition Yx GX 03)	\N	http://localhost:8055	\N
-dxQpnhhDRNRNz44_iAQ0Pw3vzJc9J9xDWw7WxcBwBNLvmSruezEVdCeAE_K6CJsn	d28ea43e-0087-4264-aad7-f52329173439	2025-12-08 12:26:36.146+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	\N	http://localhost:8055	Lb8b0NPk3qhLEN79iU8eK1cHND_F8dsMu-EgWn6qxqgbLTLc7KDekxpqzaJowRwj
-Lb8b0NPk3qhLEN79iU8eK1cHND_F8dsMu-EgWn6qxqgbLTLc7KDekxpqzaJowRwj	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 12:26:26.146+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	\N	http://localhost:8055	\N
+Btqisdyc6VfXZBuCXbreoCQJnq4_2EINQI0T6PsIKvlzv1wsEGk0Q_-FOoTlcBHx	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 11:34:13.788+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	\N	http://localhost:8055	xSDnWX6gCk33pBPxzCymjvAXRRMKXbq8ZleOZ8gOB-vVYUJE0OYXbyZEuH7f-xmv
+xSDnWX6gCk33pBPxzCymjvAXRRMKXbq8ZleOZ8gOB-vVYUJE0OYXbyZEuH7f-xmv	d28ea43e-0087-4264-aad7-f52329173439	2025-12-10 11:34:03.788+00	172.18.0.1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 OPR/124.0.0.0 (Edition std-2)	\N	http://localhost:8055	\N
 \.
 
 
@@ -9981,7 +10017,7 @@ COPY public.directus_translations (id, language, key, value) FROM stdin;
 COPY public.directus_users (id, first_name, last_name, email, password, location, title, description, tags, avatar, language, tfa_secret, status, role, token, last_access, last_page, provider, external_identifier, auth_data, email_notifications, appearance, theme_dark, theme_light, theme_light_overrides, theme_dark_overrides, text_direction) FROM stdin;
 5e7d0719-f6fa-4e9b-a681-d24bc8947984	frontend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	FxohyklfNM_RpJdS7mT8flSiYZIG4W6w	\N	\N	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 2fe28487-d3cc-46c7-bb17-77b03923174f	backend	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	active	\N	ze67Tiy3rUT7HwEclV3_7bd-cVnabDRp	\N	\N	default	\N	\N	f	\N	\N	\N	\N	\N	auto
-d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	\N	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-12-08 12:26:26.155+00	/content/users	default	\N	\N	t	\N	\N	\N	\N	\N	auto
+d28ea43e-0087-4264-aad7-f52329173439	Admin	User	melnikov.works166@gmail.com	$argon2id$v=19$m=65536,t=3,p=4$kjp3TNg9+bo3CPu1QsccKA$JVJuzUAKSKma20RrPV2rHT684ExVJoEmLv7ISi0ZgFs	\N	\N	\N	\N	\N	\N	\N	active	b7c96db7-0bcc-4ff4-8722-a320af6909dd	\N	2025-12-09 11:34:03.823+00	/content/users	default	\N	\N	t	\N	\N	\N	\N	\N	auto
 \.
 
 
@@ -10197,7 +10233,7 @@ eb5341ca-5d2b-4097-892d-e918676f31da	Цветы, которые говорят �
 --
 
 COPY public.otp_codes (id, date_created, date_updated, code, attempts, phone, expires_at) FROM stdin;
-afaad0de-a7ba-43f0-8c2b-3b1927ccffb5	2025-12-08 12:33:02.788+00	\N	538257	0	+79297160973	2025-12-08 12:38:02.773
+bb4e423d-570d-47c5-ada6-0b11279f9284	2025-12-09 07:21:32.273+00	\N	172798	0	+79297160973	2025-12-09 07:26:32.253
 \.
 
 
@@ -10467,8 +10503,8 @@ COPY public.subscription (id, date_created, date_updated, hero_image, hero_tag, 
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: directus
 --
 
-COPY public.users (id, user_created, date_created, user_updated, date_updated, name, email, phone, addresses, cart, notifications, promo_subscribe) FROM stdin;
-f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	2fe28487-d3cc-46c7-bb17-77b03923174f	2025-12-08 12:18:04.184+00	\N	\N	\N	\N	+79297160973	[]	[]	f	f
+COPY public.users (id, user_created, date_created, user_updated, date_updated, name, email, phone, cart, notifications, promo_subscribe, addresses) FROM stdin;
+f7644d5a-ee9d-428d-82be-1dc9ef4e7ea6	2fe28487-d3cc-46c7-bb17-77b03923174f	2025-12-08 12:18:04.184+00	d28ea43e-0087-4264-aad7-f52329173439	2025-12-09 12:02:05.838+00	Антон М.	example@gmail.com	+79297160973	[]	t	f	[{"street":"Самара, улица Пролетарская 8","flat":32,"floor":5,"doorway":2,"id":"651468165135843"},{"street":"Самара, ул. Ленина 25","flat":12,"floor":2,"doorway":2,"id":"68162135438661411"},{"street":"Самара, ул. Ленина 25","doorway":2,"id":"61652119898741"}]
 \.
 
 
@@ -10529,14 +10565,14 @@ COPY topology.layer (topology_id, layer_id, schema_name, table_name, feature_col
 -- Name: directus_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_activity_id_seq', 3723, true);
+SELECT pg_catalog.setval('public.directus_activity_id_seq', 3742, true);
 
 
 --
 -- Name: directus_fields_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_fields_id_seq', 424, true);
+SELECT pg_catalog.setval('public.directus_fields_id_seq', 425, true);
 
 
 --
@@ -10571,7 +10607,7 @@ SELECT pg_catalog.setval('public.directus_relations_id_seq', 75, true);
 -- Name: directus_revisions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: directus
 --
 
-SELECT pg_catalog.setval('public.directus_revisions_id_seq', 3465, true);
+SELECT pg_catalog.setval('public.directus_revisions_id_seq', 3482, true);
 
 
 --

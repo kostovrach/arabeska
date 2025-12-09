@@ -1,4 +1,6 @@
 import type { ICartItem } from './cart-item';
+import type { IOrder } from './order';
+import type { IUserAddress } from './user-address';
 
 export interface IUser {
     id: string | number;
@@ -7,13 +9,15 @@ export interface IUser {
     date_updated?: string | null;
 
     name?: string | null;
-    phone: string | number;
+    phone: string;
     email?: string | null;
 
     notifications: boolean;
     promo_subscribe: boolean;
 
-    addresses?: string[] | null;
+    orders: IOrder[] | null;
+
+    addresses: IUserAddress[] | null;
 
     cart?: ICartItem[] | null;
 
