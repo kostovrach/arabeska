@@ -168,21 +168,47 @@
                                     </template>
                                     <div class="profile__data-create">
                                         <p class="profile__data-create-title">Добавить адрес</p>
+                                        <YandexMap
+                                            v-show="false"
+                                            :settings="{ location: { center: [11, 11], zoom: 10 } }"
+                                        />
                                         <div class="profile__data-create-form">
                                             <AutoComplete
                                                 v-model="newAddress.street"
                                                 input-id="user-address-street"
                                                 class="profile__data-create-input profile__data-create-input--main"
                                                 input-class="profile__data-create-input--main-input"
-                                                panel-class="profile__data-create-input--main-suggest"
+                                                overlay-class="profile__data-create-input--main-suggest"
                                                 empty-search-message="К сожалению, совпадений не найдено"
                                                 unstyled
                                                 name="user-address-street"
                                                 type="text"
                                                 placeholder="Введите адрес для доставки"
                                                 :suggestions="suggestResponse ?? []"
-                                                @update:model-value="suggestOnSearch"
-                                            />
+                                                data-key="option.address.formattedAddress"
+                                                @complete="suggestOnSearch"
+                                                @option-select="
+                                                    (event: { value: SuggestResponseItem }) => {
+                                                        newAddress.street =
+                                                            event.value.address?.formattedAddress ??
+                                                            '';
+                                                    }
+                                                "
+                                            >
+                                                <template
+                                                    #option="{
+                                                        option,
+                                                    }: {
+                                                        option: SuggestResponseItem;
+                                                    }"
+                                                >
+                                                    <div
+                                                        class="profile__data-create-input--main-option"
+                                                    >
+                                                        {{ option.address?.formattedAddress }}
+                                                    </div>
+                                                </template>
+                                            </AutoComplete>
                                             <input
                                                 v-model="newAddress.flat"
                                                 id="user-address-flat"
@@ -228,8 +254,9 @@
 </template>
 
 <script setup lang="ts">
+    import { YandexMap } from 'vue-yandex-maps';
     // types ============================================================
-    import type { LngLat, SuggestResponse } from '@yandex/ymaps3-types';
+    import type { LngLat, SuggestResponse, SuggestResponseItem } from '@yandex/ymaps3-types';
     import type { IUser } from '~~/interfaces/entities/user';
     import type { IUserAddress } from '~~/interfaces/entities/user-address';
     // ==================================================================
@@ -676,6 +703,29 @@
                         grid-column: span 3;
                         &-input {
                             @include input();
+                        }
+                        &-suggest {
+                            z-index: 5 !important;
+                            font-family: 'Inter', sans-serif;
+                            font-size: lineScale(16, 14, 480, 1920);
+                            background-color: $c-FFFFFF;
+                            border: rem(2) solid rgba($c-D4E1E7, 0.7);
+                            border-radius: rem(32);
+                            max-height: rem(240);
+                            overflow-y: auto;
+                            overflow-x: hidden;
+                            @include hide-scrollbar;
+                        }
+                        &-option {
+                            cursor: pointer;
+                            padding: rem(12) rem(24);
+                            background-color: transparent;
+                            border-top: rem(1) solid rgba($c-D4E1E7, 0.25);
+                            @media (pointer: fine) {
+                                &:hover {
+                                    background-color: $c-accent;
+                                }
+                            }
                         }
                     }
                 }
