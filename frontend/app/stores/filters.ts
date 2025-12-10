@@ -1,4 +1,5 @@
 import type { LocationQuery } from 'vue-router';
+import type { IProduct } from '~~/interfaces/entities/product';
 
 // types ============================================================
 type SortKey = 'price_asc' | 'price_desc' | 'date_new' | null;
@@ -88,18 +89,28 @@ export const useFiltersStore = defineStore('filters', () => {
     // ==============================================================
 
     // Actions ======================================================
-    function filteredProducts(category: string) {
+    function filteredProducts(category: string | 'all', exclude?: string) {
         const products = computed(() => {
             if (!productsList.value.length) return [];
 
             const pMin = filterState.value.priceMin ?? minPrice.value;
             const pMax = filterState.value.priceMax ?? maxPrice.value;
 
-            const productsData = productsList.value.filter((el) =>
-                el.category?.some(
-                    (item) => slugify(item.categories_id?.name as string) === slugify(category)
-                )
-            );
+            let productsData: IProduct[];
+
+            if (category === 'all' && exclude?.length) {
+                productsData = productsList.value.filter((el) =>
+                    el.category?.some(
+                        (item) => slugify(item.categories_id?.name!) !== slugify(exclude)
+                    )
+                );
+            } else {
+                productsData = productsList.value.filter((el) =>
+                    el.category?.some(
+                        (item) => slugify(item.categories_id?.name!) === slugify(category)
+                    )
+                );
+            }
 
             let res = productsData.filter((product) => {
                 if (!product.available) return false;

@@ -3,10 +3,12 @@ import type { AsyncDataOptions } from '#app';
 export function useCms<T = any>(
     collection: string,
     withRelations: string[] = [],
-    requestOpt?: AsyncDataOptions<any>,
+    requestOpt?: AsyncDataOptions<{ data: T }>,
     opts: { resolveFiles?: boolean; force?: boolean; key?: string; cacheTtl?: number } = {}
 ) {
-    const key = opts.key ?? `cms:${collection}:${JSON.stringify(withRelations)}`;
+    const key =
+        opts.key ??
+        `cms:${collection}:${JSON.stringify(withRelations)}:${requestOpt ?? 'none-options'}`;
     const query = {
         relations: withRelations.join(','),
         resolveFiles: opts.resolveFiles ?? true,
@@ -16,8 +18,8 @@ export function useCms<T = any>(
         key,
         query,
         server: true,
-        getCachedData(k, nuxtApp) {
-            return nuxtApp.payload.data?.[k];
+        getCachedData(key, nuxtApp) {
+            return nuxtApp.payload.data?.[key];
         },
         immediate: true,
         ...requestOpt,

@@ -92,7 +92,7 @@ export default defineEventHandler(
                 {
                     phone: formattedPhone,
                     addresses: null,
-                    cart: null,
+                    cart: [],
                 },
                 {
                     checkFilter: { phone: { _eq: formattedPhone } },

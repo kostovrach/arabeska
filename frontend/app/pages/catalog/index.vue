@@ -10,13 +10,8 @@
             >
                 <EmblaSlide v-for="item in categories" :key="item.id">
                     <NuxtLink
-                        :class="[
-                            'catalog-nav__link',
-                            route.params.category === slugify(item.name)
-                                ? 'catalog-nav__link--current'
-                                : '',
-                        ]"
-                        :to="{ name: route.name, params: { category: slugify(item.name) } }"
+                        class="catalog-nav__link"
+                        :to="{ name: 'catalog-category', params: { category: slugify(item.name) } }"
                     >
                         {{ item.name }}
                     </NuxtLink>
@@ -30,10 +25,10 @@
                         ({{ products.length }})
                     </span>
                     <h1 class="catalog-head__title">
-                        {{ pageTitle ?? 'Сборные букеты с доставкой в Самаре' }}
+                        {{ 'Сборные букеты с доставкой в Самаре' }}
                     </h1>
                 </div>
-                <TheFilters :render-condition="filtersAvailable" />
+                <TheFilters :render-condition="true" />
             </div>
         </div>
         <div class="catalog-list">
@@ -66,35 +61,27 @@
 <script setup lang="ts">
     // types ===================================================================
     import type { ICategories } from '~~/interfaces/categories';
+    import type { ISettings } from '~~/interfaces/settings';
     // =========================================================================
 
-    // data ====================================================================
-    const route = useRoute();
     const filterStore = useFiltersStore();
 
-    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
-    const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+    // data ====================================================================
+    const { content: generalSettings } = useCms<ISettings>('settings', ['subscription_category.*']);
 
-    const products = computed(() => filterStore.filteredProducts(route.params.category as string));
-
-    const pageTitle = computed(() => {
-        const coincidence = categories.value?.find(
-            (el) => slugify(el.name) === slugify(route.params.category as string)
-        );
-
-        if (coincidence) return coincidence?.title;
-        else return null;
+    const { content: categories } = useCms<ICategories[]>('categories', [], {
+        transform: (c) => {
+            const result = c.data.filter((el) => el.available === true);
+            return { data: result };
+        },
     });
 
-    const filtersAvailable = computed(() => {
-        const coincidence = categories.value?.find(
-            (el) => slugify(el.name) === slugify(route.params.category as string)
-        );
-
-        if (coincidence) return coincidence?.filters;
-        else return false;
-    });
-
+    const products = computed(() =>
+        filterStore.filteredProducts(
+            'all',
+            slugify(generalSettings.value?.subscription_category.name ?? '')
+        )
+    );
     // =========================================================================
 </script>
 

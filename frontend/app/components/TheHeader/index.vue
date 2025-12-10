@@ -19,14 +19,9 @@
                 </div>
                 <nav class="header__nav">
                     <NuxtLink
-                        v-for="(category, idx) in categories?.slice(0, 3)"
+                        v-for="(category, idx) in hintCategories"
                         :key="idx"
-                        :class="
-                            route.name === 'catalog-category' &&
-                            route.params.category === slugify(category.name)
-                                ? 'header__nav-link header__nav-link--current'
-                                : 'header__nav-link'
-                        "
+                        class="header__nav-link"
                         :to="{
                             name: 'catalog-category',
                             params: { category: slugify(category.name) },
@@ -43,7 +38,7 @@
                 </div>
                 <a
                     class="header__number"
-                    :href="`tel:${contacts?.phone.trim().split(' ').join('')}`"
+                    :href="`tel:${contacts?.phone.trim().replace(/\s+/g, '')}`"
                 >
                     {{ contacts?.phone }}
                 </a>
@@ -82,6 +77,9 @@
     // data ================================================================================
     const { content: categoriesRaw } = useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+    const hintCategories = computed(() =>
+        categories.value?.filter((el) => slugify(el.name) !== route.params.category).slice(0, 3)
+    );
 
     const { content: contacts } = useCms<IContacts>('contact');
 

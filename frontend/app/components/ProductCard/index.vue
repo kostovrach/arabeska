@@ -63,7 +63,7 @@
                     </ul>
                     <button
                         :class="['product__button', inCart ? 'product__button--checked' : '']"
-                        @click.prevent="toggleCart"
+                        @click.prevent="addCart"
                     >
                         <span class="product__button-icon product__button-icon--default">
                             <SvgSprite type="cart" :size="28" />
@@ -89,12 +89,24 @@
         };
     }>();
 
+    // const cartStore = useCartStore();
+
     const product = props.data;
+
+    const inCart = ref(false);
+
+    function addCart() {
+        // cartStore.addToCart({
+        //     product_id: product.id,
+        //     quantity: 1,
+        //     modifier: 'standart',
+        // });
+        // inCart.value = true;
+    }
 
     // temp cart processing==============================
 
     // state
-    const inCart = ref(false);
 
     // actions
     function toggleCart() {

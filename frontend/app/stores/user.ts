@@ -14,10 +14,26 @@ export const useUserStore = defineStore('user', () => {
         isAuth.value = false;
     }
 
+    async function updateUser(payload: Partial<IUser>): Promise<{ ok: boolean }> {
+        const res = await $fetch('/api/user/update', { method: 'POST', body: payload });
+
+        if (res.success) {
+            await nextTick();
+
+            const { user, success } = await $fetch('/api/auth/me');
+
+            if (user && success) {
+                setUser(user);
+
+                return { ok: true };
+            } else return { ok: false };
+        } else return { ok: false };
+    }
+
     async function logout(): Promise<void> {
         await $fetch('/api/auth/logout', { method: 'POST' });
         clearUser();
     }
 
-    return { user, isAuth, setUser, clearUser, logout };
+    return { user, isAuth, setUser, clearUser, updateUser, logout };
 });

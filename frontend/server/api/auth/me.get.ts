@@ -1,23 +1,17 @@
-import jwt from 'jsonwebtoken';
-import { getDirectusItem } from '~~/server/services/serverCms';
-
 import type { IUser } from '~~/interfaces/entities/user';
-import type { IJwtPayload } from '~~/interfaces/jwt-payload';
-
-const config = useRuntimeConfig();
-const secret = config.jwt.secret;
+import { checkUser } from '~~/server/services/checkUser';
+import { getDirectusItem } from '~~/server/services/serverCms';
 
 export default defineEventHandler(
     async (
         event
     ): Promise<{ status: number; success: boolean; message?: string; user: IUser | null }> => {
-        const token = getCookie(event, 'authorization');
+        const { status, message, data: userData } = checkUser(event);
 
-        if (!token) return { status: 401, message: 'Unauthorized', user: null, success: false };
+        if (!userData) return { status, message, user: null, success: false };
 
         try {
-            const decoded = jwt.verify(token, secret) as IJwtPayload;
-            const user = await getDirectusItem<IUser>('users', decoded.id);
+            const user = await getDirectusItem<IUser>('users', userData.id);
 
             if (!user) {
                 return { status: 404, message: 'User not found', user: null, success: false };

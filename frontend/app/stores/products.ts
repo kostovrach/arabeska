@@ -70,11 +70,13 @@ export const useProductsStore = defineStore('products', () => {
 
     // Actions=============================================
     async function getProducts() {
-        const { content: productsRaw, status } = useCms<IProduct[]>('products', productRelations, {
+        const { content: products, status } = useCms<IProduct[]>('products', productRelations, {
             lazy: true,
+            transform: (products) => {
+                const result = products.data.filter((el) => el.available === true);
+                return { data: result };
+            },
         });
-
-        const products = computed(() => productsRaw.value?.filter((el) => el.available === true));
 
         watchEffect(() => {
             productsStatus.value = status.value;

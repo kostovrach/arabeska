@@ -1,51 +1,44 @@
-import type { IProduct } from './product';
 import type { IUser } from './user';
 import type { PaymentStatusType } from '../statuses/payment-status';
 import type { OrderStatusType } from '../statuses/order-status';
-import type { ProductModifiersType } from '../product-modifiers';
-import type { IUserAddress } from './user-address';
+import type { ICartItem } from './cart-item';
 
 export interface IOrder {
     id: string | number; // Идентификатор сделки
-    user: IUser;
+    date_created: string;
+    date_updated: string | null;
+
+    user_id: IUser['id'];
+
     payment_status: PaymentStatusType; // Статус оплаты
-    amocrm_status?: OrderStatusType;
-    total_amount: string | number; // Общая сумма
+    status?: OrderStatusType;
+    amount: number; // Общая сумма
+    payment_method: 'sbp' | 'card' | 'on-receipt';
 
     // Состав заказа
-    structure: {
-        product: IProduct; // Товар
-        quantity: string | number; // Количество
-        modifier: ProductModifiersType; // Модификатор
-    }[];
-
-    // Отправитель
-    sender: {
-        name?: string;
-        phone: string | number;
-        email?: string;
-        self_recipient: boolean;
-    };
+    structure: ICartItem[];
 
     // Получатель
-    recipient?: {
-        name?: string;
-        phone?: string | number;
-        anonymous: boolean; // Отправить анонимно
-        notification: boolean; // Позвонить получателю для уточнения
-        secret: boolean; // Не говорить, что цветы
-    };
+    recipient_name?: string | null;
+    recipient_phone?: string | null;
+    recipient_self: boolean; // "Я получатель"
+    recipient_anonymous: boolean; // Отправить анонимно
+    recipient_notification: boolean; // Позвонить получателю для уточнения
+    recipient_secret: boolean; // Не говорить, что цветы
 
     // Информация о доставке
-    delivery: {
-        courier: boolean; // Доставка курьером
-        pickup: boolean; // Самовывоз
-
-        date: string;
-        time: string;
-
-        address: IUserAddress;
-    };
+    delivery_courier: boolean; // Доставка курьером
+    delivery_pickup: boolean; // Самовывоз
+    delivery_date: string;
+    delivery_time:
+        | '08:00 - 10:00'
+        | '10:00 - 12:00'
+        | '12:00 - 14:00'
+        | '14:00 - 16:00'
+        | '16:00 - 18:00'
+        | '18:00 - 20:00';
+    delivery_pickup_address: string;
+    delivery_address: string;
 
     // Открытка
     postcard?: string;
@@ -53,9 +46,7 @@ export interface IOrder {
     comment?: string;
 
     // Согласия
-    agreement: {
-        processing: boolean; // Согласие на обработку данных
-        status_notify: boolean; // Согласие на уведомление о статусе заказа
-        marketing_notify: boolean; // Согласие получать маркетинговые предложения
-    };
+    agreement_processing: boolean; // Согласие на обработку данных
+    agreement_status_notify: boolean; // Согласие на уведомление о статусе заказа
+    agreement_marketing_notify: boolean; // Согласие получать маркетинговые предложения
 }

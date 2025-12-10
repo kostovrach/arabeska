@@ -1,6 +1,10 @@
 <template>
     <NuxtLayout>
         <div class="profile" v-if="user">
+            <div class="profile__loading" v-if="isUpdateLoading">
+                <LoadSpinner />
+            </div>
+
             <div class="profile__container">
                 <div class="profile__titlebox">
                     <h1 class="profile__title">Личный кабинет</h1>
@@ -119,12 +123,12 @@
                                     class="profile__data-button"
                                     type="submit"
                                     :disabled="!isUpdatedInfo"
+                                    @click.prevent="updateUserData"
                                 >
                                     <span>Сохранить изменения</span>
                                 </button>
                             </form>
                         </section>
-                        <pre class="test" style="font-family: 'Inter'">{{ newAddress }}</pre>
                         <section
                             id="addresses"
                             class="profile__section profile__section--addresses"
@@ -238,7 +242,7 @@
                                             class="profile__data-button"
                                             type="submit"
                                             :disabled="!isUpdatedAddresses"
-                                            @click.prevent="pushAddress"
+                                            @click.prevent="updateUserData"
                                         >
                                             <span>Сохранить</span>
                                         </button>
@@ -246,6 +250,72 @@
                                 </form>
                             </div>
                         </section>
+                        <section id="orders" class="profile__section--orders">
+                            <div class="profile__section--orders-titlebox">
+                                <h2 class="profile__section-title">Заказы</h2>
+
+                                <div class="profile__section--orders-chips">
+                                    <label
+                                        v-for="(chip, idx) in ordersChips"
+                                        :key="idx"
+                                        :class="[
+                                            'profile__section--orders-chips-item',
+                                            { active: chip.value == userOrdersTab },
+                                        ]"
+                                        :for="`user-orders-${slugify(chip.value)}`"
+                                    >
+                                        <p>
+                                            {{ chip.label }}
+                                            <span
+                                                v-if="
+                                                    userOrders?.filter(
+                                                        (order) => order.status === chip.value
+                                                    ).length
+                                                "
+                                            >
+                                                ({{
+                                                    userOrders?.filter(
+                                                        (order) => order.status === chip.value
+                                                    ).length
+                                                }})
+                                            </span>
+                                        </p>
+                                        <input
+                                            v-model="userOrdersTab"
+                                            :id="`user-orders-${slugify(chip.value)}`"
+                                            type="radio"
+                                            name="user-orders"
+                                            :value="chip.value"
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="profile__section--orders-body">
+                                <ul
+                                    v-if="userOrdersShow.length"
+                                    class="profile__section--orders-list"
+                                >
+                                    <li
+                                        v-for="order in userOrdersShow"
+                                        :key="order.id"
+                                        class="profile__section--orders-item"
+                                    ></li>
+                                </ul>
+                                <div v-else class="profile__section--orders-empty">
+                                    <p class="profile__section--orders-empty-text">
+                                        Заказов пока нет
+                                    </p>
+                                    <NuxtLink
+                                        class="profile__section--orders-empty-button"
+                                        :to="{ name: 'catalog' }"
+                                    >
+                                        <span>В каталог</span>
+                                        <span><SvgSprite type="arrow" :size="16" /></span>
+                                    </NuxtLink>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- <pre class="test" style="font-family: 'Inter'">{{ newAddress }}</pre> -->
                     </div>
                 </div>
             </div>
@@ -259,6 +329,8 @@
     import type { LngLat, SuggestResponse, SuggestResponseItem } from '@yandex/ymaps3-types';
     import type { IUser } from '~~/interfaces/entities/user';
     import type { IUserAddress } from '~~/interfaces/entities/user-address';
+    import type { OrderStatusType } from '~~/interfaces/statuses/order-status';
+    import type { IOrder } from '~~/interfaces/entities/order';
     // ==================================================================
 
     // meta =============================================================
@@ -270,19 +342,56 @@
     // data =============================================================
     const userStore = useUserStore();
 
-    const user = userStore.user;
+    const user = computed(() => userStore.user);
+
+    const { content: userOrders } = useCms<IOrder[]>('orders', [], {
+        transform: (orders) => {
+            const result = orders.data.filter((el) => el.user_id === user.value?.id);
+            return { data: result };
+        },
+    });
+
+    const userOrdersShow = computed(() => {
+        return userOrders.value?.filter((order) => order.status === userOrdersTab.value) ?? [];
+    });
+
+    const ordersChips: {
+        label: string;
+        value: OrderStatusType | 'all';
+    }[] = [
+        {
+            label: 'Все',
+            value: 'all',
+        },
+        {
+            label: 'Ожидают оплаты',
+            value: 'ожидает оплаты',
+        },
+        {
+            label: 'Доставляются',
+            value: 'передан в доставку',
+        },
+        {
+            label: 'Завершённые',
+            value: 'доставлен',
+        },
+    ];
     // ==================================================================
 
     // state ============================================================
+    const isUpdateLoading = ref<boolean>(false);
     const isUpdatedInfo = ref<boolean>(false);
     const isUpdatedAddresses = ref<boolean>(false);
 
+    const userOrdersTab = ref<OrderStatusType | 'all'>('all');
+
     const userData: Partial<IUser> = reactive({
-        name: user?.name,
-        email: user?.email,
-        notifications: user?.notifications,
-        promo_subscribe: user?.promo_subscribe,
-        addresses: user?.addresses?.length ? [...user?.addresses] : null,
+        id: user.value?.id,
+        name: user.value?.name,
+        email: user.value?.email,
+        notifications: user.value?.notifications,
+        promo_subscribe: user.value?.promo_subscribe,
+        addresses: user.value?.addresses?.length ? [...user.value?.addresses] : null,
     });
 
     const newAddress: IUserAddress = reactive({
@@ -296,7 +405,6 @@
 
     // geosuggest state =================================================
     const suggestResponse = shallowRef<null | SuggestResponse>(null);
-    const suggest = ref<string>('');
     const selectedSuggest = ref<LngLat | null>(null);
 
     const suggestOnSearch = useDebounceFn(async () => {
@@ -317,8 +425,6 @@
             }
         }
 
-        // if (newAddress.street !== suggest.value) return;
-
         suggestResponse.value = await ymaps3.suggest({
             text: newAddress.street,
             types: ['street', 'house'],
@@ -334,17 +440,20 @@
 
     function checkUpdateInfo(): void {
         if (
-            userData.name === user?.name &&
-            userData.email === user?.email &&
-            userData.notifications === user?.notifications &&
-            userData.promo_subscribe === user?.promo_subscribe
+            userData.name === user.value?.name &&
+            userData.email === user.value?.email &&
+            userData.notifications === user.value?.notifications &&
+            userData.promo_subscribe === user.value?.promo_subscribe
         ) {
             isUpdatedInfo.value = false;
         } else isUpdatedInfo.value = true;
     }
 
     function checkUpdateAddresses(): void {
-        if (userData.addresses?.length == user?.addresses?.length && !newAddress.street.length) {
+        if (
+            userData.addresses?.length == user.value?.addresses?.length &&
+            !newAddress.street.length
+        ) {
             isUpdatedAddresses.value = false;
         } else isUpdatedAddresses.value = true;
     }
@@ -375,6 +484,28 @@
             newAddress.doorway = '';
             newAddress.floor = '';
             newAddress.street = '';
+        }
+    }
+
+    async function updateUserData(): Promise<void> {
+        if (!isUpdatedInfo.value && !isUpdatedAddresses.value && !newAddress.street.length) return;
+
+        isUpdateLoading.value = true;
+        if (newAddress.street.length) pushAddress();
+
+        try {
+            const res = await userStore.updateUser(userData);
+
+            if (res.ok) {
+                checkUpdateInfo();
+                checkUpdateAddresses();
+            } else {
+                alert('Ошибка обновления данных, попробуйте повторить попытку позже');
+            }
+        } catch (err) {
+            alert('Ошибка обновления данных, попробуйте повторить попытку позже');
+        } finally {
+            isUpdateLoading.value = false;
         }
     }
 
@@ -435,6 +566,22 @@
         $p: &;
 
         margin: lineScale(64, 32, 480, 1440) 0;
+        &__loading {
+            position: fixed;
+            z-index: 4;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background-color: $c-082535;
+                opacity: 0.5;
+                pointer-events: none;
+            }
+        }
         &__container {
             @include content-container;
         }
@@ -512,6 +659,61 @@
             border: rem(2) solid rgba($c-D4E1E7, 0.7);
             border-radius: rem(32);
             scroll-margin: rem(132);
+            &--orders {
+                scroll-margin: rem(132);
+                &-titlebox {
+                    padding: lineScale(32, 16, 480, 1920);
+                }
+                &-chips {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: rem(16);
+                    &-item {
+                        cursor: pointer;
+                        position: relative;
+                        font-family: 'Inter', sans-serif;
+                        font-size: lineScale(16, 14, 480, 1920);
+                        font-weight: $fw-semi;
+                        &:not(.active) {
+                            opacity: 0.5;
+                        }
+                        > input {
+                            cursor: pointer;
+                            position: absolute;
+                            inset: 0;
+                            display: none;
+                        }
+                    }
+                }
+                &-body {
+                }
+                &-list {
+                }
+                &-empty {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: rem(16);
+                    padding: rem(64) 0;
+                    &-text {
+                        font-family: 'Inter', sans-serif;
+                        font-size: lineScale(18, 16, 480, 1920);
+                        opacity: 0.75;
+                    }
+                    &-button {
+                        @include button-primary(
+                            $color: $c-082535,
+                            $border-color: $c-98BBD7,
+                            $anim-color: $c-accent,
+                            $font-size: lineScale(16, 16, 480, 1920),
+                            $gap: rem(8),
+                            $padding: rem(10) rem(32)
+                        );
+                    }
+                }
+            }
             &-title {
                 font-size: lineScale(32, 24, 480, 1920);
                 line-height: 1.2;

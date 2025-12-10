@@ -139,8 +139,8 @@ export async function updateDirectusItem<T = any>(
         const res = await directus.request(updateItem(collection, id, data, query));
 
         return normalize(res);
-    } catch (error) {
-        console.error(`Error updating item in ${collection} (id: ${id}):`, error);
+    } catch {
+        // console.error(`Error updating item in ${collection} (id: ${id}):`, error);
         return null;
     }
 }

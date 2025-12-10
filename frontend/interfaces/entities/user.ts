@@ -19,7 +19,7 @@ export interface IUser {
 
     addresses: IUserAddress[] | null;
 
-    cart?: ICartItem[] | null;
+    cart: ICartItem[];
 
     amocrm_contact_id?: string | number | null;
 }

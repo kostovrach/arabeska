@@ -13,6 +13,8 @@ export default defineNuxtConfig({
 
     routeRules: {
         '/profile': { ssr: false },
+        '/cart': { ssr: false },
+        '/checkout': { ssr: false },
     },
 
     runtimeConfig: {
