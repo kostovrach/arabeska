@@ -10,10 +10,7 @@
     const cartStore = useCartStore();
 
     await productsStore.getProducts();
-
-    onMounted(async () => {
-        await cartStore.initCart();
-    });
+    await cartStore.initCart();
     // =============================================================
 
     // SEO & Meta ==================================================

@@ -54,8 +54,6 @@
         product: IProduct | null;
     }>();
 
-    const cmsUrl = useRuntimeConfig().public.apiBase;
-
     // refs =================================================================
     const mainRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
     const thumbsRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
