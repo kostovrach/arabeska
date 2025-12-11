@@ -91,7 +91,8 @@ export default defineEventHandler(
                 'users',
                 {
                     phone: formattedPhone,
-                    addresses: null,
+                    orders: [],
+                    addresses: [],
                     cart: [],
                 },
                 {

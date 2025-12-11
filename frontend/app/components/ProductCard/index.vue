@@ -63,7 +63,8 @@
                     </ul>
                     <button
                         :class="['product__button', inCart ? 'product__button--checked' : '']"
-                        @click.prevent="addCart"
+                        :title="inCart ? 'В корзине' : 'Добавить в корзину'"
+                        @click.prevent="toggleCart"
                     >
                         <span class="product__button-icon product__button-icon--default">
                             <SvgSprite type="cart" :size="28" />
@@ -79,6 +80,7 @@
 </template>
 
 <script setup lang="ts">
+    import type { ICartItem } from '~~/interfaces/entities/cart-item';
     import type { IProduct } from '~~/interfaces/entities/product';
 
     const props = defineProps<{
@@ -89,34 +91,25 @@
         };
     }>();
 
-    // const cartStore = useCartStore();
-
     const product = props.data;
 
-    const inCart = ref(false);
+    const defaultProductState: ICartItem = {
+        product_id: product.id,
+        quantity: 1,
+        modifier: 'standart',
+    };
 
-    function addCart() {
-        // cartStore.addToCart({
-        //     product_id: product.id,
-        //     quantity: 1,
-        //     modifier: 'standart',
-        // });
-        // inCart.value = true;
-    }
+    const cartStore = useCartStore();
 
-    // temp cart processing==============================
+    const inCart = computed(() => cartStore.checkItemInCart(defaultProductState));
 
-    // state
-
-    // actions
-    function toggleCart() {
-        if (inCart.value) {
-            inCart.value = false;
+    const toggleCart = useDebounceFn(() => {
+        if (!inCart.value) {
+            cartStore.addToCart(defaultProductState);
         } else {
-            inCart.value = true;
+            cartStore.removeFromCart(defaultProductState);
         }
-    }
-    //====================================================
+    }, 200);
 </script>
 
 <style scoped lang="scss">

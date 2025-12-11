@@ -55,9 +55,13 @@
                 <NuxtLink class="header__action header__action--profile" :to="{ name: 'profile' }">
                     <SvgSprite type="user" :size="24" />
                 </NuxtLink>
-                <NuxtLink class="header__action header__action--cart" :to="{ name: 'index' }">
+                <NuxtLink class="header__action header__action--cart" :to="{ name: 'cart' }">
                     <SvgSprite type="bag" :size="24" />
-                    <span class="header__action-indicator">48</span>
+                    <ClientOnly>
+                        <span class="header__action-indicator" v-if="cartCounter >= 1">
+                            {{ cartCounter }}
+                        </span>
+                    </ClientOnly>
                 </NuxtLink>
                 <TheHeaderBurger class="header__burger" @click="openMenu" />
             </div>
@@ -75,15 +79,21 @@
     import type { IContacts } from '~~/interfaces/contacts';
 
     // data ================================================================================
+    const route = useRoute();
+
+    const cartStore = useCartStore();
+    const cartCounter = computed(() => cartStore.cartCount);
+
     const { content: categoriesRaw } = useCms<ICategories[]>('categories');
+
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+
     const hintCategories = computed(() =>
         categories.value?.filter((el) => slugify(el.name) !== route.params.category).slice(0, 3)
     );
 
     const { content: contacts } = useCms<IContacts>('contact');
 
-    const route = useRoute();
     // =====================================================================================
 
     // modals ==============================================================================
@@ -239,11 +249,14 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                min-height: rem(18);
                 aspect-ratio: 1;
                 font-size: rem(10);
+                color: $c-FFFFFF;
                 padding: rem(4);
                 border-radius: 50%;
                 border: rem(0.25) solid transparent;
+                background-color: $c-accent;
                 will-change: border-color;
                 transition: all $td $tf;
             }

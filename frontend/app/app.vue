@@ -7,8 +7,13 @@
     import { ModalsContainer } from 'vue-final-modal';
     // data ========================================================
     const productsStore = useProductsStore();
+    const cartStore = useCartStore();
 
-    productsStore.getProducts();
+    await productsStore.getProducts();
+
+    onMounted(async () => {
+        await cartStore.initCart();
+    });
     // =============================================================
 
     // SEO & Meta ==================================================

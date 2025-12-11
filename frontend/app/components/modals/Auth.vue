@@ -157,11 +157,11 @@
 
     // types ===============================================================
     import type { IContacts } from '~~/interfaces/contacts';
-    import type { InputMaskEmitsOptions } from 'primevue/inputmask';
     type AuthStep = 'auth' | 'otp' | 'authorized';
     // =====================================================================
 
     // data ================================================================
+    const cartStore = useCartStore();
     const { content: contacts } = useCms<IContacts>('contact');
     // =====================================================================
 
@@ -287,11 +287,12 @@
                         break;
                     case 200:
                         authStep.value = 'otp';
+                        if (otpInputs.value) otpInputs.value[0]?.focus();
                         setRetryTimer();
                         break;
                     case 208:
                         authStep.value = 'otp';
-                        otpInputs?.value?.[0]?.focus();
+                        if (otpInputs.value) otpInputs.value[0]?.focus();
                         setRetryTimer();
                         break;
                     default:
@@ -337,6 +338,7 @@
                     if (props.redirect && props.redirect !== '/') {
                         navigateTo(props.redirect);
                     }
+                    cartStore.mergeCart();
                     emit('loggedIn');
                     break;
                 default:
@@ -393,7 +395,7 @@
         }
         &__info {
             color: $c-F5142B;
-            font-size: rem(1);
+            font-size: rem(12);
             line-height: 1.4;
             text-align: center;
             text-wrap: balance;

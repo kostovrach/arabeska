@@ -391,7 +391,7 @@
         email: user.value?.email,
         notifications: user.value?.notifications,
         promo_subscribe: user.value?.promo_subscribe,
-        addresses: user.value?.addresses?.length ? [...user.value?.addresses] : null,
+        addresses: user.value?.addresses?.length ? [...user.value?.addresses] : [],
     });
 
     const newAddress: IUserAddress = reactive({
@@ -473,9 +473,7 @@
         newAddress.id = id;
 
         try {
-            if (Array.isArray(userData.addresses)) {
-                userData.addresses?.push({ ...newAddress });
-            } else userData.addresses = [{ ...newAddress }];
+            userData.addresses?.push({ ...newAddress });
         } catch (err) {
             console.log(err);
         } finally {

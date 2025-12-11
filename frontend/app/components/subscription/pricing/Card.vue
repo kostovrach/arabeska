@@ -38,6 +38,7 @@
                             'pricing-card__button',
                             inCart ? 'pricing-card__button--checked' : '',
                         ]"
+                        :title="inCart ? 'В корзине' : 'Добавить в корзину'"
                         @click.prevent="toggleCart"
                     >
                         <span class="pricing-card__button-icon pricing-card__button-icon--default">
@@ -54,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+    import type { ICartItem } from '~~/interfaces/entities/cart-item';
     import type { IProduct } from '~~/interfaces/entities/product';
 
     const props = defineProps<{
@@ -62,20 +64,23 @@
 
     const card = props.data;
 
-    // temp cart processing==============================
+    const instance: ICartItem = {
+        product_id: card.id,
+        quantity: 1,
+        modifier: 'standart',
+    };
 
-    // state
-    const inCart = ref(false);
+    const cartStore = useCartStore();
 
-    // actions
-    function toggleCart() {
-        if (inCart.value) {
-            inCart.value = false;
+    const inCart = computed(() => cartStore.checkItemInCart(instance));
+
+    const toggleCart = useDebounceFn(() => {
+        if (!inCart.value) {
+            cartStore.addToCart(instance);
         } else {
-            inCart.value = true;
+            cartStore.removeFromCart(instance);
         }
-    }
-    //====================================================
+    }, 200);
 </script>
 
 <style lang="scss">

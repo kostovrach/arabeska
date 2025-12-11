@@ -15,9 +15,9 @@ export interface IUser {
     notifications: boolean;
     promo_subscribe: boolean;
 
-    orders: IOrder[] | null;
+    orders: IOrder[];
 
-    addresses: IUserAddress[] | null;
+    addresses: IUserAddress[];
 
     cart: ICartItem[];
 

@@ -19,7 +19,7 @@ export const useProductsStore = defineStore('products', () => {
     ];
 
     // State===============================================
-    const productsList = useState<IProduct[] | null>('productsList', () => null);
+    const productsList = useState<IProduct[]>('productsList', () => []);
     const productsItem = useState<IProduct | null>('productsItem', () => null);
     const productsStatus = useState<AsyncDataRequestStatus>('productsStatus', () => 'idle');
     const singleProductStatus = useState<AsyncDataRequestStatus>(
