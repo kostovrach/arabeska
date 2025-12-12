@@ -269,7 +269,7 @@
             return;
         } else {
             try {
-                const res = await $fetch('/api/auth/send-otp', {
+                const res = await $fetch('/api/auth/sign-in', {
                     method: 'POST',
                     body: authData,
                 });
@@ -311,7 +311,7 @@
         if (authOtp.code.length !== 6) return;
         isLoading.value = true;
         try {
-            const res = await $fetch('/api/auth/verify-otp', {
+            const res = await $fetch('/api/auth/sign-up', {
                 method: 'POST',
                 body: {
                     phone: authData.phone,

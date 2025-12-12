@@ -23,7 +23,7 @@ export const useViewsStore = defineStore('views', () => {
                     loadedViews = loadedViews.slice(-MAX_VIEWS);
                 }
                 viewsProducts.value = loadedViews;
-            } catch {                
+            } catch {
                 viewsProducts.value = [];
             }
         }

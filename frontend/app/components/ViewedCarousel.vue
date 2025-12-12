@@ -160,8 +160,8 @@
             font-size: rem(14);
             padding: 0 rem(16);
             opacity: 0.5;
-            @media (pointer: fine){
-                &:hover{
+            @media (pointer: fine) {
+                &:hover {
                     opacity: 0.7;
                 }
             }

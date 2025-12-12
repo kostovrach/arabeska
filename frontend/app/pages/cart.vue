@@ -180,8 +180,6 @@
     const cart = computed(() => cartStore.cartList);
 
     const { content: settings } = await useClientOnlyCms<ISettings>('settings');
-        console.log(settings.value);
-        
 
     const deliveryPrice = computed(() => settings.value?.delivery_price);
     const deliveryRequiredPrice = computed(() => settings.value?.delivery_disable_price);
