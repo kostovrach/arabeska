@@ -1,34 +1,37 @@
 <template>
-    <section class="hint-slider" v-if="products?.length">
-        <div class="hint-slider__container">
-            <div class="hint-slider__titlebox">
-                <StarsOverlay v-if="props.title" class="hint-slider__title">
-                    <h2 v-html="props.title"></h2>
+    <section class="views-slider" v-if="products?.length">
+        <div class="views-slider__container">
+            <div class="views-slider__titlebox">
+                <StarsOverlay class="views-slider__title">
+                    <h2>Вы недавно смотрели</h2>
                 </StarsOverlay>
-                <div class="hint-slider__controls">
+                <div class="views-slider__controls">
                     <button
-                        class="hint-slider__button hint-slider__button--prev"
+                        class="views-slider__button views-slider__button--prev"
                         type="button"
                         @click="scrollPrev()"
                     >
                         <SvgSprite type="arrow" />
                     </button>
                     <button
-                        class="hint-slider__button hint-slider__button--next"
+                        class="views-slider__button views-slider__button--next"
                         type="button"
                         @click="scrollNext()"
                     >
                         <SvgSprite type="arrow" />
                     </button>
                 </div>
+                <button class="views-slider__cls-button" type="button" @click.prevent="clearViews">
+                    Очистить историю
+                </button>
             </div>
-            <div class="hint-slider__body">
-                <div v-show="status === 'pending'" class="hint-slider__loader">
-                    <div class="hint-slider__loader-wrapper">
+            <div class="views-slider__body">
+                <div v-show="status === 'pending'" class="views-slider__loader">
+                    <div class="views-slider__loader-wrapper">
                         <ProductCardLoader v-for="n in 5" :key="n" />
                     </div>
                 </div>
-                <div v-show="status === 'error' || status === 'idle'" class="hint-slider__error">
+                <div v-show="status === 'error' || status === 'idle'" class="views-slider__error">
                     <FetchError />
                 </div>
                 <ClientOnly>
@@ -41,8 +44,8 @@
                         <EmblaSlide
                             v-for="(product, idx) in products"
                             :key="product.id"
-                            class="hint-slider__slide"
-                            :class="{ 'hint-slider__slide--active': idx === selectedIndex }"
+                            class="views-slider__slide"
+                            :class="{ 'views-slider__slide--active': idx === selectedIndex }"
                         >
                             <ProductCard
                                 :data="product"
@@ -70,11 +73,20 @@
     }>();
 
     const productsStore = useProductsStore();
+    const viewsStore = useViewsStore();
 
     productsStore.getProducts();
 
-    const products = computed(() => productsStore.productsList.filter((el) => el.popular));
+    const products = computed(() => {
+        const views = new Set(viewsStore.viewsProducts);
+
+        return productsStore.productsList.filter((el) => views.has(el.id.toString()));
+    });
     const status = computed(() => productsStore.productsStatus);
+    // =======================================================
+
+    // methods ===============================================
+    const clearViews = (): void => viewsStore.clearViews();
     // =======================================================
 
     // slider=================================================
@@ -116,7 +128,7 @@
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
-    .hint-slider {
+    .views-slider {
         $p: &;
 
         @include content-block;
@@ -139,6 +151,20 @@
             display: flex;
             align-items: center;
             gap: rem(24);
+        }
+        &__cls-button {
+            cursor: pointer;
+            align-self: flex-end;
+            font-family: 'Inter', sans-serif;
+            font-weight: $fw-semi;
+            font-size: rem(14);
+            padding: 0 rem(16);
+            opacity: 0.5;
+            @media (pointer: fine){
+                &:hover{
+                    opacity: 0.7;
+                }
+            }
         }
         &__loader {
             width: 100%;

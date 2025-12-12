@@ -218,6 +218,8 @@
 
     const route = useRoute();
 
+    const viewsStore = useViewsStore();
+
     const { content: settings } = useCms<ISettings>('settings', [
         'disable_controls.*',
         'disable_controls.categories_id.*',
@@ -354,6 +356,14 @@
         ],
     }));
     // ======================================================================
+    watch(
+        () => product.value,
+        async (newProduct) => {
+            await nextTick();
+            if (newProduct && newProduct.id) viewsStore.setProductInViews(newProduct.id);
+        },
+        { immediate: true }
+    );
 </script>
 
 <style lang="scss">

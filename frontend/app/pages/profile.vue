@@ -320,6 +320,7 @@
                 </div>
             </div>
         </div>
+        <ViewedCarousel />
     </NuxtLayout>
 </template>
 
@@ -892,7 +893,7 @@
                 &-form {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
-                    gap: rem(16);
+                    gap: rem(16) lineScale(16,8,480,1920);
                     margin: rem(16) 0 rem(32);
                 }
                 &-input {
@@ -927,6 +928,51 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1024px){
+        .profile {
+            &__body {
+                grid-template-columns: 100%;
+            }
+            &__nav {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        .profile {
+            &__titlebox {
+                flex-direction: column-reverse;
+                gap: rem(32);
+            }
+            &__controls {
+                align-self: flex-end;
+            }
+        }
+    }
+
+    @media (max-width: 580px){
+        .profile {
+            &__section {
+                padding: 0;
+                border: none;
+                &--orders {
+                    &-titlebox {
+                        padding: 0;
+                    }
+                }
+            }
+            &__data {
+                &-create {
+                    &-form {
+                        display: flex;
+                        flex-direction: column;
                     }
                 }
             }

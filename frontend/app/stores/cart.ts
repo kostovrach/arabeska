@@ -10,7 +10,16 @@ export const useCartStore = defineStore('cart', () => {
     const cartList = ref<ICartItem[]>([]);
 
     // Getters
-    const cartCount = computed(() => cartList.value.length);
+    const cartCount = computed(() => {
+        const itemsQtyArr = cartList.value.map((el) => Number(el.quantity));
+
+        let sum: number = 0;
+        for (let i: number = 0; i < itemsQtyArr.length; i++) {
+            sum += itemsQtyArr[i]!;
+        }
+
+        return sum;
+    });
     const cartAmount = computed(() => {
         return cartList.value.reduce((total, item) => {
             const product = productsStore.productsList?.find((el) => el.id === item.product_id);
@@ -19,11 +28,6 @@ export const useCartStore = defineStore('cart', () => {
             const price = (): number => {
                 let multiplier: number;
                 switch (item.modifier) {
-                    case 'standart':
-                        multiplier = 1;
-                        return product.discount
-                            ? product.discount * multiplier
-                            : product.price * multiplier;
                     case 'large':
                         multiplier = 1.5;
                         return product.discount
@@ -121,22 +125,60 @@ export const useCartStore = defineStore('cart', () => {
         }
     }
 
-    async function updateQty(item: ICartItem): Promise<void> {
+    async function addQty(item: ICartItem): Promise<void> {
         const key = cartKeyBuilder([item.product_id, item.modifier]);
         const existingIdx = cartList.value.findIndex(
             (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
         );
 
-        if (existingIdx === -1 || Number(item.quantity) <= 0) return;
+        if (existingIdx === -1 || Number(item.quantity) >= 5) return;
 
         const snapshot = [...cartList.value];
 
-        cartList.value[existingIdx]!.quantity = item.quantity;
+        cartList.value[existingIdx]!.quantity = Number(cartList.value[existingIdx]!.quantity) + 1;
         saveToLocalStorage();
 
         if (isAuth.value) {
             try {
-                await $fetch('/api/cart/update', { method: 'POST', body: { item } });
+                const reqPaylod = cartList.value[existingIdx];
+
+                const { success } = await $fetch('/api/cart/update', {
+                    method: 'POST',
+                    body: reqPaylod,
+                });
+
+                if (!success) cartList.value = snapshot;
+                await syncCart();
+            } catch (err) {
+                cartList.value = snapshot;
+                console.error('Error updating quantity:', err);
+            }
+        }
+    }
+
+    async function removeQty(item: ICartItem): Promise<void> {
+        const key = cartKeyBuilder([item.product_id, item.modifier]);
+        const existingIdx = cartList.value.findIndex(
+            (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
+        );
+
+        if (existingIdx === -1 || Number(item.quantity) <= 1) return;
+
+        const snapshot = [...cartList.value];
+
+        cartList.value[existingIdx]!.quantity = Number(cartList.value[existingIdx]!.quantity) - 1;
+        saveToLocalStorage();
+
+        if (isAuth.value) {
+            try {
+                const reqPaylod = cartList.value[existingIdx];
+
+                const { success } = await $fetch('/api/cart/update', {
+                    method: 'POST',
+                    body: reqPaylod,
+                });
+
+                if (!success) cartList.value = snapshot;
                 await syncCart();
             } catch (err) {
                 cartList.value = snapshot;
@@ -171,9 +213,20 @@ export const useCartStore = defineStore('cart', () => {
 
     function checkItemInCart(item: ICartItem): boolean {
         const key = cartKeyBuilder([item.product_id, item.modifier]);
-        const exist = cartList.value.find(
-            (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
-        );
+
+        let exist: ICartItem | undefined;
+        if (isAuth.value) {
+            exist = cartList.value.find(
+                (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
+            );
+        } else {
+            const localCart = localStorage.getItem('cart');
+            if (!localCart) return false;
+
+            exist = (JSON.parse(localCart) as ICartItem[]).find(
+                (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
+            );
+        }
 
         if (exist) {
             return true;
@@ -187,7 +240,8 @@ export const useCartStore = defineStore('cart', () => {
         initCart,
         addToCart,
         removeFromCart,
-        updateQty,
+        addQty,
+        removeQty,
         syncCart,
         mergeCart,
         checkItemInCart,

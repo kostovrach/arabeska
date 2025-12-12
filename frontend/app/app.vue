@@ -6,11 +6,11 @@
 <script setup lang="ts">
     import { ModalsContainer } from 'vue-final-modal';
     // data ========================================================
-    const productsStore = useProductsStore();
-    const cartStore = useCartStore();
 
-    await productsStore.getProducts();
-    await cartStore.initCart();
+    await useProductsStore().getProducts();
+    await useCartStore().initCart();
+
+    useViewsStore().initFromLocalStorage();
     // =============================================================
 
     // SEO & Meta ==================================================
