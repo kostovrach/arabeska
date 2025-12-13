@@ -326,6 +326,7 @@
 
 <script setup lang="ts">
     import { YandexMap } from 'vue-yandex-maps';
+    
     // types ============================================================
     import type { LngLat, SuggestResponse, SuggestResponseItem } from '@yandex/ymaps3-types';
     import type { IUser } from '~~/interfaces/entities/user';

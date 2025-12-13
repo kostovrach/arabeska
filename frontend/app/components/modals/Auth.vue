@@ -1,10 +1,6 @@
 <template>
-    <VueFinalModal
-        overlay-transition="vfm-fade"
-        content-transition="vfm-fade"
-        @opened="setPhoneInputFocus"
-    >
-        <div class="modal-auth hide-scrollbar">
+    <VueFinalModal overlay-transition="vfm-fade" content-transition="vfm-fade">
+        <div class="modal-auth">
             <button class="modal-auth__close-btn" type="button" @click="emit('close')">
                 <SvgSprite type="cross" :size="24" />
             </button>
@@ -15,10 +11,10 @@
                 <div
                     :class="[
                         'modal-auth__step',
-                        'modal-auth__step--auth',
-                        { active: authStep === 'auth' },
+                        'modal-auth__step--sign-in',
+                        { active: step === 'sign-in' },
                     ]"
-                    :aria-hidden="authStep !== 'auth'"
+                    :aria-hidden="step !== 'sign-in'"
                 >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Вход в личный кабинет</span>
@@ -26,45 +22,80 @@
                             Авторизуйтесь, чтобы смотреть свою историю заказов, копить баллы,
                             получать подарки и&nbsp;многое&nbsp;другое
                         </p>
+                        <div class="modal-auth__switch">
+                            <p>Еще нет аккаунта?</p>
+                            <button type="button" @click.prevent="step = 'sign-up'">
+                                <span>Зарегистрироваться</span>
+                                <span><SvgSprite type="arrow" :size="10" /></span>
+                            </button>
+                        </div>
                     </div>
-                    <form id="auth" class="modal-auth__form">
+                    <form id="sign-in" class="modal-auth__form">
                         <div class="modal-auth__inputbox">
                             <InputMask
-                                ref="phoneInput"
-                                v-model="authData.phone"
-                                id="auth-phone"
-                                class="modal-auth__input modal-auth__input--auth"
+                                ref="signInPhone"
+                                id="sign-in-phone"
+                                v-model="signInModel.phone"
+                                class="modal-auth__input"
                                 mask="+7 (999) 999-99-99"
                                 placeholder="+7 (___) ___-__-__"
-                                name="auth-phone"
-                                @focus="authErrors.phone = false"
+                                name="sign-in-phone"
+                                @focus="signInErrors.phone = false"
                             />
-                            <div v-if="authErrors.phone" class="modal-auth__error" style="left: 5%">
+                            <div
+                                v-if="signInErrors.phone"
+                                class="modal-auth__error"
+                                style="left: 5%"
+                            >
                                 <span>i</span>
                                 <p>Необходимо заполнить поле</p>
                             </div>
                         </div>
-                        <button
-                            class="modal-auth__button modal-auth__button--auth"
-                            type="submit"
-                            @click.prevent="submitPhone"
-                        >
-                            <span>Получить код</span>
+                        <div class="modal-auth__inputbox">
+                            <input
+                                id="sign-in-password"
+                                ref="signInPassword"
+                                v-model="signInModel.password"
+                                class="modal-auth__input"
+                                :type="isShowSignInPassword ? 'text' : 'password'"
+                                name="sign-in-password"
+                                placeholder="Пароль"
+                                @focus="signInErrors.password = false"
+                            />
+                            <button
+                                v-show="signInModel.password.length"
+                                class="modal-auth__input-icon"
+                                type="button"
+                                @mousedown="isShowSignInPassword = true"
+                                @mouseup="isShowSignInPassword = false"
+                                @touchstart="isShowSignInPassword = true"
+                                @touchcancel="isShowSignInPassword = false"
+                            >
+                                <SvgSprite type="eye" :size="22" />
+                            </button>
+                            <div
+                                v-if="signInErrors.password"
+                                class="modal-auth__error"
+                                style="left: 5%"
+                            >
+                                <span>i</span>
+                                <p>Необходимо заполнить поле</p>
+                            </div>
+                        </div>
+                        <button class="modal-auth__button" type="submit" @click.prevent="">
+                            <span>Отправить</span>
                         </button>
-                        <p
-                            class="modal-auth__info"
-                            v-if="authErrors.general && authErrors.general.length"
-                        >
-                            {{ authErrors.general }}
+                        <p class="modal-auth__info" v-if="signInErrors.general.length">
+                            {{ signInErrors.general }}
                         </p>
-                        <label class="modal-auth__agreement" for="auth-agreement">
+                        <label class="modal-auth__agreement" for="sign-in-agreement">
                             <div class="modal-auth__agreement-checkbox">
                                 <input
-                                    v-model="authData.agreement"
-                                    id="auth-agreement"
+                                    v-model="signInModel.agreement"
+                                    id="sign-in-agreement"
                                     type="checkbox"
-                                    name="auth-agreement"
-                                    @input="authErrors.agreement = false"
+                                    name="sign-in-agreement"
+                                    @input="signInErrors.agreement = false"
                                 />
                             </div>
                             <p class="modal-auth__agreement-text">
@@ -72,7 +103,7 @@
                                 данных
                             </p>
                             <div
-                                v-if="authErrors.agreement"
+                                v-if="signInErrors.agreement"
                                 class="modal-auth__error"
                                 style="left: -8.5%"
                             >
@@ -85,66 +116,126 @@
                 <div
                     :class="[
                         'modal-auth__step',
-                        'modal-auth__step--otp',
-                        { active: authStep === 'otp' },
+                        'modal-auth__step--sign-up',
+                        { active: step === 'sign-up' },
                     ]"
-                    :aria-hidden="authStep !== 'otp'"
+                    :aria-hidden="step !== 'sign-up'"
                 >
                     <div class="modal-auth__titlebox">
-                        <span class="modal-auth__title">Введите код</span>
+                        <span class="modal-auth__title">Регистрация</span>
                         <p class="modal-auth__desc">
-                            Отправили код на номер {{ partialHiddenPhone(authData.phone) }}
+                            Создайте аккаунт, чтобы смотреть свою историю заказов, копить баллы,
+                            получать подарки и&nbsp;многое&nbsp;другое
                         </p>
-                        <button
-                            type="button"
-                            class="modal-auth__button--swch"
-                            @click.prevent="authStep = 'auth'"
-                        >
-                            <span>
-                                <SvgSprite type="arrow" :size="12" style="rotate: -180deg" />
-                            </span>
-                            <span>Изменить</span>
-                        </button>
+                        <div class="modal-auth__switch">
+                            <p>Уже есть аккаунт?</p>
+                            <button type="button" @click.prevent="step = 'sign-in'">
+                                <span>Вход</span>
+                                <span><SvgSprite type="arrow" :size="10" /></span>
+                            </button>
+                        </div>
                     </div>
-                    <form id="otp" class="modal-auth__form">
-                        <InputOtp
-                            v-model="authOtp.code"
-                            id="auth-otp"
-                            class="modal-auth__input modal-auth__input--otp"
-                            :length="6"
-                            integerOnly
-                        >
-                            <template #default="{ attrs, events, index }">
-                                <input
-                                    ref="otpInputs"
-                                    v-bind="attrs"
-                                    v-on="events"
-                                    :id="`auth-otp-item-${index}`"
-                                    type="text"
-                                    :name="`auth-otp-item-${index}`"
-                                    class="modal-auth__input--otp-item"
-                                    placeholder="0"
-                                    @input="submitOtp"
-                                    @paste="submitOtp"
-                                />
-                                <span
-                                    v-if="index === 3"
-                                    class="modal-auth__input--otp-divider"
-                                ></span>
-                            </template>
-                        </InputOtp>
-                        <button
-                            class="modal-auth__button modal-auth__button--otp"
-                            type="submit"
-                            @click.prevent="submitPhone"
-                            :disabled="!retryState.isAllowed"
-                        >
-                            <span>Отправить код повторно</span>
-                            <span v-if="retryState.timer.length">{{ retryState.timer }}</span>
+                    <form id="sign-up" class="modal-auth__form">
+                        <div class="modal-auth__inputbox">
+                            <InputMask
+                                ref="signInPhone"
+                                id="sign-up-phone"
+                                v-model="signUpModel.phone"
+                                class="modal-auth__input"
+                                mask="+7 (999) 999-99-99"
+                                placeholder="+7 (___) ___-__-__"
+                                name="sign-up-phone"
+                                @focus="signUpErrors.phone = false"
+                            />
+                            <div
+                                v-if="signUpErrors.phone"
+                                class="modal-auth__error"
+                                style="left: 5%"
+                            >
+                                <span>i</span>
+                                <p>Необходимо заполнить поле</p>
+                            </div>
+                        </div>
+                        <div class="modal-auth__inputbox">
+                            <input
+                                id="sign-up-email"
+                                ref="signUpEmail"
+                                v-model="signUpModel.email"
+                                class="modal-auth__input"
+                                type="email"
+                                name="sign-up-email"
+                                placeholder="E-mail"
+                                @focus="signUpErrors.email = false"
+                            />
+                            <div
+                                v-if="signUpErrors.email"
+                                class="modal-auth__error"
+                                style="left: 5%"
+                            >
+                                <span>i</span>
+                                <p>Необходимо заполнить поле</p>
+                            </div>
+                        </div>
+                        <div class="modal-auth__inputbox">
+                            <input
+                                id="sign-up-password"
+                                ref="signUpPassword"
+                                v-model="signUpModel.password"
+                                class="modal-auth__input"
+                                :type="isShowSignUpPassword ? 'text' : 'password'"
+                                name="sign-up-password"
+                                placeholder="Пароль"
+                                @focus="signUpErrors.password = false"
+                            />
+                            <button
+                                v-show="signUpModel.password.length"
+                                class="modal-auth__input-icon"
+                                type="button"
+                                @mousedown="isShowSignUpPassword = true"
+                                @mouseup="isShowSignUpPassword = false"
+                                @touchstart="isShowSignUpPassword = true"
+                                @touchcancel="isShowSignUpPassword = false"
+                            >
+                                <SvgSprite type="eye" :size="22" />
+                            </button>
+                            <div
+                                v-if="signUpErrors.password"
+                                class="modal-auth__error"
+                                style="left: 5%"
+                            >
+                                <span>i</span>
+                                <p>Необходимо заполнить поле</p>
+                            </div>
+                        </div>
+                        <button class="modal-auth__button" type="submit" @click.prevent="">
+                            <span>Отправить</span>
                         </button>
-                        <p class="modal-auth__info" v-if="otpError && otpError.length">
-                            {{ otpError }}
+                        <p class="modal-auth__info" v-if="signUpErrors.general.length">
+                            {{ signInErrors.general }}
                         </p>
+                        <label class="modal-auth__agreement" for="sign-up-agreement">
+                            <div class="modal-auth__agreement-checkbox">
+                                <input
+                                    v-model="signUpModel.agreement"
+                                    id="sign-up-agreement"
+                                    type="checkbox"
+                                    name="sign-up-agreement"
+                                    @input="signUpErrors.agreement = false"
+                                />
+                            </div>
+                            <p class="modal-auth__agreement-text">
+                                Согласен с политикой конфиденциальности и обработки персональных
+                                данных
+                            </p>
+                            <div
+                                v-if="signUpErrors.agreement"
+                                class="modal-auth__error"
+                                style="left: -8.5%"
+                            >
+                                <span>i</span>
+                                <p>Без вашего согласия мы не сможем продолжить</p>
+                            </div>
+                        </label>
                     </form>
                 </div>
             </div>
@@ -154,18 +245,14 @@
 
 <script setup lang="ts">
     import { VueFinalModal } from 'vue-final-modal';
-
-    // types ===============================================================
     import type { IContacts } from '~~/interfaces/contacts';
-    type AuthStep = 'auth' | 'otp' | 'authorized';
-    // =====================================================================
 
-    // data ================================================================
-    const cartStore = useCartStore();
-    const { content: contacts } = useCms<IContacts>('contact');
-    // =====================================================================
+    const emit = defineEmits<{
+        (e: 'close'): void;
+        (e: 'loggedIn'): void;
+    }>();
 
-    // state ===============================================================
+    // State ===============================================================
     const props = withDefaults(
         defineProps<{
             redirect?: string;
@@ -174,192 +261,57 @@
             redirect: undefined,
         }
     );
-    const emit = defineEmits<{
-        (e: 'loggedIn'): void;
-        (e: 'close'): void;
-    }>();
-
-    const userStore = useUserStore();
-
-    const phoneInput = ref<{ $el: HTMLInputElement } | null>(null);
-    const otpInputs = ref<HTMLInputElement[] | null>(null);
 
     const isLoading = ref(false);
-    const authStep = ref<AuthStep>('auth');
-    const retryTimerId = ref<NodeJS.Timeout | null>(null);
+    const isShowSignInPassword = ref(false);
+    const isShowSignUpPassword = ref(false);
+    const step = ref<'sign-in' | 'sign-up'>('sign-in');
 
-    const retryState = reactive({
-        timer: '',
-        isAllowed: true,
-    });
+    // Refs
+    const signInPhone = ref<{ $el: HTMLInputElement } | null>(null);
+    const signInPassword = ref<HTMLInputElement | null>(null);
 
-    const authData = reactive({
+    const signUpPhone = ref<{ $el: HTMLInputElement } | null>(null);
+    const signUpEmail = ref<HTMLInputElement | null>(null);
+    const signUpPassword = ref<HTMLInputElement | null>(null);
+
+    // Sign-in model
+    const signInModel = reactive({
         phone: '',
+        password: '',
         agreement: true,
     });
-
-    const authErrors = reactive({
-        general: '',
+    const signInErrors = reactive({
         phone: false,
+        password: false,
         agreement: false,
+        general: '',
     });
 
-    const otpError = ref('');
-
-    const authOtp = reactive({
-        code: '',
+    // Sign-up model
+    const signUpModel = reactive({
+        phone: '',
+        email: '',
+        password: '',
+        agreement: true,
     });
+    const signUpErrors = reactive({
+        phone: false,
+        email: false,
+        password: false,
+        agreement: false,
+        general: '',
+    });
+    // =====================================================================
 
+    // data ================================================================
+    const cartStore = useCartStore();
+    const { content: contacts } = useCms<IContacts>('contact');
     // =====================================================================
 
     // methods =============================================================
-    function setPhoneInputFocus(): void {
-        phoneInput?.value?.$el.focus();
-    }
 
-    function setRetryTimer(): void {
-        if (retryTimerId.value !== null) {
-            clearInterval(retryTimerId.value);
-            retryTimerId.value = null;
-        }
-
-        let remainingSeconds = 120;
-
-        const formatTime = (seconds: number): string => {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        };
-
-        retryState.isAllowed = false;
-        retryState.timer = formatTime(remainingSeconds);
-
-        if (import.meta.client) {
-            retryTimerId.value = setInterval(() => {
-                remainingSeconds -= 1;
-
-                if (remainingSeconds <= 0) {
-                    clearInterval(retryTimerId.value!);
-                    retryTimerId.value = null;
-
-                    retryState.isAllowed = true;
-                    retryState.timer = '';
-                    return;
-                }
-
-                retryState.timer = formatTime(remainingSeconds);
-            }, 1000);
-        }
-    }
     // =====================================================================
-
-    // proccessing =========================================================
-    const submitPhone = async (): Promise<void> => {
-        isLoading.value = true;
-        authOtp.code = '';
-        if (!retryState.isAllowed && authStep.value === 'otp') {
-            isLoading.value = false;
-            return;
-        }
-
-        if (!authData.agreement || !authData.phone || !authData.phone.length) {
-            if (!authData.agreement) authErrors.agreement = true;
-            if (!authData.phone || !authData.phone.length) authErrors.phone = true;
-            isLoading.value = false;
-            return;
-        } else {
-            try {
-                const res = await $fetch('/api/auth/sign-in', {
-                    method: 'POST',
-                    body: authData,
-                });
-
-                switch (res.status) {
-                    case 500:
-                        authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                        break;
-                    case 400:
-                        authErrors.general = `Некорректный номер телефона, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                        break;
-                    case 429:
-                        authErrors.general =
-                            'Слишком частые запросы запрещены, повторите попытку через 60 секунд';
-                        break;
-                    case 200:
-                        authStep.value = 'otp';
-                        if (otpInputs.value) otpInputs.value[0]?.focus();
-                        setRetryTimer();
-                        break;
-                    case 208:
-                        authStep.value = 'otp';
-                        if (otpInputs.value) otpInputs.value[0]?.focus();
-                        setRetryTimer();
-                        break;
-                    default:
-                        authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                        break;
-                }
-            } catch {
-                authErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-            } finally {
-                isLoading.value = false;
-            }
-        }
-    };
-
-    const submitOtp = async (): Promise<void> => {
-        if (authOtp.code.length !== 6) return;
-        isLoading.value = true;
-        try {
-            const res = await $fetch('/api/auth/sign-up', {
-                method: 'POST',
-                body: {
-                    phone: authData.phone,
-                    code: authOtp.code,
-                },
-            });
-
-            switch (res.status) {
-                case 500:
-                    otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 400:
-                    otpError.value = `Некорректный номер телефона, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 429:
-                    otpError.value = `Достигнуто максимальное количество попыток, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 403:
-                    otpError.value = 'Неверный код';
-                    break;
-                case 200:
-                    authOtp.code = '';
-                    userStore.setUser(res.user!);
-                    if (props.redirect && props.redirect !== '/') {
-                        navigateTo(props.redirect);
-                    }
-                    cartStore.mergeCart();
-                    emit('loggedIn');
-                    break;
-                default:
-                    otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-            }
-        } catch {
-            otpError.value = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-        } finally {
-            isLoading.value = false;
-        }
-    };
-    // =====================================================================
-
-    watch(authStep, () => (authOtp.code = ''));
-
-    onBeforeUnmount(() => {
-        if (retryTimerId.value !== null) {
-            clearInterval(retryTimerId.value);
-        }
-    });
 </script>
 
 <style scoped lang="scss">
@@ -448,7 +400,7 @@
             gap: rem(32);
             background-color: $c-FFFFFF;
             transition: translate $td $tf;
-            &--auth {
+            &--sign-in {
                 position: relative;
                 z-index: 2;
                 &:not(.active) {
@@ -456,7 +408,7 @@
                     pointer-events: none;
                 }
             }
-            &--otp {
+            &--sign-up {
                 position: absolute;
                 z-index: 3;
                 inset: 0;
@@ -469,7 +421,6 @@
         &__titlebox {
             display: flex;
             flex-direction: column;
-            gap: rem(16);
         }
         &__title {
             font-size: lineScale(32, 24, 480, 1920);
@@ -479,6 +430,26 @@
             font-size: lineScale(16, 14, 480, 1920);
             line-height: 1.3;
             opacity: 0.5;
+            margin-top: rem(16);
+        }
+        &__switch {
+            display: flex;
+            gap: rem(8);
+            font-size: rem(14);
+            margin-top: rem(32);
+            > button {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: rem(4);
+                color: $c-accent;
+                text-decoration: underline;
+                @media (pointer: fine) {
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
         }
         &__form {
             font-family: 'Inter', sans-serif;
@@ -487,117 +458,64 @@
         }
         &__inputbox {
             position: relative;
+            &:not(:first-of-type) {
+                margin-top: rem(16);
+            }
         }
         &__input {
-            &--auth {
-                width: 100%;
-                font-size: lineScale(18, 16, 480, 1920);
-                padding: rem(12) rem(24);
-                background-color: rgba($c-D4E1E7, 0.25);
-                border: rem(2) solid rgba($c-D4E1E7, 0.25) !important;
-                border-radius: rem(32);
-                transition:
-                    background-color $td $tf,
-                    color $td $tf,
-                    border-color $td $tf;
-                &::placeholder {
-                    font-family: inherit;
-                    font-size: inherit;
-                    color: inherit;
-                    opacity: 0.5;
-                    transition: opacity $td $tf;
-                }
-                @media (pointer: fine) {
-                    &:hover,
-                    &:focus {
-                        background-color: transparent;
-                        border-color: $c-D4E1E7 !important;
-                        &::placeholder {
-                            opacity: 0.7;
-                        }
-                    }
-                }
-                &:focus,
-                &:not(:placeholder-shown) {
+            width: 100%;
+            font-size: lineScale(18, 16, 480, 1920);
+            padding: rem(12) rem(24);
+            background-color: rgba($c-D4E1E7, 0.25);
+            border: rem(2) solid rgba($c-D4E1E7, 0.25) !important;
+            border-radius: rem(32);
+            transition:
+                background-color $td $tf,
+                color $td $tf,
+                border-color $td $tf;
+            &::placeholder {
+                font-family: inherit;
+                font-size: inherit;
+                color: inherit;
+                opacity: 0.5;
+                transition: opacity $td $tf;
+            }
+            @media (pointer: fine) {
+                &:hover,
+                &:focus {
                     background-color: transparent;
-                    border-color: $c-accent !important;
-                    &::placeholder {
-                        opacity: 0.7;
-                    }
+                    border-color: $c-D4E1E7 !important;
                 }
             }
-            &--otp {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: rem(8);
-                &-item {
-                    width: lineScale(56, 48, 480, 1920);
-                    aspect-ratio: 1;
-                    text-align: center;
-                    font-size: lineScale(18, 16, 480, 1920);
-                    border-radius: rem(12);
-                    background-color: rgba($c-D4E1E7, 0.25);
-                    border: rem(2) solid transparent;
-                    &::placeholder {
-                        opacity: 0;
-                    }
-                    &:focus {
-                        border-color: $c-accent;
-                        background-color: transparent;
-                    }
-                    &:not(:placeholder-shown) {
-                        border-color: $c-98BBD7;
-                        background-color: transparent;
-                    }
-                }
-                &-divider {
-                    width: rem(16);
-                    height: rem(2);
-                    background-color: $c-082535;
-                    opacity: 0.5;
-                }
+            &:focus,
+            &:not(:placeholder-shown) {
+                background-color: transparent;
+                border-color: $c-accent !important;
+            }
+            &-icon {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                right: rem(20);
+                translate: 0 -50%;
+                color: $c-98BBD7;
+                opacity: 0.75;
             }
         }
         &__button {
             margin-top: rem(32);
             justify-content: center;
+            @include button-primary(
+                $width: 100%,
+                $gap: rem(8),
+                $font-size: lineScale(18, 16, 480, 1920),
+                $padding: rem(12) rem(40),
+                $border-color: $c-D4E1E7,
+                $anim-color: $c-accent
+            );
             &:disabled {
                 pointer-events: none;
                 opacity: 0.75;
-            }
-            &--swch {
-                cursor: pointer;
-                width: fit-content;
-                display: flex;
-                align-items: center;
-                gap: rem(6);
-                font-size: lineScale(16, 14, 480, 1920);
-                font-weight: $fw-semi;
-            }
-            &--auth {
-                @include button-primary(
-                    $width: 100%,
-                    $gap: rem(8),
-                    $font-size: lineScale(18, 16, 480, 1920),
-                    $padding: rem(12) rem(40),
-                    $border-color: $c-D4E1E7,
-                    $anim-color: $c-accent
-                );
-            }
-            &--otp {
-                @include button-primary(
-                    $width: 100%,
-                    $gap: rem(8),
-                    $font-size: lineScale(18, 16, 480, 1920),
-                    $color: $c-FFFFFF,
-                    $padding: rem(12) rem(40),
-                    $background: $c-082535,
-                    $border-color: transparent,
-                    $anim-border-color: $c-FFFFFF,
-                    $anim-color: $c-accent
-                );
             }
         }
         &__agreement {

@@ -8,10 +8,13 @@ export interface IUser {
     date_created: string;
     date_updated?: string | null;
 
+    login_attempts: number;
+    last_login_attempt?: string | null;
+
     name?: string | null;
     phone: string;
     password: string;
-    email?: string | null;
+    email: string;
 
     notifications: boolean;
     promo_subscribe: boolean;

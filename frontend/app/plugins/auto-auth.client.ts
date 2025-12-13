@@ -7,11 +7,11 @@ export default defineNuxtPlugin(async () => {
         if (user && success) {
             userStore.setUser(user);
         } else {
-            console.warn('Auto auth failed → logout, reason:', message);
+            console.warn('Auth failed:', message);
             userStore.clearUser();
         }
     } catch (err) {
-        console.warn('Auto auth failed → logout, reason:', err);
+        console.warn('Auth failed:', err);
         userStore.clearUser();
     }
 });

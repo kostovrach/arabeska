@@ -1,6 +1,8 @@
 import type { ICartItem } from '~~/interfaces/entities/cart-item';
 
 export const useCartStore = defineStore('cart', () => {
+    const STORAGE_KEY = 'cart';
+
     const userStore = useUserStore();
     const productsStore = useProductsStore();
     const isAuth = computed(() => userStore.isAuth);
@@ -52,7 +54,7 @@ export const useCartStore = defineStore('cart', () => {
     // Helpers
     function loadFromLocalStorage(): void {
         if (isClient && !isAuth.value) {
-            const localCart = localStorage.getItem('cart');
+            const localCart = localStorage.getItem(STORAGE_KEY);
             if (localCart) {
                 cartList.value = JSON.parse(localCart);
             }
@@ -61,7 +63,7 @@ export const useCartStore = defineStore('cart', () => {
 
     function saveToLocalStorage(): void {
         if (isClient && !isAuth.value) {
-            localStorage.setItem('cart', JSON.stringify(cartList.value));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cartList.value));
         } else return;
     }
 
@@ -199,14 +201,14 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     async function mergeCart(): Promise<void> {
-        const cartStorage = localStorage.getItem('cart');
+        const cartStorage = localStorage.getItem(STORAGE_KEY);
 
         if (isClient && cartStorage) {
             const localCart: ICartItem[] = JSON.parse(cartStorage);
             for (const item of localCart) {
                 await addToCart(item);
             }
-            localStorage.removeItem('cart');
+            localStorage.removeItem(STORAGE_KEY);
         }
         await syncCart();
     }
@@ -214,19 +216,9 @@ export const useCartStore = defineStore('cart', () => {
     function checkItemInCart(item: ICartItem): boolean {
         const key = cartKeyBuilder([item.product_id, item.modifier]);
 
-        let exist: ICartItem | undefined;
-        if (isAuth.value) {
-            exist = cartList.value.find(
-                (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
-            );
-        } else {
-            const localCart = localStorage.getItem('cart');
-            if (!localCart) return false;
-
-            exist = (JSON.parse(localCart) as ICartItem[]).find(
-                (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
-            );
-        }
+        const exist = cartList.value.find(
+            (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
+        );
 
         if (exist) {
             return true;

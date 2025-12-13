@@ -1,16 +1,21 @@
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { parsePhoneNumberWithError } from 'libphonenumber-js';
-import { getDirectusCollection, createDirectusItem } from '~~/server/services/serverCms';
+import { getDirectusCollection, updateDirectusItem } from '~~/server/services/serverCms';
 
 // types
-import type { IOtp } from '~~/interfaces/entities/otp';
+import type { IUser } from '~~/interfaces/entities/user';
 import type { PhoneNumber, CountryCode } from 'libphonenumber-js';
+import type { IJwtPayload } from '~~/interfaces/jwt-payload';
 
 const config = useRuntimeConfig();
 
-const smsruApiId = config.smsru.id;
-const smsruFrom = config.smsru.from;
-const phoneCountry = config.smsru.phoneCountry as CountryCode;
-const phoneFormat = config.smsru.phoneFormat as
+const JWT_SECRET = config.jwt.secret;
+const JWT_EXPIRATION = '7d';
+const MAX_ATTEMPTS = 3;
+const COOLDOWN_MINUTES = 2;
+const PHONE_COUNTRY = config.auth.phoneCountry as CountryCode;
+const PHONE_FORMAT = config.auth.phoneFormat as
     | 'NATIONAL'
     | 'INTERNATIONAL'
     | 'E.164'
@@ -18,56 +23,99 @@ const phoneFormat = config.smsru.phoneFormat as
     | 'IDD';
 
 export default defineEventHandler(
-    async (event): Promise<{ status: number; error?: string; success: boolean }> => {
-        const { phone } = await readBody<{ phone: string }>(event);
+    async (
+        event
+    ): Promise<{
+        status: number;
+        message?: string;
+        success: boolean;
+        user: Omit<IUser, 'password'> | null;
+    }> => {
+        const { phone, password } = await readBody<{
+            phone: IUser['phone'];
+            password: IUser['password'];
+        }>(event);
 
         let parsedPhone: PhoneNumber;
 
         try {
-            parsedPhone = parsePhoneNumberWithError(phone, phoneCountry);
+            parsedPhone = parsePhoneNumberWithError(phone, PHONE_COUNTRY);
+
             if (!parsedPhone.isValid()) {
-                return { status: 400, error: 'Invalid phone number', success: false };
+                return { status: 400, message: 'Invalid phone number', success: false, user: null };
             }
         } catch {
-            return { status: 500, error: 'Phone validation error', success: false };
+            return { status: 500, message: 'Phone validation error', success: false, user: null };
         }
-        const formattedPhone = parsedPhone.format(phoneFormat);
 
-        const existingOtps = await getDirectusCollection<IOtp[]>('otp_codes', {
+        const formattedPhone = parsedPhone.format(PHONE_FORMAT);
+
+        // Find user
+        const users = await getDirectusCollection<IUser[]>('users', {
             filter: { phone: { _eq: formattedPhone } },
-            sort: '-date_created',
             limit: 1,
         });
+        const user = Array.isArray(users) ? users[0] : null;
 
-        const lastOtp = Array.isArray(existingOtps) ? existingOtps[0] : null;
-
-        // 1 min cooldown
-        if (lastOtp && new Date(lastOtp.date_created).getTime() > Date.now() - 60 * 1000) {
-            return { status: 429, error: 'Cooldown: wait 1 minute', success: false };
-        } else if (lastOtp && new Date(lastOtp.date_created).getTime() < Date.now() - 60 * 1000) {
-            return { status: 208, error: 'Otp already exists', success: false };
+        if (!user) {
+            return { status: 401, message: 'Invalid credentials', success: false, user: null };
         }
 
-        const otpCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digits
+        // Check cooldown
+        if (user.login_attempts >= MAX_ATTEMPTS && user.last_login_attempt) {
+            const lastAttemptTime = new Date(user.last_login_attempt).getTime();
+            const cooldownEnd = lastAttemptTime + COOLDOWN_MINUTES * 60 * 1000;
 
-        const createOtp = await createDirectusItem<IOtp>('otp_codes', {
-            phone: formattedPhone,
-            code: otpCode,
-            expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
-            attempts: 0,
+            if (Date.now() < cooldownEnd) {
+                return {
+                    status: 429,
+                    message: 'Too many attempts, please wait',
+                    success: false,
+                    user: null,
+                };
+            } else {
+                await updateDirectusItem<IUser>('users', user.id, {
+                    login_attempts: 0,
+                    last_login_attempt: null,
+                });
+            }
+        }
+
+        // Verify password
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            const newAttempts = (user.login_attempts || 0) + 1;
+            await updateDirectusItem<IUser>('users', user.id, {
+                login_attempts: newAttempts,
+                last_login_attempt: new Date().toISOString(),
+            });
+
+            return { status: 401, message: 'Invalid credentials', success: false, user: null };
+        }
+
+        await updateDirectusItem<IUser>('users', user.id, {
+            login_attempts: 0,
+            last_login_attempt: null,
         });
-        if (!createOtp) {
-            return { status: 500, error: 'Failed to create OTP', success: false };
-        }
 
-        // test
-        const smsUrl = `https://sms.ru/sms/send?api_id=${smsruApiId}&to=${formattedPhone}&msg=Ваш код для входа на сайт: ${otpCode}&from=${smsruFrom}&test=1&json=1}`;
-        const smsRes = await fetch(smsUrl);
-        const smsResult = await smsRes.text();
-        console.log(smsResult);
+        const token = jwt.sign(
+            { id: user.id, phone: user.phone, role: 'client' } as Partial<IJwtPayload>,
+            JWT_SECRET,
+            {
+                expiresIn: JWT_EXPIRATION,
+            }
+        );
 
-        console.log('Ваш код для входа на сайт (dev):', otpCode);
+        setCookie(event, 'authorization', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 60 * 60 * parseInt(JWT_EXPIRATION),
+            path: '/',
+        });
 
-        return { status: 200, success: true };
+        const { password: _, ...userWithoutPassword } = user;
+
+        return { status: 200, success: true, user: userWithoutPassword };
     }
 );

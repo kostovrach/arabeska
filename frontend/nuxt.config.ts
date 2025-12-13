@@ -27,11 +27,9 @@ export default defineNuxtConfig({
             readToken: process.env.DIRECTUS_READ_TOKEN || '',
             crudToken: process.env.DIRECTUS_CRUD_TOKEN || '',
         },
-        smsru: {
-            id: process.env.SMSRU_API_ID || '',
-            from: process.env.SMSRU_FROM || '',
-            phoneCountry: process.env.SMSRU_COUNTRY || 'RU',
-            phoneFormat: process.env.SMSRU_FORMAT || 'E.164',
+        auth: {
+            phoneCountry: process.env.PHONE_COUNTRY || 'RU',
+            phoneFormat: process.env.PHONE_FORMAT || 'E.164',
         },
         jwt: {
             secret: process.env.JWT_SECRET || '',
