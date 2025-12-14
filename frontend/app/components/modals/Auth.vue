@@ -15,6 +15,8 @@
                         { active: step === 'sign-in' },
                     ]"
                     :aria-hidden="step !== 'sign-in'"
+                    :aria-disabled="step !== 'sign-in'"
+                    :inert="step !== 'sign-in'"
                 >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Вход в личный кабинет</span>
@@ -24,7 +26,11 @@
                         </p>
                         <div class="modal-auth__switch">
                             <p>Еще нет аккаунта?</p>
-                            <button type="button" @click.prevent="step = 'sign-up'">
+                            <button
+                                ref="signInStepButton"
+                                type="button"
+                                @click.prevent="setSignUpStep"
+                            >
                                 <span>Зарегистрироваться</span>
                                 <span><SvgSprite type="arrow" :size="10" /></span>
                             </button>
@@ -33,7 +39,6 @@
                     <form id="sign-in" class="modal-auth__form">
                         <div class="modal-auth__inputbox">
                             <InputMask
-                                ref="signInPhone"
                                 id="sign-in-phone"
                                 v-model="signInModel.phone"
                                 class="modal-auth__input"
@@ -54,7 +59,6 @@
                         <div class="modal-auth__inputbox">
                             <input
                                 id="sign-in-password"
-                                ref="signInPassword"
                                 v-model="signInModel.password"
                                 class="modal-auth__input"
                                 :type="isShowSignInPassword ? 'text' : 'password'"
@@ -82,7 +86,7 @@
                                 <p>Необходимо заполнить поле</p>
                             </div>
                         </div>
-                        <button class="modal-auth__button" type="submit" @click.prevent="">
+                        <button class="modal-auth__button" type="submit" @click.prevent="signIn">
                             <span>Отправить</span>
                         </button>
                         <p class="modal-auth__info" v-if="signInErrors.general.length">
@@ -120,6 +124,8 @@
                         { active: step === 'sign-up' },
                     ]"
                     :aria-hidden="step !== 'sign-up'"
+                    :aria-disabled="step !== 'sign-up'"
+                    :inert="step !== 'sign-up'"
                 >
                     <div class="modal-auth__titlebox">
                         <span class="modal-auth__title">Регистрация</span>
@@ -129,7 +135,11 @@
                         </p>
                         <div class="modal-auth__switch">
                             <p>Уже есть аккаунт?</p>
-                            <button type="button" @click.prevent="step = 'sign-in'">
+                            <button
+                                ref="signUpStepButton"
+                                type="button"
+                                @click.prevent="setSignInStep"
+                            >
                                 <span>Вход</span>
                                 <span><SvgSprite type="arrow" :size="10" /></span>
                             </button>
@@ -138,7 +148,6 @@
                     <form id="sign-up" class="modal-auth__form">
                         <div class="modal-auth__inputbox">
                             <InputMask
-                                ref="signInPhone"
                                 id="sign-up-phone"
                                 v-model="signUpModel.phone"
                                 class="modal-auth__input"
@@ -159,7 +168,6 @@
                         <div class="modal-auth__inputbox">
                             <input
                                 id="sign-up-email"
-                                ref="signUpEmail"
                                 v-model="signUpModel.email"
                                 class="modal-auth__input"
                                 type="email"
@@ -179,7 +187,6 @@
                         <div class="modal-auth__inputbox">
                             <input
                                 id="sign-up-password"
-                                ref="signUpPassword"
                                 v-model="signUpModel.password"
                                 class="modal-auth__input"
                                 :type="isShowSignUpPassword ? 'text' : 'password'"
@@ -207,7 +214,7 @@
                                 <p>Необходимо заполнить поле</p>
                             </div>
                         </div>
-                        <button class="modal-auth__button" type="submit" @click.prevent="">
+                        <button class="modal-auth__button" type="submit" @click.prevent="signUp">
                             <span>Отправить</span>
                         </button>
                         <p class="modal-auth__info" v-if="signUpErrors.general.length">
@@ -268,12 +275,8 @@
     const step = ref<'sign-in' | 'sign-up'>('sign-in');
 
     // Refs
-    const signInPhone = ref<{ $el: HTMLInputElement } | null>(null);
-    const signInPassword = ref<HTMLInputElement | null>(null);
-
-    const signUpPhone = ref<{ $el: HTMLInputElement } | null>(null);
-    const signUpEmail = ref<HTMLInputElement | null>(null);
-    const signUpPassword = ref<HTMLInputElement | null>(null);
+    const signInStepButton = ref<HTMLButtonElement | null>(null);
+    const signUpStepButton = ref<HTMLButtonElement | null>(null);
 
     // Sign-in model
     const signInModel = reactive({
@@ -306,11 +309,127 @@
 
     // data ================================================================
     const cartStore = useCartStore();
+    const userStore = useUserStore();
     const { content: contacts } = useCms<IContacts>('contact');
     // =====================================================================
 
     // methods =============================================================
+    function setSignUpStep(): void {
+        signInStepButton.value?.blur();
+        step.value = 'sign-up';
+    }
 
+    function setSignInStep(): void {
+        signUpStepButton.value?.blur();
+        step.value = 'sign-in';
+    }
+    // =====================================================================
+
+    // processing ==========================================================
+    async function signIn(): Promise<void> {
+        isLoading.value = true;
+
+        if (!signInModel.phone.length || !signInModel.password.length || !signInModel.agreement) {
+            if (!signInModel.phone.length) signInErrors.phone = true;
+            if (!signInModel.password.length) signInErrors.password = true;
+            if (!signInModel.agreement) signInErrors.agreement = true;
+            isLoading.value = false;
+            return;
+        }
+
+        try {
+            const res = await $fetch('/api/auth/sign-in', {
+                method: 'POST',
+                body: signInModel,
+            });
+
+            switch (res.status) {
+                case 400:
+                    signInErrors.general = 'Некорректный номер телефона';
+                    break;
+                case 500:
+                    signInErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                    break;
+                case 401:
+                    signInErrors.general = 'Некорректные данные';
+                    break;
+                case 429:
+                    signInErrors.general =
+                        'Вы ввели пароль неправильно слишком много раз, пожалуйста, повторите попытку позже';
+                    break;
+                case 200:
+                    userStore.setUser(res.user!);
+                    cartStore.mergeCart();
+                    if (props.redirect && props.redirect !== '/') {
+                        navigateTo(props.redirect);
+                    }
+                    emit('loggedIn');
+                    break;
+            }
+        } catch {
+            signInErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+        } finally {
+            isLoading.value = false;
+        }
+    }
+
+    async function signUp(): Promise<void> {
+        isLoading.value = true;
+
+        if (
+            !signUpModel.phone.length ||
+            !signUpModel.password.length ||
+            !signUpModel.email.length ||
+            !signUpModel.agreement
+        ) {
+            if (!signUpModel.phone.length) signUpErrors.phone = true;
+            if (!signUpModel.email.length) signUpErrors.email = true;
+            if (!signUpModel.password.length) signUpErrors.password = true;
+            if (!signUpModel.agreement) signUpErrors.agreement = true;
+            isLoading.value = false;
+            return;
+        }
+
+        if (signUpModel.password.length < 10) {
+            signUpErrors.general = 'Пароль должен содержать не менее 10 символов';
+            isLoading.value = false;
+            return;
+        }
+
+        try {
+            const res = await $fetch('/api/auth/sign-up', {
+                method: 'POST',
+                body: signUpModel,
+            });
+
+            switch (res.status) {
+                case 400:
+                    if (res.message === 'Invalid email')
+                        signUpErrors.general = `Некорректный E-mail`;
+                    if (res.message === 'Invalid phone number')
+                        signUpErrors.general = `Некорректный номер телефона`;
+                    break;
+                case 500:
+                    signUpErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+                    break;
+                case 409:
+                    signUpErrors.general = `Пользователь с таким номером уже существует, попробуйте войти в аккаунт`;
+                    break;
+                case 200:
+                    userStore.setUser(res.user!);
+                    cartStore.mergeCart();
+                    if (props.redirect && props.redirect !== '/') {
+                        navigateTo(props.redirect);
+                    }
+                    emit('loggedIn');
+                    break;
+            }
+        } catch {
+            signUpErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+        } finally {
+            isLoading.value = false;
+        }
+    }
     // =====================================================================
 </script>
 
@@ -330,6 +449,7 @@
         padding: rem(64) rem(32);
         border-radius: rem(32);
         overflow-x: hidden;
+        @include hide-scrollbar;
         &__close-btn {
             z-index: 5;
             top: rem(16);
@@ -365,6 +485,7 @@
             background-color: $c-082535;
             border-radius: rem(8);
             padding: rem(8) rem(16);
+            pointer-events: none;
             &::before {
                 content: '';
                 position: absolute;
@@ -401,7 +522,7 @@
             background-color: $c-FFFFFF;
             transition: translate $td $tf;
             &--sign-in {
-                position: relative;
+                position: absolute;
                 z-index: 2;
                 &:not(.active) {
                     translate: -110% 0;
@@ -409,7 +530,7 @@
                 }
             }
             &--sign-up {
-                position: absolute;
+                position: relative;
                 z-index: 3;
                 inset: 0;
                 &:not(.active) {
