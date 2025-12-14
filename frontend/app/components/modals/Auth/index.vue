@@ -66,6 +66,7 @@
                                 placeholder="Пароль"
                                 @focus="signInErrors.password = false"
                             />
+
                             <button
                                 v-show="signInModel.password.length"
                                 class="modal-auth__input-icon"
@@ -85,6 +86,10 @@
                                 <span>i</span>
                                 <p>Необходимо заполнить поле</p>
                             </div>
+                        </div>
+                        <div class="modal-auth__pass-hint">
+                            Забыли пароль?
+                            <button type="button" @click="emit('openForgot')">Восстановить</button>
                         </div>
                         <button class="modal-auth__button" type="submit" @click.prevent="signIn">
                             <span>Отправить</span>
@@ -257,6 +262,7 @@
     const emit = defineEmits<{
         (e: 'close'): void;
         (e: 'loggedIn'): void;
+        (e: 'openForgot'): void;
     }>();
 
     // State ===============================================================
@@ -618,9 +624,27 @@
                 position: absolute;
                 top: 50%;
                 right: rem(20);
-                translate: 0 -50%;
+                translate: 0 -45%;
                 color: $c-98BBD7;
                 opacity: 0.75;
+            }
+        }
+        &__pass-hint {
+            align-self: flex-end;
+            font-family: 'Inter', sans-serif;
+            font-size: rem(14);
+            opacity: 0.75;
+            margin-top: rem(8);
+            > button,
+            a {
+                cursor: pointer;
+                text-decoration: underline;
+                color: $c-accent;
+                @media (pointer: fine) {
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
             }
         }
         &__button {
@@ -652,6 +676,15 @@
                 font-weight: $fw-semi;
                 line-height: 1.2;
                 opacity: 0.5;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .modal-auth {
+            &__step {
+                display: flex;
+                flex-direction: column;
             }
         }
     }

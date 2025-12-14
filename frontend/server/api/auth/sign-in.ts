@@ -9,6 +9,7 @@ import type { PhoneNumber, CountryCode } from 'libphonenumber-js';
 import type { IJwtPayload } from '~~/interfaces/jwt-payload';
 
 const config = useRuntimeConfig();
+const isDev = config.public.appEnv === 'dev';
 
 const JWT_SECRET = config.jwt.secret;
 const JWT_EXPIRATION = '7d';
@@ -108,7 +109,7 @@ export default defineEventHandler(
 
         setCookie(event, 'authorization', token, {
             httpOnly: true,
-            secure: false,
+            secure: !isDev,
             sameSite: 'strict',
             maxAge: 60 * 60 * parseInt(JWT_EXPIRATION),
             path: '/',

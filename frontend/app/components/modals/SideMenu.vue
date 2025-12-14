@@ -111,7 +111,7 @@
         },
         {
             label: 'корзина',
-            routeName: '',
+            routeName: 'cart',
         },
         {
             label: 'подбор букета',

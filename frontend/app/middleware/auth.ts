@@ -1,10 +1,28 @@
-import { ModalsAuth } from '#components';
+import { ModalsAuth, ModalsAuthForgot } from '#components';
 import { useModal } from 'vue-final-modal';
 
 export default defineNuxtRouteMiddleware((to) => {
     const userStore = useUserStore();
 
     if (import.meta.server) return;
+
+    const {
+        open: openForgot,
+        close: closeForgot,
+        destroy: destroyForgot,
+    } = useModal({
+        component: ModalsAuthForgot,
+        attrs: {
+            onClose() {
+                closeForgot();
+            },
+            onLoggedIn() {
+                closeForgot();
+                destroyForgot();
+                destroyAuth();
+            },
+        },
+    });
 
     const {
         open: openAuth,
@@ -19,6 +37,10 @@ export default defineNuxtRouteMiddleware((to) => {
                 destroyAuth();
             },
             onClose() {
+                closeAuth();
+            },
+            onOpenForgot() {
+                openForgot();
                 closeAuth();
             },
         },
