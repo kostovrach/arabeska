@@ -1,10 +1,15 @@
 import type { ICartItem } from '~~/interfaces/entities/cart-item';
+import type { IProduct } from '~~/interfaces/entities/product';
+import type { ProductModifiersType } from '~~/interfaces/product-modifiers';
 
 export const useCartStore = defineStore('cart', () => {
     const STORAGE_KEY = 'cart';
 
     const userStore = useUserStore();
     const productsStore = useProductsStore();
+
+    const products = computed(() => productsStore.productsList);
+
     const isAuth = computed(() => userStore.isAuth);
     const isClient = import.meta.client;
 
@@ -71,6 +76,43 @@ export const useCartStore = defineStore('cart', () => {
         if (isClient) {
             loadFromLocalStorage();
             if (isAuth.value) await syncCart();
+        }
+    }
+
+    function getProductImageById(id: IProduct['id']): string {
+        const result = products.value.find((el) => el.id === id);
+
+        return `/api/cms/assets/${result?.images[0]?.directus_files_id.id}`;
+    }
+
+    function getProductTitleById(id: IProduct['id']): string {
+        const result = products.value.find((el) => el.id === id);
+
+        return result?.title ?? '';
+    }
+
+    function getProductPriceById(id: IProduct['id']): string {
+        const result = products.value.find((el) => el.id === id);
+
+        return `${(result?.discount ? result.discount : result?.price)?.toLocaleString('ru-RU')}`;
+    }
+
+    function getProductDiscountById(id: IProduct['id']): string | undefined {
+        const result = products.value.find((el) => el.id === id);
+
+        if (result?.discount) {
+            return result.price.toLocaleString('ru-RU');
+        }
+    }
+
+    function translateProductModifier(modifier: ProductModifiersType): string {
+        switch (modifier) {
+            case 'standart':
+                return 'Стандарт';
+            case 'large':
+                return 'Роскошный';
+            case 'premium':
+                return 'Премиум';
         }
     }
 
@@ -237,5 +279,10 @@ export const useCartStore = defineStore('cart', () => {
         syncCart,
         mergeCart,
         checkItemInCart,
+        getProductDiscountById,
+        getProductImageById,
+        getProductPriceById,
+        getProductTitleById,
+        translateProductModifier,
     };
 });

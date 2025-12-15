@@ -11,12 +11,6 @@ export default defineNuxtConfig({
         preset: 'node-server',
     },
 
-    routeRules: {
-        '/profile': { ssr: false },
-        '/cart': { ssr: false },
-        '/checkout': { ssr: false },
-    },
-
     runtimeConfig: {
         public: {
             cmsUrl: process.env.DIRECTUS_URL || '',

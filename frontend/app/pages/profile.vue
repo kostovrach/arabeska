@@ -1,326 +1,340 @@
 <template>
     <NuxtLayout>
-        <div class="profile" v-if="user">
-            <div class="profile__loading" v-if="isUpdateLoading">
-                <LoadSpinner />
-            </div>
-
-            <div class="profile__container">
-                <div class="profile__titlebox">
-                    <h1 class="profile__title">Личный кабинет</h1>
-                    <div class="profile__controls">
-                        <p class="profile__controls-phone">
-                            {{ partialHiddenPhone(decoratePhone(user.phone)) }}
-                        </p>
-                        <button class="profile__controls-logout" type="button" @click="logout">
-                            <span>Выйти</span>
-                            <span>
-                                <SvgSprite type="arrow" :size="12" style="rotate: -45deg" />
-                            </span>
-                        </button>
-                    </div>
+        <ClientOnly>
+            <div class="profile" v-if="user">
+                <div class="profile__loading" v-if="isUpdateLoading">
+                    <LoadSpinner />
                 </div>
 
-                <div class="profile__body">
-                    <aside class="profile__nav">
-                        <div class="profile__nav-container">
-                            <a class="profile__nav-link" href="#info"><span>Информация</span></a>
-                            <a class="profile__nav-link" href="#orders"><span>Заказы</span></a>
-                            <a class="profile__nav-link" href="#addresses"><span>Адреса</span></a>
+                <div class="profile__container">
+                    <div class="profile__titlebox">
+                        <h1 class="profile__title">Личный кабинет</h1>
+                        <div class="profile__controls">
+                            <p class="profile__controls-phone">
+                                {{ partialHiddenPhone(decoratePhone(user.phone)) }}
+                            </p>
+                            <button class="profile__controls-logout" type="button" @click="logout">
+                                <span>Выйти</span>
+                                <span>
+                                    <SvgSprite type="arrow" :size="12" style="rotate: -45deg" />
+                                </span>
+                            </button>
                         </div>
-                    </aside>
-                    <div class="profile__body-wrapper">
-                        <section id="info" class="profile__section profile__section--info">
-                            <h2 class="profile__section-title">Информация о покупателе</h2>
-                            <form class="profile__data">
-                                <div class="profile__data-field">
-                                    <div class="profile__data-field-titlebox">
-                                        <span class="profile__data-field-title">Имя</span>
-                                    </div>
-                                    <input
-                                        v-model="userData.name"
-                                        id="user-name"
-                                        class="profile__data-field-input"
-                                        type="text"
-                                        placeholder="Поделитесь как вас зовут"
-                                    />
-                                </div>
-                                <div class="profile__data-field">
-                                    <div class="profile__data-field-titlebox">
-                                        <span class="profile__data-field-title">Телефон</span>
-                                        <span class="profile__data-field-hint">
-                                            На этот номер вы получаете сервисные сообщения о
-                                            статусах заказов
-                                        </span>
-                                    </div>
-                                    <div
-                                        class="profile__data-field-input profile__data-field-input--lock"
-                                    >
-                                        <span class="profile__data-field-input--lock-icon">
-                                            <SvgSprite type="lock" :size="24" />
-                                        </span>
-                                        {{ partialHiddenPhone(decoratePhone(user.phone)) }}
-                                    </div>
-                                </div>
-                                <div class="profile__data-field">
-                                    <div class="profile__data-field-titlebox">
-                                        <span class="profile__data-field-title">E-mail</span>
-                                        <span class="profile__data-field-hint">
-                                            На этот адрес будет отправлен чек об оплате
-                                        </span>
-                                    </div>
-                                    <input
-                                        v-model="userData.email"
-                                        id="user-email"
-                                        class="profile__data-field-input"
-                                        type="email"
-                                        placeholder="Введите ваш адрес электронной почты"
-                                    />
-                                </div>
-                                <div class="profile__data-togglerbox">
-                                    <div class="profile__data-toggler">
-                                        <div class="profile__data-toggler-body">
-                                            <input
-                                                v-model="userData.promo_subscribe"
-                                                id="user-promo"
-                                                type="checkbox"
-                                            />
+                    </div>
+
+                    <div class="profile__body">
+                        <aside class="profile__nav">
+                            <div class="profile__nav-container">
+                                <a class="profile__nav-link" href="#info">
+                                    <span>Информация</span>
+                                </a>
+                                <a class="profile__nav-link" href="#orders"><span>Заказы</span></a>
+                                <a class="profile__nav-link" href="#addresses">
+                                    <span>Адреса</span>
+                                </a>
+                            </div>
+                        </aside>
+                        <div class="profile__body-wrapper">
+                            <section id="info" class="profile__section profile__section--info">
+                                <h2 class="profile__section-title">Информация о покупателе</h2>
+                                <form class="profile__data">
+                                    <div class="profile__data-field">
+                                        <div class="profile__data-field-titlebox">
+                                            <span class="profile__data-field-title">Имя</span>
                                         </div>
-                                        <label for="user-promo" class="profile__data-toggler-desc">
-                                            Подписка на промо-акции
-                                        </label>
-                                        <button
-                                            class="profile__data-toggler-tooltip"
-                                            type="button"
-                                            tabindex="0"
-                                        >
-                                            <span>?</span>
-                                            <p>Какая то содержательная подсказка</p>
-                                        </button>
+                                        <input
+                                            v-model="userData.name"
+                                            id="user-name"
+                                            class="profile__data-field-input"
+                                            type="text"
+                                            placeholder="Поделитесь как вас зовут"
+                                        />
                                     </div>
-                                    <div class="profile__data-toggler">
-                                        <div class="profile__data-toggler-body">
-                                            <input
-                                                v-model="userData.notifications"
-                                                id="user-notify"
-                                                type="checkbox"
-                                            />
+                                    <div class="profile__data-field">
+                                        <div class="profile__data-field-titlebox">
+                                            <span class="profile__data-field-title">Телефон</span>
+                                            <span class="profile__data-field-hint">
+                                                На этот номер вы получаете сервисные сообщения о
+                                                статусах заказов
+                                            </span>
                                         </div>
-                                        <label for="user-notify" class="profile__data-toggler-desc">
-                                            Получать сервисные уведомления
-                                        </label>
-                                        <button
-                                            class="profile__data-toggler-tooltip"
-                                            type="button"
-                                            tabindex="0"
-                                        >
-                                            <span>?</span>
-                                            <p>Какая то содержательная подсказка</p>
-                                        </button>
-                                    </div>
-                                </div>
-                                <button
-                                    class="profile__data-button"
-                                    type="submit"
-                                    :disabled="!isUpdatedInfo"
-                                    @click.prevent="updateUserData"
-                                >
-                                    <span>Сохранить изменения</span>
-                                </button>
-                            </form>
-                        </section>
-                        <section
-                            id="addresses"
-                            class="profile__section profile__section--addresses"
-                        >
-                            <h2 class="profile__section-title">Адреса доставки</h2>
-                            <div class="profile__data">
-                                <form class="profile__data-list">
-                                    <template v-if="userData.addresses?.length">
                                         <div
-                                            v-for="address in userData.addresses"
-                                            :key="address.id"
-                                            class="profile__data-address"
+                                            class="profile__data-field-input profile__data-field-input--lock"
                                         >
-                                            <div class="profile__data-address-wrapper">
-                                                <p class="profile__data-address-title">
-                                                    {{ address.street }}
-                                                    <span v-if="address.flat">
-                                                        {{ `, квартира ${address.flat}` }}
-                                                    </span>
-                                                    <span v-if="address.doorway">
-                                                        {{ `, ${address.doorway}-й подъезд` }}
-                                                    </span>
-                                                    <span v-if="address.floor">
-                                                        {{ `, ${address.floor}-й этаж` }}
-                                                    </span>
-                                                </p>
+                                            <span class="profile__data-field-input--lock-icon">
+                                                <SvgSprite type="lock" :size="24" />
+                                            </span>
+                                            {{ partialHiddenPhone(decoratePhone(user.phone)) }}
+                                        </div>
+                                    </div>
+                                    <div class="profile__data-field">
+                                        <div class="profile__data-field-titlebox">
+                                            <span class="profile__data-field-title">E-mail</span>
+                                            <span class="profile__data-field-hint">
+                                                На этот адрес будет отправлен чек об оплате
+                                            </span>
+                                        </div>
+                                        <input
+                                            v-model="userData.email"
+                                            id="user-email"
+                                            class="profile__data-field-input"
+                                            type="email"
+                                            placeholder="Введите ваш адрес электронной почты"
+                                        />
+                                    </div>
+                                    <div class="profile__data-togglerbox">
+                                        <div class="profile__data-toggler">
+                                            <div class="profile__data-toggler-body">
+                                                <input
+                                                    v-model="userData.promo_subscribe"
+                                                    id="user-promo"
+                                                    type="checkbox"
+                                                />
                                             </div>
-                                            <button
-                                                class="profile__data-address-delete"
-                                                type="button"
-                                                @click.prevent="deleteAddress(address.id)"
+                                            <label
+                                                for="user-promo"
+                                                class="profile__data-toggler-desc"
                                             >
-                                                Удалить
+                                                Подписка на промо-акции
+                                            </label>
+                                            <button
+                                                class="profile__data-toggler-tooltip"
+                                                type="button"
+                                                tabindex="0"
+                                            >
+                                                <span>?</span>
+                                                <p>Какая то содержательная подсказка</p>
                                             </button>
                                         </div>
-                                    </template>
-                                    <template v-else>
-                                        <span class="profile__data-address-empty">
-                                            Нет сохраненных адресов
-                                        </span>
-                                    </template>
-                                    <div class="profile__data-create">
-                                        <p class="profile__data-create-title">Добавить адрес</p>
-                                        <YandexMap
-                                            v-show="false"
-                                            :settings="{ location: { center: [11, 11], zoom: 10 } }"
-                                        />
-                                        <div class="profile__data-create-form">
-                                            <AutoComplete
-                                                v-model="newAddress.street"
-                                                input-id="user-address-street"
-                                                class="profile__data-create-input profile__data-create-input--main"
-                                                input-class="profile__data-create-input--main-input"
-                                                overlay-class="profile__data-create-input--main-suggest"
-                                                empty-search-message="К сожалению, совпадений не найдено"
-                                                unstyled
-                                                name="user-address-street"
-                                                type="text"
-                                                placeholder="Введите адрес для доставки"
-                                                :suggestions="suggestResponse ?? []"
-                                                data-key="option.address.formattedAddress"
-                                                @complete="suggestOnSearch"
-                                                @option-select="
-                                                    (event: { value: SuggestResponseItem }) => {
-                                                        newAddress.street =
-                                                            event.value.address?.formattedAddress ??
-                                                            '';
-                                                    }
-                                                "
+                                        <div class="profile__data-toggler">
+                                            <div class="profile__data-toggler-body">
+                                                <input
+                                                    v-model="userData.notifications"
+                                                    id="user-notify"
+                                                    type="checkbox"
+                                                />
+                                            </div>
+                                            <label
+                                                for="user-notify"
+                                                class="profile__data-toggler-desc"
                                             >
-                                                <template
-                                                    #option="{
-                                                        option,
-                                                    }: {
-                                                        option: SuggestResponseItem;
-                                                    }"
-                                                >
-                                                    <div
-                                                        class="profile__data-create-input--main-option"
-                                                    >
-                                                        {{ option.address?.formattedAddress }}
-                                                    </div>
-                                                </template>
-                                            </AutoComplete>
-                                            <input
-                                                v-model="newAddress.flat"
-                                                id="user-address-flat"
-                                                class="profile__data-create-input"
-                                                name="user-address-flat"
-                                                type="number"
-                                                placeholder="Квартира"
-                                            />
-                                            <input
-                                                v-model="newAddress.doorway"
-                                                id="user-address-doorway"
-                                                class="profile__data-create-input"
-                                                name="user-address-doorway"
-                                                type="number"
-                                                placeholder="Подъезд"
-                                            />
-                                            <input
-                                                v-model="newAddress.floor"
-                                                id="user-address-floor"
-                                                class="profile__data-create-input"
-                                                name="user-address-floor"
-                                                type="number"
-                                                placeholder="Этаж"
-                                            />
+                                                Получать сервисные уведомления
+                                            </label>
+                                            <button
+                                                class="profile__data-toggler-tooltip"
+                                                type="button"
+                                                tabindex="0"
+                                            >
+                                                <span>?</span>
+                                                <p>Какая то содержательная подсказка</p>
+                                            </button>
                                         </div>
-                                        <button
-                                            class="profile__data-button"
-                                            type="submit"
-                                            :disabled="!isUpdatedAddresses"
-                                            @click.prevent="updateUserData"
-                                        >
-                                            <span>Сохранить</span>
-                                        </button>
                                     </div>
+                                    <button
+                                        class="profile__data-button"
+                                        type="submit"
+                                        :disabled="!isUpdatedInfo"
+                                        @click.prevent="updateUserData"
+                                    >
+                                        <span>Сохранить изменения</span>
+                                    </button>
                                 </form>
-                            </div>
-                        </section>
-                        <section id="orders" class="profile__section--orders">
-                            <div class="profile__section--orders-titlebox">
-                                <h2 class="profile__section-title">Заказы</h2>
-
-                                <div class="profile__section--orders-chips">
-                                    <label
-                                        v-for="(chip, idx) in ordersChips"
-                                        :key="idx"
-                                        :class="[
-                                            'profile__section--orders-chips-item',
-                                            { active: chip.value == userOrdersTab },
-                                        ]"
-                                        :for="`user-orders-${slugify(chip.value)}`"
-                                    >
-                                        <p>
-                                            {{ chip.label }}
-                                            <span
-                                                v-if="
-                                                    userOrders?.filter(
-                                                        (order) => order.status === chip.value
-                                                    ).length
-                                                "
+                            </section>
+                            <section
+                                id="addresses"
+                                class="profile__section profile__section--addresses"
+                            >
+                                <h2 class="profile__section-title">Адреса доставки</h2>
+                                <div class="profile__data">
+                                    <form class="profile__data-list">
+                                        <template v-if="userData.addresses?.length">
+                                            <div
+                                                v-for="address in userData.addresses"
+                                                :key="address.id"
+                                                class="profile__data-address"
                                             >
-                                                ({{
-                                                    userOrders?.filter(
-                                                        (order) => order.status === chip.value
-                                                    ).length
-                                                }})
+                                                <div class="profile__data-address-wrapper">
+                                                    <p class="profile__data-address-title">
+                                                        {{ address.street }}
+                                                        <span v-if="address.flat">
+                                                            {{ `, квартира ${address.flat}` }}
+                                                        </span>
+                                                        <span v-if="address.doorway">
+                                                            {{ `, ${address.doorway}-й подъезд` }}
+                                                        </span>
+                                                        <span v-if="address.floor">
+                                                            {{ `, ${address.floor}-й этаж` }}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <button
+                                                    class="profile__data-address-delete"
+                                                    type="button"
+                                                    @click.prevent="deleteAddress(address.id)"
+                                                >
+                                                    Удалить
+                                                </button>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <span class="profile__data-address-empty">
+                                                Нет сохраненных адресов
                                             </span>
-                                        </p>
-                                        <input
-                                            v-model="userOrdersTab"
-                                            :id="`user-orders-${slugify(chip.value)}`"
-                                            type="radio"
-                                            name="user-orders"
-                                            :value="chip.value"
-                                        />
-                                    </label>
+                                        </template>
+                                        <div class="profile__data-create">
+                                            <p class="profile__data-create-title">Добавить адрес</p>
+                                            <YandexMap
+                                                v-show="false"
+                                                :settings="{
+                                                    location: { center: [11, 11], zoom: 10 },
+                                                }"
+                                            />
+                                            <div class="profile__data-create-form">
+                                                <AutoComplete
+                                                    v-model="newAddress.street"
+                                                    input-id="user-address-street"
+                                                    class="profile__data-create-input profile__data-create-input--main"
+                                                    input-class="profile__data-create-input--main-input"
+                                                    overlay-class="profile__data-create-input--main-suggest"
+                                                    empty-search-message="К сожалению, совпадений не найдено"
+                                                    unstyled
+                                                    name="user-address-street"
+                                                    type="text"
+                                                    placeholder="Введите адрес для доставки"
+                                                    :suggestions="suggestResponse ?? []"
+                                                    data-key="option.address.formattedAddress"
+                                                    @complete="suggestOnSearch"
+                                                    @option-select="
+                                                        (event: { value: SuggestResponseItem }) => {
+                                                            newAddress.street =
+                                                                event.value.address
+                                                                    ?.formattedAddress ?? '';
+                                                        }
+                                                    "
+                                                >
+                                                    <template
+                                                        #option="{
+                                                            option,
+                                                        }: {
+                                                            option: SuggestResponseItem;
+                                                        }"
+                                                    >
+                                                        <div
+                                                            class="profile__data-create-input--main-option"
+                                                        >
+                                                            {{ option.address?.formattedAddress }}
+                                                        </div>
+                                                    </template>
+                                                </AutoComplete>
+                                                <input
+                                                    v-model="newAddress.flat"
+                                                    id="user-address-flat"
+                                                    class="profile__data-create-input"
+                                                    name="user-address-flat"
+                                                    type="number"
+                                                    placeholder="Квартира"
+                                                />
+                                                <input
+                                                    v-model="newAddress.doorway"
+                                                    id="user-address-doorway"
+                                                    class="profile__data-create-input"
+                                                    name="user-address-doorway"
+                                                    type="number"
+                                                    placeholder="Подъезд"
+                                                />
+                                                <input
+                                                    v-model="newAddress.floor"
+                                                    id="user-address-floor"
+                                                    class="profile__data-create-input"
+                                                    name="user-address-floor"
+                                                    type="number"
+                                                    placeholder="Этаж"
+                                                />
+                                            </div>
+                                            <button
+                                                class="profile__data-button"
+                                                type="submit"
+                                                :disabled="!isUpdatedAddresses"
+                                                @click.prevent="updateUserData"
+                                            >
+                                                <span>Сохранить</span>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </div>
-                            <div class="profile__section--orders-body">
-                                <ul
-                                    v-if="userOrdersShow.length"
-                                    class="profile__section--orders-list"
-                                >
-                                    <li
-                                        v-for="order in userOrdersShow"
-                                        :key="order.id"
-                                        class="profile__section--orders-item"
-                                    ></li>
-                                </ul>
-                                <div v-else class="profile__section--orders-empty">
-                                    <p class="profile__section--orders-empty-text">
-                                        Заказов пока нет
-                                    </p>
-                                    <NuxtLink
-                                        class="profile__section--orders-empty-button"
-                                        :to="{ name: 'catalog' }"
+                            </section>
+                            <section id="orders" class="profile__section--orders">
+                                <div class="profile__section--orders-titlebox">
+                                    <h2 class="profile__section-title">Заказы</h2>
+
+                                    <div class="profile__section--orders-chips">
+                                        <label
+                                            v-for="(chip, idx) in ordersChips"
+                                            :key="idx"
+                                            :class="[
+                                                'profile__section--orders-chips-item',
+                                                { active: chip.value == userOrdersTab },
+                                            ]"
+                                            :for="`user-orders-${slugify(chip.value)}`"
+                                        >
+                                            <p>
+                                                {{ chip.label }}
+                                                <span
+                                                    v-if="
+                                                        userOrders?.filter(
+                                                            (order) => order.status === chip.value
+                                                        ).length
+                                                    "
+                                                >
+                                                    ({{
+                                                        userOrders?.filter(
+                                                            (order) => order.status === chip.value
+                                                        ).length
+                                                    }})
+                                                </span>
+                                            </p>
+                                            <input
+                                                v-model="userOrdersTab"
+                                                :id="`user-orders-${slugify(chip.value)}`"
+                                                type="radio"
+                                                name="user-orders"
+                                                :value="chip.value"
+                                            />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="profile__section--orders-body">
+                                    <ul
+                                        v-if="userOrdersShow.length"
+                                        class="profile__section--orders-list"
                                     >
-                                        <span>В каталог</span>
-                                        <span><SvgSprite type="arrow" :size="16" /></span>
-                                    </NuxtLink>
+                                        <li
+                                            v-for="order in userOrdersShow"
+                                            :key="order.id"
+                                            class="profile__section--orders-item"
+                                        ></li>
+                                    </ul>
+                                    <div v-else class="profile__section--orders-empty">
+                                        <p class="profile__section--orders-empty-text">
+                                            Заказов пока нет
+                                        </p>
+                                        <NuxtLink
+                                            class="profile__section--orders-empty-button"
+                                            :to="{ name: 'catalog' }"
+                                        >
+                                            <span>В каталог</span>
+                                            <span><SvgSprite type="arrow" :size="16" /></span>
+                                        </NuxtLink>
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
-                        <!-- <pre class="test" style="font-family: 'Inter'">{{ newAddress }}</pre> -->
+                            </section>
+                            <!-- <pre class="test" style="font-family: 'Inter'">{{ newAddress }}</pre> -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <ViewedCarousel />
+            <ViewedCarousel />
+        </ClientOnly>
     </NuxtLayout>
 </template>
 
@@ -519,6 +533,13 @@
     watch(newAddress, () => {
         checkUpdateAddresses();
     });
+
+    // SEO & Meta ================================================
+    useHead({
+        title: 'Личный кабинет | Arabeska - Магазин цветов в Самаре',
+        meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+    });
+    // ===========================================================
 </script>
 
 <style lang="scss">

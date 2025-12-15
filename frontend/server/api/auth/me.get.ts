@@ -5,7 +5,12 @@ import { getDirectusItem } from '~~/server/services/serverCms';
 export default defineEventHandler(
     async (
         event
-    ): Promise<{ status: number; success: boolean; message?: string; user: IUser | null }> => {
+    ): Promise<{
+        status: number;
+        success: boolean;
+        message?: string;
+        user: Omit<IUser, 'password'> | null;
+    }> => {
         const { status, message, data: userData } = checkUser(event);
 
         if (!userData) return { status, message, user: null, success: false };
@@ -17,7 +22,9 @@ export default defineEventHandler(
                 return { status: 404, message: 'User not found', user: null, success: false };
             }
 
-            return { status: 200, user, success: true };
+            const { password: _, ...userWithoutPassword } = user;
+
+            return { status: 200, user: userWithoutPassword, success: true };
         } catch (err) {
             console.error(err);
             return { status: 401, message: 'Invalid or expired token', user: null, success: false };

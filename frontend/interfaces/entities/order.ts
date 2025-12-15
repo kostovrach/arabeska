@@ -9,6 +9,9 @@ export interface IOrder {
     date_updated: string | null;
 
     user_id: IUser['id'];
+    user_email: IUser['email'];
+    user_phone: IUser['phone'];
+    user_name?: IUser['name'];
 
     payment_status: PaymentStatusType; // Статус оплаты
     status?: OrderStatusType;
@@ -27,8 +30,7 @@ export interface IOrder {
     recipient_secret: boolean; // Не говорить, что цветы
 
     // Информация о доставке
-    delivery_courier: boolean; // Доставка курьером
-    delivery_pickup: boolean; // Самовывоз
+    delivery: 'courier' | 'pickup';
     delivery_date: string;
     delivery_time:
         | '08:00 - 10:00'
@@ -47,6 +49,5 @@ export interface IOrder {
 
     // Согласия
     agreement_processing: boolean; // Согласие на обработку данных
-    agreement_status_notify: boolean; // Согласие на уведомление о статусе заказа
     agreement_marketing_notify: boolean; // Согласие получать маркетинговые предложения
 }

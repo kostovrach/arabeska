@@ -1,255 +1,216 @@
 <template>
     <NuxtLayout>
-        <div class="cart">
-            <div class="cart__container">
-                <div class="cart__titlebox">
-                    <h1 class="cart__title">Корзина</h1>
-                    <span class="cart__counter" v-if="cartCounter >= 1">({{ cartCounter }})</span>
-                </div>
-                <section class="cart__body">
-                    <div class="cart__hint" v-if="cartAmount !== 0">
-                        <div class="cart__hint-indicator">
-                            <SvgSprite type="delivery" :size="24" />
-                            <div class="cart__hint-indicator-progress">
-                                <svg viewBox="0 0 64 64">
-                                    <circle
-                                        class="cart__hint-indicator-progress-bg"
-                                        :cx="32"
-                                        :cy="32"
-                                        :r="radius"
-                                    />
-                                    <circle
-                                        class="cart__hint-indicator-progress-inner"
-                                        :cx="32"
-                                        :cy="32"
-                                        :r="radius"
-                                        :stroke-dasharray="circumference"
-                                        :stroke-dashoffset="dashOffset"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
-                        <p class="cart__hint-content" v-if="deliveryRemainsPrice > 0">
-                            Осталось совсем немного: добавьте товаров в корзину ещё на
-                            <span class="ruble">
-                                {{ deliveryRemainsPrice.toLocaleString('ru-RU') }}
-                            </span>
-                            , чтобы доставка стала бесплатной!
-                        </p>
-                        <p class="cart__hint-content" v-else>
-                            Товаров в корзине достаточно. Доставка бесплатная!
-                        </p>
-                    </div>
-                    <div class="cart__hint cart__hint--empty" v-else>
-                        <p class="cart__hint--empty-text">В корзине нет товаров</p>
-                        <NuxtLink class="cart__hint--empty-button" :to="{ name: 'catalog' }">
-                            <span>За покупками</span>
-                            <span><SvgSprite type="arrow" :size="18" /></span>
-                        </NuxtLink>
-                    </div>
-                    <ul class="cart__list" v-if="cartAmount !== 0">
-                        <li v-for="item in cart" :key="item.product_id" class="cart__item">
-                            <NuxtLink
-                                class="cart__item-image-container"
-                                :to="{ name: 'product-id', params: { id: item.product_id } }"
-                            >
-                                <img
-                                    class="cart__item-image"
-                                    :src="getProductImage(item.product_id)"
-                                    :alt="getProductTitle(item.product_id) ?? '#'"
-                                />
-                            </NuxtLink>
-                            <div class="cart__item-body">
-                                <div class="cart__item-field">
-                                    <h2 class="cart__item-title">
-                                        {{ getProductTitle(item.product_id) }}
-                                    </h2>
-                                    <button
-                                        class="cart__item-button"
-                                        type="button"
-                                        @click.prevent="removeProduct(item)"
-                                    >
-                                        Удалить
-                                    </button>
-                                </div>
-                                <div class="cart__item-field">
-                                    <p class="cart__item-field-name">Размер</p>
-                                    <span class="cart__item-field-value">
-                                        {{ translateProductModifier(item.modifier) }}
-                                    </span>
-                                </div>
-                                <div class="cart__item-field">
-                                    <p class="cart__item-field-name">Количество</p>
-                                    <div class="cart__item-field-controls">
-                                        <button
-                                            type="button"
-                                            :disabled="Number(item.quantity) <= 1"
-                                            @click="removeQty(item)"
-                                        >
-                                            <SvgSprite type="minus" :size="14" />
-                                        </button>
-                                        <span>{{ item.quantity }}</span>
-                                        <button
-                                            type="button"
-                                            :disabled="Number(item.quantity) >= 5"
-                                            @click="addQty(item)"
-                                        >
-                                            <SvgSprite type="plus" :size="14" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="cart__item-field">
-                                    <p class="cart__item-field-name">Стомость</p>
-                                    <div class="cart__item-field-price">
-                                        <p
-                                            class="cart__item-field-price-crossed"
-                                            v-if="getProductDiscount(item.product_id)"
-                                        >
-                                            <span class="ruble">
-                                                {{ getProductDiscount(item.product_id) }}
-                                            </span>
-                                        </p>
-                                        <p class="cart__item-field-price-common ruble">
-                                            <span>
-                                                {{ getProductPrice(item.product_id) }}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <aside class="cart__sider">
-                        <div class="cart__sider-wrapper">
-                            <div class="cart__sider-head">
-                                <p>Сумма</p>
-                                <span class="ruble">{{ cartAmount.toLocaleString('ru-RU') }}</span>
-                            </div>
-                            <ul class="cart__sider-details" v-if="cartAmount !== 0">
-                                <li class="cart__sider-details-item">
-                                    <p>Доставка</p>
-                                    <span :class="['ruble', { warn: deliveryRemainsPrice > 0 }]">
-                                        {{
-                                            (deliveryRemainsPrice > 0
-                                                ? settings?.delivery_price
-                                                : 0
-                                            )?.toLocaleString('ru-RU')
-                                        }}
-                                    </span>
-                                </li>
-                            </ul>
-                            <button class="cart__button" type="button" v-if="cartAmount !== 0">
-                                <span>Перейти к оформлению</span>
-                                <span>
-                                    <SvgSprite type="arrow" :size="18" />
-                                </span>
-                            </button>
-                        </div>
-                    </aside>
-                    <button
-                        class="cart__button cart__button--sticky"
-                        type="button"
-                        v-if="cartAmount !== 0"
-                    >
-                        <span>Перейти к оформлению</span>
-                        <span>
-                            <SvgSprite type="arrow" :size="18" />
+        <ClientOnly>
+            <div class="cart">
+                <div class="cart__container">
+                    <div class="cart__titlebox">
+                        <h1 class="cart__title">Корзина</h1>
+                        <span class="cart__counter" v-if="cartCounter >= 1">
+                            ({{ cartCounter }})
                         </span>
-                    </button>
-                </section>
+                    </div>
+                    <section class="cart__body">
+                        <div class="cart__hint" v-if="cartAmount !== 0">
+                            <div class="cart__hint-indicator">
+                                <SvgSprite type="delivery" :size="24" />
+                                <div class="cart__hint-indicator-progress">
+                                    <svg viewBox="0 0 64 64">
+                                        <circle
+                                            class="cart__hint-indicator-progress-bg"
+                                            :cx="32"
+                                            :cy="32"
+                                            :r="radius"
+                                        />
+                                        <circle
+                                            class="cart__hint-indicator-progress-inner"
+                                            :cx="32"
+                                            :cy="32"
+                                            :r="radius"
+                                            :stroke-dasharray="circumference"
+                                            :stroke-dashoffset="dashOffset"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="cart__hint-content" v-if="remainsToFreeDelivery > 0">
+                                Осталось совсем немного: добавьте товаров в корзину ещё на
+                                <span class="ruble">
+                                    {{ remainsToFreeDelivery.toLocaleString('ru-RU') }}
+                                </span>
+                                , чтобы доставка стала бесплатной!
+                            </p>
+                            <p class="cart__hint-content" v-else>
+                                Товаров в корзине достаточно. Доставка бесплатная!
+                            </p>
+                        </div>
+                        <div class="cart__hint cart__hint--empty" v-else>
+                            <p class="cart__hint--empty-text">В корзине нет товаров</p>
+                            <NuxtLink class="cart__hint--empty-button" :to="{ name: 'catalog' }">
+                                <span>За покупками</span>
+                                <span><SvgSprite type="arrow" :size="18" /></span>
+                            </NuxtLink>
+                        </div>
+                        <ul class="cart__list" v-if="cartAmount !== 0">
+                            <li v-for="item in cart" :key="item.product_id" class="cart__item">
+                                <NuxtLink
+                                    class="cart__item-image-container"
+                                    :to="{ name: 'product-id', params: { id: item.product_id } }"
+                                >
+                                    <img
+                                        class="cart__item-image"
+                                        :src="getProductImageById(item.product_id)"
+                                        :alt="getProductTitleById(item.product_id) ?? '#'"
+                                    />
+                                </NuxtLink>
+                                <div class="cart__item-body">
+                                    <div class="cart__item-field">
+                                        <h2 class="cart__item-title">
+                                            {{ getProductTitleById(item.product_id) }}
+                                        </h2>
+                                        <button
+                                            class="cart__item-button"
+                                            type="button"
+                                            @click.prevent="removeProduct(item)"
+                                        >
+                                            Удалить
+                                        </button>
+                                    </div>
+                                    <div class="cart__item-field">
+                                        <p class="cart__item-field-name">Размер</p>
+                                        <span class="cart__item-field-value">
+                                            {{ translateProductModifier(item.modifier) }}
+                                        </span>
+                                    </div>
+                                    <div class="cart__item-field">
+                                        <p class="cart__item-field-name">Количество</p>
+                                        <div class="cart__item-field-controls">
+                                            <button
+                                                type="button"
+                                                :disabled="Number(item.quantity) <= 1"
+                                                @click="removeQty(item)"
+                                            >
+                                                <SvgSprite type="minus" :size="14" />
+                                            </button>
+                                            <span>{{ item.quantity }}</span>
+                                            <button
+                                                type="button"
+                                                :disabled="Number(item.quantity) >= 5"
+                                                @click="addQty(item)"
+                                            >
+                                                <SvgSprite type="plus" :size="14" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="cart__item-field">
+                                        <p class="cart__item-field-name">Стомость</p>
+                                        <div class="cart__item-field-price">
+                                            <p
+                                                class="cart__item-field-price-crossed"
+                                                v-if="getProductDiscountById(item.product_id)"
+                                            >
+                                                <span class="ruble">
+                                                    {{ getProductDiscountById(item.product_id) }}
+                                                </span>
+                                            </p>
+                                            <p class="cart__item-field-price-common ruble">
+                                                <span>
+                                                    {{ getProductPriceById(item.product_id) }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <aside class="cart__sider">
+                            <div class="cart__sider-wrapper">
+                                <div class="cart__sider-head">
+                                    <p>Сумма</p>
+                                    <span class="ruble">
+                                        {{ cartAmount.toLocaleString('ru-RU') }}
+                                    </span>
+                                </div>
+                                <ul class="cart__sider-details" v-if="cartAmount !== 0">
+                                    <li class="cart__sider-details-item">
+                                        <p>Доставка</p>
+                                        <span
+                                            :class="['ruble', { warn: remainsToFreeDelivery > 0 }]"
+                                        >
+                                            {{ totalDeliveryPrice.toLocaleString('ru-RU') }}
+                                        </span>
+                                    </li>
+                                </ul>
+                                <NuxtLink
+                                    v-if="cartAmount !== 0"
+                                    class="cart__button"
+                                    :to="{ name: 'checkout' }"
+                                >
+                                    <span>Перейти к оформлению</span>
+                                    <span>
+                                        <SvgSprite type="arrow" :size="18" />
+                                    </span>
+                                </NuxtLink>
+                            </div>
+                        </aside>
+                        <NuxtLink
+                            v-if="cartAmount !== 0"
+                            class="cart__button cart__button--sticky"
+                            :to="{ name: 'checkout' }"
+                        >
+                            <span>Перейти к оформлению</span>
+                            <span>
+                                <SvgSprite type="arrow" :size="18" />
+                            </span>
+                        </NuxtLink>
+                    </section>
+                </div>
             </div>
-        </div>
+        </ClientOnly>
         <HintCarousel title="Вам стоит взглянуть" />
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
     import type { ICartItem } from '~~/interfaces/entities/cart-item';
-    import type { IProduct } from '~~/interfaces/entities/product';
-    import type { ProductModifiersType } from '~~/interfaces/product-modifiers';
     import type { ISettings } from '~~/interfaces/settings';
 
-    // data ======================================================
     const cartStore = useCartStore();
-    const productsStore = useProductsStore();
 
+    const {
+        getProductDiscountById,
+        getProductImageById,
+        getProductPriceById,
+        getProductTitleById,
+        translateProductModifier,
+    } = cartStore;
+    // data ======================================================
     const cartCounter = computed(() => cartStore.cartCount);
     const cartAmount = computed(() => cartStore.cartAmount);
-    const products = computed(() => productsStore.productsList);
 
     const cart = computed(() => cartStore.cartList);
 
-    const { content: settings } = await useClientOnlyCms<ISettings>('settings');
+    const { content: settings } = useCms<ISettings>('settings');
 
-    const deliveryPrice = computed(() => settings.value?.delivery_price);
-    const deliveryRequiredPrice = computed(() => settings.value?.delivery_disable_price);
-    const deliveryRemainsPrice = computed(() => {
-        if (!deliveryPrice.value || !deliveryRequiredPrice.value) return 0;
-        if (deliveryRequiredPrice.value <= 0 || cartAmount.value >= deliveryRequiredPrice.value)
-            return 0;
+    const deliveryPrice = computed(() => settings.value?.delivery_price ?? 0);
+    const deliveryRequiredPrice = computed(() => settings.value?.delivery_disable_price ?? 0);
 
-        return deliveryRequiredPrice.value - cartAmount.value;
-    });
-    const deliveryRemainsPricePercent = computed(() => {
-        if (!deliveryPrice.value || !deliveryRequiredPrice.value || cartAmount.value === 0)
-            return 0;
-        if (deliveryRequiredPrice.value <= 0 || cartAmount.value >= deliveryRequiredPrice.value)
-            return 100;
-
-        const missing = deliveryRequiredPrice.value - cartAmount.value;
-        return Math.round((missing / deliveryRequiredPrice.value) * 100);
-    });
+    const {
+        remains: remainsToFreeDelivery,
+        remainsPercent: remainsToFreeDeliveryPercent,
+        price: totalDeliveryPrice,
+    } = useDeliveryPriceCalculator(cartAmount, deliveryPrice, deliveryRequiredPrice);
 
     // progressbar ----------------------------------
     const radius = 28;
     const circumference = 2 * Math.PI * radius;
     const dashOffset = computed(() => {
-        const percent = deliveryRemainsPricePercent.value / 100;
+        const percent = remainsToFreeDeliveryPercent.value / 100;
         if (percent >= 1) {
             return 0 * circumference;
         }
-        return (deliveryRemainsPricePercent.value / 100) * circumference;
+        return (remainsToFreeDeliveryPercent.value / 100) * circumference;
     });
     // ----------------------------------------------
-    // ===========================================================
-
-    // helpers ===================================================
-    function translateProductModifier(modifier: ProductModifiersType): string {
-        switch (modifier) {
-            case 'standart':
-                return 'Стандарт';
-            case 'large':
-                return 'Роскошный';
-            case 'premium':
-                return 'Премиум';
-        }
-    }
-
-    function getProductImage(id: IProduct['id']): string {
-        const result = products.value.find((el) => el.id === id);
-
-        return `/api/cms/assets/${result?.images[0]?.directus_files_id.id}`;
-    }
-
-    function getProductTitle(id: IProduct['id']): string {
-        const result = products.value.find((el) => el.id === id);
-
-        return result?.title ?? '';
-    }
-
-    function getProductPrice(id: IProduct['id']): string {
-        const result = products.value.find((el) => el.id === id);
-
-        return `${(result?.discount ? result.discount : result?.price)?.toLocaleString('ru-RU')}`;
-    }
-
-    function getProductDiscount(id: IProduct['id']): string | undefined {
-        const result = products.value.find((el) => el.id === id);
-
-        if (result?.discount) {
-            return result.price.toLocaleString('ru-RU');
-        }
-    }
     // ===========================================================
 
     // methods ===================================================
@@ -264,6 +225,13 @@
     const removeProduct = async (product: ICartItem): Promise<void> => {
         await cartStore.removeFromCart(product);
     };
+    // ===========================================================
+
+    // SEO & Meta ================================================
+    useHead({
+        title: 'Корзина | Arabeska - Магазин цветов в Самаре',
+        meta: [{ name: 'robots', content: 'noindex, nofollow' }],
+    });
     // ===========================================================
 </script>
 
