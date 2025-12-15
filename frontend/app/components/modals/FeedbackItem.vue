@@ -46,10 +46,8 @@
 
     feedbackStore.getFeedbackById(props.feedbackId);
 
-    const { feedbackItem, feedbackItemStatus } = storeToRefs(feedbackStore);
-
-    const feedback = computed(() => feedbackItem.value);
-    const status = computed(() => feedbackItemStatus.value);
+    const feedback = computed(() => feedbackStore.feedbackItem);
+    const status = computed(() => feedbackStore.feedbackStatus);
     //=========================================================
 </script>
 

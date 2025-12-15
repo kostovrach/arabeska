@@ -67,9 +67,11 @@
     const filterStore = useFiltersStore();
 
     // data ====================================================================
-    const { content: generalSettings } = useCms<ISettings>('settings', ['subscription_category.*']);
+    const { content: generalSettings } = await useCms<ISettings>('settings', [
+        'subscription_category.*',
+    ]);
 
-    const { content: categories } = useCms<ICategories[]>('categories', [], {
+    const { content: categories } = await useCms<ICategories[]>('categories', [], {
         transform: (c) => {
             const result = c.data.filter((el) => el.available === true);
             return { data: result };

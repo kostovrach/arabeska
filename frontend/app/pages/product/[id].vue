@@ -49,92 +49,104 @@
                                     <ProductShare />
                                 </div>
                             </div>
-                            <div class="product-view__controls">
-                                <ul class="product-view__variant" v-if="!isControlsDisabled">
-                                    <li class="product-view__variant-item">
-                                        <div class="product-view__variant-toggler">
-                                            <input
-                                                id="variant-standart"
-                                                v-model="productModel.type"
-                                                type="radio"
-                                                name="variant"
-                                                value="standart"
-                                            />
-                                        </div>
-                                        <label
-                                            for="variant-standart"
-                                            class="product-view__type-desc"
-                                        >
-                                            <strong>Стандарт</strong>
-                                            — собрать букет как на фото
-                                        </label>
-                                    </li>
-                                    <li class="product-view__variant-item">
-                                        <div class="product-view__variant-toggler">
-                                            <input
-                                                id="variant-large"
-                                                v-model="productModel.type"
-                                                type="radio"
-                                                name="variant"
-                                                value="large"
-                                            />
-                                        </div>
-                                        <label
-                                            for="variant-large"
-                                            class="product-view__variant-desc"
-                                        >
-                                            <strong>Роскошный</strong>
-                                            — на 50% больше цветов
-                                        </label>
-                                    </li>
-                                    <li class="product-view__variant-item">
-                                        <div class="product-view__variant-toggler">
-                                            <input
-                                                id="variant-premium"
-                                                v-model="productModel.type"
-                                                type="radio"
-                                                name="variant"
-                                                value="premium"
-                                            />
-                                        </div>
-                                        <label
-                                            for="variant-premium"
-                                            class="product-view__variant-desc"
-                                        >
-                                            <strong>Премиум</strong>
-                                            — в 2 раза больше цветов, крафтовая упаковка
-                                        </label>
-                                    </li>
-                                </ul>
+                            <ClientOnly>
+                                <div class="product-view__controls">
+                                    <ul class="product-view__variant" v-if="!isControlsDisabled">
+                                        <li class="product-view__variant-item">
+                                            <div class="product-view__variant-toggler">
+                                                <input
+                                                    id="variant-standart"
+                                                    v-model="productModel.modifier"
+                                                    type="radio"
+                                                    name="variant"
+                                                    value="standart"
+                                                />
+                                            </div>
+                                            <label
+                                                for="variant-standart"
+                                                class="product-view__type-desc"
+                                            >
+                                                <strong>Стандарт</strong>
+                                                — собрать букет как на фото
+                                            </label>
+                                        </li>
+                                        <li class="product-view__variant-item">
+                                            <div class="product-view__variant-toggler">
+                                                <input
+                                                    id="variant-large"
+                                                    v-model="productModel.modifier"
+                                                    type="radio"
+                                                    name="variant"
+                                                    value="large"
+                                                />
+                                            </div>
+                                            <label
+                                                for="variant-large"
+                                                class="product-view__variant-desc"
+                                            >
+                                                <strong>Роскошный</strong>
+                                                — на 50% больше цветов
+                                            </label>
+                                        </li>
+                                        <li class="product-view__variant-item">
+                                            <div class="product-view__variant-toggler">
+                                                <input
+                                                    id="variant-premium"
+                                                    v-model="productModel.modifier"
+                                                    type="radio"
+                                                    name="variant"
+                                                    value="premium"
+                                                />
+                                            </div>
+                                            <label
+                                                for="variant-premium"
+                                                class="product-view__variant-desc"
+                                            >
+                                                <strong>Премиум</strong>
+                                                — в 2 раза больше цветов, крафтовая упаковка
+                                            </label>
+                                        </li>
+                                    </ul>
 
-                                <div class="product-view__button-container">
-                                    <CircleButton
-                                        class="product-view__button"
-                                        type="button"
-                                        logic="double-line"
-                                    >
-                                        <span>Добавить в&nbsp;корзину</span>
-                                    </CircleButton>
-                                </div>
+                                    <div class="product-view__button-container">
+                                        <CircleButton
+                                            class="product-view__button"
+                                            type="button"
+                                            logic="double-line"
+                                            @click="toggleCart"
+                                        >
+                                            <span>
+                                                {{
+                                                    inCart
+                                                        ? 'Удалить из&nbsp;корзины'
+                                                        : 'Добавить в&nbsp;корзину'
+                                                }}
+                                            </span>
+                                        </CircleButton>
+                                    </div>
 
-                                <div class="product-view__counter" v-if="!isSubscriptionPricing">
-                                    <button
-                                        type="button"
-                                        :disabled="productModel.quantity <= 1"
-                                        @click="removeQuantity"
+                                    <div
+                                        class="product-view__counter"
+                                        v-if="!isSubscriptionPricing && inCart"
                                     >
-                                        <SvgSprite type="minus" :size="14" />
-                                    </button>
-                                    <span>{{ productModel.quantity }}</span>
-                                    <button
-                                        type="button"
-                                        :disabled="productModel.quantity >= 5"
-                                        @click="addQuantity"
-                                    >
-                                        <SvgSprite type="plus" :size="14" />
-                                    </button>
+                                        <button
+                                            type="button"
+                                            :disabled="Number(productModel.quantity) <= 1"
+                                            @click="removeQuantity"
+                                        >
+                                            <SvgSprite type="minus" :size="14" />
+                                        </button>
+                                        <span>{{ productModel.quantity }}</span>
+                                        <button
+                                            type="button"
+                                            :disabled="Number(productModel.quantity) >= 5"
+                                            @click="addQuantity"
+                                        >
+                                            <SvgSprite type="plus" :size="14" />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </ClientOnly>
                             <ul class="product-view__price">
                                 <li v-if="product?.discount" class="product-view__price-crossed">
                                     <span>
@@ -167,28 +179,39 @@
                                 <ul>
                                     <li v-for="(item, idx) in product?.structure" :key="idx">
                                         <span>- {{ item.structure_id?.name }}</span>
-                                        <!-- <span v-if="item.quantity">&mdash;{{ item.quantity }}</span> -->
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <ul class="product-view__footer">
-                            <li v-if="1 === 1" class="product-view__footer-card">
-                                <span><SvgSprite type="user-fill" :size="24" /></span>
-                                <div>
-                                    <NuxtLink :to="{ name: 'index' }">Авторизуйтесь,</NuxtLink>
-                                    чтобы&nbsp;снизить цену
-                                </div>
-                            </li>
-                            <li v-if="1 === 1" class="product-view__footer-card">
-                                <span><SvgSprite type="delivery" :size="24" /></span>
-                                <span>Бесплатная доставка от 1500 ₽</span>
-                            </li>
-                            <li v-if="product?.size" class="product-view__footer-card">
-                                <span><SvgSprite type="box" :size="24" /></span>
-                                <span>Размеры {{ product?.size }}</span>
-                            </li>
-                        </ul>
+                        <ClientOnly>
+                            <ul class="product-view__footer">
+                                <li v-if="!isAuth" class="product-view__footer-card">
+                                    <span><SvgSprite type="user-fill" :size="24" /></span>
+                                    <div>
+                                        <button type="button" @click="openAuth">
+                                            Авторизуйтесь,
+                                        </button>
+                                        чтобы&nbsp;снизить цену
+                                    </div>
+                                </li>
+                                <li
+                                    v-if="settings?.delivery_disable_price"
+                                    class="product-view__footer-card"
+                                >
+                                    <span><SvgSprite type="delivery" :size="24" /></span>
+                                    <p>
+                                        Бесплатная доставка от
+                                        <span class="ruble">
+                                            {{ settings?.delivery_disable_price }}
+                                        </span>
+                                    </p>
+                                </li>
+                                <li v-if="product?.size" class="product-view__footer-card">
+                                    <span><SvgSprite type="box" :size="24" /></span>
+                                    <span>Размеры {{ product?.size }}</span>
+                                </li>
+                            </ul>
+                        </ClientOnly>
                     </div>
                     <div class="product-view__info">
                         <ProductAccordion
@@ -209,35 +232,74 @@
 </template>
 
 <script setup lang="ts">
+    import { ModalsAuth, ModalsAuthForgot } from '#components';
+    import { useModal } from 'vue-final-modal';
+
+    import type { ICartItem } from '~~/interfaces/entities/cart-item';
     import type { IProduct } from '~~/interfaces/entities/product';
-    import type { ProductModifiersType } from '~~/interfaces/product-modifiers';
     import type { ISettings } from '~~/interfaces/settings';
 
-    // data =================================================================
-    const baseUrl = useRuntimeConfig().public.siteUrl;
-
+    const siteUrl = useRuntimeConfig().public.siteUrl;
     const route = useRoute();
 
     const viewsStore = useViewsStore();
+    const userStore = useUserStore();
+    const cartStore = useCartStore();
 
-    const { content: settings } = useCms<ISettings>('settings', [
+    // data =================================================================
+
+    const { content: settings } = await useCms<ISettings>('settings', [
         'disable_controls.*',
         'disable_controls.categories_id.*',
         'subscription_category.*',
     ]);
 
-    const { item: product, status } = useCmsItem<IProduct>('products', route.params.id as string, [
-        'images.*',
-        'images.directus_files_id.*',
-        'category.*',
-        'category.categories_id.*',
-        'reason.*',
-        'reason.reason_id.*',
-        'style.*',
-        'style.styles_id.*',
-        'structure.*',
-        'structure.structure_id.*',
-    ]);
+    const { item: product, status } = await useCmsItem<IProduct>(
+        'products',
+        route.params.id as string,
+        [
+            'images.*',
+            'images.directus_files_id.*',
+            'category.*',
+            'category.categories_id.*',
+            'reason.*',
+            'reason.reason_id.*',
+            'style.*',
+            'style.styles_id.*',
+            'structure.*',
+            'structure.structure_id.*',
+        ]
+    );
+    // =======================================================================
+
+    // State =================================================================
+    const cartProductQty = computed(() => {
+        if (inCart.value) {
+            const key = cartKeyBuilder([productModel.product_id, productModel.modifier]);
+            const coincidence = cartStore.cartList.find(
+                (el) => cartKeyBuilder([el.product_id, el.modifier]) === key
+            );
+
+            return coincidence ? coincidence.quantity : 1;
+        } else return 1;
+    });
+
+    const productModel: ICartItem = reactive({
+        product_id: product?.value?.id ?? '',
+        modifier: 'standart',
+        quantity: cartProductQty,
+    });
+
+    const variantMultipliers: Record<string, number> = {
+        standart: 1,
+        large: 1.5,
+        premium: 2,
+    };
+    // =======================================================================
+
+    // Getters ===============================================================
+    const isAuth = computed(() => userStore.isAuth);
+    const inCart = computed(() => cartStore.checkItemInCart(productModel));
 
     const productCategories = computed(() =>
         product.value?.category?.map((el) => slugify(el.categories_id?.name as string))
@@ -256,60 +318,98 @@
             el.includes(slugify(settings.value?.subscription_category.name as string))
         )
     );
-    // =======================================================================
 
-    // product processing ====================================================
-    // model
-    const productModel: { id: IProduct['id']; type: ProductModifiersType; quantity: number } =
-        reactive({
-            id: product?.value?.id!,
-            type: 'standart',
-            quantity: 1,
-        });
-
-    // multipliers
-    const variantMultipliers: Record<string, number> = {
-        standart: 1,
-        large: 1.5,
-        premium: 2,
-    };
-
-    // price
     const discountPrice = computed(() => {
         if (!product?.value?.discount) return 0;
 
-        const multiplier = variantMultipliers[productModel.type] || 1;
-        return product?.value?.discount * multiplier * productModel.quantity;
+        const multiplier = variantMultipliers[productModel.modifier] || 1;
+        return product?.value?.discount * multiplier * Number(productModel.quantity);
     });
 
     const totalPrice = computed(() => {
         if (!product?.value?.price) return 0;
 
-        const multiplier = variantMultipliers[productModel.type] || 1;
-        return product?.value?.price * multiplier * productModel.quantity;
+        const multiplier = variantMultipliers[productModel.modifier] || 1;
+        return product?.value?.price * multiplier * Number(productModel.quantity);
+    });
+    // =======================================================================
+
+    // Methods ===============================================================
+    const {
+        open: openForgot,
+        close: closeForgot,
+        destroy: destroyForgot,
+    } = useModal({
+        component: ModalsAuthForgot,
+        attrs: {
+            onClose() {
+                closeForgot();
+            },
+            onLoggedIn() {
+                closeForgot();
+                destroyForgot();
+                destroyAuth();
+            },
+        },
     });
 
-    // counter
-    const addQuantity = () => {
-        if (productModel.quantity < 5) productModel.quantity++;
-    };
-    const removeQuantity = () => {
-        if (productModel.quantity > 1) productModel.quantity--;
-    };
-    // ======================================================================
+    const {
+        open: openAuth,
+        close: closeAuth,
+        destroy: destroyAuth,
+    } = useModal({
+        component: ModalsAuth,
+        attrs: {
+            onLoggedIn() {
+                closeAuth();
+                destroyAuth();
+            },
+            onClose() {
+                closeAuth();
+            },
+            onOpenForgot() {
+                openForgot();
+                closeAuth();
+            },
+        },
+    });
+
+    const toggleCart = useDebounceFn(() => {
+        if (!productModel.product_id) return;
+        if (!inCart.value) {
+            cartStore.addToCart(productModel);
+        } else {
+            cartStore.removeFromCart(productModel);
+        }
+    }, 200);
+
+    const addQuantity = useDebounceFn(() => {
+        if (!productModel.product_id) return;
+        if (!inCart.value) return;
+
+        cartStore.addQty(productModel);
+    }, 200);
+
+    const removeQuantity = useDebounceFn(() => {
+        if (!productModel.product_id) return;
+        if (!inCart.value) return;
+
+        cartStore.removeQty(productModel);
+    }, 200);
+    // =======================================================================
 
     // SEO & Meta ===========================================================
     const productMeta = computed(() => ({
         '@context': 'https://schema.org/',
         '@type': 'Product',
         name: `${product.value?.meta_title ?? product.value?.title} | Арабеска - магазин цветов в Самаре`,
-        image: `${baseUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
+        image: `${siteUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
         description: product.value?.meta_description ?? '',
         sku: product.value?.id,
         brand: 'Arabeska',
         offers: {
             '@type': 'Offer',
-            url: `${baseUrl}${route.fullPath}`,
+            url: `${siteUrl}${route.fullPath}`,
             priceCurrency: 'RUB',
             price: product.value?.discount ? product.value?.discount : product.value?.price,
             availability: 'https://schema.org/InStock',
@@ -330,10 +430,10 @@
             {
                 property: 'og:image',
                 content: product.value?.og_image
-                    ? `${baseUrl}/api/cms/assets/${product.value.og_image}`
-                    : `${baseUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
+                    ? `${siteUrl}/api/cms/assets/${product.value.og_image}`
+                    : `${siteUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
             },
-            { property: 'og:url', content: `${baseUrl}${route.fullPath}` },
+            { property: 'og:url', content: `${siteUrl}${route.fullPath}` },
             { property: 'og:site:name', content: 'Arabeska' },
             { name: 'twitter:card', content: 'summary_large_image' },
             {
@@ -344,8 +444,8 @@
             {
                 name: 'twitter:image',
                 content: product.value?.og_image
-                    ? `${baseUrl}/api/cms/assets/${product.value.og_image}`
-                    : `${baseUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
+                    ? `${siteUrl}/api/cms/assets/${product.value.og_image}`
+                    : `${siteUrl}/api/cms/assets/${product.value?.images[0]?.directus_files_id.id}`,
             },
         ],
         script: [
@@ -376,7 +476,7 @@
         }
         &__body {
             display: grid;
-            grid-template-columns: repeat(2, auto);
+            grid-template-columns: 35% auto;
             grid-template-areas:
                 'slider content'
                 'slider info';
@@ -413,6 +513,7 @@
             grid-area: content;
             width: 100%;
             display: grid;
+            grid-template-columns: auto 30%;
             grid-template-areas:
                 'main sider'
                 'footer footer';
@@ -619,7 +720,9 @@
                     border-radius: 50%;
                     background-color: $c-accent;
                 }
+                button,
                 a {
+                    cursor: pointer;
                     text-decoration: underline;
                     @media (pointer: fine) {
                         &:hover {

@@ -84,7 +84,7 @@
     const cartStore = useCartStore();
     const cartCounter = computed(() => cartStore.cartCount);
 
-    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
+    const { content: categoriesRaw } = await useCms<ICategories[]>('categories');
 
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
 
@@ -92,7 +92,7 @@
         categories.value?.filter((el) => slugify(el.name) !== route.params.category).slice(0, 3)
     );
 
-    const { content: contacts } = useCms<IContacts>('contact');
+    const { content: contacts } = await useCms<IContacts>('contact');
 
     // =====================================================================================
 

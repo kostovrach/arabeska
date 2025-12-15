@@ -1,6 +1,6 @@
 import type { AsyncDataOptions } from '#app';
 
-export function useCms<T = any>(
+export async function useCms<T = any>(
     collection: string,
     withRelations: string[] = [],
     requestOpt?: AsyncDataOptions<{ data: T }>,
@@ -14,7 +14,7 @@ export function useCms<T = any>(
         resolveFiles: opts.resolveFiles ?? true,
     };
 
-    const { data, status, refresh } = useFetch<{ data: T }>(`/api/cms/${collection}`, {
+    const { data, status, refresh } = await useFetch<{ data: T }>(`/api/cms/${collection}`, {
         key,
         query,
         server: true,

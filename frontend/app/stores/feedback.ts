@@ -1,4 +1,4 @@
-import type { AsyncData, AsyncDataOptions, AsyncDataRequestStatus } from '#app';
+import type { AsyncDataRequestStatus } from '#app';
 import type { IFeedback } from '~~/interfaces/feedback';
 
 export const useFeedbackStore = defineStore('feedback', () => {
@@ -11,7 +11,7 @@ export const useFeedbackStore = defineStore('feedback', () => {
 
     // Actions=============================================
     async function getFeedback() {
-        const { content: feedbackRaw, status } = useCms<IFeedback[]>('feedback', [], {
+        const { content: feedbackRaw, status } = await useCms<IFeedback[]>('feedback', [], {
             lazy: true,
         });
 
@@ -28,7 +28,7 @@ export const useFeedbackStore = defineStore('feedback', () => {
             feedbackItemStatus.value = 'error';
             return;
         } else {
-            const { content: feedbackRaw, status } = useCms<IFeedback[]>('feedback', [], {
+            const { content: feedbackRaw, status } = await useCms<IFeedback[]>('feedback', [], {
                 lazy: true,
             });
 

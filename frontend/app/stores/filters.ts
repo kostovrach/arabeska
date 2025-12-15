@@ -165,8 +165,8 @@ export const useFiltersStore = defineStore('filters', () => {
         return products.value;
     }
 
-    function loadFilters() {
-        const { content: filtersData } = useCms<IFiltersList>('filters', [
+    async function loadFilters() {
+        const { content: filtersData } = await useCms<IFiltersList>('filters', [
             'reasons.*',
             'reasons.reason_id.*',
             'structure.*',

@@ -3,6 +3,6 @@ import type { IProduct } from './product';
 
 export interface ICartItem {
     product_id: IProduct['id'];
-    quantity: string | number;
+    quantity: number;
     modifier: ProductModifiersType;
 }

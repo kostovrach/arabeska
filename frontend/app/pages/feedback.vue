@@ -55,7 +55,7 @@
     // ====================================================
 
     // data ===============================================
-    const { content: page } = useCms<IFeedbackPage>('feedback_page');
+    const { content: page } = await useCms<IFeedbackPage>('feedback_page');
     // ====================================================
 </script>
 

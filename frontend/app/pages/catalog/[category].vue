@@ -73,7 +73,7 @@
 
     // data ====================================================================
 
-    const { content: categories } = useCms<ICategories[]>('categories', [], {
+    const { content: categories } = await useCms<ICategories[]>('categories', [], {
         transform: (cat) => {
             const result = cat.data.filter((el) => el.available === true);
             return { data: result };

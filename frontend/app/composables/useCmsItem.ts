@@ -1,4 +1,4 @@
-export function useCmsItem<T = any>(
+export async function useCmsItem<T = any>(
     collection: string,
     id: string | number,
     withRelations: string[] = [],
@@ -11,7 +11,7 @@ export function useCmsItem<T = any>(
         resolveFiles: opts.resolveFiles ?? true,
     };
 
-    const { data, status, refresh } = useFetch<{ data: T }>(`/api/cms/${collection}/${id}`, {
+    const { data, status, refresh } = await useFetch<{ data: T }>(`/api/cms/${collection}/${id}`, {
         key,
         query,
         server: true,

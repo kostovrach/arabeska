@@ -91,17 +91,17 @@ export const useCartStore = defineStore('cart', () => {
         return result?.title ?? '';
     }
 
-    function getProductPriceById(id: IProduct['id']): string {
-        const result = products.value.find((el) => el.id === id);
+    function getProductPriceById(id: IProduct['id']): number {
+        const result = products.value.find((el) => el.id === id)!;
 
-        return `${(result?.discount ? result.discount : result?.price)?.toLocaleString('ru-RU')}`;
+        return result.discount ? result.discount : result.price;
     }
 
-    function getProductDiscountById(id: IProduct['id']): string | undefined {
-        const result = products.value.find((el) => el.id === id);
+    function getProductDiscountById(id: IProduct['id']): number | undefined {
+        const result = products.value.find((el) => el.id === id)!;
 
         if (result?.discount) {
-            return result.price.toLocaleString('ru-RU');
+            return result.price;
         }
     }
 

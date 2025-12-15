@@ -89,7 +89,7 @@
                         </aside>
                         <form class="checkout__form">
                             <div class="checkout__section">
-                                <h2 class="checkout__section-title">От кого</h2>
+                                <h2 class="checkout__section-title">Кому</h2>
                                 <div class="checkout__data checkout__data--to">
                                     <input
                                         id="order-recipient-name"
@@ -107,6 +107,7 @@
                                         mask="+7 (999) 999-99-99"
                                         placeholder="+7 (___) ___-__-__"
                                         name="order-recipient-phone"
+                                        unstyled
                                         :disabled="order.recipient_self"
                                     />
                                 </div>
@@ -245,34 +246,36 @@
                                 <template v-if="order.delivery === 'courier'">
                                     <div class="checkout__data checkout__data--courier">
                                         <span class="checkout__data-title">Адрес доставки</span>
-                                        <input
-                                            id="order-delivery-street"
-                                            v-model="intermediateAddress.street"
-                                            class="checkout__input"
-                                            type="text"
-                                            placeholder="Введите адрес"
-                                        />
-                                        <input
-                                            id="order-delivery-flat"
-                                            v-model="intermediateAddress.flat"
-                                            class="checkout__input"
-                                            type="number"
-                                            placeholder="Квартира"
-                                        />
-                                        <input
-                                            id="order-delivery-doorway"
-                                            v-model="intermediateAddress.doorway"
-                                            class="checkout__input"
-                                            type="number"
-                                            placeholder="Подъезд"
-                                        />
-                                        <input
-                                            id="order-delivery-floor"
-                                            v-model="intermediateAddress.floor"
-                                            class="checkout__input"
-                                            type="number"
-                                            placeholder="Квартира"
-                                        />
+                                        <Select
+                                            label-id="order-delivery-street"
+                                            v-model="order.delivery_address"
+                                            class="checkout__dropdown checkout__dropdown--large"
+                                            overlay-class="checkout__dropdown-overlay"
+                                            placeholder="Выберите адрес"
+                                            :options="userAddresses"
+                                            unstyled
+                                        >
+                                            <template #option="{ option }">
+                                                <button
+                                                    class="checkout__dropdown-option"
+                                                    type="button"
+                                                >
+                                                    {{ option }}
+                                                </button>
+                                            </template>
+                                            <template #footer>
+                                                <button
+                                                    class="checkout__dropdown-option checkout__dropdown-option--footer"
+                                                    type="button"
+                                                    @click="openAddAddress"
+                                                >
+                                                    <span>
+                                                        <SvgSprite type="plus" :size="14" />
+                                                    </span>
+                                                    <span>Добавить адрес</span>
+                                                </button>
+                                            </template>
+                                        </Select>
                                     </div>
                                     <div class="checkout__data--courier-hint">
                                         <span class="checkout__data--courier-hint-icon">
@@ -300,7 +303,8 @@
                                         <Select
                                             label-id="order-delivery-pickup"
                                             v-model="order.delivery_pickup_address"
-                                            class="checkout__input--pickup"
+                                            class="checkout__dropdown"
+                                            overlay-class="checkout__dropdown-overlay"
                                             placeholder="Выберите салон"
                                             :options="
                                                 contacts?.addresses.map((el) => el.full_address)
@@ -309,7 +313,7 @@
                                         >
                                             <template #option="{ option }">
                                                 <button
-                                                    class="checkout__input--pickup-option"
+                                                    class="checkout__dropdown-option"
                                                     type="button"
                                                 >
                                                     {{ option }}
@@ -329,16 +333,14 @@
                                     <Select
                                         label-id="order-delivery-time"
                                         v-model="order.delivery_time"
-                                        class="checkout__input--time"
+                                        class="checkout__dropdown"
+                                        overlay-class="checkout__dropdown-overlay"
                                         placeholder="Выберите время"
                                         :options="deliveryTimeVariants"
                                         unstyled
                                     >
                                         <template #option="{ option }">
-                                            <button
-                                                class="checkout__input--time-option"
-                                                type="button"
-                                            >
+                                            <button class="checkout__dropdown-option" type="button">
                                                 {{ option }}
                                             </button>
                                         </template>
@@ -444,6 +446,52 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="checkout__controls">
+                                <div class="checkout__agreements">
+                                    <div class="checkout__toggler">
+                                        <div class="checkout__toggler-body">
+                                            <input
+                                                id="order-agreement-processing"
+                                                v-model="order.agreement_processing"
+                                                type="checkbox"
+                                                name="order-agreement-processing"
+                                            />
+                                        </div>
+                                        <label
+                                            class="checkout__toggler-label"
+                                            for="order-agreement-processing"
+                                        >
+                                            Я ознакомился(сь) с политикой конфиденциальности и
+                                            согласен(на) с обработкой персональных данных
+                                        </label>
+                                    </div>
+                                    <div class="checkout__toggler">
+                                        <div class="checkout__toggler-body">
+                                            <input
+                                                id="order-agreement-marketing"
+                                                v-model="order.agreement_marketing_notify"
+                                                type="checkbox"
+                                                name="order-agreement-marketing"
+                                            />
+                                        </div>
+                                        <label
+                                            class="checkout__toggler-label"
+                                            for="order-agreement-marketing"
+                                        >
+                                            Хочу получать информацию о новых предложениях и акциях
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="checkout__button" type="submit" @click.prevent="">
+                                    <span>Оплатить заказ</span>
+                                    <span>
+                                        <SvgSprite type="arrow" :size="18" />
+                                    </span>
+                                </button>
+                                <NuxtLink class="checkout__help" :to="{ name: 'contact' }">
+                                    Нужна помощь с оформлением заказа?
+                                </NuxtLink>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -453,6 +501,8 @@
 </template>
 
 <script setup lang="ts">
+    import { ModalsAddAddress } from '#components';
+    import { useModal } from 'vue-final-modal';
     import type { IContacts } from '~~/interfaces/contacts';
     import type { IOrder } from '~~/interfaces/entities/order';
     import type { ISettings } from '~~/interfaces/settings';
@@ -475,8 +525,8 @@
     } = cartStore;
 
     // data ======================================================
-    const { content: settings } = useCms<ISettings>('settings');
-    const { content: contacts } = useCms<IContacts>('contact');
+    const { content: settings } = await useCms<ISettings>('settings');
+    const { content: contacts } = await useCms<IContacts>('contact');
 
     const deliveryTimeVariants = [
         '10:00 - 12:00',
@@ -497,28 +547,22 @@
 
     const totalAmount = computed(() => cartAmount.value + totalDeliveryPrice.value);
 
+    const userAddresses = computed(() => {
+        if (!user.value?.addresses.length) return [];
+
+        return user.value?.addresses.map((el) => {
+            const street = `${el.street}, `;
+            const flat = el.flat ? `квартира ${el.flat}, ` : '';
+            const doorway = el.doorway ? `${el.doorway}-й подъезд, ` : '';
+            const floor = el.floor ? `${el.floor}-й этаж` : '';
+
+            return street + flat + doorway + floor;
+        });
+    });
+
     const { price: totalDeliveryPrice, remains: remainsToFreeDelivery } =
         useDeliveryPriceCalculator(cartAmount, deliveryPrice, deliveryRequiredPrice);
     // ===========================================================
-
-    const intermediateAddress = reactive({
-        street: '',
-        flat: '',
-        doorway: '',
-        floor: '',
-    });
-
-    const formattedAddress = computed(() => {
-        const street = `${intermediateAddress.street}, `;
-        const flat = intermediateAddress.flat.length
-            ? `квартира ${intermediateAddress.flat}, `
-            : '';
-        const doorway = intermediateAddress.doorway.length
-            ? `${intermediateAddress.doorway}-й подъезд, `
-            : '';
-        const floor = intermediateAddress.floor.length ? `${intermediateAddress.floor}-й этаж` : '';
-        return street + flat + doorway + floor;
-    });
 
     // Model =====================================================
     const promocode = ref<string>('');
@@ -550,7 +594,7 @@
         delivery_date: '',
         delivery_time: '10:00 - 12:00',
         delivery_pickup_address: '',
-        delivery_address: formattedAddress,
+        delivery_address: '',
 
         // Additionally
         postcard: '',
@@ -574,6 +618,15 @@
             order.recipient_phone = '';
         }
     }
+
+    const { open: openAddAddress, close: closeAddAddress } = useModal({
+        component: ModalsAddAddress,
+        attrs: {
+            onClose() {
+                closeAddAddress();
+            },
+        },
+    });
     // ===========================================================
 
     // SEO & Meta ================================================
@@ -584,7 +637,7 @@
     // ===========================================================
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
     @mixin input() {
@@ -653,7 +706,7 @@
             justify-content: center;
         }
         &__title {
-            font-size: lineScale(128, 64, 480, 1920);
+            font-size: lineScale(128, 48, 480, 1920);
             font-weight: $fw-semi;
         }
         &__cheque {
@@ -809,15 +862,16 @@
             border: rem(2) solid rgba($c-D4E1E7, 0.7);
             border-radius: rem(32);
             &-title {
-                font-size: lineScale(32, 20, 480, 1920);
+                font-size: lineScale(32, 22, 480, 1920);
+                line-height: 1.4;
             }
         }
         &__data {
             font-family: 'Inter', sans-serif;
             &-title {
                 display: block;
-                font-size: lineScale(18, 14, 480, 1920);
-                margin-bottom: rem(16);
+                font-size: lineScale(18, 16, 480, 1920);
+                line-height: 1.4;
                 grid-column: span 2;
             }
             &--to {
@@ -829,9 +883,6 @@
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: rem(16) rem(8);
-                :first-of-type {
-                    grid-column: span 3;
-                }
                 &-hint {
                     display: flex;
                     align-items: center;
@@ -871,6 +922,76 @@
                 display: flex;
                 flex-direction: column;
                 gap: rem(16);
+            }
+        }
+        &__dropdown {
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: lineScale(20, 18, 480, 1920);
+            padding: rem(12) rem(24);
+            background-color: rgba($c-D4E1E7, 0.25);
+            border: rem(2) solid rgba($c-D4E1E7, 0.25) !important;
+            border-radius: rem(32);
+            color: rgba($c-082535, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition:
+                background-color $td $tf,
+                color $td $tf,
+                border-color $td $tf;
+            @media (pointer: fine) {
+                &:hover {
+                    background-color: transparent;
+                    border-color: $c-D4E1E7 !important;
+                    &::placeholder {
+                        opacity: 0.5;
+                    }
+                }
+            }
+            &:focus {
+                background-color: transparent;
+                border-color: $c-accent !important;
+                color: $c-082535;
+                &::placeholder {
+                    opacity: 0.5;
+                }
+            }
+            &:disabled {
+                pointer-events: none;
+            }
+            &-overlay {
+                z-index: 4 !important;
+                background-color: $c-FFFFFF;
+                border-radius: rem(32);
+                overflow: hidden;
+                box-shadow: 1px 1px 5px rgba($c-98BBD7, 0.5);
+            }
+            &-option {
+                cursor: pointer;
+                display: block;
+                box-sizing: border-box;
+                width: 100%;
+                font-size: lineScale(18, 18, 480, 1920);
+                padding: rem(12) rem(24);
+                border: rem(1) solid rgba($c-98BBD7, 0.15);
+                @media (pointer: fine) {
+                    &:hover {
+                        color: $c-FFFFFF;
+                        background-color: $c-accent;
+                    }
+                }
+                &--footer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: rem(8);
+                    font-size: rem(14);
+                }
+            }
+            &--large {
+                grid-column: span 3;
             }
         }
         &__input {
@@ -914,118 +1035,6 @@
                 }
                 &:disabled {
                     pointer-events: none;
-                }
-            }
-            &--time {
-                cursor: pointer;
-                width: 100%;
-                font-family: 'Inter', sans-serif;
-                font-size: lineScale(20, 18, 480, 1920);
-                padding: rem(12) rem(24);
-                background-color: rgba($c-D4E1E7, 0.25);
-                border: rem(2) solid rgba($c-D4E1E7, 0.25) !important;
-                border-radius: rem(32);
-                color: rgba($c-082535, 0.7);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                transition:
-                    background-color $td $tf,
-                    color $td $tf,
-                    border-color $td $tf;
-                @media (pointer: fine) {
-                    &:hover {
-                        background-color: transparent;
-                        border-color: $c-D4E1E7 !important;
-                        &::placeholder {
-                            opacity: 0.5;
-                        }
-                    }
-                }
-                &:focus {
-                    background-color: transparent;
-                    border-color: $c-accent !important;
-                    color: $c-082535;
-                    &::placeholder {
-                        opacity: 0.5;
-                    }
-                }
-                &:disabled {
-                    pointer-events: none;
-                }
-                [role='listbox'] {
-                    display: none;
-                }
-                &-option {
-                    cursor: pointer;
-                    box-sizing: border-box;
-                    width: 100%;
-                    font-size: lineScale(20, 18, 480, 1920);
-                    padding: rem(8) rem(24);
-                    background-color: $c-F4F7F9;
-                    border: rem(1) solid rgba($c-98BBD7, 0.15);
-                    @media (pointer: fine) {
-                        &:hover {
-                            color: $c-FFFFFF;
-                            background-color: $c-accent;
-                        }
-                    }
-                }
-            }
-            &--pickup {
-                cursor: pointer;
-                width: 100%;
-                font-family: 'Inter', sans-serif;
-                font-size: lineScale(20, 18, 480, 1920);
-                padding: rem(12) rem(24);
-                background-color: rgba($c-D4E1E7, 0.25);
-                border: rem(2) solid rgba($c-D4E1E7, 0.25) !important;
-                border-radius: rem(32);
-                color: rgba($c-082535, 0.7);
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                transition:
-                    background-color $td $tf,
-                    color $td $tf,
-                    border-color $td $tf;
-                @media (pointer: fine) {
-                    &:hover {
-                        background-color: transparent;
-                        border-color: $c-D4E1E7 !important;
-                        &::placeholder {
-                            opacity: 0.5;
-                        }
-                    }
-                }
-                &:focus {
-                    background-color: transparent;
-                    border-color: $c-accent !important;
-                    color: $c-082535;
-                    &::placeholder {
-                        opacity: 0.5;
-                    }
-                }
-                &:disabled {
-                    pointer-events: none;
-                }
-                [role='listbox'] {
-                    display: none;
-                }
-                &-option {
-                    cursor: pointer;
-                    box-sizing: border-box;
-                    width: 100%;
-                    font-size: lineScale(20, 18, 480, 1920);
-                    padding: rem(8) rem(24);
-                    background-color: $c-F4F7F9;
-                    border: rem(1) solid rgba($c-98BBD7, 0.15);
-                    @media (pointer: fine) {
-                        &:hover {
-                            color: $c-FFFFFF;
-                            background-color: $c-accent;
-                        }
-                    }
                 }
             }
         }
@@ -1141,9 +1150,9 @@
             &-body {
                 @include toggler();
             }
-            &-desc {
+            &-label {
                 font-family: 'Inter', sans-serif;
-
+                font-size: lineScale(16, 14, 480, 1920);
                 line-height: 1.4;
             }
             &-tooltip {
@@ -1219,8 +1228,8 @@
                     opacity: 0;
                 }
                 &-icon {
-                    width: lineScale(64, 48, 480, 1920);
-                    min-width: lineScale(64, 48, 480, 1920);
+                    width: lineScale(48, 40, 480, 1920);
+                    min-width: lineScale(48, 40, 480, 1920);
                 }
                 &-body {
                     display: flex;
@@ -1228,12 +1237,79 @@
                     gap: rem(8);
                 }
                 &-title {
-                    font-size: lineScale(24, 20, 480, 1920);
+                    font-size: lineScale(20, 18, 480, 1920);
                 }
                 &-desc {
                     font-size: lineScale(16, 14, 480, 1920);
                     opacity: 0.5;
                 }
+            }
+        }
+        &__controls {
+            font-family: 'Inter', sans-serif;
+            margin-top: rem(32);
+        }
+        &__agreements {
+            display: flex;
+            flex-direction: column;
+            gap: rem(8);
+        }
+        &__button {
+            justify-content: center;
+            margin-top: rem(16);
+            @include button-primary(
+                $width: 100%,
+                $gap: rem(8),
+                $color: $c-FFFFFF,
+                $font-size: lineScale(20, 18, 480, 1920),
+                $border-color: $c-98BBD7,
+                $background: $c-98BBD7,
+                $padding: rem(14) rem(32),
+                $anim-color: $c-accent,
+                $anim-border-color: $c-accent
+            );
+        }
+        &__help {
+            cursor: pointer;
+            width: fit-content;
+            display: block;
+            color: $c-98BBD7;
+            margin: rem(32) auto 0;
+            @media (pointer: fine) {
+                &:hover {
+                    color: $c-accent;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .checkout {
+            &__wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .checkout {
+            &__data {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    @media (max-width: 640px) {
+        .checkout {
+            &__cheque {
+                padding: 0;
+                box-shadow: none;
+            }
+            &__section {
+                border: none;
+                padding: 0;
             }
         }
     }

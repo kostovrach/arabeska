@@ -141,7 +141,7 @@
         hoverColor: string;
     }
 
-    const { content: page } = useCms<IContacts>('contact');
+    const { content: page } = await useCms<IContacts>('contact');
 
     const socialsLinks: ISocialsLink[] = [
         {

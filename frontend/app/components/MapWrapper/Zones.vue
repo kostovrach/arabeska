@@ -145,7 +145,7 @@
     // ===============================================================================
 
     // data ==========================================================================
-    const { content: zones } = useCms<IDeliveryZones[]>('delivery_zones');
+    const { content: zones } = await useCms<IDeliveryZones[]>('delivery_zones');
     // ===============================================================================
 
     function setMarkerCoordinates(event: MouseEvent, mapEvent: MapEvent, idx: number): void {

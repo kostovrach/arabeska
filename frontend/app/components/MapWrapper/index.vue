@@ -77,7 +77,7 @@
     const markersIdx = ref<number | null>(null);
 
     // data
-    const { content: markers } = useCms<IContacts>('contact');
+    const { content: markers } = await useCms<IContacts>('contact');
 </script>
 
 <style lang="scss">

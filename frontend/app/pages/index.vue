@@ -119,7 +119,7 @@
 
     const { productsList, productsStatus } = storeToRefs(productsStore);
 
-    const { content: page } = useCms<IHomePage>('home', [
+    const { content: page } = await useCms<IHomePage>('home', [
         'hero_slides.*',
         'hero_slides.home_slider_id.*',
         'carousels.*',

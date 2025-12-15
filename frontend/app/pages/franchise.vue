@@ -131,7 +131,7 @@
     // =================================================================
 
     // data ============================================================
-    const { content: page } = useCms<IFranchisePage>('franchise', [
+    const { content: page } = await useCms<IFranchisePage>('franchise', [
         'advant_info.*',
         'advant_info.franchise_advant_id.*',
     ]);

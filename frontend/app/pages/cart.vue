@@ -109,12 +109,23 @@
                                                 v-if="getProductDiscountById(item.product_id)"
                                             >
                                                 <span class="ruble">
-                                                    {{ getProductDiscountById(item.product_id) }}
+                                                    {{
+                                                        (
+                                                            getProductDiscountById(
+                                                                item.product_id
+                                                            )! * item.quantity
+                                                        ).toLocaleString('ru-RU')
+                                                    }}
                                                 </span>
                                             </p>
                                             <p class="cart__item-field-price-common ruble">
                                                 <span>
-                                                    {{ getProductPriceById(item.product_id) }}
+                                                    {{
+                                                        (
+                                                            getProductPriceById(item.product_id) *
+                                                            item.quantity
+                                                        ).toLocaleString('ru-RU')
+                                                    }}
                                                 </span>
                                             </p>
                                         </div>
@@ -189,7 +200,7 @@
 
     const cart = computed(() => cartStore.cartList);
 
-    const { content: settings } = useCms<ISettings>('settings');
+    const { content: settings } = await useCms<ISettings>('settings');
 
     const deliveryPrice = computed(() => settings.value?.delivery_price ?? 0);
     const deliveryRequiredPrice = computed(() => settings.value?.delivery_disable_price ?? 0);

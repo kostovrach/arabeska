@@ -4,7 +4,7 @@
             <div class="feedback-list__titlebox">
                 <h2 class="feedback-list__title">Отзывы</h2>
                 <ClientOnly>
-                    <span class="feedback-list__counter">({{ feedbackList?.length }})</span>
+                    <span class="feedback-list__counter">({{ items?.length }})</span>
                 </ClientOnly>
             </div>
             <div v-show="status === 'error' || status === 'idle'" class="feedback-list__error">
@@ -62,12 +62,10 @@
 
     // data===================================================
     const feedbackStore = useFeedbackStore();
-    feedbackStore.getFeedback();
+    await feedbackStore.getFeedback();
 
-    const { feedbackList, feedbackStatus } = storeToRefs(feedbackStore);
-
-    const status = computed(() => feedbackStatus.value);
-    const items = computed(() => feedbackList.value ?? []);
+    const status = computed(() => feedbackStore.feedbackStatus);
+    const items = computed(() => feedbackStore.feedbackList);
     // =======================================================
 
     function openFeedback(id: string | number): void {

@@ -220,7 +220,7 @@
     // data ================================================================
     const cartStore = useCartStore();
     const userStore = useUserStore();
-    const { content: contacts } = useCms<IContacts>('contact');
+    const { content: contacts } = await useCms<IContacts>('contact');
     // =====================================================================
 
     // State ============================================================

@@ -201,28 +201,18 @@
                                                     name="user-address-street"
                                                     type="text"
                                                     placeholder="Введите адрес для доставки"
-                                                    :suggestions="suggestResponse ?? []"
-                                                    data-key="option.address.formattedAddress"
-                                                    @complete="suggestOnSearch"
-                                                    @option-select="
-                                                        (event: { value: SuggestResponseItem }) => {
-                                                            newAddress.street =
-                                                                event.value.address
-                                                                    ?.formattedAddress ?? '';
-                                                        }
+                                                    :suggestions="
+                                                        suggestResponse?.map(
+                                                            (el) => el.address?.formattedAddress
+                                                        ) ?? []
                                                     "
+                                                    @complete="suggestOnSearch"
                                                 >
-                                                    <template
-                                                        #option="{
-                                                            option,
-                                                        }: {
-                                                            option: SuggestResponseItem;
-                                                        }"
-                                                    >
+                                                    <template #option="{ option }">
                                                         <div
                                                             class="profile__data-create-input--main-option"
                                                         >
-                                                            {{ option.address?.formattedAddress }}
+                                                            {{ option }}
                                                         </div>
                                                     </template>
                                                 </AutoComplete>
@@ -328,7 +318,6 @@
                                     </div>
                                 </div>
                             </section>
-                            <!-- <pre class="test" style="font-family: 'Inter'">{{ newAddress }}</pre> -->
                         </div>
                     </div>
                 </div>
@@ -342,7 +331,7 @@
     import { YandexMap } from 'vue-yandex-maps';
 
     // types ============================================================
-    import type { LngLat, SuggestResponse, SuggestResponseItem } from '@yandex/ymaps3-types';
+    import type { LngLat, SuggestResponse } from '@yandex/ymaps3-types';
     import type { IUser } from '~~/interfaces/entities/user';
     import type { IUserAddress } from '~~/interfaces/entities/user-address';
     import type { OrderStatusType } from '~~/interfaces/statuses/order-status';
@@ -360,7 +349,7 @@
 
     const user = computed(() => userStore.user);
 
-    const { content: userOrders } = useCms<IOrder[]>('orders', [], {
+    const { content: userOrders } = await useCms<IOrder[]>('orders', [], {
         transform: (orders) => {
             const result = orders.data.filter((el) => el.user_id === user.value?.id);
             return { data: result };
