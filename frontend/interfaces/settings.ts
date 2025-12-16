@@ -16,4 +16,7 @@ export interface ISettings {
         settings_id: any;
         categories_id: ICategories;
     }[];
+
+    delivery_price: number;
+    delivery_disable_price: number;
 }

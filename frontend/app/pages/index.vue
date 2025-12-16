@@ -116,12 +116,10 @@
 
     // data ================================================
     const productsStore = useProductsStore();
-    // Вызов основного метода происходит в app.vue
 
     const { productsList, productsStatus } = storeToRefs(productsStore);
-    //======================================================
 
-    const { content: page, status } = useCms<IHomePage>('home', [
+    const { content: page } = await useCms<IHomePage>('home', [
         'hero_slides.*',
         'hero_slides.home_slider_id.*',
         'carousels.*',
@@ -130,4 +128,5 @@
         'advant_blocks.*',
         'advant_blocks.home_advant_id.*',
     ]);
+    //======================================================
 </script>

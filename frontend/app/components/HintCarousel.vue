@@ -1,20 +1,20 @@
 <template>
-    <section class="accessory-slider" v-if="products?.length">
-        <div class="accessory-slider__container">
-            <div class="accessory-slider__titlebox">
-                <StarsOverlay v-if="props.title" class="accessory-slider__title">
+    <section class="hint-slider" v-if="products?.length">
+        <div class="hint-slider__container">
+            <div class="hint-slider__titlebox">
+                <StarsOverlay v-if="props.title" class="hint-slider__title">
                     <h2 v-html="props.title"></h2>
                 </StarsOverlay>
-                <div class="accessory-slider__controls">
+                <div class="hint-slider__controls">
                     <button
-                        class="accessory-slider__button accessory-slider__button--prev"
+                        class="hint-slider__button hint-slider__button--prev"
                         type="button"
                         @click="scrollPrev()"
                     >
                         <SvgSprite type="arrow" />
                     </button>
                     <button
-                        class="accessory-slider__button accessory-slider__button--next"
+                        class="hint-slider__button hint-slider__button--next"
                         type="button"
                         @click="scrollNext()"
                     >
@@ -22,16 +22,13 @@
                     </button>
                 </div>
             </div>
-            <div class="accessory-slider__body">
-                <div v-show="status === 'pending'" class="accessory-slider__loader">
-                    <div class="accessory-slider__loader-wrapper">
+            <div class="hint-slider__body">
+                <div v-show="status === 'pending'" class="hint-slider__loader">
+                    <div class="hint-slider__loader-wrapper">
                         <ProductCardLoader v-for="n in 5" :key="n" />
                     </div>
                 </div>
-                <div
-                    v-show="status === 'error' || status === 'idle'"
-                    class="accessory-slider__error"
-                >
+                <div v-show="status === 'error' || status === 'idle'" class="hint-slider__error">
                     <FetchError />
                 </div>
                 <ClientOnly>
@@ -44,8 +41,8 @@
                         <EmblaSlide
                             v-for="(product, idx) in products"
                             :key="product.id"
-                            class="accessory-slider__slide"
-                            :class="{ 'accessory-slider__slide--active': idx === selectedIndex }"
+                            class="hint-slider__slide"
+                            :class="{ 'hint-slider__slide--active': idx === selectedIndex }"
                         >
                             <ProductCard
                                 :data="product"
@@ -76,10 +73,8 @@
 
     productsStore.getProducts();
 
-    const { productsList, productsStatus } = storeToRefs(productsStore);
-
-    const products = computed(() => productsList.value?.filter((el) => el.popular));
-    const status = computed(() => productsStatus.value);
+    const products = computed(() => productsStore.productsList.filter((el) => el.popular));
+    const status = computed(() => productsStore.productsStatus);
     // =======================================================
 
     // slider=================================================
@@ -121,7 +116,7 @@
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
 
-    .accessory-slider {
+    .hint-slider {
         $p: &;
 
         @include content-block;

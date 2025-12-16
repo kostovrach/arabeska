@@ -136,7 +136,7 @@
     const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
     const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
 
-    const { content: categories } = useCms<ICategories[]>('categories');
+    const { content: categories } = await useCms<ICategories[]>('categories');
 
     const navItems: {
         title: string;

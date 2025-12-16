@@ -1,16 +1,21 @@
 <template>
-    <VueFinalModal overlay-transition="vfm-fade" content-transition="vfm-slide-up">
+    <VueFinalModal
+        overlay-transition="vfm-fade"
+        content-transition="vfm-slide-up"
+        @opened="inputSetFocus"
+    >
         <div class="searchbar">
             <div class="searchbar__head">
                 <div class="searchbar__inputbox">
                     <input
                         ref="inputRef"
+                        v-model="inputModel"
                         id="searchbar"
                         class="searchbar__input"
                         type="text"
                         name="searchbar"
                         placeholder="Найти букет"
-                        v-model="inputModel"
+                        autocomplete="off"
                         @input="onInput"
                     />
                     <button class="searchbar__close-btn" type="button" @click="emit('close')">
@@ -35,12 +40,10 @@
                         <span><SvgSprite type="arrow" :size="16" /></span>
                     </NuxtLink>
                 </div>
-                <div
+                <LoadSpinner
                     v-if="!searchResult?.length && inputModel && isLoading"
                     class="searchbar__result-loading"
-                >
-                    <span></span>
-                </div>
+                ></LoadSpinner>
                 <ul class="searchbar__result-list">
                     <li
                         v-for="product in searchResult"
@@ -54,7 +57,7 @@
                             <picture class="searchbar__result-item-image-container">
                                 <img
                                     :src="
-                                        `${cmsUrl}/assets/${product.images[0]?.directus_files_id.id}` ||
+                                        `/api/cms/assets/${product.images[0]?.directus_files_id.id}` ||
                                         '/img/service/flowers-placeholder.png'
                                     "
                                     :alt="product.title"
@@ -115,18 +118,16 @@
 </template>
 
 <script setup lang="ts">
-    // types===============================================
-    import type { IProduct } from '~~/interfaces/product';
-    // ====================================================
-
     import { VueFinalModal } from 'vue-final-modal';
+
+    // types===============================================
+    import type { IProduct } from '~~/interfaces/entities/product';
+    // ====================================================
 
     const emit = defineEmits<{
         (e: 'close'): void;
         (e: 'open'): void;
     }>();
-
-    const cmsUrl = useRuntimeConfig().public.apiBase;
 
     const inputRef = ref<HTMLInputElement | null>(null);
     const inputModel = ref<string>('');
@@ -157,7 +158,6 @@
     .searchbar {
         width: 100%;
         height: 100%;
-        max-height: 100lvh;
         &__head {
             display: flex;
             align-items: center;
@@ -198,16 +198,18 @@
         &__result {
             width: 100%;
             height: 100%;
+            max-height: 90lvh;
             background-color: $c-secondary;
             padding: rem(32) 0;
             border-radius: 0 0 rem(32) rem(32);
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            @include hide-scrollbar;
             &-list {
                 height: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                overflow-y: auto;
             }
             &-item {
                 position: relative;
@@ -307,34 +309,6 @@
                             background-color: $c-accent;
                             rotate: -8deg;
                         }
-                    }
-                }
-            }
-            &-loading {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                > span {
-                    position: relative;
-                    display: block;
-                    width: rem(40);
-                    aspect-ratio: 1;
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        inset: 0;
-                        border-radius: 50%;
-                        border: {
-                            top: rem(2) solid $c-accent;
-                            right: rem(2) solid transparent;
-                        }
-                        animation: loader 1s linear infinite;
-                    }
-                }
-                @keyframes loader {
-                    to {
-                        rotate: 360deg;
                     }
                 }
             }

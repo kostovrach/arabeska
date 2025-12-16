@@ -103,7 +103,7 @@
     // ===============================================================
 
     // data ==========================================================
-    const { content: page } = useCms<IFaqPage>('faq');
+    const { content: page } = await useCms<IFaqPage>('faq');
     // ===============================================================
 </script>
 
@@ -154,7 +154,7 @@
             border-radius: rem(32);
             box-shadow: 1px 1px 5px rgba($c-D4E1E7, 0.7);
             &-link {
-                font-size: lineScale(24, 18, 480, 1440);
+                font-size: lineScale(22, 18, 480, 1440);
                 @include frame-scale($padding: rem(18) rem(32), $border-radius: rem(32));
             }
         }

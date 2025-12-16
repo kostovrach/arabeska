@@ -89,11 +89,11 @@
     // ============================================================
 
     // data =======================================================
-    const { content: page } = useCms<ISubscriptionPage>('subscription');
+    const { content: page } = await useCms<ISubscriptionPage>('subscription');
 
     const productsStore = useProductsStore();
 
-    const { content: settings } = useCms<ISettings>('settings', [
+    const { content: settings } = await useCms<ISettings>('settings', [
         'disable_controls.*',
         'disable_controls.categories_id.*',
         'subscription_category.*',
@@ -102,13 +102,13 @@
 
     // computed ===================================================
     const subscriptionCategory = computed(() =>
-        slugify(settings.value?.subscription_category.name as string)
+        slugify(settings.value?.subscription_category.name ?? 'unknow')
     );
 
     const pricingCards = computed(() => {
         return productsStore.productsList?.filter((el) =>
             el.category?.some(
-                (c) => slugify(c.categories_id?.name as string) === subscriptionCategory.value
+                (c) => slugify(c.categories_id?.name ?? 'unknow') === subscriptionCategory.value
             )
         );
     });

@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { IProduct } from '~~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/entities/product';
 
     const props = withDefaults(
         defineProps<{

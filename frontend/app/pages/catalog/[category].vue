@@ -68,12 +68,17 @@
     import type { ICategories } from '~~/interfaces/categories';
     // =========================================================================
 
-    // data ====================================================================
     const route = useRoute();
     const filterStore = useFiltersStore();
 
-    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
-    const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+    // data ====================================================================
+
+    const { content: categories } = await useCms<ICategories[]>('categories', [], {
+        transform: (cat) => {
+            const result = cat.data.filter((el) => el.available === true);
+            return { data: result };
+        },
+    });
 
     const products = computed(() => filterStore.filteredProducts(route.params.category as string));
 

@@ -63,6 +63,7 @@
                     </ul>
                     <button
                         :class="['product__button', inCart ? 'product__button--checked' : '']"
+                        :title="inCart ? 'В корзине' : 'Добавить в корзину'"
                         @click.prevent="toggleCart"
                     >
                         <span class="product__button-icon product__button-icon--default">
@@ -79,7 +80,8 @@
 </template>
 
 <script setup lang="ts">
-    import type { IProduct } from '~~/interfaces/product';
+    import type { ICartItem } from '~~/interfaces/entities/cart-item';
+    import type { IProduct } from '~~/interfaces/entities/product';
 
     const props = defineProps<{
         data: IProduct;
@@ -91,20 +93,23 @@
 
     const product = props.data;
 
-    // temp cart processing==============================
+    const defaultProductState: ICartItem = {
+        product_id: product.id,
+        quantity: 1,
+        modifier: 'standart',
+    };
 
-    // state
-    const inCart = ref(false);
+    const cartStore = useCartStore();
 
-    // actions
-    function toggleCart() {
-        if (inCart.value) {
-            inCart.value = false;
+    const inCart = computed(() => cartStore.checkItemInCart(defaultProductState));
+
+    const toggleCart = useDebounceFn(() => {
+        if (!inCart.value) {
+            cartStore.addToCart(defaultProductState);
         } else {
-            inCart.value = true;
+            cartStore.removeFromCart(defaultProductState);
         }
-    }
-    //====================================================
+    }, 200);
 </script>
 
 <style scoped lang="scss">

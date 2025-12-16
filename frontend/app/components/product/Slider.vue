@@ -10,11 +10,11 @@
                 <a
                     class="slider--main-slide-wrapper"
                     :data-fancybox="product?.title"
-                    :href="`/api/cms/assets/${slide.directus_files_id.id}`"
+                    :href="`../api/cms/assets/${slide.directus_files_id.id}`"
                 >
                     <picture class="slider--main-slide-image">
                         <img
-                            :src="`api/cms/assets/${slide.directus_files_id.id}`"
+                            :src="`../api/cms/assets/${slide.directus_files_id.id}`"
                             :alt="`Фото ${idx + 1}`"
                         />
                     </picture>
@@ -47,14 +47,12 @@
 
 <script setup lang="ts">
     // types ================================================================
-    import type { IProduct } from '~~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/entities/product';
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
 
     const props = defineProps<{
         product: IProduct | null;
     }>();
-
-    const cmsUrl = useRuntimeConfig().public.apiBase;
 
     // refs =================================================================
     const mainRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);

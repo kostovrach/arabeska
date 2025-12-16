@@ -19,14 +19,9 @@
                 </div>
                 <nav class="header__nav">
                     <NuxtLink
-                        v-for="(category, idx) in categories?.slice(0, 3)"
+                        v-for="(category, idx) in hintCategories"
                         :key="idx"
-                        :class="
-                            route.name === 'catalog-category' &&
-                            route.params.category === slugify(category.name)
-                                ? 'header__nav-link header__nav-link--current'
-                                : 'header__nav-link'
-                        "
+                        class="header__nav-link"
                         :to="{
                             name: 'catalog-category',
                             params: { category: slugify(category.name) },
@@ -43,7 +38,7 @@
                 </div>
                 <a
                     class="header__number"
-                    :href="`tel:${contacts?.phone.trim().split(' ').join('')}`"
+                    :href="`tel:${contacts?.phone.trim().replace(/\s+/g, '')}`"
                 >
                     {{ contacts?.phone }}
                 </a>
@@ -57,12 +52,16 @@
                         <SvgSprite type="search" :size="24" />
                     </button>
                 </ClientOnly>
-                <NuxtLink class="header__action header__action--profile" :to="{ name: 'index' }">
+                <NuxtLink class="header__action header__action--profile" :to="{ name: 'profile' }">
                     <SvgSprite type="user" :size="24" />
                 </NuxtLink>
-                <NuxtLink class="header__action header__action--cart" :to="{ name: 'index' }">
+                <NuxtLink class="header__action header__action--cart" :to="{ name: 'cart' }">
                     <SvgSprite type="bag" :size="24" />
-                    <span class="header__action-indicator">48</span>
+                    <ClientOnly>
+                        <span class="header__action-indicator" v-if="cartCounter >= 1">
+                            {{ cartCounter }}
+                        </span>
+                    </ClientOnly>
                 </NuxtLink>
                 <TheHeaderBurger class="header__burger" @click="openMenu" />
             </div>
@@ -80,12 +79,21 @@
     import type { IContacts } from '~~/interfaces/contacts';
 
     // data ================================================================================
-    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
+    const route = useRoute();
+
+    const cartStore = useCartStore();
+    const cartCounter = computed(() => cartStore.cartCount);
+
+    const { content: categoriesRaw } = await useCms<ICategories[]>('categories');
+
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
 
-    const { content: contacts } = useCms<IContacts>('contact');
+    const hintCategories = computed(() =>
+        categories.value?.filter((el) => slugify(el.name) !== route.params.category).slice(0, 3)
+    );
 
-    const route = useRoute();
+    const { content: contacts } = await useCms<IContacts>('contact');
+
     // =====================================================================================
 
     // modals ==============================================================================
@@ -241,11 +249,14 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                min-height: rem(18);
                 aspect-ratio: 1;
                 font-size: rem(10);
+                color: $c-FFFFFF;
                 padding: rem(4);
                 border-radius: 50%;
                 border: rem(0.25) solid transparent;
+                background-color: $c-accent;
                 will-change: border-color;
                 transition: all $td $tf;
             }

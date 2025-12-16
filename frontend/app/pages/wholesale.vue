@@ -95,7 +95,7 @@
     }
     // =========================================================================
 
-    const { content: page, status } = useCms<IWholesalePage>('wholesale', [
+    const { content: page, status } = await useCms<IWholesalePage>('wholesale', [
         'advant.*',
         'advant.wholesale_advant_id.*',
     ]);

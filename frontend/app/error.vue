@@ -15,7 +15,7 @@
                         class="not-found-hero__button"
                         type="NuxtLink"
                         logic="double-line"
-                        to="index"
+                        to="catalog"
                     >
                         <span>открыть каталог</span>
                     </CircleButton>

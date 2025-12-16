@@ -31,13 +31,13 @@
                         :autoplay-enable="props.autoplay"
                         :autoplay="autoplayOptions"
                         padding="48px 0"
-                        @mouseenter="autoplayStop"
-                        @mouseleave="autoplayStart"
                     >
                         <EmblaSlide
                             v-for="product in products"
                             :key="product.id"
                             class="home-carousel__slide"
+                            @mouseenter="autoplayStop"
+                            @mouseleave="autoplayStart"
                         >
                             <ProductCard :data="product" />
                         </EmblaSlide>
@@ -68,7 +68,7 @@
 <script setup lang="ts">
     // types==================================================
     import type { AsyncDataRequestStatus } from '#app';
-    import type { IProduct } from '~~/interfaces/product';
+    import type { IProduct } from '~~/interfaces/entities/product';
 
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import type { AutoplayOptionsType } from 'embla-carousel-autoplay';
@@ -107,17 +107,25 @@
         jump: false,
     };
 
-    const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
-    const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
+    const scrollPrev = () => {
+        if (sliderRef.value?.emblaApi?.canScrollPrev()) {
+            sliderRef?.value?.emblaApi?.scrollPrev();
+        } else return;
+    };
+    const scrollNext = () => {
+        if (sliderRef.value?.emblaApi?.canScrollNext()) {
+            sliderRef?.value?.emblaApi?.scrollNext();
+        } else return;
+    };
 
     const autoplayStop = () => {
         if (props.autoplay) {
-            sliderRef?.value?.emblaApi?.plugins().autoplay.stop();
+            sliderRef?.value?.emblaApi?.plugins()?.autoplay?.stop();
         } else return;
     };
     const autoplayStart = () => {
-        if (props.autoplay) {
-            sliderRef?.value?.emblaApi?.plugins().autoplay.play();
+        if (props.autoplay && !sliderRef?.value?.emblaApi?.plugins()?.autoplay) {
+            sliderRef?.value?.emblaApi?.plugins()?.autoplay?.play();
         } else return;
     };
     //=====================================================

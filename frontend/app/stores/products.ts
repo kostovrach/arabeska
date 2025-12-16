@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { AsyncDataRequestStatus } from '#app';
-import type { IProduct } from '~~/interfaces/product';
+import type { IProduct } from '~~/interfaces/entities/product';
 import type FuseType from 'fuse.js';
 
 export const useProductsStore = defineStore('products', () => {
@@ -19,7 +19,7 @@ export const useProductsStore = defineStore('products', () => {
     ];
 
     // State===============================================
-    const productsList = useState<IProduct[] | null>('productsList', () => null);
+    const productsList = useState<IProduct[]>('productsList', () => []);
     const productsItem = useState<IProduct | null>('productsItem', () => null);
     const productsStatus = useState<AsyncDataRequestStatus>('productsStatus', () => 'idle');
     const singleProductStatus = useState<AsyncDataRequestStatus>(
@@ -70,11 +70,17 @@ export const useProductsStore = defineStore('products', () => {
 
     // Actions=============================================
     async function getProducts() {
-        const { content: productsRaw, status } = useCms<IProduct[]>('products', productRelations, {
-            lazy: true,
-        });
-
-        const products = computed(() => productsRaw.value?.filter((el) => el.available === true));
+        const { content: products, status } = await useCms<IProduct[]>(
+            'products',
+            productRelations,
+            {
+                lazy: true,
+                transform: (products) => {
+                    const result = products.data.filter((el) => el.available === true);
+                    return { data: result };
+                },
+            }
+        );
 
         watchEffect(() => {
             productsStatus.value = status.value;
@@ -82,20 +88,16 @@ export const useProductsStore = defineStore('products', () => {
         });
     }
 
+    /**@deprecated лучше напрямую использовать useCmsItem */
     async function getProductById(id: number | string) {
         if (!id) {
             singleProductStatus.value = 'error';
             return;
         } else {
-            const { content: productRaw, status } = useCms<IProduct[]>(
+            const { item: product, status } = await useCmsItem<IProduct>(
                 'products',
-                productRelations,
-                {
-                    lazy: true,
-                }
-            );
-            const product = computed(() =>
-                productRaw.value?.find((el) => el.id == id && el.available === true)
+                id,
+                productRelations
             );
 
             watchEffect(() => {

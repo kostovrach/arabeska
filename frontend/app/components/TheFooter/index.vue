@@ -141,8 +141,8 @@
 
     const route = useRoute();
 
-    const { content: docsData, status: docsStatus } = useCms<IDocs[]>('docs');
-    const { content: contacts } = useCms<IContacts>('contact');
+    const { content: docsData, status: docsStatus } = await useCms<IDocs[]>('docs');
+    const { content: contacts } = await useCms<IContacts>('contact');
 
     const socials: {
         label: string;

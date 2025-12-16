@@ -107,11 +107,11 @@
         },
         {
             label: 'личный кабинет',
-            routeName: '',
+            routeName: 'profile',
         },
         {
             label: 'корзина',
-            routeName: '',
+            routeName: 'cart',
         },
         {
             label: 'подбор букета',

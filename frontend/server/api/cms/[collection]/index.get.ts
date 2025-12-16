@@ -1,4 +1,4 @@
-import { fetchCollection } from '../../services/directusData';
+import { fetchCollection } from '../../../services/directus/data';
 
 export default defineCachedEventHandler(
     async (event) => {
@@ -6,9 +6,9 @@ export default defineCachedEventHandler(
 
         try {
             let q: Record<string, string> = {};
-            const url = event.req.url;
+            const url = event.node.req.url;
             if (url) {
-                const parsed = new URL(url, config.public.urlBase);
+                const parsed = new URL(url, config.public.siteUrl);
                 q = Object.fromEntries(parsed.searchParams.entries());
             }
 

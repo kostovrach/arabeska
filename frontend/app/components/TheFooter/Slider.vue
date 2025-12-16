@@ -65,7 +65,7 @@
     // ================================================================
 
     // data ===========================================================
-    const { content: categoriesRaw } = useCms<ICategories[]>('categories');
+    const { content: categoriesRaw } = await useCms<ICategories[]>('categories');
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
     // ================================================================
 

@@ -1,4 +1,4 @@
-import type { ISeo } from './seo';
+import type { ISeo } from '../seo';
 
 // images ========================================
 interface IProductImages {
