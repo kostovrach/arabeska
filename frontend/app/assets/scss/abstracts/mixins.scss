@@ -277,18 +277,18 @@
     }
 }
 
-@mixin toggler($width: rem(48), $init-color: $c-98BBD7, $active-color: $c-accent) {
+@mixin toggler($init-color: $c-98BBD7, $active-color: $c-accent) {
     position: relative;
     box-sizing: border-box;
 
-    width: $width;
-    min-width: $width;
-    // height: calc($width / 2);
+    width: rem(48);
+    min-width: rem(48);
+    max-width: rem(48);
     aspect-ratio: 2/1;
 
     background-color: $c-FFFFFF;
     border: rem(2) solid $init-color;
-    border-radius: calc($width / 3);
+    border-radius: rem(16);
     transition:
         background-color $td $tf,
         border-color $td $tf;
@@ -299,26 +299,27 @@
         position: absolute;
         top: 0;
         left: 0;
-        height: 100%;
+        width: rem(20);
+        min-width: rem(20);
+        max-width: rem(20);
         aspect-ratio: 1;
         background-color: $init-color;
         border-radius: 50%;
-        border: calc($width / 16) solid $c-FFFFFF;
+        border: rem(3) solid $c-FFFFFF;
         transition: all $td $tf;
         pointer-events: none;
     }
     input {
         cursor: pointer;
         position: absolute;
+        z-index: 4;
         inset: 0;
-        appearance: none;
-        touch-action: manipulation;
     }
     &:has(input:checked) {
         background-color: $active-color;
         border-color: $active-color;
         &::before {
-            translate: calc(100% + ($width / 16)) 0;
+            translate: 120% 0;
             border-color: $active-color;
             background-color: $c-FFFFFF;
         }

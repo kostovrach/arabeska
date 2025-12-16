@@ -543,7 +543,7 @@
             &--sticky {
                 grid-area: button;
                 position: sticky;
-                bottom: rem(64);
+                bottom: rem(32);
                 margin: 0;
                 color: $c-FFFFFF;
                 background-color: $c-accent;

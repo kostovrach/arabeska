@@ -22,7 +22,7 @@
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
         meta: [
             { name: 'theme-color', content: '#082535' },
-            { name: 'robots', content: 'index, follow' },
+            { name: 'robots', content: 'noindex, nofollow' },
             { property: 'og:type', content: 'website' },
         ],
     });

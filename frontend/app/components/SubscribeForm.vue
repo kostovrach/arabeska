@@ -7,7 +7,7 @@
                 v-model="form.input"
                 mask="+7 (999) 999-99-99"
                 placeholder="+7 (___) ___-__-__"
-                type="text"
+                type="number"
                 name="subscribe-phone"
             />
         </div>

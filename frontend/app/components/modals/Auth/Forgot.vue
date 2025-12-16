@@ -132,7 +132,7 @@
                                         v-bind="attrs"
                                         v-on="events"
                                         :id="`forgot-otp-item-${index}`"
-                                        type="text"
+                                        type="number"
                                         :name="`forgot-otp-item-${index}`"
                                         class="modal-forgot__input--otp-item"
                                         placeholder="0"
@@ -730,6 +730,39 @@
                 font-weight: $fw-semi;
                 line-height: 1.2;
                 opacity: 0.5;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .modal-forgot {
+            &__container {
+                display: flex;
+                flex-direction: column;
+            }
+            &__step {
+                &--email {
+                    &:not(.active) {
+                        translate: -150% 0;
+                        pointer-events: none;
+                    }
+                }
+                &--otp {
+                    &:not(.active) {
+                        translate: 150% 0;
+                        pointer-events: none;
+                    }
+                    &.skip {
+                        translate: -150% 0;
+                        pointer-events: none;
+                    }
+                }
+                &--pass {
+                    &:not(.active) {
+                        translate: 0 150%;
+                        pointer-events: none;
+                    }
+                }
             }
         }
     }

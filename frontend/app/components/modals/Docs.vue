@@ -81,7 +81,7 @@
         &__container {
             display: flex;
             flex-direction: column;
-            padding: rem(32);
+            padding: rem(32) rem(32) rem(128);
         }
         &__button {
             align-self: flex-end;

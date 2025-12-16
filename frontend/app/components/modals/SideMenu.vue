@@ -43,19 +43,30 @@
                 </nav>
                 <div class="menu__footer">
                     <div class="menu__socials">
-                        <a
-                            v-for="(link, idx) in socialsLinks"
-                            :key="idx"
-                            class="menu__socials-link"
-                            :href="link.link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            :style="`--mask: url('${link.maskPath}'); --anim-color: ${link.hoverColor}`"
-                        ></a>
+                        <template v-for="(link, idx) in socialsLinks" :key="idx">
+                            <a
+                                v-if="link.link"
+                                class="menu__socials-link"
+                                :href="link.link.trim().replace(/\s+/g, '')"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                :style="`--mask: url('${link.maskPath}'); --anim-color: ${link.hoverColor}`"
+                            ></a>
+                        </template>
                     </div>
                     <div class="menu__connection">
-                        <a href="tel:">8 846 050-55-10</a>
-                        <a href="mailto:">support@damailn.com</a>
+                        <a
+                            v-if="contact?.phone"
+                            :href="`tel:${contact?.phone.trim().replace(/\s+/g, '')}`"
+                        >
+                            {{ contact?.phone }}
+                        </a>
+                        <a
+                            v-if="contact?.mail"
+                            :href="`mailto:${contact?.mail.trim().replace(/\s+/g, '')}`"
+                        >
+                            {{ contact?.mail }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -70,6 +81,7 @@
 
     // types ===================================================
     import type { RouteParamsRawGeneric } from 'vue-router';
+    import type { IContacts } from '~~/interfaces/contacts';
     interface INavLink {
         routeName: string;
         routeParams?: RouteParamsRawGeneric;
@@ -79,7 +91,7 @@
 
     interface ISocialsLink {
         maskPath: string;
-        link: string;
+        link?: string;
         hoverColor: string;
     }
     // =========================================================
@@ -99,6 +111,8 @@
 
     // data ====================================================
     const routeName = useRoute().name;
+
+    const { content: contact } = await useCms<IContacts>('contact');
 
     const navLinks: INavLink[] = [
         {
@@ -138,22 +152,22 @@
     const socialsLinks: ISocialsLink[] = [
         {
             maskPath: '/img/masks/vk.svg',
-            link: 'https://example.com',
+            link: contact.value?.vk,
             hoverColor: '#016FCC',
         },
         {
             maskPath: '/img/masks/telegram.svg',
-            link: 'https://example.com',
+            link: contact.value?.telegram,
             hoverColor: '#03A4DF',
         },
         {
             maskPath: '/img/masks/ok.svg',
-            link: 'https://example.com',
+            link: contact.value?.ok,
             hoverColor: '#FF7700',
         },
         {
             maskPath: '/img/masks/instagram.svg',
-            link: 'https://example.com',
+            link: contact.value?.instagram,
             hoverColor:
                 'linear-gradient(45deg, #feda75 0%, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%)',
         },
@@ -182,7 +196,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: $px 0;
+            padding: $px 0 lineScale(32, 128, 480, 1920);
         }
         &__header {
             width: 100%;
