@@ -255,6 +255,17 @@ export const useCartStore = defineStore('cart', () => {
         await syncCart();
     }
 
+    async function clearCart(): Promise<void> {
+        if (isAuth.value) {
+            const res = await $fetch('/api/cart/clear', { method: 'POST' });
+
+            if (res.success) {
+                await syncCart();
+                saveToLocalStorage();
+            }
+        }
+    }
+
     function checkItemInCart(item: ICartItem): boolean {
         const key = cartKeyBuilder([item.product_id, item.modifier]);
 
@@ -277,6 +288,7 @@ export const useCartStore = defineStore('cart', () => {
         addQty,
         removeQty,
         syncCart,
+        clearCart,
         mergeCart,
         checkItemInCart,
         getProductDiscountById,

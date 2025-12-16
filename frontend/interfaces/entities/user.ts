@@ -19,11 +19,11 @@ export interface IUser {
     notifications: boolean;
     promo_subscribe: boolean;
 
-    orders: IOrder[];
-
     addresses: IUserAddress[];
 
     cart: ICartItem[];
+
+    used_promocodes: string[] | null;
 
     amocrm_contact_id?: string | number | null;
 }

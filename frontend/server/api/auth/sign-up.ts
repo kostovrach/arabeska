@@ -84,10 +84,10 @@ export default defineEventHandler(
                 email,
                 notifications: true,
                 promo_subscribe: false,
-                orders: [],
                 addresses: [],
                 cart: [],
                 login_attempts: 0,
+                used_promocodes: null,
             },
             {
                 checkFilter: { phone: { _eq: formattedPhone } },

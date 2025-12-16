@@ -155,15 +155,15 @@
                                             >
                                                 <div class="profile__data-address-wrapper">
                                                     <p class="profile__data-address-title">
-                                                        {{ address.street }}
+                                                        {{ `${address.street}, ` }}
                                                         <span v-if="address.flat">
-                                                            {{ `, квартира ${address.flat}` }}
+                                                            {{ `квартира ${address.flat}, ` }}
                                                         </span>
                                                         <span v-if="address.doorway">
-                                                            {{ `, ${address.doorway}-й подъезд` }}
+                                                            {{ `${address.doorway}-й подъезд, ` }}
                                                         </span>
                                                         <span v-if="address.floor">
-                                                            {{ `, ${address.floor}-й этаж` }}
+                                                            {{ `${address.floor}-й этаж` }}
                                                         </span>
                                                     </p>
                                                 </div>
@@ -302,7 +302,108 @@
                                             v-for="order in userOrdersShow"
                                             :key="order.id"
                                             class="profile__section--orders-item"
-                                        ></li>
+                                        >
+                                            <div class="profile__section--orders-item-head">
+                                                <div class="profile__section--orders-item-titlebox">
+                                                    <span class="profile__section--orders-item-id">
+                                                        {{ order.id.toString().slice(0, 8) }}
+                                                    </span>
+                                                    <div
+                                                        class="profile__section--orders-item-status"
+                                                    >
+                                                        {{ order.status }}
+                                                    </div>
+                                                </div>
+                                                <span
+                                                    class="profile__section--orders-item-count ruble"
+                                                >
+                                                    {{ order.amount.toLocaleString('ru-RU') }}
+                                                </span>
+                                            </div>
+                                            <div class="profile__section--orders-item-body">
+                                                <ul class="profile__section--orders-item-info">
+                                                    <li>{{ normalizeDate(order.date_created) }}</li>
+                                                    <li>
+                                                        {{
+                                                            order.delivery_address ??
+                                                            order.delivery_pickup_address
+                                                        }}
+                                                    </li>
+                                                    <li
+                                                        v-if="
+                                                            order.recipient_name &&
+                                                            order.recipient_phone
+                                                        "
+                                                    >
+                                                        {{
+                                                            `${order.recipient_name}, ${order.recipient_phone}`
+                                                        }}
+                                                    </li>
+                                                </ul>
+                                                <p class="profile__section--orders-item-subtitle">
+                                                    {{
+                                                        `Дата доставки: ${normalizeDate(order.delivery_date)}`
+                                                    }}
+                                                </p>
+                                                <div class="profile__section--orders-item-gallery">
+                                                    <img
+                                                        v-for="product in order.structure"
+                                                        :key="product.product_id"
+                                                        class="profile__section--orders-item-gallery-image"
+                                                        :src="
+                                                            getProductImageById(product.product_id)
+                                                        "
+                                                        :alt="
+                                                            getProductTitleById(
+                                                                product.product_id
+                                                            ) ?? '#'
+                                                        "
+                                                    />
+                                                </div>
+                                                <ul class="profile__section--orders-item-structure">
+                                                    <li
+                                                        v-for="item in order.structure"
+                                                        :key="item.product_id"
+                                                        class="profile__section--orders-item-structure-item"
+                                                    >
+                                                        <span
+                                                            class="profile__section--orders-item-structure-title"
+                                                        >
+                                                            {{
+                                                                getProductTitleById(item.product_id)
+                                                            }}
+                                                        </span>
+                                                        <span
+                                                            v-if="
+                                                                translateProductModifier(
+                                                                    item.modifier
+                                                                )
+                                                            "
+                                                            class="profile__section--orders-item-structure-modifier"
+                                                        >
+                                                            {{
+                                                                translateProductModifier(
+                                                                    item.modifier
+                                                                )
+                                                            }}
+                                                        </span>
+                                                        <span
+                                                            v-if="item.quantity"
+                                                            class="profile__section--orders-item-structure-qty"
+                                                        >
+                                                            {{ `${item.quantity} шт.` }}
+                                                        </span>
+                                                        <span
+                                                            class="profile__section--orders-item-structure-price ruble"
+                                                        >
+                                                            {{
+                                                                getProductPriceById(item.product_id)
+                                                            }}
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
                                     </ul>
                                     <div v-else class="profile__section--orders-empty">
                                         <p class="profile__section--orders-empty-text">
@@ -346,15 +447,18 @@
 
     // data =============================================================
     const userStore = useUserStore();
+    const cartStore = useCartStore();
+
+    const {
+        getProductImageById,
+        getProductTitleById,
+        getProductPriceById,
+        translateProductModifier,
+    } = cartStore;
 
     const user = computed(() => userStore.user);
 
-    const { content: userOrders } = await useCms<IOrder[]>('orders', [], {
-        transform: (orders) => {
-            const result = orders.data.filter((el) => el.user_id === user.value?.id);
-            return { data: result };
-        },
-    });
+    const userOrders = ref<IOrder[]>([]);
 
     const userOrdersShow = computed(() => {
         return userOrders.value?.filter((order) => order.status === userOrdersTab.value) ?? [];
@@ -388,7 +492,7 @@
     const isUpdatedInfo = ref<boolean>(false);
     const isUpdatedAddresses = ref<boolean>(false);
 
-    const userOrdersTab = ref<OrderStatusType | 'all'>('all');
+    const userOrdersTab = ref<OrderStatusType | 'all'>('ожидает оплаты');
 
     const userData: Partial<IUser> = reactive({
         id: user.value?.id,
@@ -512,6 +616,15 @@
         }
     }
 
+    async function getUserOrders(): Promise<void> {
+        try {
+            const { orders } = await $fetch('/api/orders');
+            userOrders.value = orders;
+        } catch {
+            userOrders.value = [];
+        }
+    }
+
     // ==================================================================
 
     watch(userData, () => {
@@ -521,6 +634,10 @@
 
     watch(newAddress, () => {
         checkUpdateAddresses();
+    });
+
+    onMounted(async () => {
+        await getUserOrders();
     });
 
     // SEO & Meta ================================================
@@ -696,8 +813,100 @@
                     }
                 }
                 &-body {
+                    margin-top: rem(32);
                 }
                 &-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: rem(16);
+                }
+                &-item {
+                    border: rem(2) solid $c-accent;
+                    border-radius: rem(32);
+                    padding: rem(32) lineScale(32, 16, 480, 1920);
+                    &-head {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: rem(32);
+                    }
+                    &-titlebox {
+                        display: flex;
+                        align-items: center;
+                        gap: rem(16);
+                    }
+                    &-id {
+                        font-size: lineScale(22, 18, 480, 1920);
+                        font-weight: $fw-semi;
+                    }
+                    &-status {
+                        padding: rem(4) rem(16);
+                        border-radius: rem(32);
+                        font-size: rem(14);
+                        color: $c-FFFFFF;
+                        background-color: $c-98BBD7;
+                    }
+                    &-count {
+                        font-size: lineScale(20, 16, 480, 1920);
+                        font-weight: $fw-semi;
+                    }
+                    &-body {
+                        display: flex;
+                        flex-direction: column;
+                        gap: rem(32);
+                        font-family: 'Inter', sans-serif;
+                        margin-top: rem(32);
+                    }
+                    &-info {
+                        display: flex;
+                        flex-direction: column;
+                        gap: rem(8);
+                        font-size: rem(16);
+                        font-weight: $fw-semi;
+                        line-height: 1.2;
+                        opacity: 0.5;
+                    }
+                    &-subtitle {
+                        font-size: rem(18);
+                    }
+                    &-gallery {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: rem(8);
+                        &-image {
+                            width: lineScale(80, 64, 480, 1920);
+                            min-width: lineScale(80, 64, 480, 1920);
+                            aspect-ratio: 1;
+                            border-radius: rem(16);
+                            object-fit: cover;
+                            overflow: hidden;
+                        }
+                    }
+                    &-structure {
+                        display: flex;
+                        flex-direction: column;
+                        gap: rem(16);
+                        &-item {
+                            display: grid;
+                            grid-template-columns: repeat(4, 1fr);
+                            gap: rem(8);
+                            font-size: rem(14);
+                            font-weight: $fw-semi;
+                            > * {
+                                width: fit-content;
+                            }
+                        }
+                        &-qty,
+                        &-price {
+                            justify-self: flex-end;
+                            text-align: right;
+                        }
+                        &-modifier {
+                            opacity: 0.5;
+                        }
+                    }
                 }
                 &-empty {
                     width: 100%;
@@ -873,6 +1082,7 @@
                     display: flex;
                     align-items: center;
                     flex-wrap: wrap;
+                    gap: 0.5ch;
                     font-size: lineScale(18, 16, 480, 1920);
                     > span {
                         opacity: 0.5;
@@ -962,6 +1172,29 @@
                 flex-direction: column-reverse;
                 gap: rem(32);
             }
+            &__section {
+                &--orders {
+                    &-item {
+                        &-head {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+                        &-titlebox {
+                            width: 100%;
+                            justify-content: space-between;
+                        }
+                        &-structure {
+                            &-item {
+                                grid-template-columns: repeat(3, 1fr);
+                            }
+                            &-modifier {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
             &__controls {
                 align-self: flex-end;
             }
@@ -976,6 +1209,17 @@
                 &--orders {
                     &-titlebox {
                         padding: 0;
+                    }
+                    &-item {
+                        border: {
+                            left: 0;
+                            right: 0;
+                        }
+                        padding: {
+                            left: 0;
+                            right: 0;
+                        }
+                        border-radius: 0;
                     }
                 }
             }
