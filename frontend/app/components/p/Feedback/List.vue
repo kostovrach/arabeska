@@ -7,21 +7,8 @@
                     <span class="feedback-list__counter">({{ items?.length }})</span>
                 </ClientOnly>
             </div>
-            <div v-show="status === 'error' || status === 'idle'" class="feedback-list__error">
-                <FetchError />
-            </div>
-            <div
-                v-show="status === 'pending'"
-                class="feedback-list__body feedback-list__body--loader"
-            >
-                <FeedbackCardLoader
-                    v-for="n in 8"
-                    :key="n"
-                    class="feedback-list__item feedback-list__item--loader"
-                />
-            </div>
             <ClientOnly>
-                <div v-show="status === 'success'" class="feedback-list__body">
+                <div class="feedback-list__body">
                     <button
                         v-for="card in items"
                         :key="card.id"
@@ -62,9 +49,7 @@
 
     // data===================================================
     const feedbackStore = useFeedbackStore();
-    await feedbackStore.getFeedback();
 
-    const status = computed(() => feedbackStore.feedbackStatus);
     const items = computed(() => feedbackStore.feedbackList);
     // =======================================================
 

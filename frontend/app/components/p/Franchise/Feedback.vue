@@ -8,7 +8,7 @@
                 </p>
             </div>
             <div class="franchise-feedback__body">
-                <FeedbackCarousel />
+                <CFeedbackCarousel />
             </div>
         </div>
     </section>

@@ -1,6 +1,6 @@
 <template>
     <NuxtLayout>
-        <InfoHero
+        <BlockHero
             class="franchise-hero"
             :image-url="page?.hero_image_url ?? ''"
             :tag="page?.hero_tag ?? ''"
@@ -13,7 +13,7 @@
                     <span><SvgSprite type="arrow" :size="24" /></span>
                 </a>
             </template>
-        </InfoHero>
+        </BlockHero>
         <div class="franchise">
             <PFranchiseAbout
                 :title="page?.advant_title ?? ''"
@@ -34,7 +34,7 @@
                     })) ?? []
                 "
             />
-            <AccordionSection
+            <BlockFaq
                 :title="page?.faq_title ?? ''"
                 :description="page?.faq_description"
                 :content="page?.faq_blocks"
@@ -44,7 +44,7 @@
                 :title="page?.feedback_title ?? ''"
                 :description="page?.feedback_description ?? ''"
             />
-            <Banner
+            <BlockBanner
                 v-if="page?.banner_image_url"
                 class="franchise-banner"
                 :title="page.banner_title ?? ''"
@@ -71,7 +71,7 @@
                         <span><SvgSprite type="arrow" :size="24" /></span>
                     </a>
                 </div>
-            </Banner>
+            </BlockBanner>
         </div>
     </NuxtLayout>
 </template>

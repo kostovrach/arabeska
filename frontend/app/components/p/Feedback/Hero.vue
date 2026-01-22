@@ -6,7 +6,7 @@
                     <h1>{{ props.title }}</h1>
                 </StarsOverlay>
                 <p v-if="props.subtitle" class="feedback-hero__desc">{{ props.subtitle }}</p>
-                <RateWidgets class="feedback-hero__widgets" />
+                <CRateWidgets class="feedback-hero__widgets" />
             </div>
             <picture class="feedback-hero__image-container">
                 <img class="feedback-hero__image" :src="props.imageUrl" :alt="props.title ?? '#'" />

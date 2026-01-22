@@ -5,26 +5,31 @@
                 <button class="modal-feedback__button" type="button" @click="emit('close')">
                     <span><SvgSprite type="cross" :size="32" /></span>
                 </button>
-                <div class="modal-feedback__titlebox">
-                    <picture class="modal-feedback__image-container">
-                        <img
-                            class="modal-feedback__image"
-                            :src="feedback?.avatar_url || '/img/service/user-placeholder.png'"
-                            :alt="feedback?.name || '#'"
-                        />
-                    </picture>
-                    <div class="modal-feedback__rate">
-                        <span
-                            v-for="icon in feedback?.rate"
-                            :key="icon"
-                            class="modal-feedback__rate-icon"
-                        >
-                            <SvgSprite type="rate-star" :size="24" />
-                        </span>
+                <template v-if="card">
+                    <div class="modal-feedback__titlebox">
+                        <picture class="modal-feedback__image-container">
+                            <img
+                                class="modal-feedback__image"
+                                :src="card?.avatar_url || '/img/service/user-placeholder.png'"
+                                :alt="card?.name || '#'"
+                            />
+                        </picture>
+                        <div class="modal-feedback__rate">
+                            <span
+                                v-for="icon in card?.rate"
+                                :key="icon"
+                                class="modal-feedback__rate-icon"
+                            >
+                                <SvgSprite type="rate-star" :size="24" />
+                            </span>
+                        </div>
+                        <span class="modal-feedback__title">{{ card?.name }}</span>
                     </div>
-                    <span class="modal-feedback__title">{{ feedback?.name }}</span>
-                </div>
-                <p v-if="feedback?.text" class="modal-feedback__body">{{ feedback.text }}</p>
+                    <p v-if="card?.text" class="modal-feedback__body">{{ card.text }}</p>
+                </template>
+                <template v-else>
+                    <FetchError />
+                </template>
             </div>
         </div>
     </VueFinalModal>
@@ -42,12 +47,9 @@
     }>();
 
     //data ====================================================
-    const feedbackStore = useFeedbackStore();
+    const { getFeedbackById } = useFeedbackStore();
 
-    feedbackStore.getFeedbackById(props.feedbackId);
-
-    const feedback = computed(() => feedbackStore.feedbackItem);
-    const status = computed(() => feedbackStore.feedbackStatus);
+    const card = getFeedbackById(props.feedbackId);
     //=========================================================
 </script>
 

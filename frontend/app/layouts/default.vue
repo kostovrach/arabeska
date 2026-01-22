@@ -1,6 +1,7 @@
 <template>
     <div class="page">
         <TheHeader />
+        <TheCallToAction />
         <main class="content">
             <slot></slot>
         </main>

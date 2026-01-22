@@ -6,9 +6,11 @@
 <script setup lang="ts">
     import { ModalsContainer } from 'vue-final-modal';
     import type { IProduct } from '~~/interfaces/entities/product';
+    import type { IFeedback } from '~~/interfaces/feedback';
     // data ========================================================
 
     const { setProducts } = useProductsStore();
+    const { setFeedback } = useFeedbackStore();
 
     const { content: products } = await useCms<IProduct[]>(
         'products',
@@ -30,8 +32,11 @@
 
                 return { data: result };
             },
+            lazy: true,
         }
     );
+
+    const { content: feedback } = await useCms<IFeedback[]>('feedback');
 
     await useCartStore().initCart();
     useViewsStore().initFromLocalStorage();
@@ -39,6 +44,7 @@
 
     // Setters =====================================================
     setProducts(products.value ?? []);
+    setFeedback(feedback.value ?? []);
     // =============================================================
 
     // SEO & Meta ==================================================
