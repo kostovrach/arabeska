@@ -1,46 +1,30 @@
 <template>
     <NuxtLayout>
         <template v-if="page">
-            <HomeHero :slides="page?.hero_slides" />
-            <HomeCarousel
+            <PHomeHero :slides="page?.hero_slides" />
+            <PHomeCarousel
                 v-for="carousel in page?.carousels"
                 :key="carousel.id"
                 :title="carousel.home_carousels_id.title"
-                :category="slugify(carousel.home_carousels_id.category.name)"
-                :content-ref="
-                    computed(
-                        () =>
-                            productsList?.filter((element) =>
-                                element.category?.some(
-                                    (el) =>
-                                        el.categories_id?.name?.trim().toLowerCase() ==
-                                        carousel.home_carousels_id.category.name
-                                            .trim()
-                                            .toLowerCase()
-                                )
-                            ) ?? null
-                    )
-                "
-                :status-ref="ref(productsStatus)"
+                :category="carousel.home_carousels_id.category.name"
                 :wtith-link="carousel.home_carousels_id.link"
                 :autoplay="carousel.home_carousels_id.autoplay"
             />
-            <HomeBanner
+            <PHomeBanner
                 :image-url="page?.banner_image_url"
                 :title="page?.banner_title ?? ''"
                 :subtitle="page?.banner_subtitle ?? ''"
                 :description="page?.banner_text ?? ''"
                 :button-text="page?.banner_button_text ?? 'Подписаться на цветы'"
             />
-            <HomeAdvant :title="page?.advant_title" :content-list="page?.advant_blocks ?? []" />
-            <HomeFeedback :title="page?.feedback_title" :subtitle="page?.feedback_subtitle" />
-            <HomeMap />
+            <PHomeAdvant :title="page?.advant_title" :content-list="page?.advant_blocks ?? []" />
+            <PHomeFeedback :title="page?.feedback_title" :subtitle="page?.feedback_subtitle" />
+            <PHomeMap />
         </template>
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-    // types ===============================================
     interface IHomePage {
         id: number | string;
         date_updated: string;
@@ -114,11 +98,6 @@
         feedback_subtitle?: string;
     }
 
-    // data ================================================
-    const productsStore = useProductsStore();
-
-    const { productsList, productsStatus } = storeToRefs(productsStore);
-
     const { content: page } = await useCms<IHomePage>('home', [
         'hero_slides.*',
         'hero_slides.home_slider_id.*',
@@ -128,5 +107,4 @@
         'advant_blocks.*',
         'advant_blocks.home_advant_id.*',
     ]);
-    //======================================================
 </script>

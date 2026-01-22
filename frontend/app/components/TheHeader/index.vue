@@ -44,7 +44,7 @@
                 </a>
                 <ClientOnly>
                     <button
-                        v-if="useProductsStore().productsList?.length"
+                        v-if="products.length"
                         class="header__action header__action-searchbar"
                         type="button"
                         @click="openSearchbar"
@@ -70,23 +70,22 @@
 </template>
 
 <script setup lang="ts">
-    // types ===============================================================================
-    import type { ICategories } from '~~/interfaces/categories';
-    // =====================================================================================
-
     import { ModalsSearchbar, ModalsSideMenu, ModalsCatalog } from '#components';
     import { useModal } from 'vue-final-modal';
+    import type { ICategories } from '~~/interfaces/categories';
     import type { IContacts } from '~~/interfaces/contacts';
 
     // data ================================================================================
     const route = useRoute();
 
     const cartStore = useCartStore();
+    const productsStore = useProductsStore();
     const cartCounter = computed(() => cartStore.cartCount);
 
     const { content: categoriesRaw } = await useCms<ICategories[]>('categories');
 
     const categories = computed(() => categoriesRaw.value?.filter((el) => el.available === true));
+    const products = computed(() => productsStore.products);
 
     const hintCategories = computed(() =>
         categories.value?.filter((el) => slugify(el.name) !== route.params.category).slice(0, 3)

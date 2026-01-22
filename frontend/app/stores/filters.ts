@@ -54,6 +54,8 @@ interface FilterState {
 // ==================================================================
 
 export const useFiltersStore = defineStore('filters', () => {
+    const productsStore = useProductsStore();
+
     // State ========================================================
     const filterState: Ref<FilterState> = ref({
         popularOnly: false,
@@ -66,13 +68,13 @@ export const useFiltersStore = defineStore('filters', () => {
         sortBy: null,
     });
 
-    const structures = useState<IFilterStructure[] | null>('filterStructures', () => null);
-    const reasons = useState<IFilterReasons[] | null>('filterReasons', () => null);
-    const styles = useState<IFilterStyle[] | null>('filterStyles', () => null);
+    const structures = ref<IFilterStructure[]>([]);
+    const reasons = ref<IFilterReasons[]>([]);
+    const styles = ref<IFilterStyle[]>([]);
     // ==============================================================
 
     // Computed =====================================================
-    const productsList = computed(() => useProductsStore().productsList ?? []);
+    const productsList = computed(() => productsStore.products);
     const minPrice = computed(() => {
         const prices = productsList.value
             .map((p) => p.discount ?? p.price)

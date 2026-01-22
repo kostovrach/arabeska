@@ -25,13 +25,18 @@ export default defineEventHandler(
         const { password: new_password } = await readBody<{ password: string }>(event);
         const reset_token = getCookie(event, 'reset-password');
         if (!reset_token) {
-            return { status: 403, message: 'Invalid or expired token', success: false, user: null };
+            return {
+                status: 403,
+                message: 'Некорректный токен: начните сброс с начала',
+                success: false,
+                user: null,
+            };
         }
 
         if (new_password.length < 10) {
             return {
                 status: 400,
-                message: 'Password must be at least 10 characters',
+                message: 'Пароль должен содержать не менее 10 символов',
                 success: false,
                 user: null,
             };
@@ -42,18 +47,23 @@ export default defineEventHandler(
         try {
             decoded = jwt.verify(reset_token, JWT_SECRET) as IJwtPayload;
         } catch {
-            return { status: 403, message: 'Invalid or expired token', success: false, user: null };
+            return {
+                status: 403,
+                message: 'Некорректный токен: начните сброс с начала',
+                success: false,
+                user: null,
+            };
         }
 
         const userId = decoded.id;
         if (!userId) {
-            return { status: 403, message: 'Invalid token', success: false, user: null };
+            return { status: 403, message: 'Некорректный токен', success: false, user: null };
         }
 
         // Find user
         const user = await getDirectusItem<IUser>('users', userId);
         if (!user) {
-            return { status: 404, message: 'User not found', success: false, user: null };
+            return { status: 404, message: 'Пользователь не найден', success: false, user: null };
         }
 
         const hashedPassword = await bcrypt.hash(new_password, SALT_ROUNDS);
@@ -66,7 +76,7 @@ export default defineEventHandler(
         if (!updUser) {
             return {
                 status: 500,
-                message: 'Failed to update password',
+                message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
                 success: false,
                 user: null,
             };

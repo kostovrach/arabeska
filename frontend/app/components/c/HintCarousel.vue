@@ -1,59 +1,31 @@
 <template>
     <section class="hint-slider" v-if="products?.length">
         <div class="hint-slider__container">
+            <div class="hint-slider__body">
+                <EmblaContainer ref="sliderRef" :options="carouselOptions" padding="48px 0">
+                    <EmblaSlide
+                        v-for="(product, idx) in products"
+                        :key="product.id"
+                        class="hint-slider__slide"
+                        :class="{ 'hint-slider__slide--active': idx === selectedIndex }"
+                    >
+                        <ProductCard
+                            :data="product"
+                            :dynamic="{
+                                enable: true,
+                                class: idx === selectedIndex ? 'active' : 'disable',
+                            }"
+                        />
+                    </EmblaSlide>
+                </EmblaContainer>
+            </div>
             <div class="hint-slider__titlebox">
                 <StarsOverlay v-if="props.title" class="hint-slider__title">
                     <h2 v-html="props.title"></h2>
                 </StarsOverlay>
                 <div class="hint-slider__controls">
-                    <button
-                        class="hint-slider__button hint-slider__button--prev"
-                        type="button"
-                        @click="scrollPrev()"
-                    >
-                        <SvgSprite type="arrow" />
-                    </button>
-                    <button
-                        class="hint-slider__button hint-slider__button--next"
-                        type="button"
-                        @click="scrollNext()"
-                    >
-                        <SvgSprite type="arrow" />
-                    </button>
+                    <EmblaNavigation :slider-ref="computed(() => sliderRef)" />
                 </div>
-            </div>
-            <div class="hint-slider__body">
-                <div v-show="status === 'pending'" class="hint-slider__loader">
-                    <div class="hint-slider__loader-wrapper">
-                        <ProductCardLoader v-for="n in 5" :key="n" />
-                    </div>
-                </div>
-                <div v-show="status === 'error' || status === 'idle'" class="hint-slider__error">
-                    <FetchError />
-                </div>
-                <ClientOnly>
-                    <EmblaContainer
-                        v-show="status === 'success'"
-                        ref="sliderRef"
-                        :options="carouselOptions"
-                        padding="48px 0"
-                    >
-                        <EmblaSlide
-                            v-for="(product, idx) in products"
-                            :key="product.id"
-                            class="hint-slider__slide"
-                            :class="{ 'hint-slider__slide--active': idx === selectedIndex }"
-                        >
-                            <ProductCard
-                                :data="product"
-                                :dynamic="{
-                                    enable: true,
-                                    class: idx === selectedIndex ? 'active' : 'disable',
-                                }"
-                            />
-                        </EmblaSlide>
-                    </EmblaContainer>
-                </ClientOnly>
             </div>
         </div>
     </section>
@@ -64,17 +36,19 @@
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     // =======================================================
 
-    // data ==================================================
-    const props = defineProps<{
-        title?: string;
-    }>();
-
     const productsStore = useProductsStore();
 
-    productsStore.getProducts();
+    // data ==================================================
+    const props = withDefaults(
+        defineProps<{
+            title?: string | null;
+        }>(),
+        {
+            title: null,
+        }
+    );
 
-    const products = computed(() => productsStore.productsList.filter((el) => el.popular));
-    const status = computed(() => productsStore.productsStatus);
+    const products = computed(() => productsStore.products.filter((el) => el.popular));
     // =======================================================
 
     // slider=================================================
@@ -87,9 +61,6 @@
         dragFree: false,
         duration: 25,
     };
-
-    const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
-    const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
 
     watchEffect((onCleanup) => {
         const slider = sliderRef.value?.emblaApi;
@@ -120,6 +91,10 @@
         $p: &;
 
         @include content-block;
+        &__container {
+            display: flex;
+            flex-direction: column-reverse;
+        }
         &__titlebox {
             width: 100%;
             display: flex;

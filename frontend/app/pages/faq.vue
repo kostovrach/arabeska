@@ -32,7 +32,7 @@
                             </nav>
                         </aside>
                         <div class="faq__content">
-                            <FaqDelivery
+                            <PFaqDelivery
                                 :id="slugify(page?.delivery_title ?? '') ?? 'delivery-rules'"
                                 class="faq__section"
                                 :title="page?.delivery_title ?? ''"
@@ -43,7 +43,7 @@
                                 :advant-subtitle="page?.delivery_advant_subtitle ?? ''"
                                 :advant-cards="page?.delivery_advant_cards ?? []"
                             />
-                            <FaqTypeSection
+                            <PFaqTypeSection
                                 v-for="(section, idx) in page?.additional_blocks"
                                 :key="idx"
                                 :id="slugify(section.title)"
@@ -51,7 +51,7 @@
                                 :title="section.title"
                                 :content="section.content"
                             />
-                            <AccordionSection
+                            <BlockFaq
                                 v-if="page?.accordion_blocks.length"
                                 class="faq__section"
                                 :title="page?.accordion_title ?? 'Популярные вопросы'"

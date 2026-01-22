@@ -1,35 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { AsyncDataRequestStatus } from '#app';
 import type { IProduct } from '~~/interfaces/entities/product';
-import type FuseType from 'fuse.js';
 
 export const useProductsStore = defineStore('products', () => {
-    const productRelations = [
-        'images.*',
-        'images.directus_files_id.*',
-        'category.*',
-        'category.categories_id.*',
-        'reason.*',
-        'reason.reason_id.*',
-        'style.*',
-        'style.styles_id.*',
-        'structure.*',
-        'structure.structure_id.*',
-    ];
-
     // State===============================================
-    const productsList = useState<IProduct[]>('productsList', () => []);
-    const productsItem = useState<IProduct | null>('productsItem', () => null);
-    const productsStatus = useState<AsyncDataRequestStatus>('productsStatus', () => 'idle');
-    const singleProductStatus = useState<AsyncDataRequestStatus>(
-        'singleProductStatus',
-        () => 'idle'
-    );
+    const products = ref<IProduct[]>([]);
+    const filteredProducts = ref<IProduct[]>([]);
 
-    // Fussy-search========================================
-    const fuse = shallowRef<FuseType<IProduct> | null>(null);
-    const fuseOptions: Record<string, any> = {
+    // Helpers
+    const { search } = useFuseSearch<IProduct>({
         keys: [
             'id',
             'title',
@@ -42,88 +21,29 @@ export const useProductsStore = defineStore('products', () => {
         threshold: 0.35,
         ignoreLocation: true,
         includeScore: false,
-    };
-
-    async function initFuseIfNeeded(): Promise<void> {
-        if (fuse.value) return;
-        const list = productsList.value;
-        if (!list || !list.length) return;
-        const { default: Fuse } = await import('fuse.js');
-        fuse.value = new Fuse(list, fuseOptions);
-    }
-
-    watch(
-        productsList,
-        (newList) => {
-            if (!newList || !newList.length) {
-                fuse.value = null;
-                return;
-            }
-            if (fuse.value) {
-                import('fuse.js').then(({ default: Fuse }) => {
-                    fuse.value = new Fuse(newList, fuseOptions);
-                });
-            }
-        },
-        { immediate: false }
-    );
+    });
 
     // Actions=============================================
-    async function getProducts() {
-        const { content: products, status } = await useCms<IProduct[]>(
-            'products',
-            productRelations,
-            {
-                lazy: true,
-                transform: (products) => {
-                    const result = products.data.filter((el) => el.available === true);
-                    return { data: result };
-                },
-            }
-        );
-
-        watchEffect(() => {
-            productsStatus.value = status.value;
-            if (products.value) productsList.value = products.value;
-        });
+    function setProducts(data: IProduct[]) {
+        products.value = data;
     }
 
     /**@deprecated лучше напрямую использовать useCmsItem */
-    async function getProductById(id: number | string) {
-        if (!id) {
-            singleProductStatus.value = 'error';
-            return;
-        } else {
-            const { item: product, status } = await useCmsItem<IProduct>(
-                'products',
-                id,
-                productRelations
-            );
+    function getProductById(id: IProduct['id']): IProduct | null {
+        const result = products.value.find((el) => el.id === id);
 
-            watchEffect(() => {
-                singleProductStatus.value = status.value;
-                if (product.value) productsItem.value = product.value ?? null;
-            });
-        }
+        return result ?? null;
     }
 
-    async function searchProductsFuzzy(query: string): Promise<IProduct[]> {
-        if (!query.trim()) return [];
+    async function searchProducts(query: string) {
+        const doSearch = useDebounceFn(async () => {
+            const result = await search(query, products.value);
 
-        await initFuseIfNeeded();
+            return result;
+        }, 300);
 
-        if (!fuse.value) return [];
-
-        return fuse.value.search(query).map((r: any) => r.item);
+        filteredProducts.value = await doSearch();
     }
 
-    return {
-        productsList,
-        productsItem,
-        productsStatus,
-        singleProductStatus,
-        getProducts,
-        getProductById,
-        searchProductsFuzzy,
-    };
+    return { products, filteredProducts, setProducts, getProductById, searchProducts };
 });

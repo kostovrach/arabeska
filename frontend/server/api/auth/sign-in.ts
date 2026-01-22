@@ -43,10 +43,10 @@ export default defineEventHandler(
             parsedPhone = parsePhoneNumberWithError(phone, PHONE_COUNTRY);
 
             if (!parsedPhone.isValid()) {
-                return { status: 400, message: 'Invalid phone number', success: false, user: null };
+                return { status: 400, message: 'Некорректный номер телефона', success: false, user: null };
             }
         } catch {
-            return { status: 500, message: 'Phone validation error', success: false, user: null };
+            return { status: 500, message: 'Ошибка верификации номера телефона, поробуйте повторить попытку', success: false, user: null };
         }
 
         const formattedPhone = parsedPhone.format(PHONE_FORMAT);
@@ -59,7 +59,7 @@ export default defineEventHandler(
         const user = Array.isArray(users) ? users[0] : null;
 
         if (!user) {
-            return { status: 401, message: 'Invalid credentials', success: false, user: null };
+            return { status: 401, message: 'Пользователь не найден, проверьте корректность введенных данных и повторите попытку', success: false, user: null };
         }
 
         // Check cooldown
@@ -70,7 +70,7 @@ export default defineEventHandler(
             if (Date.now() < cooldownEnd) {
                 return {
                     status: 429,
-                    message: 'Too many attempts, please wait',
+                    message: 'Слишком много попыток, попробуйте повторить попытку позже',
                     success: false,
                     user: null,
                 };
@@ -91,7 +91,7 @@ export default defineEventHandler(
                 last_login_attempt: new Date().toISOString(),
             });
 
-            return { status: 401, message: 'Invalid credentials', success: false, user: null };
+            return { status: 401, message: 'Пользователь не найден, проверьте корректность введенных данных и повторите попытку', success: false, user: null };
         }
 
         await updateDirectusItem<IUser>('users', user.id, {

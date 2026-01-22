@@ -84,19 +84,19 @@
                                     </div>
                                     <div class="profile__data-togglerbox">
                                         <div class="profile__data-toggler">
-                                            <div class="profile__data-toggler-body">
+                                            <label
+                                                for="user-promo"
+                                                class="profile__data-toggler-body"
+                                            >
                                                 <input
                                                     v-model="userData.promo_subscribe"
                                                     id="user-promo"
                                                     type="checkbox"
                                                 />
-                                            </div>
-                                            <label
-                                                for="user-promo"
-                                                class="profile__data-toggler-desc"
-                                            >
-                                                Подписка на промо-акции
                                             </label>
+                                            <span class="profile__data-toggler-desc">
+                                                Подписка на промо-акции
+                                            </span>
                                             <button
                                                 class="profile__data-toggler-tooltip"
                                                 type="button"
@@ -107,19 +107,19 @@
                                             </button>
                                         </div>
                                         <div class="profile__data-toggler">
-                                            <div class="profile__data-toggler-body">
+                                            <label
+                                                for="user-notify"
+                                                class="profile__data-toggler-body"
+                                            >
                                                 <input
                                                     v-model="userData.notifications"
                                                     id="user-notify"
                                                     type="checkbox"
                                                 />
-                                            </div>
-                                            <label
-                                                for="user-notify"
-                                                class="profile__data-toggler-desc"
-                                            >
-                                                Получать сервисные уведомления
                                             </label>
+                                            <span class="profile__data-toggler-desc">
+                                                Получать сервисные уведомления
+                                            </span>
                                             <button
                                                 class="profile__data-toggler-tooltip"
                                                 type="button"

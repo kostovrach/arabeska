@@ -23,7 +23,7 @@ export default defineEventHandler(
         const { email, code } = await readBody<{ email: string; code: string }>(event);
 
         if (!validator.isEmail(email)) {
-            return { status: 400, message: 'Invalid email', success: false };
+            return { status: 400, message: 'Некорректный e-mail', success: false };
         }
 
         const users = await getDirectusCollection<IUser[]>('users', {
@@ -35,7 +35,7 @@ export default defineEventHandler(
         if (!user) {
             return {
                 status: 403,
-                message: 'Invalid, or expired code',
+                message: 'Некорректный токен: начните сброс с начала',
                 success: false,
             };
         }
@@ -58,14 +58,14 @@ export default defineEventHandler(
                     await deleteDirectusItem('password_reset_otps', otp.id);
                     return {
                         status: 429,
-                        message: 'Max attempts reached',
+                        message: 'Достигнуто максимальное количество попыток. Пожалуйста, свяжитесь с поддержкой',
                         success: false,
                     };
                 }
             }
             return {
                 status: 403,
-                message: 'Invalid, or expired code',
+                message: 'Некорректный токен: начните сброс с начала',
                 success: false,
             };
         }

@@ -117,7 +117,7 @@
                 </div>
             </div>
         </section>
-        <Banner
+        <BlockBanner
             v-if="page?.banner_image_url"
             class="contact__banner"
             :title="page.banner_title ?? ''"
@@ -128,7 +128,7 @@
             </p>
 
             <SubscribeForm v-if="page.banner_form_enabled" />
-        </Banner>
+        </BlockBanner>
     </NuxtLayout>
 </template>
 

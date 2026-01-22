@@ -2,19 +2,19 @@
     <section class="home-banner">
         <div class="home-banner__container">
             <div class="home-banner__title">
-                <HomeBannerCircularText :text="props.title" />
+                <PHomeBannerCircularText :text="props.title" />
             </div>
             <div class="home-banner__content">
                 <h2 class="home-banner__subtitle">{{ props.subtitle }}</h2>
                 <p class="home-banner__desc">{{ props.description }}</p>
-                <CircleButton
+                <ButtonCircle
                     class="home-banner__button"
                     type="NuxtLink"
                     to="index"
                     logic="double-line"
                 >
                     <span>{{ props.buttonText }}</span>
-                </CircleButton>
+                </ButtonCircle>
             </div>
 
             <picture class="home-banner__image-container">

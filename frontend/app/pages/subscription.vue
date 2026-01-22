@@ -1,6 +1,6 @@
 <template>
     <NuxtLayout>
-        <SubscriptionHero
+        <PSubscriptionHero
             :image-url="page?.hero_image_url ?? ''"
             :tag="page?.hero_tag"
             :description="page?.hero_description"
@@ -8,17 +8,17 @@
             :info-tags="page?.hero_info"
             :button-text="page?.hero_button_text ?? 'Выбрать тариф'"
         />
-        <SubscriptionPricing
+        <PSubscriptionPricing
             :title="page?.pricing_title ?? 'Тарифы'"
             :description="page?.pricing_description"
-            :pricing-cards="pricingCards ?? []"
+            :pricing-cards="pricingCards"
         />
-        <AccordionSection
+        <BlockFaq
             :title="page?.faq_title ?? ''"
             :description="page?.faq_description"
             :content="page?.faq_blocks"
         />
-        <Banner
+        <BlockBanner
             v-if="page?.banner_image_url"
             class="subscription-banner"
             :title="page.banner_title"
@@ -46,7 +46,7 @@
                     </a>
                 </div>
             </div>
-        </Banner>
+        </BlockBanner>
     </NuxtLayout>
 </template>
 
@@ -106,7 +106,7 @@
     );
 
     const pricingCards = computed(() => {
-        return productsStore.productsList?.filter((el) =>
+        return productsStore.products?.filter((el) =>
             el.category?.some(
                 (c) => slugify(c.categories_id?.name ?? 'unknow') === subscriptionCategory.value
             )

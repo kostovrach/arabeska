@@ -9,7 +9,7 @@
                 <div class="searchbar__inputbox">
                     <input
                         ref="inputRef"
-                        v-model="inputModel"
+                        v-model="query"
                         id="searchbar"
                         class="searchbar__input"
                         type="text"
@@ -23,9 +23,9 @@
                     </button>
                 </div>
             </div>
-            <div v-if="inputModel" class="searchbar__result">
+            <div v-if="query" class="searchbar__result">
                 <div
-                    v-if="!searchResult?.length && inputModel && !isLoading"
+                    v-if="!products?.length && query && !isLoading"
                     class="searchbar__result-empty"
                 >
                     <span class="searchbar__result-empty-text">
@@ -41,12 +41,12 @@
                     </NuxtLink>
                 </div>
                 <LoadSpinner
-                    v-if="!searchResult?.length && inputModel && isLoading"
+                    v-if="!products?.length && query && isLoading"
                     class="searchbar__result-loading"
                 ></LoadSpinner>
                 <ul class="searchbar__result-list">
                     <li
-                        v-for="product in searchResult"
+                        v-for="product in products"
                         :key="product.id"
                         class="searchbar__result-item"
                     >
@@ -101,7 +101,7 @@
                     </li>
                 </ul>
                 <div
-                    v-if="searchResult?.length && searchResult?.length >= 7"
+                    v-if="products?.length && products?.length >= 7"
                     class="searchbar__result-overflow"
                 >
                     <NuxtLink
@@ -120,36 +120,38 @@
 <script setup lang="ts">
     import { VueFinalModal } from 'vue-final-modal';
 
-    // types===============================================
-    import type { IProduct } from '~~/interfaces/entities/product';
-    // ====================================================
-
     const emit = defineEmits<{
         (e: 'close'): void;
         (e: 'open'): void;
     }>();
 
+    const productsStore = useProductsStore();
+    const { searchProducts } = productsStore;
+
+    // State ==============================================
     const inputRef = ref<HTMLInputElement | null>(null);
-    const inputModel = ref<string>('');
-    const searchResult = ref<IProduct[] | null>(null);
+    const query = ref<string>('');
     const isLoading = ref<boolean>(false);
 
-    const productsStore = useProductsStore();
+    // Data ===============================================
+    const products = computed(() => productsStore.filteredProducts);
+    // ====================================================
 
-    const inputSetFocus = (): void => inputRef.value?.focus();
+    // Methods ============================================
+    function inputSetFocus(): void {
+        inputRef.value?.focus();
+    }
 
-    const search = useDebounceFn(async () => {
-        searchResult.value = (await productsStore.searchProductsFuzzy(inputModel.value)).slice(
-            0,
-            7
-        );
+    async function search() {
+        await searchProducts(query.value);
         isLoading.value = false;
-    }, 300);
+    }
 
-    const onInput = () => {
+    function onInput() {
         isLoading.value = true;
         search();
-    };
+    }
+    // ====================================================
 </script>
 
 <style scoped lang="scss">

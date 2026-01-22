@@ -12,7 +12,7 @@
                     </a>
                     <a :href="`mailto:${contacts?.mail.trim()}`">{{ contacts?.mail }}</a>
                 </div>
-                <SubscribeForm class="footer__form" title="Сэкономьте 5% за подписку!" />
+                <CSubscribeForm class="footer__form" title="Сэкономьте 5% за подписку!" />
             </div>
             <div class="footer__nav">
                 <div class="footer__nav-list footer__nav-list--map">

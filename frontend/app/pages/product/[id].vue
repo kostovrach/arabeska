@@ -3,7 +3,7 @@
         <section class="product-view">
             <div class="product-view__container">
                 <div v-show="status === 'pending'" class="product-view__loading">
-                    <ProductLoader />
+                    <PProductLoader />
                 </div>
                 <div v-show="status === 'error' || status === 'idle'" class="product-view__error">
                     <FetchError />
@@ -31,7 +31,7 @@
                                 <span>new!</span>
                             </div>
 
-                            <ProductSlider :product="product" />
+                            <PProductSlider :product="product" />
                         </div>
                     </div>
                     <div class="product-view__content">
@@ -46,13 +46,16 @@
                                     ></div>
                                 </ClientOnly>
                                 <div class="product-view__share-menu">
-                                    <ProductShare />
+                                    <PProductShare />
                                 </div>
                             </div>
                             <ClientOnly>
                                 <div class="product-view__controls">
-                                    <ul class="product-view__variant" v-if="!isControlsDisabled">
-                                        <li class="product-view__variant-item">
+                                    <div class="product-view__variant" v-if="!isControlsDisabled">
+                                        <label
+                                            for="variant-standart"
+                                            class="product-view__variant-item"
+                                        >
                                             <div class="product-view__variant-toggler">
                                                 <input
                                                     id="variant-standart"
@@ -62,15 +65,15 @@
                                                     value="standart"
                                                 />
                                             </div>
-                                            <label
-                                                for="variant-standart"
-                                                class="product-view__type-desc"
-                                            >
+                                            <span class="product-view__type-desc">
                                                 <strong>Стандарт</strong>
                                                 — собрать букет как на фото
-                                            </label>
-                                        </li>
-                                        <li class="product-view__variant-item">
+                                            </span>
+                                        </label>
+                                        <label
+                                            for="variant-large"
+                                            class="product-view__variant-item"
+                                        >
                                             <div class="product-view__variant-toggler">
                                                 <input
                                                     id="variant-large"
@@ -80,15 +83,15 @@
                                                     value="large"
                                                 />
                                             </div>
-                                            <label
-                                                for="variant-large"
-                                                class="product-view__variant-desc"
-                                            >
+                                            <span class="product-view__variant-desc">
                                                 <strong>Роскошный</strong>
                                                 — на 50% больше цветов
-                                            </label>
-                                        </li>
-                                        <li class="product-view__variant-item">
+                                            </span>
+                                        </label>
+                                        <label
+                                            for="variant-premium"
+                                            class="product-view__variant-item"
+                                        >
                                             <div class="product-view__variant-toggler">
                                                 <input
                                                     id="variant-premium"
@@ -98,18 +101,15 @@
                                                     value="premium"
                                                 />
                                             </div>
-                                            <label
-                                                for="variant-premium"
-                                                class="product-view__variant-desc"
-                                            >
+                                            <span class="product-view__variant-desc">
                                                 <strong>Премиум</strong>
                                                 — в 2 раза больше цветов, крафтовая упаковка
-                                            </label>
-                                        </li>
-                                    </ul>
+                                            </span>
+                                        </label>
+                                    </div>
 
                                     <div class="product-view__button-container">
-                                        <CircleButton
+                                        <ButtonCircle
                                             class="product-view__button"
                                             type="button"
                                             logic="double-line"
@@ -122,7 +122,7 @@
                                                         : 'Добавить в&nbsp;корзину'
                                                 }}
                                             </span>
-                                        </CircleButton>
+                                        </ButtonCircle>
                                     </div>
 
                                     <div
@@ -214,7 +214,7 @@
                         </ClientOnly>
                     </div>
                     <div class="product-view__info">
-                        <ProductAccordion
+                        <PProductAccordion
                             :spoilers="
                                 settings?.products_info.map((el) => ({
                                     title: el.title,
@@ -227,7 +227,7 @@
                 </div>
             </div>
         </section>
-        <HintCarousel title="Вам стоит взглянуть" />
+        <CHintCarousel title="Вам стоит взглянуть" />
     </NuxtLayout>
 </template>
 

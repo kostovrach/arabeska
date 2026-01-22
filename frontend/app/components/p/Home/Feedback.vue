@@ -9,8 +9,8 @@
                     <SvgSprite type="arrow" :size="12" />
                 </NuxtLink>
             </div>
-            <RateWidgets class="home-feedback__widgets" />
-            <FeedbackCarousel />
+            <CRateWidgets class="home-feedback__widgets" />
+            <CFeedbackCarousel />
         </div>
     </section>
 </template>

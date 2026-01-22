@@ -7,6 +7,9 @@
                     align: 'start',
                     dragFree: true,
                 }"
+                auto-scroll
+                :auto-scroll-options="{ speed: 0.75 }"
+                stop-scroll-on-hover
             >
                 <EmblaSlide v-for="item in categories" :key="item.id">
                     <NuxtLink

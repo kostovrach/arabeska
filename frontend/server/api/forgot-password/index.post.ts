@@ -106,7 +106,7 @@ export default defineEventHandler(
         const { email } = await readBody<{ email: string }>(event);
 
         if (!validator.isEmail(email)) {
-            return { status: 400, message: 'Invalid email', success: false };
+            return { status: 400, message: 'Некорректный e-mail', success: false };
         }
 
         const ip = getClientIp(event);
@@ -124,7 +124,11 @@ export default defineEventHandler(
             const cooldownEnd = lastTime + COOLDOWN_MINUTES * 60 * 1000;
 
             if (Date.now() < cooldownEnd) {
-                return { status: 429, message: 'Too many requests, please wait', success: false };
+                return {
+                    status: 429,
+                    message: 'Слишком много попыток, попробуйте позже',
+                    success: false,
+                };
             } else {
                 await updateDirectusItem<IRateLimit>('rate_limits', rateLimit.id, {
                     attempts: 0,
@@ -142,7 +146,11 @@ export default defineEventHandler(
                 last_attempt: null,
             });
             if (!rateLimit) {
-                return { status: 500, message: 'Server error', success: false };
+                return {
+                    status: 500,
+                    message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
+                    success: false,
+                };
             }
         }
 
@@ -160,7 +168,11 @@ export default defineEventHandler(
         const user = Array.isArray(users) ? users[0] : null;
 
         if (!user) {
-            return { status: 200, message: 'If account exist, reset code sent', success: true };
+            return {
+                status: 200,
+                message: 'Если аккаунт с таким e-mail существует, код отправлен',
+                success: true,
+            };
         }
 
         const existingOtps = await getDirectusCollection<IResetOtp[]>('password_reset_otps', {
@@ -171,7 +183,11 @@ export default defineEventHandler(
         const lastOtp = Array.isArray(existingOtps) ? existingOtps[0] : null;
 
         if (lastOtp && new Date(lastOtp.date_created).getTime() > Date.now() - 60 * 1000) {
-            return { status: 429, message: 'Cooldown: wait 1 minute', success: false };
+            return {
+                status: 429,
+                message: 'Слишком много попыток, повторите через 60сек',
+                success: false,
+            };
         }
 
         // Gen OTP
@@ -188,7 +204,7 @@ export default defineEventHandler(
         if (!createOtp) {
             return {
                 status: 500,
-                message: 'Server error: failed to create reset code',
+                message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
                 success: false,
             };
         }
@@ -213,7 +229,11 @@ export default defineEventHandler(
             }
         } catch (err) {
             console.error('Email send error:', err);
-            return { status: 500, message: 'Failed to send email', success: false };
+            return {
+                status: 500,
+                message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
+                success: false,
+            };
         }
 
         return { status: 200, success: true };

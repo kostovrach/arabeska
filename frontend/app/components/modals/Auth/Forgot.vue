@@ -67,15 +67,16 @@
                                 placeholder="E-mail"
                                 @focus="formErrors.email = false"
                             />
-                            <div
+                            <FormNotifyInfo
                                 v-if="formErrors.email"
-                                class="modal-forgot__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
+                        <FormNotifyError v-if="formErrors.general.length">
+                            {{ formErrors.general }}
+                        </FormNotifyError>
                         <button
                             class="modal-forgot__button"
                             type="submit"
@@ -83,9 +84,6 @@
                         >
                             <span>Получить код</span>
                         </button>
-                        <p class="modal-forgot__info" v-if="formErrors.general.length">
-                            {{ formErrors.general }}
-                        </p>
                         <label class="modal-forgot__agreement" for="forgot-agreement">
                             <div class="modal-forgot__agreement-checkbox">
                                 <input
@@ -100,14 +98,12 @@
                                 Согласен с политикой конфиденциальности и обработки персональных
                                 данных
                             </p>
-                            <div
+                            <FormNotifyInfo
                                 v-if="formErrors.agreement"
-                                class="modal-forgot__error"
-                                style="left: -8.5%"
+                                :position="{ top: '100%', left: '-8.5%' }"
                             >
-                                <span>i</span>
-                                <p>Без вашего согласия мы не сможем продолжить</p>
-                            </div>
+                                Без вашего согласия мы не сможем продолжить
+                            </FormNotifyInfo>
                         </label>
                     </form>
                     <form
@@ -146,6 +142,9 @@
                                 </template>
                             </InputOtp>
                         </div>
+                        <FormNotifyError v-if="formErrors.general.length">
+                            {{ formErrors.general }}
+                        </FormNotifyError>
                         <button
                             class="modal-forgot__button modal-forgot__button--otp"
                             type="submit"
@@ -155,9 +154,6 @@
                             <span>Отправить код повторно</span>
                             <span v-if="retryState.timer.length">{{ retryState.timer }}</span>
                         </button>
-                        <p class="modal-forgot__info" v-if="formErrors.general.length">
-                            {{ formErrors.general }}
-                        </p>
                     </form>
                     <form
                         :class="[
@@ -187,15 +183,16 @@
                             >
                                 <SvgSprite type="eye" :size="22" />
                             </button>
-                            <div
+                            <FormNotifyInfo
                                 v-if="formErrors.password"
-                                class="modal-forgot__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
+                        <FormNotifyError v-if="formErrors.general.length">
+                            {{ formErrors.general }}
+                        </FormNotifyError>
                         <button
                             class="modal-forgot__button"
                             type="submit"
@@ -203,9 +200,6 @@
                         >
                             <span>Отправить</span>
                         </button>
-                        <p class="modal-forgot__info" v-if="formErrors.general.length">
-                            {{ formErrors.general }}
-                        </p>
                     </form>
                 </div>
             </div>
@@ -332,15 +326,16 @@
     // ==================================================================
 
     // Proccessing ======================================================
-    async function submitEmail(): Promise<void> {
-        isLoading.value = true;
+    const errorFallbackText = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
 
+    async function submitEmail(): Promise<void> {
         if (!formData.email.length || !formData.agreement) {
             if (!formData.email.length) formErrors.email = true;
             if (!formData.agreement) formErrors.agreement = true;
-            isLoading.value = false;
             return;
         }
+
+        isLoading.value = true;
 
         try {
             const res = await $fetch('/api/forgot-password', {
@@ -348,24 +343,15 @@
                 body: formData,
             });
 
-            switch (res.status) {
-                case 400:
-                    formErrors.general = 'Некорректный E-mail';
-                    break;
-                case 429:
-                    formErrors.general = 'Превышено количество попыток, попробуйте повторить позже';
-                    break;
-                case 500:
-                    formErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 200:
-                    setStep('otp');
-                    setRetryTimer();
-                    setOtpInputFocus();
-                    break;
+            if (res.success) {
+                setStep('otp');
+                setRetryTimer();
+                setOtpInputFocus();
+            } else {
+                formErrors.general = res.message ?? errorFallbackText;
             }
         } catch {
-            formErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+            formErrors.general = errorFallbackText;
         } finally {
             isLoading.value = false;
         }
@@ -381,26 +367,14 @@
                 body: formData,
             });
 
-            switch (res.status) {
-                case 400:
-                    formErrors.general = 'Некорректный E-mail';
-                    break;
-                case 403:
-                    formErrors.general = 'Неверный или истекший код';
-                    break;
-                case 500:
-                    formErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 429:
-                    formErrors.general = 'Превышено количество попыток, попробуйте повторить позже';
-                    break;
-                case 200:
-                    formData.code = '';
-                    setStep('password');
-                    break;
+            if (res.success) {
+                formData.code = '';
+                setStep('password');
+            } else {
+                formErrors.general = res.message ?? errorFallbackText;
             }
         } catch {
-            formErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+            formErrors.general = errorFallbackText;
         } finally {
             isLoading.value = false;
         }
@@ -419,31 +393,19 @@
                 method: 'POST',
                 body: formData,
             });
-            switch (res.status) {
-                case 400:
-                    formErrors.general =
-                        'Слишком короткий пароль. Пароль должен содержать не менее 10 символов';
-                    break;
-                case 403:
-                    formErrors.general = `Ошибка верификации запроса, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 500:
-                    formErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 404:
-                    formErrors.general = `Пользователь не найден, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 200:
-                    userStore.setUser(res.user!);
-                    cartStore.mergeCart();
-                    localStorage.removeItem(STORAGE_KEY);
-                    navigateTo('/');
-                    emit('close');
-                    emit('loggedIn');
-                    break;
+
+            if (res.success) {
+                userStore.setUser(res.user!);
+                cartStore.mergeCart();
+                localStorage.removeItem(STORAGE_KEY);
+                navigateTo('/');
+                emit('close');
+                emit('loggedIn');
+            } else {
+                formErrors.general = res.message ?? errorFallbackText;
             }
         } catch {
-            formErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+            formErrors.general = errorFallbackText;
         } finally {
             isLoading.value = false;
         }
@@ -493,53 +455,6 @@
             justify-content: center;
             background-color: rgba($c-000000, 0.5);
         }
-        &__info {
-            color: $c-F5142B;
-            font-size: rem(12);
-            line-height: 1.4;
-            text-align: center;
-            text-wrap: balance;
-            margin-top: rem(16);
-        }
-        &__error {
-            position: absolute;
-            z-index: 5;
-            top: 115%;
-            display: flex;
-            align-items: flex-start;
-            gap: rem(8);
-            font-size: rem(14);
-            color: $c-FFFFFF;
-            background-color: $c-082535;
-            border-radius: rem(8);
-            padding: rem(8) rem(16);
-            pointer-events: none;
-            &::before {
-                content: '';
-                position: absolute;
-                z-index: -1;
-                top: 0;
-                left: 10%;
-                width: rem(16);
-                min-width: rem(16);
-                aspect-ratio: 1;
-                background-color: inherit;
-                rotate: 45deg;
-                translate: 0 -50%;
-            }
-            > span {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: rem(12);
-                color: $c-FFFFFF;
-                width: rem(16);
-                min-width: rem(16);
-                aspect-ratio: 1;
-                background-color: $c-accent;
-                border-radius: 50%;
-            }
-        }
         &__container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -578,6 +493,7 @@
             font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
+            gap: rem(16);
             &--email {
                 position: relative;
                 z-index: 2;
@@ -611,9 +527,6 @@
         }
         &__inputbox {
             position: relative;
-            &:not(:first-of-type) {
-                margin-top: rem(16);
-            }
         }
         &__input {
             width: 100%;
@@ -689,7 +602,6 @@
             }
         }
         &__button {
-            margin-top: rem(32);
             justify-content: center;
             @include button-primary(
                 $width: 100%,

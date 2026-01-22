@@ -1,12 +1,12 @@
 <template>
     <NuxtLayout>
-        <FeedbackHero
+        <PFeedbackHero
             :title="page?.hero_title ?? ''"
             :subtitle="page?.hero_subtitle"
             :image-url="page?.hero_image_url ?? ''"
         />
-        <FeedbackList />
-        <Banner
+        <PFeedbackList />
+        <BlockBanner
             v-if="page?.banner_image_url"
             class="feedback-banner"
             :title="page?.banner_title ?? ''"
@@ -30,7 +30,7 @@
                     </a>
                 </div>
             </div>
-        </Banner>
+        </BlockBanner>
     </NuxtLayout>
 </template>
 

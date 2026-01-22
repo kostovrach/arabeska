@@ -1,46 +1,9 @@
 <template>
-    <section class="views-slider" v-if="products?.length">
-        <div class="views-slider__container">
-            <div class="views-slider__titlebox">
-                <StarsOverlay class="views-slider__title">
-                    <h2>Вы недавно смотрели</h2>
-                </StarsOverlay>
-                <div class="views-slider__controls">
-                    <button
-                        class="views-slider__button views-slider__button--prev"
-                        type="button"
-                        @click="scrollPrev()"
-                    >
-                        <SvgSprite type="arrow" />
-                    </button>
-                    <button
-                        class="views-slider__button views-slider__button--next"
-                        type="button"
-                        @click="scrollNext()"
-                    >
-                        <SvgSprite type="arrow" />
-                    </button>
-                </div>
-                <button class="views-slider__cls-button" type="button" @click.prevent="clearViews">
-                    Очистить историю
-                </button>
-            </div>
-            <div class="views-slider__body">
-                <div v-show="status === 'pending'" class="views-slider__loader">
-                    <div class="views-slider__loader-wrapper">
-                        <ProductCardLoader v-for="n in 5" :key="n" />
-                    </div>
-                </div>
-                <div v-show="status === 'error' || status === 'idle'" class="views-slider__error">
-                    <FetchError />
-                </div>
-                <ClientOnly>
-                    <EmblaContainer
-                        v-show="status === 'success'"
-                        ref="sliderRef"
-                        :options="carouselOptions"
-                        padding="48px 0"
-                    >
+    <ClientOnly>
+        <section class="views-slider" v-if="products?.length">
+            <div class="views-slider__container">
+                <div class="views-slider__body">
+                    <EmblaContainer ref="sliderRef" :options="carouselOptions" padding="48px 0">
                         <EmblaSlide
                             v-for="(product, idx) in products"
                             :key="product.id"
@@ -56,16 +19,29 @@
                             />
                         </EmblaSlide>
                     </EmblaContainer>
-                </ClientOnly>
+                </div>
+                <div class="views-slider__titlebox">
+                    <StarsOverlay class="views-slider__title">
+                        <h2>Вы недавно смотрели</h2>
+                    </StarsOverlay>
+                    <div class="views-slider__controls">
+                        <EmblaNavigation :slider-ref="computed(() => sliderRef)" />
+                    </div>
+                    <button
+                        class="views-slider__cls-button"
+                        type="button"
+                        @click.prevent="clearViews"
+                    >
+                        Очистить историю
+                    </button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
-    // types==================================================
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
-    // =======================================================
 
     // data ==================================================
     const props = defineProps<{
@@ -75,14 +51,11 @@
     const productsStore = useProductsStore();
     const viewsStore = useViewsStore();
 
-    productsStore.getProducts();
-
     const products = computed(() => {
         const views = new Set(viewsStore.viewsProducts);
 
-        return productsStore.productsList.filter((el) => views.has(el.id.toString()));
+        return productsStore.products.filter((el) => views.has(el.id.toString()));
     });
-    const status = computed(() => productsStore.productsStatus);
     // =======================================================
 
     // methods ===============================================
@@ -99,9 +72,6 @@
         dragFree: false,
         duration: 25,
     };
-
-    const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
-    const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
 
     watchEffect((onCleanup) => {
         const slider = sliderRef.value?.emblaApi;
@@ -132,6 +102,10 @@
         $p: &;
 
         @include content-block;
+        &__container {
+            display: flex;
+            flex-direction: column-reverse;
+        }
         &__titlebox {
             width: 100%;
             display: flex;

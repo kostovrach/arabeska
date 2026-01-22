@@ -3,20 +3,18 @@ import type { IProduct } from '~~/interfaces/entities/product';
 import type { ProductModifiersType } from '~~/interfaces/product-modifiers';
 
 export const useCartStore = defineStore('cart', () => {
-    const STORAGE_KEY = 'cart';
-
     const userStore = useUserStore();
     const productsStore = useProductsStore();
 
-    const products = computed(() => productsStore.productsList);
-
-    const isAuth = computed(() => userStore.isAuth);
-    const isClient = import.meta.client;
+    const STORAGE_KEY = 'cart';
 
     // State
     const cartList = ref<ICartItem[]>([]);
 
     // Getters
+    const isAuth = computed(() => userStore.isAuth);
+    const isClient = import.meta.client;
+    const products = computed(() => productsStore.products);
     const cartCount = computed(() => {
         const itemsQtyArr = cartList.value.map((el) => Number(el.quantity));
 
@@ -29,7 +27,7 @@ export const useCartStore = defineStore('cart', () => {
     });
     const cartAmount = computed(() => {
         return cartList.value.reduce((total, item) => {
-            const product = productsStore.productsList?.find((el) => el.id === item.product_id);
+            const product = products.value.find((el) => el.id === item.product_id);
             if (!product) return total;
 
             const price = (): number => {

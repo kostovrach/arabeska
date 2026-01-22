@@ -11,21 +11,19 @@
                         Запрашиваемая страница не существует. Вы сможете найти интересующие цветы в
                         каталоге
                     </p>
-                    <CircleButton
+                    <ButtonCircle
                         class="not-found-hero__button"
                         type="NuxtLink"
                         logic="double-line"
                         to="catalog"
                     >
                         <span>открыть каталог</span>
-                    </CircleButton>
+                    </ButtonCircle>
                 </div>
             </div>
         </section>
     </NuxtLayout>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;

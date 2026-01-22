@@ -5,12 +5,40 @@
 
 <script setup lang="ts">
     import { ModalsContainer } from 'vue-final-modal';
+    import type { IProduct } from '~~/interfaces/entities/product';
     // data ========================================================
 
-    await useProductsStore().getProducts();
-    await useCartStore().initCart();
+    const { setProducts } = useProductsStore();
 
+    const { content: products } = await useCms<IProduct[]>(
+        'products',
+        [
+            'images.*',
+            'images.directus_files_id.*',
+            'category.*',
+            'category.categories_id.*',
+            'reason.*',
+            'reason.reason_id.*',
+            'style.*',
+            'style.styles_id.*',
+            'structure.*',
+            'structure.structure_id.*',
+        ],
+        {
+            transform: (productsArray) => {
+                const result = productsArray.data.filter((product) => product.available === true);
+
+                return { data: result };
+            },
+        }
+    );
+
+    await useCartStore().initCart();
     useViewsStore().initFromLocalStorage();
+    // =============================================================
+
+    // Setters =====================================================
+    setProducts(products.value ?? []);
     // =============================================================
 
     // SEO & Meta ==================================================

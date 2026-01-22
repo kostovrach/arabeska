@@ -1,7 +1,7 @@
 <template>
     <NuxtLayout>
         <template v-if="page">
-            <InfoHero
+            <BlockHero
                 class="wholesale-hero"
                 :image-url="page.image_url ?? ''"
                 :tag="page.tag ?? ''"
@@ -14,7 +14,7 @@
                         <span><SvgSprite type="arrow" :size="24" /></span>
                     </button>
                 </template>
-            </InfoHero>
+            </BlockHero>
             <div class="wholesale">
                 <section class="wholesale-list">
                     <ul class="wholesale-list__container">
@@ -37,12 +37,12 @@
                         </li>
                     </ul>
                 </section>
-                <AccordionSection
+                <BlockFaq
                     :title="page.faq_title ?? ''"
                     :description="page.faq_description"
                     :content="page.faq_blocks"
                 />
-                <Banner
+                <BlockBanner
                     v-if="page.banner_image_url"
                     class="wholesale-banner"
                     :title="page.banner_title ?? ''"
@@ -57,7 +57,7 @@
                             <span><SvgSprite type="arrow" :size="24" /></span>
                         </button>
                     </div>
-                </Banner>
+                </BlockBanner>
             </div>
         </template>
     </NuxtLayout>

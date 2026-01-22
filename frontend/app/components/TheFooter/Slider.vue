@@ -4,9 +4,8 @@
             ref="sliderRef"
             class="slider__body"
             :options="carouselOptions"
-            autoplay-enable
-            @mouseenter="autoplayStop"
-            @mouseleave="autoplayStart"
+            stop-scroll-on-hover
+            autoplay
         >
             <EmblaSlide
                 v-for="(category, idx) in categories"
@@ -42,18 +41,7 @@
             </EmblaSlide>
         </EmblaContainer>
         <div class="slider__controls">
-            <button class="slider__button slider__button--prev" @click="scrollPrev">
-                <SvgSprite type="arrow" :size="20" />
-            </button>
-            <div class="slider__pagination">
-                {{ selectedSnap }}
-                <span class="symbol">/</span>
-                {{ snapCount }}
-            </div>
-
-            <button class="slider__button slider__button--next" @click="scrollNext">
-                <SvgSprite type="arrow" :size="20" />
-            </button>
+            <EmblaNavigation :slider-ref="computed(() => sliderRef)" pagination />
         </div>
     </div>
 </template>
@@ -78,30 +66,6 @@
         dragFree: false,
         duration: 25,
     };
-
-    // controls========================================================
-    const scrollPrev = () => sliderRef?.value?.emblaApi?.scrollPrev();
-    const scrollNext = () => sliderRef?.value?.emblaApi?.scrollNext();
-
-    const autoplayStop = () => sliderRef?.value?.emblaApi?.plugins().autoplay.stop();
-    const autoplayStart = () => sliderRef?.value?.emblaApi?.plugins().autoplay.play();
-    // ================================================================
-
-    // pagination======================================================
-    const selectedSnap = ref<number>();
-    const snapCount = ref<number>();
-
-    const updateSnapDisplay = () => {
-        selectedSnap.value = (sliderRef.value?.emblaApi?.selectedScrollSnap() ?? 0) + 1;
-        snapCount.value = sliderRef.value?.emblaApi?.scrollSnapList().length ?? 0;
-    };
-
-    onMounted(() => {
-        sliderRef.value?.emblaApi?.on('select', updateSnapDisplay).on('reInit', updateSnapDisplay);
-
-        updateSnapDisplay();
-    });
-    // ================================================================
 </script>
 
 <style scoped lang="scss">
@@ -187,41 +151,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: rem(16);
-            font-size: rem(14);
             color: $c-98BBD7;
             margin-top: rem(24);
-        }
-        &__button {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            &::before {
-                content: '';
-                display: block;
-                width: rem(32);
-                height: rem(2);
-                transform: scaleY(0.89);
-                translate: 0 -0.5px;
-                background-color: currentColor;
-                transition: width $td $tf;
-            }
-            @media (pointer: fine) {
-                &:hover {
-                    &::before {
-                        width: rem(48);
-                    }
-                }
-            }
-            &[disabled] {
-                opacity: 0.5;
-                &::before {
-                    width: 0;
-                }
-            }
-            &--prev {
-                transform: scaleX(-1);
-            }
         }
     }
 </style>

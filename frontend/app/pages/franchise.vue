@@ -15,7 +15,7 @@
             </template>
         </InfoHero>
         <div class="franchise">
-            <FranchiseAbout
+            <PFranchiseAbout
                 :title="page?.advant_title ?? ''"
                 :description="page?.advant_description"
                 :metrics="
@@ -25,7 +25,7 @@
                     })) ?? []
                 "
             />
-            <FranchiseList
+            <PFranchiseList
                 :content="
                     page?.advant_info.map((el) => ({
                         imageUrl: el.franchise_advant_id.image_url,
@@ -39,7 +39,7 @@
                 :description="page?.faq_description"
                 :content="page?.faq_blocks"
             />
-            <FranchiseFeedback
+            <PFranchiseFeedback
                 v-if="page?.feedback_available"
                 :title="page?.feedback_title ?? ''"
                 :description="page?.feedback_description ?? ''"

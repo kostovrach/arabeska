@@ -2,7 +2,7 @@
     <div class="feedback-carousel">
         <div v-show="status === 'pending'" class="feedback-carousel__loader">
             <div class="feedback-carousel__loader-wrapper">
-                <FeedbackLoader v-for="n in 5" :key="n" />
+                <CFeedbackLoader v-for="n in 5" :key="n" />
             </div>
         </div>
         <div v-show="status === 'error'" class="feedback-carousel__error">
@@ -15,13 +15,13 @@
                 ref="sliderRef"
                 class="feedback-carousel__slider"
                 :options="carouselOptions"
-                :autoplay-enable="true"
-                :autoplay="autoplayOptions"
+                :autoScroll="true"
+                :autoScrollOptions="autoplayOptions"
                 @mouseenter="autoplayStop"
                 @mouseleave="autoplayStart"
             >
                 <EmblaSlide v-for="item in items" :key="item.id" class="feedback-carousel__slide">
-                    <FeedbackCard :content="item" />
+                    <CFeedbackCard :content="item" />
                 </EmblaSlide>
             </EmblaContainer>
         </ClientOnly>

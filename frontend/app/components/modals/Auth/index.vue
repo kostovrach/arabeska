@@ -42,19 +42,18 @@
                                 id="sign-in-phone"
                                 v-model="signInModel.phone"
                                 class="modal-auth__input"
+                                inputmode="tel"
                                 mask="+7 (999) 999-99-99"
                                 placeholder="+7 (___) ___-__-__"
                                 name="sign-in-phone"
                                 @focus="signInErrors.phone = false"
                             />
-                            <div
+                            <FormNotifyInfo
                                 v-if="signInErrors.phone"
-                                class="modal-auth__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
                         <div class="modal-auth__inputbox">
                             <input
@@ -78,25 +77,23 @@
                             >
                                 <SvgSprite type="eye" :size="22" />
                             </button>
-                            <div
+                            <FormNotifyInfo
                                 v-if="signInErrors.password"
-                                class="modal-auth__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
                         <div class="modal-auth__pass-hint">
                             Забыли пароль?
                             <button type="button" @click="emit('openForgot')">Восстановить</button>
                         </div>
+                        <FormNotifyError v-if="signInErrors.general.length">
+                            {{ signInErrors.general }}
+                        </FormNotifyError>
                         <button class="modal-auth__button" type="submit" @click.prevent="signIn">
                             <span>Отправить</span>
                         </button>
-                        <p class="modal-auth__info" v-if="signInErrors.general.length">
-                            {{ signInErrors.general }}
-                        </p>
                         <label class="modal-auth__agreement" for="sign-in-agreement">
                             <div class="modal-auth__agreement-checkbox">
                                 <input
@@ -111,14 +108,12 @@
                                 Согласен с политикой конфиденциальности и обработки персональных
                                 данных
                             </p>
-                            <div
+                            <FormNotifyInfo
                                 v-if="signInErrors.agreement"
-                                class="modal-auth__error"
-                                style="left: -8.5%"
+                                :position="{ top: '100%', left: '-8.5%' }"
                             >
-                                <span>i</span>
-                                <p>Без вашего согласия мы не сможем продолжить</p>
-                            </div>
+                                Без вашего согласия мы не сможем продолжить
+                            </FormNotifyInfo>
                         </label>
                     </form>
                 </div>
@@ -161,14 +156,12 @@
                                 name="sign-up-phone"
                                 @focus="signUpErrors.phone = false"
                             />
-                            <div
+                            <FormNotifyInfo
                                 v-if="signUpErrors.phone"
-                                class="modal-auth__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
                         <div class="modal-auth__inputbox">
                             <input
@@ -180,14 +173,12 @@
                                 placeholder="E-mail"
                                 @focus="signUpErrors.email = false"
                             />
-                            <div
+                            <FormNotifyInfo
                                 v-if="signUpErrors.email"
-                                class="modal-auth__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
                         <div class="modal-auth__inputbox">
                             <input
@@ -210,21 +201,22 @@
                             >
                                 <SvgSprite type="eye" :size="22" />
                             </button>
-                            <div
+                            <FormNotifyInfo
                                 v-if="signUpErrors.password"
-                                class="modal-auth__error"
-                                style="left: 5%"
+                                :position="{ top: '100%', left: '5%' }"
                             >
-                                <span>i</span>
-                                <p>Необходимо заполнить поле</p>
-                            </div>
+                                Необходимо заполнить поле
+                            </FormNotifyInfo>
                         </div>
+                        <FormNotifyError
+                            v-if="signUpErrors.general.length"
+                            :style="{ marginTop: '1rem' }"
+                        >
+                            {{ signUpErrors.general }}
+                        </FormNotifyError>
                         <button class="modal-auth__button" type="submit" @click.prevent="signUp">
                             <span>Отправить</span>
                         </button>
-                        <p class="modal-auth__info" v-if="signUpErrors.general.length">
-                            {{ signInErrors.general }}
-                        </p>
                         <label class="modal-auth__agreement" for="sign-up-agreement">
                             <div class="modal-auth__agreement-checkbox">
                                 <input
@@ -239,14 +231,12 @@
                                 Согласен с политикой конфиденциальности и обработки персональных
                                 данных
                             </p>
-                            <div
+                            <FormNotifyInfo
                                 v-if="signUpErrors.agreement"
-                                class="modal-auth__error"
-                                style="left: -8.5%"
+                                :position="{ top: '100%', left: '-8.5%' }"
                             >
-                                <span>i</span>
-                                <p>Без вашего согласия мы не сможем продолжить</p>
-                            </div>
+                                Без вашего согласия мы не сможем продолжить
+                            </FormNotifyInfo>
                         </label>
                     </form>
                 </div>
@@ -320,28 +310,46 @@
     // =====================================================================
 
     // methods =============================================================
+    function clearErrors() {
+        signInErrors.phone = false;
+        signInErrors.password = false;
+        signInErrors.agreement = false;
+        signInErrors.general = '';
+
+        signUpErrors.phone = false;
+        signUpErrors.password = false;
+        signUpErrors.email = false;
+        signUpErrors.agreement = false;
+        signUpErrors.general = '';
+    }
+
     function setSignUpStep(): void {
         signInStepButton.value?.blur();
         step.value = 'sign-up';
+        clearErrors();
     }
 
     function setSignInStep(): void {
         signUpStepButton.value?.blur();
         step.value = 'sign-in';
+        clearErrors();
     }
     // =====================================================================
 
     // processing ==========================================================
     async function signIn(): Promise<void> {
-        isLoading.value = true;
+        const errorFallbackText = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+
+        signInErrors.general = '';
 
         if (!signInModel.phone.length || !signInModel.password.length || !signInModel.agreement) {
             if (!signInModel.phone.length) signInErrors.phone = true;
             if (!signInModel.password.length) signInErrors.password = true;
             if (!signInModel.agreement) signInErrors.agreement = true;
-            isLoading.value = false;
             return;
         }
+
+        isLoading.value = true;
 
         try {
             const res = await $fetch('/api/auth/sign-in', {
@@ -349,38 +357,28 @@
                 body: signInModel,
             });
 
-            switch (res.status) {
-                case 400:
-                    signInErrors.general = 'Некорректный номер телефона';
-                    break;
-                case 500:
-                    signInErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 401:
-                    signInErrors.general = 'Некорректные данные';
-                    break;
-                case 429:
-                    signInErrors.general =
-                        'Вы ввели пароль неправильно слишком много раз, пожалуйста, повторите попытку позже';
-                    break;
-                case 200:
-                    userStore.setUser(res.user!);
-                    cartStore.mergeCart();
-                    if (props.redirect && props.redirect !== '/') {
-                        navigateTo(props.redirect);
-                    }
-                    emit('loggedIn');
-                    break;
+            if (res.success) {
+                userStore.setUser(res.user!);
+                cartStore.mergeCart();
+                if (props.redirect && props.redirect !== '/') {
+                    navigateTo(props.redirect);
+                }
+                emit('loggedIn');
+            } else {
+                signInErrors.general = res.message ?? errorFallbackText;
+                return;
             }
         } catch {
-            signInErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+            signInErrors.general = errorFallbackText;
         } finally {
             isLoading.value = false;
         }
     }
 
     async function signUp(): Promise<void> {
-        isLoading.value = true;
+        const errorFallbackText = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+
+        signUpErrors.general = '';
 
         if (
             !signUpModel.phone.length ||
@@ -392,15 +390,14 @@
             if (!signUpModel.email.length) signUpErrors.email = true;
             if (!signUpModel.password.length) signUpErrors.password = true;
             if (!signUpModel.agreement) signUpErrors.agreement = true;
-            isLoading.value = false;
             return;
         }
 
         if (signUpModel.password.length < 10) {
             signUpErrors.general = 'Пароль должен содержать не менее 10 символов';
-            isLoading.value = false;
             return;
         }
+        isLoading.value = true;
 
         try {
             const res = await $fetch('/api/auth/sign-up', {
@@ -408,30 +405,19 @@
                 body: signUpModel,
             });
 
-            switch (res.status) {
-                case 400:
-                    if (res.message === 'Invalid email')
-                        signUpErrors.general = `Некорректный E-mail`;
-                    if (res.message === 'Invalid phone number')
-                        signUpErrors.general = `Некорректный номер телефона`;
-                    break;
-                case 500:
-                    signUpErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
-                    break;
-                case 409:
-                    signUpErrors.general = `Пользователь с таким номером уже существует, попробуйте войти в аккаунт`;
-                    break;
-                case 200:
-                    userStore.setUser(res.user!);
-                    cartStore.mergeCart();
-                    if (props.redirect && props.redirect !== '/') {
-                        navigateTo(props.redirect);
-                    }
-                    emit('loggedIn');
-                    break;
+            if (res.success) {
+                userStore.setUser(res.user!);
+                cartStore.mergeCart();
+                if (props.redirect && props.redirect !== '/') {
+                    navigateTo(props.redirect);
+                }
+                emit('loggedIn');
+            } else {
+                signUpErrors.general = res.message ?? errorFallbackText;
+                return;
             }
         } catch {
-            signUpErrors.general = `Произошла непредвиденная ошибка, повторите попытку позже или свяжитесь с нами: ${contacts.value?.phone}`;
+            signUpErrors.general = errorFallbackText;
         } finally {
             isLoading.value = false;
         }
@@ -470,53 +456,6 @@
             align-items: center;
             justify-content: center;
             background-color: rgba($c-000000, 0.5);
-        }
-        &__info {
-            color: $c-F5142B;
-            font-size: rem(12);
-            line-height: 1.4;
-            text-align: center;
-            text-wrap: balance;
-            margin-top: rem(16);
-        }
-        &__error {
-            position: absolute;
-            z-index: 5;
-            top: 115%;
-            display: flex;
-            align-items: flex-start;
-            gap: rem(8);
-            font-size: rem(14);
-            color: $c-FFFFFF;
-            background-color: $c-082535;
-            border-radius: rem(8);
-            padding: rem(8) rem(16);
-            pointer-events: none;
-            &::before {
-                content: '';
-                position: absolute;
-                z-index: -1;
-                top: 0;
-                left: 10%;
-                width: rem(16);
-                min-width: rem(16);
-                aspect-ratio: 1;
-                background-color: inherit;
-                rotate: 45deg;
-                translate: 0 -50%;
-            }
-            > span {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: rem(12);
-                color: $c-FFFFFF;
-                width: rem(16);
-                min-width: rem(16);
-                aspect-ratio: 1;
-                background-color: $c-accent;
-                border-radius: 50%;
-            }
         }
         &__container {
             position: relative;
@@ -634,7 +573,7 @@
             font-family: 'Inter', sans-serif;
             font-size: rem(14);
             opacity: 0.75;
-            margin-top: rem(8);
+            margin: rem(8) 0 rem(16);
             > button,
             a {
                 cursor: pointer;
@@ -648,7 +587,7 @@
             }
         }
         &__button {
-            margin-top: rem(32);
+            margin-top: rem(16);
             justify-content: center;
             @include button-primary(
                 $width: 100%,
