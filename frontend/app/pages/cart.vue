@@ -10,19 +10,19 @@
                         </span>
                     </div>
                     <section class="cart__body">
-                        <div class="cart__hint" v-if="cartAmount !== 0">
-                            <div class="cart__hint-indicator">
+                        <div class="cart__calculator" v-if="cartAmount !== 0">
+                            <div class="cart__calculator-indicator">
                                 <SvgSprite type="delivery" :size="24" />
-                                <div class="cart__hint-indicator-progress">
+                                <div class="cart__calculator-indicator-progress">
                                     <svg viewBox="0 0 64 64">
                                         <circle
-                                            class="cart__hint-indicator-progress-bg"
+                                            class="cart__calculator-indicator-progress-bg"
                                             :cx="32"
                                             :cy="32"
                                             :r="radius"
                                         />
                                         <circle
-                                            class="cart__hint-indicator-progress-inner"
+                                            class="cart__calculator-indicator-progress-inner"
                                             :cx="32"
                                             :cy="32"
                                             :r="radius"
@@ -32,107 +32,37 @@
                                     </svg>
                                 </div>
                             </div>
-                            <p class="cart__hint-content" v-if="remainsToFreeDelivery > 0">
+                            <p class="cart__calculator-content" v-if="remainsToFreeDelivery > 0">
                                 Осталось совсем немного: добавьте товаров в корзину ещё на
                                 <span class="ruble">
                                     {{ remainsToFreeDelivery.toLocaleString('ru-RU') }}
                                 </span>
                                 , чтобы доставка стала бесплатной!
                             </p>
-                            <p class="cart__hint-content" v-else>
+                            <p class="cart__calculator-content" v-else>
                                 Товаров в корзине достаточно. Доставка бесплатная!
                             </p>
                         </div>
-                        <div class="cart__hint cart__hint--empty" v-else>
-                            <p class="cart__hint--empty-text">В корзине нет товаров</p>
-                            <NuxtLink class="cart__hint--empty-button" :to="{ name: 'catalog' }">
-                                <span>За покупками</span>
-                                <span><SvgSprite type="arrow" :size="18" /></span>
-                            </NuxtLink>
-                        </div>
-                        <ul class="cart__list" v-if="cartAmount !== 0">
-                            <li v-for="item in cart" :key="item.product_id" class="cart__item">
-                                <NuxtLink
-                                    class="cart__item-image-container"
-                                    :to="{ name: 'product-id', params: { id: item.product_id } }"
-                                >
-                                    <img
-                                        class="cart__item-image"
-                                        :src="getProductImageById(item.product_id)"
-                                        :alt="getProductTitleById(item.product_id) ?? '#'"
-                                    />
+                        <div class="cart__content">
+                            <div class="cart__list" v-if="cartAmount !== 0">
+                                <PCartProductCard
+                                    v-for="item in cart"
+                                    :key="item.product_id"
+                                    :data="item"
+                                    class="cart__item"
+                                />
+                            </div>
+                            <div class="cart__empty" v-else>
+                                <p class="cart__empty-text">В корзине нет товаров</p>
+                                <NuxtLink class="cart__empty-button" :to="{ name: 'catalog' }">
+                                    <span>За покупками</span>
+                                    <span><SvgSprite type="arrow" :size="18" /></span>
                                 </NuxtLink>
-                                <div class="cart__item-body">
-                                    <div class="cart__item-field">
-                                        <h2 class="cart__item-title">
-                                            {{ getProductTitleById(item.product_id) }}
-                                        </h2>
-                                        <button
-                                            class="cart__item-button"
-                                            type="button"
-                                            @click.prevent="removeProduct(item)"
-                                        >
-                                            Удалить
-                                        </button>
-                                    </div>
-                                    <div class="cart__item-field">
-                                        <p class="cart__item-field-name">Размер</p>
-                                        <span class="cart__item-field-value">
-                                            {{ translateProductModifier(item.modifier) }}
-                                        </span>
-                                    </div>
-                                    <div class="cart__item-field">
-                                        <p class="cart__item-field-name">Количество</p>
-                                        <div class="cart__item-field-controls">
-                                            <button
-                                                type="button"
-                                                :disabled="Number(item.quantity) <= 1"
-                                                @click="removeQty(item)"
-                                            >
-                                                <SvgSprite type="minus" :size="14" />
-                                            </button>
-                                            <span>{{ item.quantity }}</span>
-                                            <button
-                                                type="button"
-                                                :disabled="Number(item.quantity) >= 5"
-                                                @click="addQty(item)"
-                                            >
-                                                <SvgSprite type="plus" :size="14" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="cart__item-field">
-                                        <p class="cart__item-field-name">Стомость</p>
-                                        <div class="cart__item-field-price">
-                                            <p
-                                                class="cart__item-field-price-crossed"
-                                                v-if="getProductDiscountById(item.product_id)"
-                                            >
-                                                <span class="ruble">
-                                                    {{
-                                                        (
-                                                            getProductDiscountById(
-                                                                item.product_id
-                                                            )! * item.quantity
-                                                        ).toLocaleString('ru-RU')
-                                                    }}
-                                                </span>
-                                            </p>
-                                            <p class="cart__item-field-price-common ruble">
-                                                <span>
-                                                    {{
-                                                        (
-                                                            getProductPriceById(item.product_id) *
-                                                            item.quantity
-                                                        ).toLocaleString('ru-RU')
-                                                    }}
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                            </div>
+                            <div class="cart__hint">
+                                <PCartHint title="Вам стоит взглянуть" />
+                            </div>
+                        </div>
                         <aside class="cart__sider">
                             <div class="cart__sider-wrapper">
                                 <div class="cart__sider-head">
@@ -168,7 +98,7 @@
                             class="cart__button cart__button--sticky"
                             :to="{ name: 'checkout' }"
                         >
-                            <span>Перейти к оформлению</span>
+                            <span>К оформлению</span>
                             <span>
                                 <SvgSprite type="arrow" :size="18" />
                             </span>
@@ -177,23 +107,15 @@
                 </div>
             </div>
         </ClientOnly>
-        <CHintCarousel title="Вам стоит взглянуть" />
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-    import type { ICartItem } from '~~/interfaces/entities/cart-item';
+    import { PCartHint } from '#components';
     import type { ISettings } from '~~/interfaces/settings';
 
     const cartStore = useCartStore();
 
-    const {
-        getProductDiscountById,
-        getProductImageById,
-        getProductPriceById,
-        getProductTitleById,
-        translateProductModifier,
-    } = cartStore;
     // data ======================================================
     const cartCounter = computed(() => cartStore.cartCount);
     const cartAmount = computed(() => cartStore.cartAmount);
@@ -210,8 +132,9 @@
         remainsPercent: remainsToFreeDeliveryPercent,
         price: totalDeliveryPrice,
     } = useDeliveryPriceCalculator(cartAmount, deliveryPrice, deliveryRequiredPrice);
+    // ===========================================================
 
-    // progressbar ----------------------------------
+    // progressbar ===============================================
     const radius = 28;
     const circumference = 2 * Math.PI * radius;
     const dashOffset = computed(() => {
@@ -221,21 +144,6 @@
         }
         return (remainsToFreeDeliveryPercent.value / 100) * circumference;
     });
-    // ----------------------------------------------
-    // ===========================================================
-
-    // methods ===================================================
-    const addQty = useDebounceFn(async (product: ICartItem): Promise<void> => {
-        await cartStore.addQty(product);
-    }, 200);
-
-    const removeQty = useDebounceFn(async (product: ICartItem): Promise<void> => {
-        await cartStore.removeQty(product);
-    }, 200);
-
-    const removeProduct = async (product: ICartItem): Promise<void> => {
-        await cartStore.removeFromCart(product);
-    };
     // ===========================================================
 
     // SEO & Meta ================================================
@@ -281,12 +189,12 @@
             display: grid;
             grid-template-columns: 60% auto;
             grid-template-areas:
-                'hint sider'
+                'calculator sider'
                 'list sider';
             gap: rem(32) lineScale(64, 32, 480, 1920);
         }
-        &__hint {
-            grid-area: hint;
+        &__calculator {
+            grid-area: calculator;
             display: flex;
             align-items: center;
             gap: rem(16);
@@ -339,25 +247,30 @@
                     font-weight: $fw-bold;
                 }
             }
-            &--empty {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: rem(32);
-                background-color: transparent;
-                border: rem(1.5) solid rgba($c-98BBD7, 0.5);
-                padding: rem(64) rem(32);
-                &-text {
-                    font-size: lineScale(32, 24, 480, 1920);
-                }
-                &-button {
-                    @include button-primary(
-                        $border-color: $c-accent,
-                        $gap: rem(16),
-                        $anim-color: $c-accent
-                    );
-                }
+        }
+        &__content {
+            border: rem(1.5) solid rgba($c-98BBD7, 0.5);
+            padding: lineScale(32, 16, 480, 1920);
+            border-radius: rem(32);
+            overflow: hidden;
+        }
+        &__empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: rem(32);
+            margin: rem(32) 0;
+            &-text {
+                font-size: lineScale(24, 20, 480, 1920);
+            }
+            &-button {
+                @include button-primary(
+                    $border-color: $c-accent,
+                    $gap: rem(16),
+                    $anim-color: $c-accent,
+                    $font-size: lineScale(20, 18, 480, 1920)
+                );
             }
         }
         &__list {
@@ -365,9 +278,9 @@
             display: flex;
             flex-direction: column;
             gap: rem(32);
-            padding: lineScale(32, 16, 480, 1920);
-            border-radius: rem(32);
-            border: rem(1.5) solid rgba($c-98BBD7, 0.5);
+        }
+        &__hint {
+            margin-top: rem(96);
         }
         &__sider {
             grid-area: sider;
@@ -421,108 +334,6 @@
                 }
             }
         }
-        &__item {
-            display: flex;
-            align-items: flex-start;
-            gap: rem(24);
-            &-image-container {
-                display: block;
-                width: lineScale(140, 96, 480, 1920);
-                min-width: lineScale(140, 96, 480, 1920);
-                aspect-ratio: 1;
-                border-radius: rem(16);
-                overflow: hidden;
-            }
-            &-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            &-body {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                gap: rem(12);
-                padding: rem(8) 0;
-            }
-            &-title {
-                font-size: lineScale(22, 16, 480, 1920);
-                text-wrap: balance;
-                font-weight: $fw-semi;
-                margin-bottom: rem(8);
-            }
-            &-field {
-                display: flex;
-                align-items: flex-start;
-                justify-content: space-between;
-                gap: rem(32);
-                &-name {
-                    font-size: lineScale(14, 12, 480, 1920);
-                    font-weight: $fw-semi;
-                    opacity: 0.5;
-                }
-                &-value {
-                    font-weight: $fw-semi;
-                    font-size: lineScale(16, 12, 480, 1920);
-                    opacity: 0.5;
-                }
-                &-controls {
-                    display: flex;
-                    align-items: center;
-                    gap: rem(16);
-                    font-size: lineScale(16, 14, 480, 1920);
-                    > button {
-                        cursor: pointer;
-                        &:disabled {
-                            pointer-events: none;
-                            opacity: 0.5;
-                        }
-                    }
-                }
-                &-price {
-                    display: flex;
-                    align-items: flex-end;
-                    justify-content: flex-end;
-                    flex-wrap: wrap;
-                    gap: rem(8) rem(16);
-                    font-size: lineScale(24, 20, 480, 1920);
-                    font-weight: $fw-semi;
-                    &-crossed {
-                        position: relative;
-                        width: fit-content;
-                        font-size: lineScale(16, 14, 480, 1440);
-                        > span {
-                            opacity: 0.5;
-                        }
-                        &::before {
-                            content: '';
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            translate: -50% -50%;
-                            width: 110%;
-                            height: rem(2);
-                            background-color: $c-accent;
-                            rotate: -8deg;
-                        }
-                    }
-                }
-            }
-            &-button {
-                cursor: pointer;
-                width: fit-content;
-                text-transform: uppercase;
-                font-size: rem(12);
-                font-weight: $fw-semi;
-                color: $c-F5142B;
-                text-decoration: underline;
-                @media (pointer: fine) {
-                    &:hover {
-                        text-decoration: none;
-                    }
-                }
-            }
-        }
         &__button {
             align-items: center;
             justify-content: center;
@@ -559,7 +370,7 @@
             &__body {
                 grid-template-columns: 100%;
                 grid-template-areas:
-                    'hint'
+                    'calculator'
                     'list'
                     'sider'
                     'button';

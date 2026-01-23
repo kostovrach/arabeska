@@ -8,7 +8,7 @@
                 </p>
             </div>
             <div class="subscription-pricing__list">
-                <SubscriptionPricingCard
+                <PSubscriptionPricingCard
                     v-for="(card, idx) in props.pricingCards"
                     :key="card.id"
                     :data="card"

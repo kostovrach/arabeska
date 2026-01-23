@@ -33,21 +33,27 @@
                             /мес
                         </span>
                     </div>
-                    <button
-                        :class="[
-                            'pricing-card__button',
-                            inCart ? 'pricing-card__button--checked' : '',
-                        ]"
-                        :title="inCart ? 'В корзине' : 'Добавить в корзину'"
-                        @click.prevent="toggleCart"
-                    >
-                        <span class="pricing-card__button-icon pricing-card__button-icon--default">
-                            <SvgSprite type="cart" :size="32" />
-                        </span>
-                        <span class="pricing-card__button-icon pricing-card__button-icon--checked">
-                            <SvgSprite type="checkmark" :size="32" />
-                        </span>
-                    </button>
+                    <ClientOnly>
+                        <button
+                            :class="[
+                                'pricing-card__button',
+                                inCart ? 'pricing-card__button--checked' : '',
+                            ]"
+                            :title="inCart ? 'В корзине' : 'Добавить в корзину'"
+                            @click.prevent="toggleCart"
+                        >
+                            <span
+                                class="pricing-card__button-icon pricing-card__button-icon--default"
+                            >
+                                <SvgSprite type="cart" :size="32" />
+                            </span>
+                            <span
+                                class="pricing-card__button-icon pricing-card__button-icon--checked"
+                            >
+                                <SvgSprite type="checkmark" :size="32" />
+                            </span>
+                        </button>
+                    </ClientOnly>
                 </div>
             </div>
         </div>
@@ -97,6 +103,15 @@
                     flex: 1;
                 }
             }
+        }
+        @media (max-width: 1100px) {
+            aspect-ratio: 1.2/1;
+        }
+        @media (max-width: 768px) {
+            aspect-ratio: 1/1.2;
+        }
+        @media (max-width: 540px) {
+            aspect-ratio: 1.1/1;
         }
         &__sticker {
             position: absolute;
@@ -262,24 +277,6 @@
                 width: fit-content;
                 font-size: lineScale(20, 16, 480, 1440);
             }
-        }
-    }
-
-    @media (max-width: 1100px) {
-        .pricing-card {
-            aspect-ratio: 1.2/1;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .pricing-card {
-            aspect-ratio: 1/1.2;
-        }
-    }
-
-    @media (max-width: 540px) {
-        .pricing-card {
-            aspect-ratio: 1.1/1;
         }
     }
 </style>

@@ -20,9 +20,9 @@
             <div class="home-carousel__body">
                 <EmblaContainer
                     ref="sliderRef"
-                    :options="carouselOptions"
+                    :options="{ loop: true, align: 'center', dragFree: true }"
                     :autoScroll="props.autoplay"
-                    :autoScrollOptions="autoScrollOptions"
+                    :autoScrollOptions="{ speed: 1 }"
                     :stop-scroll-on-hover="true"
                     padding="48px 0"
                 >
@@ -47,8 +47,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
-    import type { AutoScrollOptionsType } from 'embla-carousel-auto-scroll';
+    import type { EmblaCarouselType } from 'embla-carousel';
 
     const props = withDefaults(
         defineProps<{
@@ -75,20 +74,7 @@
         )
     );
 
-    // slider==============================================
     const sliderRef = ref<{ emblaApi: EmblaCarouselType | null } | null>(null);
-
-    const carouselOptions: EmblaOptionsType = {
-        loop: true,
-        align: 'center',
-        dragFree: true,
-        // duration: props.autoplay ? 5000 : 25,
-    };
-
-    const autoScrollOptions: AutoScrollOptionsType = {
-        speed: 1,
-    };
-    //=====================================================
 </script>
 
 <style scoped lang="scss">
@@ -156,6 +142,7 @@
         }
         &__slide {
             width: fit-content;
+            margin-right: lineScale(24,16,480,1920);
         }
     }
 </style>

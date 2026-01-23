@@ -3,6 +3,7 @@
         :class="[
             'product',
             props.dynamic?.enable ? `product--dynamic product--${props.dynamic?.class}` : '',
+            { 'product--compact': props.compact },
         ]"
     >
         <div v-if="product.discount" class="product__sticker product__sticker--discount">
@@ -29,11 +30,11 @@
             </picture>
             <div class="product__content">
                 <span class="product__id">арт. {{ product.id }}</span>
-                <h3 class="product__title">{{ product.title || '' }}</h3>
+                <h3 class="product__title" :title="product.title">{{ product.title }}</h3>
                 <ul
                     v-if="product.structure"
                     class="product__desc"
-                    :title="product.structure.map((el) => el.structure_id?.name).join(', ')"
+                    :title="`Состав: ${product.structure.map((el) => el.structure_id?.name).join(', ')}`"
                 >
                     {{
                         product.structure.map((el) => el.structure_id?.name).join(', ')
@@ -87,23 +88,27 @@
     import type { ICartItem } from '~~/interfaces/entities/cart-item';
     import type { IProduct } from '~~/interfaces/entities/product';
 
-    const props = defineProps<{
-        data: IProduct;
-        dynamic?: {
-            enable: boolean;
-            class: 'active' | 'disable';
-        };
-    }>();
+    const props = withDefaults(
+        defineProps<{
+            data: IProduct;
+            dynamic?: { enable: boolean; class: 'active' | 'disable' };
+            compact?: boolean;
+        }>(),
+        {
+            dynamic: () => ({ enable: false, class: 'active' }),
+            compact: false,
+        }
+    );
 
     const product = props.data;
+
+    const cartStore = useCartStore();
 
     const defaultProductState: ICartItem = {
         product_id: product.id,
         quantity: 1,
         modifier: 'standart',
     };
-
-    const cartStore = useCartStore();
 
     const inCart = computed(() => cartStore.checkItemInCart(defaultProductState));
 
@@ -124,7 +129,7 @@
         $border-radius: rem(24);
 
         position: relative;
-        width: rem(345);
+        width: rem(300);
         height: 100%;
         transition: translate $td $tf;
         @media (pointer: fine) {
@@ -145,6 +150,9 @@
         @media (max-width: 1024px) {
             width: rem(280);
         }
+        &--compact {
+            width: rem(220);
+        }
         &__sticker {
             position: absolute;
             top: 0;
@@ -156,6 +164,9 @@
             &--new {
                 text-transform: uppercase;
                 @include sticker($bg-color: $c-F5142B);
+            }
+            @at-root #{$p}--compact & {
+                scale: 0.8;
             }
         }
         &__wrapper {
@@ -185,11 +196,19 @@
             border-radius: 0 0 $border-radius $border-radius;
             border: rem(1) solid $c-D4E1E7;
             border-top: none;
+            @at-root #{$p}--compact & {
+                padding: rem(16) lineScale(16, 12, 480, 1920);
+            }
         }
         &__title {
+            min-height: 2em;
             font-size: lineScale(20, 16, 480, 1440);
             font-weight: $fw-semi;
             text-wrap: balance;
+            @include lineClamp(2);
+            @at-root #{$p}--compact & {
+                font-size: lineScale(18, 16, 480, 1920);
+            }
         }
         &__id {
             align-self: flex-end;
@@ -206,6 +225,9 @@
             margin-top: rem(8);
             opacity: 0.5;
             @include lineClamp(1);
+            // @at-root #{$p}--compact & {
+            //     display: none;
+            // }
         }
         &__footer {
             display: flex;
@@ -219,6 +241,9 @@
                 &--crossed {
                     position: relative;
                     font-size: lineScale(16, 14, 480, 1440);
+                    @at-root #{$p}--compact & {
+                        font-size: lineScale(14, 12, 480, 1920);
+                    }
                     &::before {
                         content: '';
                         position: absolute;
@@ -236,6 +261,9 @@
                 }
                 &--current {
                     font-size: lineScale(24, 18, 480, 1440);
+                    @at-root #{$p}--compact & {
+                        font-size: lineScale(20, 18, 480, 1920);
+                    }
                 }
             }
         }

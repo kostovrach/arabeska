@@ -126,8 +126,5 @@
         &__button {
             @include slider-buttons;
         }
-        &__slide {
-            margin-right: 0;
-        }
     }
 </style>

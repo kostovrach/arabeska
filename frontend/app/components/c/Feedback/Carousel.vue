@@ -47,6 +47,7 @@
         }
         &__slide {
             width: fit-content;
+            margin-right: rem(16);
         }
         &__loader {
             width: 100%;

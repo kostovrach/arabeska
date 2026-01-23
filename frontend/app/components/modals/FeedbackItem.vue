@@ -20,7 +20,7 @@
                                 :key="icon"
                                 class="modal-feedback__rate-icon"
                             >
-                                <SvgSprite type="rate-star" :size="24" />
+                                <SvgSprite type="rate-star" :size="20" />
                             </span>
                         </div>
                         <span class="modal-feedback__title">{{ card?.name }}</span>
@@ -95,11 +95,12 @@
                 'image rate'
                 'image title';
             align-items: center;
-            gap: rem(8) rem(24);
+            gap: rem(8) rem(16);
         }
         &__image-container {
             grid-area: image;
-            width: rem(96);
+            width: lineScale(64,48,480,1920);
+            min-width: lineScale(64,48,480,1920);
             aspect-ratio: 1;
             border-radius: 50%;
             overflow: hidden;
@@ -121,11 +122,11 @@
         &__title {
             grid-area: title;
             align-self: flex-start;
-            font-size: lineScale(28, 20, 480, 1440);
+            font-size: lineScale(24, 20, 480, 1440);
             font-weight: $fw-semi;
         }
         &__body {
-            font-size: lineScale(20, 18, 480, 1440);
+            font-size: lineScale(18, 16, 480, 1440);
             line-height: 1.4;
             margin-top: rem(32);
         }

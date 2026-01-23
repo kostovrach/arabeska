@@ -1,29 +1,31 @@
 <template>
-    <div class="call-to-action">
-        <SpeedDial
-            class="call-to-action__body"
-            :model="links"
-            :radius="120"
-            direction="up"
-            :transition-delay="80"
-        >
-            <template #button="{ toggleCallback }">
-                <button class="call-to-action__button" type="button" @click="toggleCallback">
-                    <SvgSprite type="chat" :size="32" />
-                </button>
-            </template>
-            <template #item="{ item }">
-                <a
-                    class="call-to-action__item"
-                    :href="item.href"
-                    :target="item.target"
-                    :style="{ backgroundColor: item.color }"
-                >
-                    <SvgSprite :type="item.icon ?? ''" :size="22" :style="item.iconStyle" />
-                </a>
-            </template>
-        </SpeedDial>
-    </div>
+    <ClientOnly>
+        <div class="call-to-action">
+            <SpeedDial
+                class="call-to-action__body"
+                :model="links"
+                :radius="120"
+                direction="up"
+                :transition-delay="80"
+            >
+                <template #button="{ toggleCallback }">
+                    <button class="call-to-action__button" type="button" @click="toggleCallback">
+                        <SvgSprite type="chat" :size="32" />
+                    </button>
+                </template>
+                <template #item="{ item }">
+                    <a
+                        class="call-to-action__item"
+                        :href="item.href"
+                        :target="item.target"
+                        :style="{ backgroundColor: item.color }"
+                    >
+                        <SvgSprite :type="item.icon ?? ''" :size="22" :style="item.iconStyle" />
+                    </a>
+                </template>
+            </SpeedDial>
+        </div>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -74,6 +76,7 @@
         bottom: lineScale(32, 16, 480, 1920);
         right: lineScale(32, 16, 480, 1920);
         z-index: 10;
+        pointer-events: none;
         &__button {
             cursor: pointer;
             position: relative;
@@ -86,6 +89,7 @@
             background-color: $c-accent;
             border-radius: 50%;
             margin-top: rem(8);
+            pointer-events: auto;
             &::before {
                 content: '';
                 position: absolute;
@@ -119,6 +123,7 @@
             color: $c-FFFFFF;
             margin: rem(6);
             border-radius: rem(8);
+            pointer-events: auto;
             @media (pointer: fine) {
                 &:hover {
                     rotate: -6.5deg;

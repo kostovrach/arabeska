@@ -347,6 +347,7 @@
                 line-height: 1;
                 font-weight: $fw-semi;
                 padding: rem(8) 0;
+                margin-right: rem(32);
                 @media (pointer: fine) {
                     &:hover {
                         color: $c-FFFFFF;

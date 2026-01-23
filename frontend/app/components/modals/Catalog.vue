@@ -95,6 +95,7 @@
             aspect-ratio: 1.5/1;
             border-radius: rem(32);
             overflow: hidden;
+            margin-right: rem(16);
             @media (pointer: fine) {
                 &:hover {
                     #{$p}__item {

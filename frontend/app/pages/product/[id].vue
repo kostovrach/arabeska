@@ -210,6 +210,22 @@
                                     <span><SvgSprite type="box" :size="24" /></span>
                                     <span>Размеры {{ product?.size }}</span>
                                 </li>
+                                <li class="product-view__footer-card">
+                                    <span><SvgSprite type="supplies" :size="24" /></span>
+                                    <span>Свежие поставки каждый день</span>
+                                </li>
+                                <li class="product-view__footer-card">
+                                    <span><SvgSprite type="postcard" :size="30" /></span>
+                                    <span>Открытка в подарок</span>
+                                </li>
+                                <li class="product-view__footer-card">
+                                    <span><SvgSprite type="image" :size="24" /></span>
+                                    <span>Фото букета перед отправкой</span>
+                                </li>
+                                <li class="product-view__footer-card">
+                                    <span><SvgSprite type="cashback" :size="24" /></span>
+                                    <span>Кэшбек до 10% от суммы заказа</span>
+                                </li>
                             </ul>
                         </ClientOnly>
                     </div>
@@ -221,7 +237,7 @@
                                     content: el.content,
                                 })) ?? []
                             "
-                            :multiply="true"
+                            multiple
                         />
                     </div>
                 </div>
@@ -481,12 +497,30 @@
                 'slider content'
                 'slider info';
             gap: lineScale(64, 32, 1024, 1440);
+            @media (max-width: 1240px) {
+                grid-template-areas:
+                    'slider content'
+                    'info info';
+            }
+            @media (max-width: 768px) {
+                grid-template-areas:
+                    'slider slider'
+                    'content content'
+                    'info info';
+            }
         }
         &__slider {
             grid-area: slider;
             position: relative;
             width: fit-content;
             height: 100%;
+            @media (max-width: 1240px) {
+                width: 100%;
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: space-between;
+                gap: rem(32);
+            }
             &-wrapper {
                 position: sticky;
                 top: rem(136);
@@ -518,6 +552,12 @@
                 'main sider'
                 'footer footer';
             gap: lineScale(64, 32, 480, 1440);
+            @media (max-width: 1240px) {
+                grid-template-areas:
+                    'main main'
+                    'sider sider'
+                    'footer footer';
+            }
         }
         &__main {
             grid-area: main;
@@ -670,6 +710,9 @@
             &-image {
                 max-width: rem(228);
                 aspect-ratio: 1;
+                @media (max-width: 1024px) {
+                    max-width: rem(160);
+                }
                 img {
                     width: 100%;
                     height: 100%;
@@ -695,13 +738,14 @@
         &__footer {
             grid-area: footer;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             gap: rem(8);
             &-card {
-                flex: 1 1 30%;
+                flex: 1;
+                min-width: rem(270);
                 display: flex;
                 align-items: center;
-                justify-content: center;
                 gap: rem(16);
                 padding: rem(16) rem(24);
                 border-radius: rem(32);
@@ -734,67 +778,6 @@
         }
         &__info {
             grid-area: info;
-        }
-    }
-
-    @media (max-width: 1240px) {
-        .product-view {
-            &__body {
-                grid-template-areas:
-                    'slider content'
-                    'info info';
-            }
-            &__content {
-                grid-template-areas:
-                    'main main'
-                    'sider sider'
-                    'footer footer';
-            }
-            &__sider {
-                width: 100%;
-                display: flex;
-                flex-direction: row-reverse;
-                justify-content: space-between;
-                gap: rem(32);
-            }
-            &__footer {
-                flex-wrap: wrap;
-            }
-        }
-    }
-
-    @media (max-width: 1024px) {
-        .product-view {
-            &__sider {
-                &-image {
-                    max-width: rem(160);
-                }
-            }
-        }
-    }
-
-    @media (max-width: 768px) {
-        .product-view {
-            &__body {
-                grid-template-areas:
-                    'slider slider'
-                    'content content'
-                    'info info';
-            }
-        }
-    }
-
-    @media (max-width: 580px) {
-        .product-view {
-            &__footer {
-                display: flex;
-                flex-direction: column;
-                &-card {
-                    flex: initial;
-                    width: 100%;
-                    justify-content: flex-start;
-                }
-            }
         }
     }
 </style>

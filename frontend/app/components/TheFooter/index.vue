@@ -205,14 +205,31 @@
         background-color: $c-secondary;
         &__container {
             display: grid;
+            grid-template-columns: 30% auto 30%;
             grid-template-areas:
                 'slider main nav'
                 'info info info';
             gap: rem(32);
             @include content-container;
+            @media (max-width: 1440px) {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-areas:
+                    'main nav'
+                    'info info';
+                gap: rem(64) rem(32);
+            }
+            @media (max-width: 1024px) {
+                grid-template-areas:
+                    'main main'
+                    'nav nav'
+                    'info info';
+            }
         }
         &__slider {
             grid-area: slider;
+            @media (max-width: 1440px) {
+                display: none;
+            }
         }
         &__main {
             grid-area: main;
@@ -254,6 +271,9 @@
                 'map address';
             justify-content: space-between;
             gap: rem(32) lineScale(64, 32, 480, 1440);
+            @media (max-width: 1024px) {
+                justify-content: initial;
+            }
             &-list {
                 max-width: 20ch;
                 display: flex;
@@ -294,6 +314,10 @@
             justify-content: space-between;
             gap: rem(32);
             color: $c-98BBD7;
+            @media (max-width: 768px) {
+                display: flex;
+                flex-direction: column;
+            }
             &-copy {
                 grid-area: copy;
                 cursor: default;
@@ -324,43 +348,6 @@
                 font-size: rem(12);
                 font-family: 'Inter', sans-serif;
                 opacity: 0.5;
-            }
-        }
-    }
-
-    @media (max-width: 1440px) {
-        .footer {
-            &__container {
-                grid-template-areas:
-                    'main nav'
-                    'info info';
-                gap: rem(64) rem(32);
-            }
-            &__slider {
-                display: none;
-            }
-        }
-    }
-
-    @media (max-width: 1024px) {
-        .footer {
-            &__container {
-                grid-template-areas:
-                    'main main'
-                    'nav nav'
-                    'info info';
-            }
-            &__nav {
-                justify-content: initial;
-            }
-        }
-    }
-
-    @media (max-width: 768px) {
-        .footer {
-            &__info {
-                display: flex;
-                flex-direction: column;
             }
         }
     }

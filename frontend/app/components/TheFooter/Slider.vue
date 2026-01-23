@@ -83,6 +83,7 @@
             aspect-ratio: 1.2/1;
             border-radius: rem(32);
             overflow: hidden;
+            margin-right: rem(16);
             @media (pointer: fine) {
                 &:hover {
                     #{$p}__slide-wrapper {
