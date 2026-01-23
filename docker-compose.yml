@@ -30,13 +30,20 @@ services:
             DB_DATABASE: ${POSTGRES_DB}
             DB_USER: ${POSTGRES_USER}
             DB_PASSWORD: ${POSTGRES_PASSWORD}
+
             STORAGE_LOCATIONS: ${STORAGE_LOCATIONS}
-            STORAGE_LOCAL_DRIVER: ${STORAGE_LOCAL_DRIVER}
-            STORAGE_LOCAL_ROOT: ${STORAGE_LOCAL_ROOT}
+            STORAGE_S3_DRIVER: ${STORAGE_S3_DRIVER}
+            STORAGE_S3_KEY: ${STORAGE_S3_KEY}
+            STORAGE_S3_SECRET: ${STORAGE_S3_SECRET}
+            STORAGE_S3_BUCKET: ${STORAGE_S3_BUCKET}
+            STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
+            STORAGE_S3_REGION: ${STORAGE_S3_REGION}
+            STORAGE_S3_ROOT: ${STORAGE_S3_ROOT}
+
             CORS_ENABLED: ${CORS_ENABLED}
             CORS_ORIGIN: ${CORS_ORIGIN}
         volumes:
-            - ${PWD}/cms/uploads:/directus/uploads
+            - ${STORAGE_S3_ROOT}:/directus/uploads
             - ${PWD}/cms/extensions:/directus/extensions
             - ${PWD}/cms/backups:/directus/backups
         depends_on:
