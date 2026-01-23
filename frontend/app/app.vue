@@ -25,6 +25,10 @@
             'style.styles_id.*',
             'structure.*',
             'structure.structure_id.*',
+            'color.*',
+            'color.colors_id.*',
+            'format.*',
+            'format.format_id.*',
         ],
         {
             transform: (productsArray) => {

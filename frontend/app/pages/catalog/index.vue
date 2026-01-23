@@ -3,10 +3,7 @@
         <div class="catalog-nav">
             <EmblaContainer
                 class="catalog-nav__container"
-                :options="{
-                    align: 'start',
-                    dragFree: true,
-                }"
+                :options="{ align: 'start', dragFree: true, loop: true }"
                 auto-scroll
                 :auto-scroll-options="{ speed: 0.75 }"
                 stop-scroll-on-hover
@@ -24,14 +21,16 @@
         <div class="catalog-head">
             <div class="catalog-head__container">
                 <div class="catalog-head__titlebox">
-                    <span v-if="products.length" class="catalog-head__counter">
-                        ({{ products.length }})
-                    </span>
+                    <ClientOnly>
+                        <span v-if="products.length" class="catalog-head__counter">
+                            ({{ products.length }})
+                        </span>
+                    </ClientOnly>
                     <h1 class="catalog-head__title">
                         {{ 'Сборные букеты с доставкой в Самаре' }}
                     </h1>
                 </div>
-                <TheFilters :render-condition="true" />
+                <TheFilters type="standard" />
             </div>
         </div>
         <div class="catalog-list">
@@ -50,7 +49,9 @@
                                 </picture>
                                 <p class="catalog-list__no-result-title">Совпадений не найдено</p>
                                 <p class="catalog-list__no-result-text">
-                                    Попробуйте сбросить фильтры или поискать в других категориях
+                                    Попробуйте
+                                    <button @click="resetFilters">сбросить фильтры</button>
+                                    или поискать в других категориях
                                 </p>
                             </div>
                         </div>
@@ -62,12 +63,12 @@
 </template>
 
 <script setup lang="ts">
-    // types ===================================================================
     import type { ICategories } from '~~/interfaces/categories';
     import type { ISettings } from '~~/interfaces/settings';
-    // =========================================================================
 
     const filterStore = useFiltersStore();
+
+    const { resetFilters } = filterStore;
 
     // data ====================================================================
     const { content: generalSettings } = await useCms<ISettings>('settings', [
@@ -186,6 +187,15 @@
                 font-size: lineScale(16, 14, 480, 1440);
                 line-height: 1.4;
                 opacity: 0.5;
+                > button {
+                    cursor: pointer;
+                    text-decoration: underline;
+                    @media (pointer: fine) {
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
+                }
             }
         }
     }

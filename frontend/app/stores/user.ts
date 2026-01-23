@@ -1,8 +1,8 @@
 import type { IUser } from '~~/interfaces/entities/user';
 
 export const useUserStore = defineStore('user', () => {
-    const user = useState<Omit<IUser, 'password'> | null>('user', () => null);
-    const isAuth = useState<boolean>('isAuth', () => false);
+    const user = ref<Omit<IUser, 'password'> | null>(null);
+    const isAuth = ref<boolean>(false);
 
     function setUser(payload: Omit<IUser, 'password'>): void {
         user.value = payload;

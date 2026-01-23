@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
         <form
-            v-if="props.renderCondition"
+            v-if="props.type !== 'none'"
             @submit.prevent
             class="filters"
             role="region"
@@ -28,38 +28,75 @@
                     />
                     <span>Акции</span>
                 </label>
-                <TheFiltersDropdown
-                    class="filters__item filters__item--multiply"
-                    label="Цветы"
-                    :items="
-                        structures?.map((el) => ({
-                            id: el.structure_id.id,
-                            name: el.structure_id.name,
-                        })) ?? []
-                    "
-                    v-model:selected="filterState.selectedStructures"
-                />
-                <TheFiltersDropdown
-                    class="filters__item filters__item--multiply"
-                    label="Повод"
-                    :items="
-                        reasons?.map((el) => ({ id: el.reason_id.id, name: el.reason_id.name })) ??
-                        []
-                    "
-                    v-model:selected="filterState.selectedReasons"
-                />
-                <TheFiltersDropdown
-                    class="filters__item filters__item--multiply"
-                    label="Стиль"
-                    :items="
-                        styles?.map((el) => ({ id: el.styles_id.id, name: el.styles_id.name })) ??
-                        []
-                    "
-                    v-model:selected="filterState.selectedStyles"
-                />
+
+                <template v-if="props.type === 'standard'">
+                    <TheFiltersDropdown
+                        class="filters__item filters__item--multiple"
+                        label="Цветы"
+                        :items="
+                            structures?.map((el) => ({
+                                id: el.structure_id.id,
+                                name: el.structure_id.name,
+                            })) ?? []
+                        "
+                        v-model:selected="filterState.selectedStructures"
+                    />
+                    <TheFiltersDropdown
+                        class="filters__item filters__item--multiple"
+                        label="Повод"
+                        :items="
+                            reasons?.map((el) => ({
+                                id: el.reason_id.id,
+                                name: el.reason_id.name,
+                            })) ?? []
+                        "
+                        v-model:selected="filterState.selectedReasons"
+                    />
+                    <TheFiltersDropdown
+                        class="filters__item filters__item--multiple"
+                        label="Стиль"
+                        :items="
+                            styles?.map((el) => ({
+                                id: el.styles_id.id,
+                                name: el.styles_id.name,
+                            })) ?? []
+                        "
+                        v-model:selected="filterState.selectedStyles"
+                    />
+                </template>
+
+                <template v-if="props.type === 'roses'">
+                    <TheFiltersDropdown
+                        class="filters__item filters__item--multiple"
+                        label="Цвет"
+                        :items="
+                            colors?.map((el) => ({
+                                id: el.colors_id.id,
+                                name: el.colors_id.name,
+                            })) ?? []
+                        "
+                        v-model:selected="filterState.selectedColors"
+                    />
+                </template>
+
+                <template v-if="props.type === 'roses' || props.type === 'additional'">
+                    <TheFiltersDropdown
+                        class="filters__item filters__item--multiple"
+                        label="Формат"
+                        :items="
+                            formats?.map((el) => ({
+                                id: el.format_id.id,
+                                name: el.format_id.name,
+                            })) ?? []
+                        "
+                        v-model:selected="filterState.selectedFormats"
+                    />
+                </template>
                 <button
                     class="filters__item filters__item--reset"
                     type="button"
+                    title="Сбросить фильтры"
+                    aria-label="Сбросить фильтры"
                     @click="
                         () => {
                             resetFilters();
@@ -132,16 +169,15 @@
 </template>
 
 <script setup lang="ts">
-    // types ======================================================================
     import type { LocationQuery } from 'vue-router';
-    // ============================================================================
+    import type { ICategories } from '~~/interfaces/categories';
 
     const props = withDefaults(
         defineProps<{
-            renderCondition: boolean;
+            type: ICategories['filters'];
         }>(),
         {
-            renderCondition: true,
+            type: 'standard',
         }
     );
 
@@ -150,8 +186,17 @@
     const router = useRouter();
 
     const filterStore = useFiltersStore();
-    const { filterState, structures, reasons, styles, minPrice, maxPrice } =
-        storeToRefs(filterStore);
+
+    const filterState = computed(() => filterStore.filterState);
+
+    const structures = computed(() => filterStore.structures);
+    const reasons = computed(() => filterStore.reasons);
+    const styles = computed(() => filterStore.styles);
+    const colors = computed(() => filterStore.colors);
+    const formats = computed(() => filterStore.formats);
+
+    const minPrice = computed(() => filterStore.minPrice);
+    const maxPrice = computed(() => filterStore.maxPrice);
 
     const { resetFilters, loadFilters, initFromQuery } = filterStore;
 
@@ -185,6 +230,7 @@
     // helpers ====================================================================
     const doSyncToUrl = useDebounceFn(() => {
         const q: LocationQuery = {};
+
         if (filterState.value.popularOnly) q.popular = 'true';
         if (filterState.value.discountOnly) q.discount = 'true';
         if (filterState.value.selectedStructures.length)
@@ -193,6 +239,10 @@
             q.reason = filterState.value.selectedReasons.join(',');
         if (filterState.value.selectedStyles.length)
             q.style = filterState.value.selectedStyles.join(',');
+        if (filterState.value.selectedColors.length)
+            q.color = filterState.value.selectedColors.join(',');
+        if (filterState.value.selectedFormats.length)
+            q.format = filterState.value.selectedFormats.join(',');
         if (
             filterState.value.priceMin != null &&
             filterState.value.priceMax != null &&
@@ -242,6 +292,10 @@
         justify-content: space-between;
         gap: rem(32);
         font-family: 'Inter', sans-serif;
+        @media (max-width: 768px) {
+            display: flex;
+            flex-direction: column;
+        }
         &__group {
             grid-area: group;
             display: flex;
@@ -249,12 +303,16 @@
             flex-wrap: wrap;
             gap: rem(8);
             user-select: none;
+            @media (max-width: 768px) {
+                max-width: 75%;
+            }
         }
         &__item {
             cursor: pointer;
             font-size: lineScale(18, 16, 480, 1440);
             font-weight: $fw-semi;
             &--button {
+                position: relative;
                 width: fit-content;
                 display: flex;
                 align-items: center;
@@ -262,6 +320,12 @@
                 padding: rem(12) rem(18);
                 border-radius: rem(32);
                 opacity: 0.8;
+                > input {
+                    position: absolute;
+                    inset: 0;
+                    z-index: -1;
+                    pointer-events: none;
+                }
                 &:has(input[type='checkbox']:checked) {
                     color: $c-FFFFFF;
                     background-color: $c-accent;
@@ -319,6 +383,9 @@
             gap: rem(32);
             font-size: rem(16);
             font-weight: $fw-semi;
+            @media (max-width: 768px) {
+                align-self: flex-end;
+            }
             &-label {
                 opacity: 0.5;
             }
@@ -389,18 +456,7 @@
         }
         &__sort {
             grid-area: sort;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .filters {
-            display: flex;
-            flex-direction: column;
-            &__group {
-                max-width: 75%;
-            }
-            &__range,
-            &__sort {
+            @media (max-width: 768px) {
                 align-self: flex-end;
             }
         }

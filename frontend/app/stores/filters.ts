@@ -34,11 +34,33 @@ interface IFilterReasons {
     };
 }
 
+interface IFilterColor {
+    id: number | string;
+    filters_id?: unknown;
+    colors_id: {
+        id: number | string;
+        name: string;
+        sort?: number;
+    };
+}
+
+interface IFilterFormat {
+    id: number | string;
+    filters_id?: unknown;
+    format_id: {
+        id: number | string;
+        name: string;
+        sort?: number;
+    };
+}
+
 interface IFiltersList {
     id?: number | string;
     styles?: IFilterStyle[];
     reasons?: IFilterReasons[];
     structure?: IFilterStructure[];
+    color?: IFilterColor[];
+    format?: IFilterFormat[];
 }
 
 interface FilterState {
@@ -47,6 +69,8 @@ interface FilterState {
     selectedStructures: string[];
     selectedReasons: string[];
     selectedStyles: string[];
+    selectedColors: string[];
+    selectedFormats: string[];
     priceMin: number | null;
     priceMax: number | null;
     sortBy: SortKey;
@@ -63,6 +87,8 @@ export const useFiltersStore = defineStore('filters', () => {
         selectedStructures: [],
         selectedReasons: [],
         selectedStyles: [],
+        selectedColors: [],
+        selectedFormats: [],
         priceMin: null,
         priceMax: null,
         sortBy: null,
@@ -71,6 +97,8 @@ export const useFiltersStore = defineStore('filters', () => {
     const structures = ref<IFilterStructure[]>([]);
     const reasons = ref<IFilterReasons[]>([]);
     const styles = ref<IFilterStyle[]>([]);
+    const colors = ref<IFilterColor[]>([]);
+    const formats = ref<IFilterFormat[]>([]);
     // ==============================================================
 
     // Computed =====================================================
@@ -146,6 +174,23 @@ export const useFiltersStore = defineStore('filters', () => {
                         return false;
                 }
 
+                if (filterState.value.selectedColors.length) {
+                    const names = (product.color ?? []).map((col) =>
+                        String(col.colors_id?.name ?? '').trim()
+                    );
+
+                    if (!filterState.value.selectedColors.every((sel) => names.includes(sel)))
+                        return false;
+                }
+
+                if (filterState.value.selectedFormats.length) {
+                    const names = (product.format ?? []).map((fr) =>
+                        String(fr.format_id?.name ?? '').trim()
+                    );
+                    if (!filterState.value.selectedFormats.every((sel) => names.includes(sel)))
+                        return false;
+                }
+
                 return true;
             });
 
@@ -175,6 +220,10 @@ export const useFiltersStore = defineStore('filters', () => {
             'structure.structure_id.*',
             'styles.*',
             'styles.styles_id.*',
+            'color.*',
+            'color.colors_id.*',
+            'format.*',
+            'format.format_id.*',
         ]);
 
         watchEffect(() => {
@@ -183,6 +232,8 @@ export const useFiltersStore = defineStore('filters', () => {
                 if (data.structure?.length) structures.value = data.structure;
                 if (data.reasons?.length) reasons.value = data.reasons;
                 if (data.styles?.length) styles.value = data.styles;
+                if (data.color?.length) colors.value = data.color;
+                if (data.format?.length) formats.value = data.format;
             }
         });
     }
@@ -201,6 +252,12 @@ export const useFiltersStore = defineStore('filters', () => {
             selectedStyles: query.style
                 ? String(query.style).split(',').map(decodeURIComponent)
                 : [],
+            selectedColors: query.color
+                ? String(query.color).split(',').map(decodeURIComponent)
+                : [],
+            selectedFormats: query.format
+                ? String(query.format).split(',').map(decodeURIComponent)
+                : [],
             priceMin: query.price_min ? Number(query.price_min) : minPrice.value,
             priceMax: query.price_max ? Number(query.price_max) : maxPrice.value,
             sortBy: (query.sort as SortKey) ?? null,
@@ -214,6 +271,8 @@ export const useFiltersStore = defineStore('filters', () => {
             !filterState.value.selectedStructures.length &&
             !filterState.value.selectedReasons.length &&
             !filterState.value.selectedStyles.length &&
+            !filterState.value.selectedColors.length &&
+            !filterState.value.selectedFormats.length &&
             filterState.value.priceMax == maxPrice.value &&
             filterState.value.priceMin == minPrice.value &&
             !filterState.value.sortBy
@@ -226,6 +285,8 @@ export const useFiltersStore = defineStore('filters', () => {
                 selectedStructures: [],
                 selectedReasons: [],
                 selectedStyles: [],
+                selectedColors: [],
+                selectedFormats: [],
                 priceMin: minPrice.value,
                 priceMax: maxPrice.value,
                 sortBy: null,
@@ -250,6 +311,8 @@ export const useFiltersStore = defineStore('filters', () => {
         structures,
         reasons,
         styles,
+        colors,
+        formats,
         minPrice,
         maxPrice,
         filteredProducts,

@@ -156,10 +156,17 @@
         }
         &-option {
             cursor: pointer;
+            position: relative;
             font-size: lineScale(16, 14, 480, 1440);
             padding: rem(6) rem(16);
             border: rem(1) solid $c-D4E1E7;
             border-radius: rem(32);
+            > input {
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                pointer-events: none;
+            }
             &:has(input[type='checkbox']:checked) {
                 color: $c-FFFFFF;
                 background-color: $c-accent;

@@ -6,5 +6,5 @@ export interface ICategories {
     image?: string;
     image_url?: string;
     available: boolean;
-    filters: boolean;
+    filters: 'none' | 'standard' | 'roses' | 'additional';
 }

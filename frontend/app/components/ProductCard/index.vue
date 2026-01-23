@@ -28,11 +28,13 @@
                 />
             </picture>
             <div class="product__content">
-                <div class="product__titlebox">
-                    <h3 class="product__title">{{ product.title || '' }}</h3>
-                    <div class="product__id">арт. {{ product.id }}</div>
-                </div>
-                <ul v-if="product.structure" class="product__desc">
+                <span class="product__id">арт. {{ product.id }}</span>
+                <h3 class="product__title">{{ product.title || '' }}</h3>
+                <ul
+                    v-if="product.structure"
+                    class="product__desc"
+                    :title="product.structure.map((el) => el.structure_id?.name).join(', ')"
+                >
                     {{
                         product.structure.map((el) => el.structure_id?.name).join(', ')
                     }}
@@ -61,18 +63,20 @@
                             </div>
                         </li>
                     </ul>
-                    <button
-                        :class="['product__button', inCart ? 'product__button--checked' : '']"
-                        :title="inCart ? 'В корзине' : 'Добавить в корзину'"
-                        @click.prevent="toggleCart"
-                    >
-                        <span class="product__button-icon product__button-icon--default">
-                            <SvgSprite type="cart" :size="28" />
-                        </span>
-                        <span class="product__button-icon product__button-icon--checked">
-                            <SvgSprite type="checkmark" :size="28" />
-                        </span>
-                    </button>
+                    <ClientOnly>
+                        <button
+                            :class="['product__button', inCart ? 'product__button--checked' : '']"
+                            :title="inCart ? 'В корзине' : 'Добавить в корзину'"
+                            @click.prevent="toggleCart"
+                        >
+                            <span class="product__button-icon product__button-icon--default">
+                                <SvgSprite type="cart" :size="24" />
+                            </span>
+                            <span class="product__button-icon product__button-icon--checked">
+                                <SvgSprite type="checkmark" :size="24" />
+                            </span>
+                        </button>
+                    </ClientOnly>
                 </div>
             </div>
         </NuxtLink>
@@ -137,6 +141,10 @@
             // filter: grayscale(100%);
             // pointer-events: none;
         }
+
+        @media (max-width: 1024px) {
+            width: rem(280);
+        }
         &__sticker {
             position: absolute;
             top: 0;
@@ -160,13 +168,13 @@
         }
         &__image-container {
             width: 100%;
-            aspect-ratio: 1;
+            aspect-ratio: 1.1/1;
             overflow: hidden;
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+        }
+        &__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         &__content {
             height: 100%;
@@ -178,27 +186,23 @@
             border: rem(1) solid $c-D4E1E7;
             border-top: none;
         }
-        &__titlebox {
-            display: flex;
-            justify-content: space-between;
-            gap: rem(16);
-        }
         &__title {
-            font-size: lineScale(22, 16, 480, 1440);
+            font-size: lineScale(20, 16, 480, 1440);
             font-weight: $fw-semi;
             text-wrap: balance;
         }
         &__id {
-            // max-width: 15ch;
+            align-self: flex-end;
+            max-width: 15ch;
             white-space: nowrap;
-            // overflow: hidden;
-            // text-overflow: ellipsis;
+            overflow: hidden;
+            text-overflow: ellipsis;
             font-size: rem(14);
             opacity: 0.5;
         }
         &__desc {
             width: 100%;
-            font-size: lineScale(16, 14, 480, 1440);
+            font-size: lineScale(14, 12, 480, 1440);
             margin-top: rem(8);
             opacity: 0.5;
             @include lineClamp(1);
@@ -238,13 +242,18 @@
         &__button {
             cursor: pointer;
             position: relative;
-            width: rem(48);
+            width: lineScale(48, 36, 480, 1920);
+            min-width: lineScale(48, 36, 480, 1920);
             aspect-ratio: 1;
             color: $c-FFFFFF;
             background-color: $c-secondary;
             border-radius: 50%;
             overflow: hidden;
             transition: background-color $td $tf;
+            > svg {
+                height: fit-content;
+                width: rem(64);
+            }
             @media (pointer: fine) {
                 &:not(#{$p}__button--checked):hover {
                     background-color: $c-accent;
@@ -270,15 +279,6 @@
                 &--checked {
                     transform: translateY(-200%);
                 }
-            }
-        }
-    }
-
-    @media (max-width: 1024px) {
-        .product {
-            width: rem(280);
-            &__titlebox {
-                flex-direction: column-reverse;
             }
         }
     }

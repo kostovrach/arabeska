@@ -3,10 +3,7 @@
         <div class="catalog-nav">
             <EmblaContainer
                 class="catalog-nav__container"
-                :options="{
-                    align: 'start',
-                    dragFree: true,
-                }"
+                :options="{ align: 'start', dragFree: true, loop: true }"
                 auto-scroll
                 :auto-scroll-options="{ speed: 0.75 }"
                 stop-scroll-on-hover
@@ -19,7 +16,10 @@
                                 ? 'catalog-nav__link--current'
                                 : '',
                         ]"
-                        :to="{ name: route.name, params: { category: slugify(item.name) } }"
+                        :to="{
+                            name: route.name,
+                            params: { category: slugify(item.name) },
+                        }"
                     >
                         {{ item.name }}
                     </NuxtLink>
@@ -29,14 +29,16 @@
         <div class="catalog-head">
             <div class="catalog-head__container">
                 <div class="catalog-head__titlebox">
-                    <span v-if="products.length" class="catalog-head__counter">
-                        ({{ products.length }})
-                    </span>
+                    <ClientOnly>
+                        <span v-if="products.length" class="catalog-head__counter">
+                            ({{ products.length }})
+                        </span>
+                    </ClientOnly>
                     <h1 class="catalog-head__title">
                         {{ pageTitle ?? 'Сборные букеты с доставкой в Самаре' }}
                     </h1>
                 </div>
-                <TheFilters :render-condition="filtersAvailable" />
+                <TheFilters :type="filtersType" />
             </div>
         </div>
         <div class="catalog-list">
@@ -55,7 +57,9 @@
                                 </picture>
                                 <p class="catalog-list__no-result-title">Совпадений не найдено</p>
                                 <p class="catalog-list__no-result-text">
-                                    Попробуйте сбросить фильтры или поискать в других категориях
+                                    Попробуйте
+                                    <button @click="resetFilters">сбросить фильтры</button>
+                                    или поискать в других категориях
                                 </p>
                             </div>
                         </div>
@@ -67,15 +71,14 @@
 </template>
 
 <script setup lang="ts">
-    // types ===================================================================
     import type { ICategories } from '~~/interfaces/categories';
-    // =========================================================================
 
     const route = useRoute();
     const filterStore = useFiltersStore();
 
-    // data ====================================================================
+    const { resetFilters } = filterStore;
 
+    // data ====================================================================
     const { content: categories } = await useCms<ICategories[]>('categories', [], {
         transform: (cat) => {
             const result = cat.data.filter((el) => el.available === true);
@@ -94,13 +97,13 @@
         else return null;
     });
 
-    const filtersAvailable = computed(() => {
+    const filtersType = computed(() => {
         const coincidence = categories.value?.find(
             (el) => slugify(el.name) === slugify(route.params.category as string)
         );
 
         if (coincidence) return coincidence?.filters;
-        else return false;
+        else return 'none';
     });
 
     // =========================================================================
@@ -202,6 +205,15 @@
                 font-size: lineScale(16, 14, 480, 1440);
                 line-height: 1.4;
                 opacity: 0.5;
+                > button {
+                    cursor: pointer;
+                    text-decoration: underline;
+                    @media (pointer: fine) {
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
+                }
             }
         }
     }

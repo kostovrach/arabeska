@@ -17,9 +17,9 @@
                     class="call-to-action__item"
                     :href="item.href"
                     :target="item.target"
-                    :style="{ color: item.color }"
+                    :style="{ backgroundColor: item.color }"
                 >
-                    <SvgSprite :type="item.icon ?? ''" :size="40" />
+                    <SvgSprite :type="item.icon ?? ''" :size="22" :style="item.iconStyle" />
                 </a>
             </template>
         </SpeedDial>
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-    import { SpeedDial } from '#components';
+    import type { HTMLAttributes } from 'vue';
     import type { IContacts } from '~~/interfaces/contacts';
 
     const { content: contacts } = await useCms<IContacts>('contact');
@@ -37,11 +37,12 @@
         href: string;
         target: string;
         color: string;
+        iconStyle?: HTMLAttributes['style'];
     }[] = [];
 
     if (contacts.value?.vk)
         links.push({
-            icon: 'socials-vk',
+            icon: 'socials-vk-nofill',
             href: `${contacts.value?.vk?.trim().replace(/\s+/g, '')}`,
             target: '_blank',
             color: '#016FCC',
@@ -49,10 +50,19 @@
 
     if (contacts.value?.telegram)
         links.push({
-            icon: 'socials-telegram',
+            icon: 'socials-telegram-nofill',
             href: `${contacts.value?.telegram?.trim().replace(/\s+/g, '')}`,
             target: '_blank',
             color: '#03A4DF',
+            iconStyle: { translate: `-1px 0` },
+        });
+
+    if (contacts.value?.phone)
+        links.push({
+            icon: 'phone',
+            href: `tel:${contacts.value?.phone?.trim().replace(/\s+/g, '')}`,
+            target: '_parent',
+            color: '#99CC65',
         });
 </script>
 
@@ -75,6 +85,7 @@
             justify-content: center;
             background-color: $c-accent;
             border-radius: 50%;
+            margin-top: rem(8);
             &::before {
                 content: '';
                 position: absolute;
@@ -100,7 +111,20 @@
             }
         }
         &__item {
-            color: $c-accent;
+            width: rem(34);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $c-FFFFFF;
+            margin: rem(6);
+            border-radius: rem(8);
+            @media (pointer: fine) {
+                &:hover {
+                    rotate: -6.5deg;
+                    scale: 1.05;
+                }
+            }
         }
     }
 </style>

@@ -52,11 +52,33 @@ interface IProductStructure {
 }
 // ===============================================
 
-// styles =====================================
+// styles ========================================
 interface IProductStyle {
     id?: number | string;
     products_id?: any;
     styles_id?: {
+        id?: number | string;
+        name?: string;
+    };
+}
+// ===============================================
+
+// colors ========================================
+interface IProductColor {
+    id?: number | string;
+    products_id?: any;
+    colors_id?: {
+        id?: number | string;
+        name?: string;
+    };
+}
+// ===============================================
+
+// format ========================================
+interface IProductFormat {
+    id?: number | string;
+    products_id?: any;
+    format_id?: {
         id?: number | string;
         name?: string;
     };
@@ -81,6 +103,8 @@ export interface IProduct extends ISeo {
     structure?: IProductStructure[];
     reason?: IProductReasons[];
     style?: IProductStyle[];
+    color?: IProductColor[];
+    format?: IProductFormat[];
 
     available: boolean;
     popular: boolean;

@@ -177,7 +177,7 @@
                 </div>
             </div>
         </ClientOnly>
-        <HintCarousel title="Вам стоит взглянуть" />
+        <CHintCarousel title="Вам стоит взглянуть" />
     </NuxtLayout>
 </template>
 
