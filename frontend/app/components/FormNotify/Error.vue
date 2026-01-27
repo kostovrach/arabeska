@@ -1,9 +1,20 @@
 <template>
-    <div class="form-notify-error">
+    <div :class="['form-notify-error', `form-notify-error--${props.alignment}`]">
         <span class="form-notify-error__icon">!</span>
         <span class="form-notify-error__text"><slot></slot></span>
     </div>
 </template>
+
+<script setup lang="ts">
+    const props = withDefaults(
+        defineProps<{
+            alignment?: 'left' | 'center';
+        }>(),
+        {
+            alignment: 'left',
+        }
+    );
+</script>
 
 <style scoped lang="scss">
     @use '~/assets/scss/abstracts' as *;
@@ -20,10 +31,15 @@
         border: rem(2) solid $error-color;
         border-radius: rem(8);
         padding: rem(8) rem(16);
+        &--center {
+            justify-content: center;
+            max-width: initial;
+        }
         &__icon {
             width: rem(18);
             min-width: rem(18);
-            aspect-ratio: 1;
+            height: rem(18);
+            min-height: rem(18);
             display: flex;
             align-items: center;
             justify-content: center;

@@ -340,7 +340,10 @@
                                                         }}
                                                     </li>
                                                 </ul>
-                                                <p class="profile__section--orders-item-subtitle">
+                                                <p
+                                                    class="profile__section--orders-item-subtitle"
+                                                    v-if="order.delivery_date"
+                                                >
                                                     {{
                                                         `Дата доставки: ${normalizeDate(order.delivery_date)}`
                                                     }}
@@ -423,7 +426,7 @@
                     </div>
                 </div>
             </div>
-            <ViewedCarousel />
+            <CViewedCarousel />
         </ClientOnly>
     </NuxtLayout>
 </template>
@@ -461,7 +464,12 @@
     const userOrders = ref<IOrder[]>([]);
 
     const userOrdersShow = computed(() => {
-        return userOrders.value?.filter((order) => order.status === userOrdersTab.value) ?? [];
+        const valid =
+            userOrders.value?.filter((order) => order.status === userOrdersTab.value) ?? [];
+
+        return valid.sort(
+            (a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
+        );
     });
 
     const ordersChips: {

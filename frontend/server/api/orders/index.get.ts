@@ -20,13 +20,13 @@ export default defineEventHandler(
         try {
             const user = await getDirectusItem<IUser>('users', userData.id);
             if (!user)
-                return { status: 404, message: 'User not found', success: false, orders: [] };
+                return { status: 404, message: 'Пользователь не найден', success: false, orders: [] };
 
             const orders = await getDirectusCollection<IOrder[]>('orders', {
                 filter: { user_id: { _eq: user.id } },
             });
             if (!orders.length)
-                return { status: 404, message: 'Orders not found', success: false, orders: [] };
+                return { status: 404, message: 'У данного пользователя отсутствуют заказы', success: false, orders: [] };
 
             return { status: 200, success: true, orders };
         } catch (err) {

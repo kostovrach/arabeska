@@ -104,6 +104,7 @@
         &__link {
             white-space: nowrap;
             font-size: lineScale(20, 18, 480, 1440);
+            margin-right: rem(18);
             @media (pointer: fine) {
                 &:hover {
                     color: $c-FFFFFF;

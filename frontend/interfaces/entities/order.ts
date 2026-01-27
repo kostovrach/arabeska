@@ -30,17 +30,11 @@ export interface IOrder {
     recipient_secret: boolean; // Не говорить, что цветы
 
     // Информация о доставке
-    delivery: 'courier' | 'pickup';
-    delivery_date: string;
-    delivery_time:
-        | '08:00 - 10:00'
-        | '10:00 - 12:00'
-        | '12:00 - 14:00'
-        | '14:00 - 16:00'
-        | '16:00 - 18:00'
-        | '18:00 - 20:00';
-    delivery_pickup_address: string;
-    delivery_address: string;
+    delivery: 'courier' | 'pickup' | 'specify';
+    delivery_date: string | null;
+    delivery_time: string | null;
+    delivery_pickup_address: string | null;
+    delivery_address: string | null;
 
     // Открытка
     postcard?: string;

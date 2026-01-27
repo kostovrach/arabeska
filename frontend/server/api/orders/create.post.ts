@@ -23,16 +23,24 @@ export default defineEventHandler(
 
         const user = await getDirectusItem<IUser>('users', userData.id);
         if (!user) {
-            return { status: 404, message: 'User not found', success: false };
+            return { status: 404, message: 'Ошибка: пользователь не найден', success: false };
         }
 
         try {
             const createOrder = await createDirectusItem<IOrder>('orders', { ...order });
             if (!createOrder) {
-                return { status: 500, message: 'Server error', success: false };
+                return {
+                    status: 500,
+                    message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
+                    success: false,
+                };
             }
         } catch {
-            return { status: 500, message: 'Server error', success: false };
+            return {
+                status: 500,
+                message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
+                success: false,
+            };
         }
 
         if (promocode) {
@@ -42,7 +50,11 @@ export default defineEventHandler(
                     : [promocode],
             });
             if (!updateUser) {
-                return { status: 500, message: 'Server error', success: false };
+                return {
+                    status: 500,
+                    message: 'Произошла непредвиденная ошибка, попробуйте повторить попытку позже',
+                    success: false,
+                };
             }
         }
 

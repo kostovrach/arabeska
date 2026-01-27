@@ -56,7 +56,7 @@
                 </div>
             </div>
         </ClientOnly>
-        <HintCarousel title="Рекомендуем" />
+        <CHintCarousel title="Рекомендуем" />
     </NuxtLayout>
 </template>
 

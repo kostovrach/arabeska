@@ -113,6 +113,9 @@
                                         {{ totalAmount.toLocaleString('ru-RU') }}
                                     </span>
                                 </div>
+                                <pre>
+                                    {{ order }}
+                                </pre>
                             </aside>
                             <form class="checkout__form">
                                 <div class="checkout__section">
@@ -140,7 +143,10 @@
                                     </div>
                                     <div class="checkout__togglerbox">
                                         <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
+                                            <label
+                                                for="order-recipient-self"
+                                                class="checkout__toggler-body"
+                                            >
                                                 <input
                                                     id="order-recipient-self"
                                                     v-model="order.recipient_self"
@@ -148,29 +154,26 @@
                                                     name="order-recipient-self"
                                                     @input="toggleSelfRecipient"
                                                 />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-recipient-self"
-                                            >
-                                                Я получатель
                                             </label>
+                                            <span class="checkout__toggler-label">
+                                                Я получатель
+                                            </span>
                                         </div>
                                         <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
+                                            <label
+                                                for="order-recipient-anonymous"
+                                                class="checkout__toggler-body"
+                                            >
                                                 <input
                                                     id="order-recipient-anonymous"
                                                     v-model="order.recipient_anonymous"
                                                     type="checkbox"
                                                     name="order-recipient-anonymous"
                                                 />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-recipient-anonymous"
-                                            >
-                                                Отправить анонимно
                                             </label>
+                                            <span class="checkout__toggler-label">
+                                                Отправить анонимно
+                                            </span>
                                             <button
                                                 class="checkout__toggler-tooltip"
                                                 type="button"
@@ -181,20 +184,20 @@
                                             </button>
                                         </div>
                                         <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
+                                            <label
+                                                for="order-recipient-secret"
+                                                class="checkout__toggler-body"
+                                            >
                                                 <input
                                                     id="order-recipient-secret"
                                                     v-model="order.recipient_secret"
                                                     type="checkbox"
                                                     name="order-recipient-secret"
                                                 />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-recipient-secret"
-                                            >
-                                                Не говорить, что это цветы
                                             </label>
+                                            <span class="checkout__toggler-label">
+                                                Не говорить, что это цветы
+                                            </span>
                                             <button
                                                 class="checkout__toggler-tooltip"
                                                 type="button"
@@ -205,21 +208,22 @@
                                             </button>
                                         </div>
                                         <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
+                                            <label
+                                                for="order-recipient-notification"
+                                                class="checkout__toggler-body"
+                                            >
                                                 <input
                                                     id="order-recipient-notification"
                                                     v-model="order.recipient_notification"
+                                                    @click="toggleRecipientNotification"
                                                     type="checkbox"
                                                     name="order-recipient-notification"
                                                 />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-recipient-notification"
-                                            >
+                                            </label>
+                                            <span class="checkout__toggler-label">
                                                 Позвонить получателю для уточнения времени и даты
                                                 доставки
-                                            </label>
+                                            </span>
                                             <button
                                                 class="checkout__toggler-tooltip"
                                                 type="button"
@@ -231,130 +235,185 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="checkout__section">
-                                    <h2 class="checkout__section-title">Способ получения</h2>
-                                    <div class="checkout__togglerbox">
-                                        <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
-                                                <input
-                                                    id="order-delivery-courier"
-                                                    v-model="order.delivery"
-                                                    type="radio"
-                                                    name="order-delivery-method"
-                                                    value="courier"
-                                                />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-delivery-courier"
-                                            >
-                                                Доставка курьером
-                                            </label>
-                                        </div>
-                                        <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
-                                                <input
-                                                    id="order-delivery-pickup"
-                                                    v-model="order.delivery"
-                                                    type="radio"
-                                                    name="order-delivery-method"
-                                                    value="pickup"
-                                                />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-delivery-pickup"
-                                            >
-                                                Самовывоз
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <template v-if="order.delivery === 'courier'">
-                                        <div class="checkout__data checkout__data--courier">
-                                            <span class="checkout__data-title">Адрес доставки</span>
-                                            <div
-                                                class="checkout__data-inputbox checkout__data-inputbox--large"
-                                            >
-                                                <Select
-                                                    label-id="order-delivery-street"
-                                                    v-model="order.delivery_address"
-                                                    class="checkout__dropdown"
-                                                    overlay-class="checkout__dropdown-overlay"
-                                                    placeholder="Выберите адрес"
-                                                    :options="userAddresses"
-                                                    unstyled
-                                                    @focus="orderErrors.deliveryAddress = false"
+                                <template v-if="!order.recipient_notification">
+                                    <div class="checkout__section">
+                                        <h2 class="checkout__section-title">Способ получения</h2>
+                                        <div class="checkout__togglerbox">
+                                            <div class="checkout__toggler">
+                                                <label
+                                                    for="order-delivery-courier"
+                                                    class="checkout__toggler-body"
                                                 >
-                                                    <template #option="{ option }">
-                                                        <button
-                                                            class="checkout__dropdown-option"
-                                                            type="button"
-                                                        >
-                                                            {{ option }}
-                                                        </button>
-                                                    </template>
-                                                    <template #footer>
-                                                        <button
-                                                            class="checkout__dropdown-option checkout__dropdown-option--footer"
-                                                            type="button"
-                                                            @click="openAddAddress"
-                                                        >
-                                                            <span>
-                                                                <SvgSprite type="plus" :size="14" />
-                                                            </span>
-                                                            <span>Добавить адрес</span>
-                                                        </button>
-                                                    </template>
-                                                </Select>
+                                                    <input
+                                                        id="order-delivery-courier"
+                                                        v-model="order.delivery"
+                                                        type="radio"
+                                                        name="order-delivery-method"
+                                                        value="courier"
+                                                    />
+                                                </label>
+                                                <span class="checkout__toggler-label">
+                                                    Доставка курьером
+                                                </span>
+                                            </div>
+                                            <div class="checkout__toggler">
+                                                <label
+                                                    for="order-delivery-pickup"
+                                                    class="checkout__toggler-body"
+                                                >
+                                                    <input
+                                                        id="order-delivery-pickup"
+                                                        v-model="order.delivery"
+                                                        type="radio"
+                                                        name="order-delivery-method"
+                                                        value="pickup"
+                                                    />
+                                                </label>
+                                                <label class="checkout__toggler-label">
+                                                    Самовывоз
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <template v-if="order.delivery === 'courier'">
+                                            <div class="checkout__data checkout__data--courier">
+                                                <span class="checkout__data-title">
+                                                    Адрес доставки
+                                                </span>
                                                 <div
-                                                    v-if="orderErrors.deliveryAddress"
-                                                    class="checkout__data-error"
-                                                    style="left: 5%"
+                                                    class="checkout__data-inputbox checkout__data-inputbox--large"
                                                 >
-                                                    <span>i</span>
-                                                    <p>Необходимо заполнить поле</p>
+                                                    <Select
+                                                        label-id="order-delivery-street"
+                                                        v-model="order.delivery_address"
+                                                        class="checkout__dropdown"
+                                                        overlay-class="checkout__dropdown-overlay"
+                                                        placeholder="Выберите адрес"
+                                                        :options="userAddresses"
+                                                        unstyled
+                                                        @focus="orderErrors.deliveryAddress = false"
+                                                    >
+                                                        <template #option="{ option }">
+                                                            <button
+                                                                class="checkout__dropdown-option"
+                                                                type="button"
+                                                            >
+                                                                {{ option }}
+                                                            </button>
+                                                        </template>
+                                                        <template #footer>
+                                                            <button
+                                                                class="checkout__dropdown-option checkout__dropdown-option--footer"
+                                                                type="button"
+                                                                @click="openAddAddress"
+                                                            >
+                                                                <span>
+                                                                    <SvgSprite
+                                                                        type="plus"
+                                                                        :size="14"
+                                                                    />
+                                                                </span>
+                                                                <span>Добавить адрес</span>
+                                                            </button>
+                                                        </template>
+                                                    </Select>
+                                                    <FormNotifyInfo
+                                                        v-if="orderErrors.deliveryAddress"
+                                                        class="checkout__data-error"
+                                                        :position="{ top: '100%', left: '5%' }"
+                                                    >
+                                                        Необходимо заполнить поле
+                                                    </FormNotifyInfo>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="checkout__data--courier-hint">
-                                            <span class="checkout__data--courier-hint-icon">
-                                                <SvgSprite type="warn" :size="48" />
-                                            </span>
-                                            <p class="checkout__data--courier-hint-text">
-                                                Для удаленных районов стоимость доставки
-                                                <span class="ruble">
-                                                    {{ settings?.delivery_price }}
+                                            <div class="checkout__data--courier-hint">
+                                                <span class="checkout__data--courier-hint-icon">
+                                                    <SvgSprite type="warn" :size="48" />
                                                 </span>
-                                                , вне&nbsp;зависимости от&nbsp;стоимости заказа.
-                                                <NuxtLink :to="{ name: 'faq' }" target="_blank">
-                                                    <span>Подробнее</span>
-                                                    <SvgSprite type="arrow" :size="14" />
-                                                </NuxtLink>
-                                            </p>
-                                        </div>
-                                    </template>
-
-                                    <template v-else>
-                                        <div class="checkout__data--pickup">
-                                            <h3 class="checkout__data-title">
-                                                Выберите салон, из которого вам удобно забрать заказ
-                                            </h3>
+                                                <p class="checkout__data--courier-hint-text">
+                                                    Для удаленных районов стоимость доставки
+                                                    <span class="ruble">
+                                                        {{ settings?.delivery_price }}
+                                                    </span>
+                                                    , вне&nbsp;зависимости от&nbsp;стоимости заказа.
+                                                    <NuxtLink :to="{ name: 'faq' }" target="_blank">
+                                                        <span>Подробнее</span>
+                                                        <SvgSprite type="arrow" :size="14" />
+                                                    </NuxtLink>
+                                                </p>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <div class="checkout__data--pickup">
+                                                <h3 class="checkout__data-title">
+                                                    Выберите салон, из которого вам удобно забрать
+                                                    заказ
+                                                </h3>
+                                                <div class="checkout__data-inputbox">
+                                                    <Select
+                                                        label-id="order-delivery-pickup"
+                                                        v-model="order.delivery_pickup_address"
+                                                        class="checkout__dropdown"
+                                                        overlay-class="checkout__dropdown-overlay"
+                                                        placeholder="Выберите салон"
+                                                        :options="
+                                                            contacts?.addresses.map(
+                                                                (el) => el.full_address
+                                                            )
+                                                        "
+                                                        unstyled
+                                                        @focus="
+                                                            orderErrors.deliveryPickupAddress = false
+                                                        "
+                                                    >
+                                                        <template #option="{ option }">
+                                                            <button
+                                                                class="checkout__dropdown-option"
+                                                                type="button"
+                                                            >
+                                                                {{ option }}
+                                                            </button>
+                                                        </template>
+                                                    </Select>
+                                                    <FormNotifyInfo
+                                                        v-if="orderErrors.deliveryPickupAddress"
+                                                        class="checkout__data-error"
+                                                        :position="{ top: '100%', left: '5%' }"
+                                                    >
+                                                        Необходимо заполнить поле
+                                                    </FormNotifyInfo>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <div class="checkout__data checkout__data--date">
+                                            <span class="checkout__data-title">
+                                                Дата и время доставки
+                                            </span>
+                                            <div class="checkout__data-inputbox">
+                                                <input
+                                                    id="order-delivery-date"
+                                                    v-model="order.delivery_date"
+                                                    class="checkout__input--date"
+                                                    type="date"
+                                                    @focus="orderErrors.deliveryDate = false"
+                                                />
+                                                <FormNotifyInfo
+                                                    v-if="orderErrors.deliveryDate"
+                                                    class="checkout__data-error"
+                                                    :position="{ top: '100%', left: '5%' }"
+                                                >
+                                                    Необходимо заполнить поле
+                                                </FormNotifyInfo>
+                                            </div>
                                             <div class="checkout__data-inputbox">
                                                 <Select
-                                                    label-id="order-delivery-pickup"
-                                                    v-model="order.delivery_pickup_address"
+                                                    label-id="order-delivery-time"
+                                                    v-model="order.delivery_time"
                                                     class="checkout__dropdown"
                                                     overlay-class="checkout__dropdown-overlay"
-                                                    placeholder="Выберите салон"
-                                                    :options="
-                                                        contacts?.addresses.map(
-                                                            (el) => el.full_address
-                                                        )
-                                                    "
+                                                    placeholder="Выберите время"
+                                                    :options="deliveryTimeVariants"
                                                     unstyled
-                                                    @focus="
-                                                        orderErrors.deliveryPickupAddress = false
-                                                    "
+                                                    @focus="orderErrors.deliveryTime = false"
                                                 >
                                                     <template #option="{ option }">
                                                         <button
@@ -365,69 +424,17 @@
                                                         </button>
                                                     </template>
                                                 </Select>
-                                                <div
-                                                    v-if="orderErrors.deliveryPickupAddress"
+                                                <FormNotifyInfo
+                                                    v-if="orderErrors.deliveryTime"
                                                     class="checkout__data-error"
-                                                    style="left: 5%"
+                                                    :position="{ top: '100%', left: '5%' }"
                                                 >
-                                                    <span>i</span>
-                                                    <p>Необходимо заполнить поле</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
-                                    <div class="checkout__data checkout__data--date">
-                                        <span class="checkout__data-title">
-                                            Дата и время доставки
-                                        </span>
-                                        <div class="checkout__data-inputbox">
-                                            <input
-                                                id="order-delivery-date"
-                                                v-model="order.delivery_date"
-                                                class="checkout__input--date"
-                                                type="date"
-                                                @focus="orderErrors.deliveryDate = false"
-                                            />
-                                            <div
-                                                v-if="orderErrors.deliveryDate"
-                                                class="checkout__data-error"
-                                                style="left: 5%"
-                                            >
-                                                <span>i</span>
-                                                <p>Необходимо заполнить поле</p>
-                                            </div>
-                                        </div>
-                                        <div class="checkout__data-inputbox">
-                                            <Select
-                                                label-id="order-delivery-time"
-                                                v-model="order.delivery_time"
-                                                class="checkout__dropdown"
-                                                overlay-class="checkout__dropdown-overlay"
-                                                placeholder="Выберите время"
-                                                :options="deliveryTimeVariants"
-                                                unstyled
-                                                @focus="orderErrors.deliveryTime = false"
-                                            >
-                                                <template #option="{ option }">
-                                                    <button
-                                                        class="checkout__dropdown-option"
-                                                        type="button"
-                                                    >
-                                                        {{ option }}
-                                                    </button>
-                                                </template>
-                                            </Select>
-                                            <div
-                                                v-if="orderErrors.deliveryTime"
-                                                class="checkout__data-error"
-                                                style="left: 5%"
-                                            >
-                                                <span>i</span>
-                                                <p>Необходимо заполнить поле</p>
+                                                    Необходимо заполнить поле
+                                                </FormNotifyInfo>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </template>
                                 <div class="checkout__section">
                                     <h3 class="checkout__section-title">Текст для открытки</h3>
                                     <div class="checkout__textarea">
@@ -461,7 +468,10 @@
                                 <div class="checkout__section">
                                     <h3 class="checkout__section-title">Способ оплаты</h3>
                                     <div class="checkout__payment">
-                                        <label class="checkout__payment-item">
+                                        <label
+                                            for="order-payment-sbp"
+                                            class="checkout__payment-item"
+                                        >
                                             <input
                                                 id="order-payment-sbp"
                                                 v-model="order.payment_method"
@@ -483,7 +493,10 @@
                                                 </p>
                                             </div>
                                         </label>
-                                        <label class="checkout__payment-item">
+                                        <label
+                                            for="order-payment-card"
+                                            class="checkout__payment-item"
+                                        >
                                             <input
                                                 id="order-payment-card"
                                                 v-model="order.payment_method"
@@ -505,7 +518,10 @@
                                                 </p>
                                             </div>
                                         </label>
-                                        <label class="checkout__payment-item">
+                                        <label
+                                            for="order-payment-on-receipt"
+                                            class="checkout__payment-item"
+                                        >
                                             <input
                                                 id="order-payment-on-receipt"
                                                 v-model="order.payment_method"
@@ -532,7 +548,10 @@
                                 <div class="checkout__controls">
                                     <div class="checkout__agreements">
                                         <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
+                                            <label
+                                                for="order-agreement-processing"
+                                                class="checkout__toggler-body"
+                                            >
                                                 <input
                                                     id="order-agreement-processing"
                                                     v-model="order.agreement_processing"
@@ -540,41 +559,44 @@
                                                     name="order-agreement-processing"
                                                     @focus="orderErrors.agreement = false"
                                                 />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-agreement-processing"
-                                            >
+                                            </label>
+                                            <span class="checkout__toggler-label">
                                                 Я ознакомился(сь) с политикой конфиденциальности и
                                                 согласен(на) с обработкой персональных данных
-                                            </label>
-                                            <div
+                                            </span>
+                                            <FormNotifyInfo
                                                 v-if="orderErrors.agreement"
                                                 class="checkout__data-error"
-                                                style="left: -3%"
+                                                :position="{ top: '100%', left: '-3%' }"
                                             >
-                                                <span>i</span>
-                                                <p>Без вашего согласия мы не сможем продолжить</p>
-                                            </div>
+                                                Без вашего согласия мы не сможем продолжить
+                                            </FormNotifyInfo>
                                         </div>
                                         <div class="checkout__toggler">
-                                            <div class="checkout__toggler-body">
+                                            <label
+                                                for="order-agreement-marketing"
+                                                class="checkout__toggler-body"
+                                            >
                                                 <input
                                                     id="order-agreement-marketing"
                                                     v-model="order.agreement_marketing_notify"
                                                     type="checkbox"
                                                     name="order-agreement-marketing"
                                                 />
-                                            </div>
-                                            <label
-                                                class="checkout__toggler-label"
-                                                for="order-agreement-marketing"
-                                            >
+                                            </label>
+                                            <span class="checkout__toggler-label">
                                                 Хочу получать информацию о новых предложениях и
                                                 акциях
-                                            </label>
+                                            </span>
                                         </div>
                                     </div>
+                                    <FormNotifyError
+                                        alignment="center"
+                                        class="checkout__info"
+                                        v-if="orderErrors.general.length"
+                                    >
+                                        {{ orderErrors.general }}
+                                    </FormNotifyError>
                                     <button
                                         class="checkout__button"
                                         type="submit"
@@ -585,9 +607,6 @@
                                             <SvgSprite type="arrow" :size="18" />
                                         </span>
                                     </button>
-                                    <p class="checkout__info" v-if="orderErrors.general.length">
-                                        {{ orderErrors.general }}
-                                    </p>
                                     <NuxtLink class="checkout__help" :to="{ name: 'contact' }">
                                         Нужна помощь с оформлением заказа?
                                     </NuxtLink>
@@ -626,7 +645,6 @@
 
     const user = computed(() => userStore.user!);
 
-    const router = useRouter();
     const {
         getProductDiscountById,
         getProductImageById,
@@ -635,11 +653,21 @@
         translateProductModifier,
     } = cartStore;
 
+    // state =====================================================
+    const isLoading = ref(false);
+    const promocodeIsDisabled = ref(false);
+
+    const promocode = reactive({
+        name: '',
+        discount: 0,
+        error: '',
+    });
+    // ===========================================================
+
     // data ======================================================
     const { content: settings } = await useCms<ISettings>('settings');
     const { content: contacts } = await useCms<IContacts>('contact');
 
-    const isLoading = ref(false);
     const deliveryTimeVariants = [
         '10:00 - 12:00',
         '08:00 - 10:00',
@@ -648,14 +676,6 @@
         '16:00 - 18:00',
         '18:00 - 20:00',
     ];
-
-    const promocode = reactive({
-        name: '',
-        discount: 0,
-        error: '',
-    });
-
-    const promocodeIsDisabled = ref(false);
 
     const deliveryPrice = computed(() => settings.value?.delivery_price ?? 0);
     const deliveryRequiredPrice = computed(() => settings.value?.delivery_disable_price ?? 0);
@@ -687,7 +707,6 @@
     // ===========================================================
 
     // Model =====================================================
-
     const order: Omit<IOrder, 'id' | 'date_created' | 'date_updated'> = reactive({
         // User data
         user_id: user.value?.id,
@@ -713,11 +732,11 @@
 
         // Delivery info
         delivery: 'courier',
-        delivery_date: '',
-        delivery_time: '10:00 - 12:00',
-        delivery_pickup_address: '',
+        delivery_date: null,
+        delivery_time: null,
+        delivery_pickup_address: null,
         delivery_address:
-            userAddresses.value.length && userAddresses.value[0] ? userAddresses.value[0] : '',
+            userAddresses.value.length && userAddresses.value[0] ? userAddresses.value[0] : null,
 
         // Additionally
         postcard: '',
@@ -751,6 +770,18 @@
         }
     }
 
+    function toggleRecipientNotification() {
+        if (!order.recipient_notification) {
+            order.delivery = 'specify';
+            order.delivery_time = null;
+            order.recipient_notification = true;
+            order.delivery_address = null;
+            order.delivery_pickup_address = null;
+        } else {
+            order.delivery = 'courier';
+        }
+    }
+
     const { open: openAddAddress, close: closeAddAddress } = useModal({
         component: ModalsAddAddress,
         attrs: {
@@ -761,26 +792,34 @@
     });
 
     async function createOrder(): Promise<void> {
-        if (!order.delivery_date || !order.delivery_time || !order.agreement_processing) {
-            if (!order.delivery_date) orderErrors.deliveryDate = true;
-            if (!order.delivery_time) orderErrors.deliveryTime = true;
-            if (!order.agreement_processing) orderErrors.agreement = true;
-            orderErrors.general = 'Заполнены не все поля';
+        if (!order.agreement_processing) {
+            orderErrors.agreement = true;
+            orderErrors.general = 'Не заполнены обязательные поля';
             return;
         }
-        if (order.delivery === 'courier') {
-            if (!order.delivery_address) {
-                orderErrors.deliveryAddress = true;
-                return;
-            }
-            order.delivery_pickup_address = '';
+
+        if (!order.recipient_notification && !order.delivery_date && !order.delivery_time) {
+            if (!order.delivery_date) orderErrors.deliveryDate = true;
+            if (!order.delivery_time) orderErrors.deliveryTime = true;
+            orderErrors.general = 'Не заполнены обязательные поля';
+            return;
         }
-        if (order.delivery === 'pickup') {
-            if (!order.delivery_pickup_address) {
-                orderErrors.deliveryPickupAddress = true;
-                return;
+
+        if (!order.recipient_notification) {
+            if (order.delivery === 'courier') {
+                if (!order.delivery_address) {
+                    orderErrors.deliveryAddress = true;
+                    return;
+                }
+                order.delivery_pickup_address = null;
             }
-            order.delivery_address = '';
+            if (order.delivery === 'pickup') {
+                if (!order.delivery_pickup_address) {
+                    orderErrors.deliveryPickupAddress = true;
+                    return;
+                }
+                order.delivery_address = null;
+            }
         }
         isLoading.value = true;
 
@@ -796,26 +835,21 @@
                 },
             });
 
-            switch (res.status) {
-                case 500:
-                    orderErrors.general =
-                        'Произошла непредвиденная ошибка, попробуйте повторить попыьку позже или связаться с нами';
-                    break;
-                case 401:
-                    orderErrors.general = 'Ошибка, сначала войдите в аккаунт';
-                    break;
-                case 404:
-                    orderErrors.general = 'Ошибка, пользователь не найден';
-                    break;
-                case 200:
-                    const orderItems = JSON.stringify(cart.value);
-                    cartStore.clearCart();
-                    router.push(`/checkout/success?order=${orderItems}`);
-                    break;
+            if (res.success) {
+                const orderItems = JSON.stringify(cart.value);
+                cartStore.clearCart();
+                navigateTo({ name: 'checkout-success', query: { order: orderItems } });
+                return;
+            } else {
+                orderErrors.general =
+                    'Произошла непредвиденная ошибка, попробуйте повторить попыьку позже или связаться с нами';
+                return;
             }
         } catch {
             orderErrors.general =
                 'Произошла непредвиденная ошибка, попробуйте повторить попыьку позже или связаться с нами';
+        } finally {
+            isLoading.value = false;
         }
     }
 
@@ -1141,45 +1175,6 @@
                     grid-column: span 3;
                 }
             }
-            &-error {
-                position: absolute;
-                z-index: 5;
-                top: 115%;
-                display: flex;
-                align-items: flex-start;
-                gap: rem(8);
-                font-size: rem(14);
-                color: $c-FFFFFF;
-                background-color: $c-082535;
-                border-radius: rem(8);
-                padding: rem(8) rem(16);
-                pointer-events: none;
-                &::before {
-                    content: '';
-                    position: absolute;
-                    z-index: -1;
-                    top: 0;
-                    left: 10%;
-                    width: rem(16);
-                    min-width: rem(16);
-                    aspect-ratio: 1;
-                    background-color: inherit;
-                    rotate: 45deg;
-                    translate: 0 -50%;
-                }
-                > span {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: rem(12);
-                    color: $c-FFFFFF;
-                    width: rem(16);
-                    min-width: rem(16);
-                    aspect-ratio: 1;
-                    background-color: $c-accent;
-                    border-radius: 50%;
-                }
-            }
             &--to {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -1243,6 +1238,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            min-height: rem(54);
             transition:
                 background-color $td $tf,
                 color $td $tf,
@@ -1308,6 +1304,7 @@
                 border: rem(2) solid rgba($c-D4E1E7, 0.25) !important;
                 border-radius: rem(32);
                 color: rgba($c-082535, 0.7);
+                min-height: rem(54);
                 transition:
                     background-color $td $tf,
                     color $td $tf,
@@ -1574,12 +1571,7 @@
             );
         }
         &__info {
-            color: $c-F5142B;
-            font-size: rem(14);
-            line-height: 1.4;
-            text-align: center;
-            text-wrap: balance;
-            margin-top: rem(16);
+            margin: rem(32) 0;
         }
         &__help {
             cursor: pointer;
